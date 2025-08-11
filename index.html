@@ -1,11 +1,287 @@
 <!DOCTYPE html>
-<html>
+<html lang="da">
 <head>
-    <meta charset="UTF-8">
-    <title>LYDSTYRKEN</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>[ LYDSTYRKEN ]</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#000;
+      --card:#111;
+      --muted:rgba(255,255,255,0.75);
+      --accent:rgba(0,255,136,0.12);
+      --accent-strong:rgba(0,255,136,0.22);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Montserrat,system-ui,Arial,sans-serif;
+      background:var(--bg);
+      color:#fff;
+      text-transform:uppercase;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+    header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:18px 18px;
+      gap:12px;
+      position:sticky;top:0;background:transparent;z-index:20;
+      border-bottom:1px solid rgba(255,255,255,0.03)
+    }
+    .logo{font-weight:900;font-size:1.1rem}
+
+    /* Navigation: no green glow on nav items per request */
+    nav{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    nav a{
+      color:#fff;text-decoration:none;font-weight:700;letter-spacing:1px;
+      padding:6px 10px;border-radius:6px;border:1px solid rgba(255,255,255,0.06);
+      background:transparent;font-size:0.9rem
+    }
+    nav a:focus{outline:2px solid rgba(255,255,255,0.08)}
+
+    .login-btn{
+      padding:6px 12px;border-radius:6px;border:2px solid #fff;background:transparent;color:#fff;font-weight:900;cursor:pointer
+    }
+    .login-btn:active{transform:translateY(1px)}
+
+    .hero{
+      min-height:60vh;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:32px 18px;
+      background:linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.6));
+      background-image: url('hero-speaker.jpg');background-size:cover;background-position:center;
+    }
+    .hero h1{font-size:clamp(1.8rem,6vw,3.2rem);margin:0;font-weight:900}
+    .hero p{max-width:720px;margin-top:12px;color:var(--muted);font-weight:400}
+
+    main{max-width:1100px;margin:40px auto;padding:0 18px}
+    h2{font-size:clamp(1.2rem,4vw,1.8rem);margin:0 0 18px 0;font-weight:900}
+
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+    .card{background:var(--card);padding:14px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);transition:box-shadow .18s ease,transform .12s ease}
+    .card:hover{box-shadow:0 6px 18px var(--accent);transform:translateY(-3px)}
+    .card img{width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:10px}
+    .card h3{margin:6px 0 0 0;font-size:1rem;font-weight:700}
+
+    /* Contact area: buttons styled like text but are actual buttons to ensure a real user gesture */
+    .contact-list{display:flex;flex-direction:column;gap:10px}
+    .contact-row{display:flex;align-items:center;gap:10px}
+    .contact-emoji{font-size:1.1rem}
+    .copy-btn{
+      background:transparent;border:0;color:#fff;font-weight:700;letter-spacing:0.6px;padding:8px 10px;border-radius:6px;cursor:pointer;text-align:left;font-size:0.98rem
+    }
+    .copy-btn:focus{outline:2px solid rgba(0,255,136,0.18)}
+    .copy-btn:hover{background:var(--accent)}
+
+    /* subtle helper text */
+    .muted{color:var(--muted);font-weight:400;font-size:0.9rem}
+
+    footer{padding:30px 18px;text-align:center;color:rgba(255,255,255,0.6);font-size:0.8rem}
+
+    /* toast */
+    #toast{position:fixed;left:50%;transform:translateX(-50%);bottom:22px;background:#111;padding:10px 16px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:60}
+
+    /* fallback modal */
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:80}
+    .modal-card{background:#0b0b0b;padding:18px;border-radius:10px;width:min(520px,92%);border:1px solid rgba(255,255,255,0.04)}
+    .modal-card p{margin:0 0 8px 0;color:var(--muted)}
+    .modal-input{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:#fff}
+    .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:12px}
+    .btn{padding:8px 12px;border-radius:8px;border:0;cursor:pointer}
+    .btn-primary{background:#00ff88;color:#000;font-weight:800}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:#fff}
+
+    @media (max-width:600px){
+      header{padding:14px 12px}
+      .hero{padding:28px 12px}
+      nav a{font-size:0.85rem;padding:6px 8px}
+      .login-btn{padding:6px 8px;font-size:0.85rem}
+    }
+  </style>
 </head>
 <body>
-    <h1>Velkommen til LYDSTYRKEN</h1>
-    <p>Vi leverer lyd til hele Danmark!</p>
+  <header>
+    <div class="logo">[ LYDSTYRKEN ]</div>
+    <nav aria-label="Hovednavigation">
+      <a href="#pakker">[ PAKKER ]</a>
+      <a href="#bygselv">[ BYG SELV ]</a>
+      <a href="#hvem">[ HVEM ER VI? ]</a>
+      <a href="#kontakt">[ KONTAKT ]</a>
+      <button class="login-btn" id="loginBtn">[ LOG IND ]</button>
+    </nav>
+  </header>
+
+  <section class="hero" aria-hidden="false">
+    <h1>[ OPLEV LYD, DER BEVÆGER DIG ]</h1>
+    <p>Professionelle højttalerløsninger til alle dine events – kvalitet, design og lyd i verdensklasse.</p>
+  </section>
+
+  <main>
+    <section id="pakker">
+      <h2>[ PAKKER ]</h2>
+      <div class="grid">
+        <div class="card">
+          <img src="pakke1.jpg" alt="Pakkebillede 1">
+          <h3>[ PAKKE 1 ]</h3>
+          <p class="muted">Perfekt til mindre events.</p>
+        </div>
+        <div class="card">
+          <img src="pakke2.jpg" alt="Pakkebillede 2">
+          <h3>[ PAKKE 2 ]</h3>
+          <p class="muted">Den alsidige løsning til mellemstore events.</p>
+        </div>
+        <div class="card">
+          <img src="pakke3.jpg" alt="Pakkebillede 3">
+          <h3>[ PAKKE 3 ]</h3>
+          <p class="muted">Til store koncerter og events, hvor lyd betyder alt.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="bygselv" style="margin-top:28px">
+      <h2>[ BYG SELV ]</h2>
+      <p class="muted">Sammensæt din egen højttalerpakke, så den passer perfekt til dit behov. Kontakt os for et skræddersyet tilbud.</p>
+    </section>
+
+    <section id="hvem" style="margin-top:28px">
+      <h2>[ HVEM ER VI? ]</h2>
+      <p class="muted">Marius og Pernille – passionerede lydentusiaster, der bringer lydoplevelser til live.</p>
+    </section>
+
+    <section id="kontakt" style="margin-top:28px">
+      <h2>[ KONTAKT ]</h2>
+      <div class="contact-list" aria-live="polite">
+        <div class="contact-row">
+          <div class="contact-emoji">📱</div>
+          <button class="copy-btn" data-copy="+45 42 60 34 70" aria-label="Kopier telefonnummer">[ +45 42 60 34 70 ]</button>
+        </div>
+        <div class="contact-row">
+          <div class="contact-emoji">📧</div>
+          <button class="copy-btn" data-copy="lydstyrken@gmail.com" aria-label="Kopier email">[ lydstyrken@gmail.com ]</button>
+        </div>
+        <div class="contact-row">
+          <div class="contact-emoji">📷</div>
+          <button class="copy-btn" data-copy="@lydstyrken.pm" aria-label="Kopier instagram">[ @lydstyrken.pm ]</button>
+        </div>
+        <div class="contact-row">
+          <div class="contact-emoji">📘</div>
+          <button class="copy-btn" data-copy="https://facebook.com/lydstyrken" aria-label="Kopier facebook link">[ facebook.com/lydstyrken ]</button>
+        </div>
+      </div>
+      <p class="muted" style="margin-top:10px">Tryk på en linje for at kopiere til udklipsholder.</p>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 [ LYDSTYRKEN ]. ALLE RETTIGHEDER FORBEHOLDES.
+  </footer>
+
+  <!-- toast -->
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <!-- fallback modal (hidden by default) -->
+  <div id="fallbackModal" class="modal" style="display:none">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="fallbackTitle">
+      <h3 id="fallbackTitle" style="margin:0 0 8px 0;font-weight:900">Kopiering ikke mulig automatisk</h3>
+      <p>Din browser eller den nuværende side tillader ikke automatisk kopiering. Brug nedenstående felt til at kopiere manuelt (tryk Ctrl+C eller lang-tryk på mobil).</p>
+      <input id="fallbackInput" class="modal-input" readonly>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" id="modalClose">Luk</button>
+        <button class="btn btn-primary" id="modalSelect">Markér og kopier</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Attach event listeners after DOM is ready
+    document.addEventListener('DOMContentLoaded', function () {
+      const copyBtns = document.querySelectorAll('.copy-btn');
+      copyBtns.forEach(btn => {
+        btn.addEventListener('click', async function (e) {
+          const text = btn.dataset.copy;
+          // We *must* run clipboard.writeText inside a direct user gesture (click handler) — done here.
+          try {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              await navigator.clipboard.writeText(text);
+              showToast('Kopieret: ' + text);
+            } else {
+              // No Clipboard API available — fallback
+              fallbackCopy(text);
+            }
+          } catch (err) {
+            // If permission/feature is blocked, fallback to manual modal
+            console.warn('clipboard.writeText fejlede:', err);
+            fallbackModal(text);
+          }
+        });
+      });
+
+      // login button placeholder
+      const loginBtn = document.getElementById('loginBtn');
+      loginBtn.addEventListener('click', function () {
+        // replace with real login flow later
+        window.location.href = '/login';
+      });
+
+      // modal actions
+      document.getElementById('modalClose').addEventListener('click', function () {
+        hideFallbackModal();
+      });
+      document.getElementById('modalSelect').addEventListener('click', function () {
+        const input = document.getElementById('fallbackInput');
+        input.select();
+        try {
+          document.execCommand('copy');
+          hideFallbackModal();
+          showToast('Kopieret manuelt: ' + input.value);
+        } catch (e) {
+          // If execCommand also fails, instruct user
+          alert('Kan ikke kopiere automatisk. Marker teksten og kopier manuelt (Ctrl+C eller lang-tryk).');
+        }
+      });
+
+    });
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.style.opacity = '1';
+      clearTimeout(window._toastTimeout);
+      window._toastTimeout = setTimeout(() => { toast.style.opacity = '0'; }, 2200);
+    }
+
+    function fallbackCopy(text) {
+      // Attempt quick fallback: create input, select, try execCommand
+      const tmp = document.createElement('input');
+      tmp.value = text;
+      document.body.appendChild(tmp);
+      tmp.select();
+      try {
+        const ok = document.execCommand('copy');
+        tmp.remove();
+        if (ok) {
+          showToast('Kopieret: ' + text);
+          return;
+        }
+      } catch (e) {
+        console.warn('execCommand copy fejlede', e);
+      }
+      tmp.remove();
+      fallbackModal(text);
+    }
+
+    function fallbackModal(text) {
+      const modal = document.getElementById('fallbackModal');
+      const input = document.getElementById('fallbackInput');
+      input.value = text;
+      modal.style.display = 'flex';
+      // try to focus and select for mobile/desktop
+      setTimeout(() => { input.focus(); input.select(); }, 40);
+    }
+    function hideFallbackModal() { document.getElementById('fallbackModal').style.display = 'none'; }
+  </script>
 </body>
 </html>
