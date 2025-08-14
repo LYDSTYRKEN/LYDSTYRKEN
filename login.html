@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lydstyrken - Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #000;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    h1 {
+      margin-bottom: 20px;
+      color: #00ff66;
+    }
+    input {
+      display: block;
+      margin: 10px 0;
+      padding: 10px;
+      width: 250px;
+      border: none;
+      border-radius: 5px;
+    }
+    button {
+      padding: 10px 15px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+      background-color: #00ff66;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #00cc52;
+    }
+    .container {
+      background-color: #111;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    .back-btn {
+      margin-top: 15px;
+      background-color: transparent;
+      color: #00ff66;
+      border: 2px solid #00ff66;
+    }
+    .back-btn:hover {
+      background-color: #00ff66;
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Login</h1>
+
+    <!-- Email login -->
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Adgangskode">
+    <button onclick="login()">Log ind</button>
+    <button onclick="signup()">Opret bruger</button>
+
+    <hr>
+
+    <!-- Google login -->
+    <button onclick="googleLogin()">Log ind med Google</button>
+
+    <!-- Tilbage -->
+    <button class="back-btn" onclick="window.location.href='index.html'">Tilbage til forsiden</button>
+  </div>
+
+  <!-- Firebase scripts -->
+  <script type="module">
+    // Import Firebase
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } 
+      from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
+    // Din Firebase config (indsæt din fra Firebase Console)
+    const firebaseConfig = {
+      apiKey: "DIN_API_KEY",
+      authDomain: "DIN_PROJECT.firebaseapp.com",
+      projectId: "DIN_PROJECT",
+      storageBucket: "DIN_PROJECT.appspot.com",
+      messagingSenderId: "DIN_SENDER_ID",
+      appId: "DIN_APP_ID",
+      measurementId: "DIN_MEASUREMENT_ID"
+    };
+
+    // Init Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Email login
+    window.login = function() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          alert("Logget ind som: " + userCredential.user.email);
+          window.location.href = "index.html"; // tilbage til forsiden
+        })
+        .catch((error) => {
+          alert("Fejl: " + error.message);
+        });
+    }
+
+    // Opret bruger
+    window.signup = function() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          alert("Bruger oprettet: " + userCredential.user.email);
+        })
+        .catch((error) => {
+          alert("Fejl: " + error.message);
+        });
+    }
+
+    // Google login
+    window.googleLogin = function() {
+      const provider = new GoogleAuthProvider();
+      signInWithPopup(auth, provider)
+        .then((result) => {
+          alert("Logget ind som: " + result.user.email);
+          window.location.href = "index.html";
+        })
+        .catch((error) => {
+          alert("Fejl: " + error.message);
+        });
+    }
+  </script>
+</body>
+</html>
