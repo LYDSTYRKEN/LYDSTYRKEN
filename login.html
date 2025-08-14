@@ -85,16 +85,16 @@
     import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } 
       from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 
-    // Din Firebase config (indsæt din fra Firebase Console)
+    // Firebase config
     const firebaseConfig = {
-    apiKey: "AIzaSyCyKtFD4BrFjKGtPGy2cKPenkysz4h2lLI",
-    authDomain: "lydstyrken-ab288.firebaseapp.com",
-    projectId: "lydstyrken-ab288",
-    storageBucket: "lydstyrken-ab288.firebasestorage.app",
-    messagingSenderId: "140962566931",
-    appId: "1:140962566931:web:b7f4ababaf3184bc8cc0e6",
-    measurementId: "G-Q74KMFN9YV"
-  };
+      apiKey: "AIzaSyCyKtFD4BrFjKGtPGy2cKPenkysz4h2lLI",
+      authDomain: "lydstyrken-ab288.firebaseapp.com",
+      projectId: "lydstyrken-ab288",
+      storageBucket: "lydstyrken-ab288.appspot.com",
+      messagingSenderId: "140962566931",
+      appId: "1:140962566931:web:b7f4ababaf3184bc8cc0e6",
+      measurementId: "G-Q74KMFN9YV"
+    };
 
     // Init Firebase
     const app = initializeApp(firebaseConfig);
@@ -106,8 +106,10 @@
       const password = document.getElementById("password").value;
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          alert("Logget ind som: " + userCredential.user.email);
-          window.location.href = "index.html"; // tilbage til forsiden
+          const user = userCredential.user;
+          localStorage.setItem("lydstyrkenUser", user.email);
+          alert("Logget ind som: " + user.email);
+          window.location.href = "index.html";
         })
         .catch((error) => {
           alert("Fejl: " + error.message);
@@ -120,7 +122,10 @@
       const password = document.getElementById("password").value;
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          alert("Bruger oprettet: " + userCredential.user.email);
+          const user = userCredential.user;
+          localStorage.setItem("lydstyrkenUser", user.email);
+          alert("Bruger oprettet: " + user.email);
+          window.location.href = "index.html";
         })
         .catch((error) => {
           alert("Fejl: " + error.message);
@@ -132,7 +137,9 @@
       const provider = new GoogleAuthProvider();
       signInWithPopup(auth, provider)
         .then((result) => {
-          alert("Logget ind som: " + result.user.email);
+          const user = result.user;
+          localStorage.setItem("lydstyrkenUser", user.displayName || user.email);
+          alert("Logget ind som: " + (user.displayName || user.email));
           window.location.href = "index.html";
         })
         .catch((error) => {
