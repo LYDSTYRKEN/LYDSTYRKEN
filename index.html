@@ -203,6 +203,36 @@
       <a href="#kontakt">[ KONTAKT ]</a>
       <button class="login-btn" id="loginBtn">[ LOG IND ]</button>
     </nav>
+
+    <div id="userDisplay" style="position: absolute; top: 10px; right: 20px; color: #00ff66; font-weight: bold;"></div>
+        <script>
+        const user = localStorage.getItem("lydstyrkenUser");
+        if (user) {
+            document.getElementById("userDisplay").textContent = "Hej, " + user;
+        }
+        </script>
+
+        <div id="userArea" style="position: absolute; top: 10px; right: 20px; color: #00ff66; font-weight: bold; display: flex; gap: 10px; align-items: center;"></div>
+
+        <script>
+        const user = localStorage.getItem("lydstyrkenUser");
+        const userArea = document.getElementById("userArea");
+
+        if (user) {
+            userArea.innerHTML = `
+            <span>Hej, ${user}</span>
+            <button onclick="window.location.href='konto.html'" style="background: transparent; border: 2px solid #00ff66; color: #00ff66; padding: 5px 10px; border-radius: 5px; cursor: pointer;">Min konto</button>
+            <button onclick="logout()" style="background: transparent; border: 2px solid #ff4444; color: #ff4444; padding: 5px 10px; border-radius: 5px; cursor: pointer;">Log ud</button>
+            `;
+        }
+
+        function logout() {
+            localStorage.removeItem("lydstyrkenUser");
+            alert("Du er nu logget ud");
+            window.location.href = "index.html";
+        }
+        </script>
+
   </header>
 
   <section class="hero" aria-hidden="false">
