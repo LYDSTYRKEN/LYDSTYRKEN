@@ -191,6 +191,57 @@
     font-size: 1rem;
     }
 
+        /* Brugermenu styling */
+    .user-menu {
+    position: relative;
+    display: none; /* Skjult som standard */
+    }
+
+    .user-name {
+    font-weight: bold;
+    color: #00ff66;
+    cursor: pointer;
+    padding: 6px 12px;
+    border: 1px solid #444;
+    border-radius: 4px;
+    }
+
+    .user-name:hover {
+    background: #00ff66;
+    color: black;
+    }
+
+    .dropdown {
+    display: none;
+    position: absolute;
+    top: 35px;
+    right: 0;
+    background: #111;
+    border: 1px solid #444;
+    border-radius: 4px;
+    overflow: hidden;
+    min-width: 160px;
+    z-index: 100;
+    }
+
+    .dropdown a {
+    display: block;
+    padding: 10px;
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    }
+
+    .dropdown a:hover {
+    background: #00ff66;
+    color: black;
+    }
+
+    .user-menu:hover .dropdown {
+    display: block;
+    }
+
+
   </style>
 </head>
 <body>
@@ -201,7 +252,19 @@
       <a href="#bygselv">[ BYG SELV ]</a>
       <a href="#hvem">[ HVEM ER VI? ]</a>
       <a href="#kontakt">[ KONTAKT ]</a>
-      <button class="login-btn" id="loginBtn">[ LOG IND ]</button>
+      <!-- Login knap -->
+        <button class="login-btn" onclick="window.location.href='login.html'">[ LOG IND ]</button>
+
+        <!-- Brugermenu (skjult som standard) -->
+        <div class="user-menu">
+        <span class="user-name" id="user-name">Hej, Bruger</span>
+        <div class="dropdown">
+            <a href="min-konto.html">Min konto</a>
+            <a href="tidligere-ordrer.html">Tidligere ordrer</a>
+            <a href="#" onclick="logout()">Log ud</a>
+        </div>
+        </div>
+
     </nav>
 
     <div id="userDisplay" style="position: absolute; top: 10px; right: 20px; color: #00ff66; font-weight: bold;"></div>
@@ -431,5 +494,42 @@
     });
 
   </script>
+
+
+
+    <!-- Firebase login og bruger-menu kode -->
+    <script type="module">
+    import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
+    const auth = getAuth();
+
+    // Elementer
+    const loginBtn = document.querySelector(".login-btn");
+    const userMenu = document.querySelector(".user-menu");
+    const userNameSpan = document.getElementById("user-name");
+
+    auth.onAuthStateChanged((user) => {
+        if (user) {
+        // Skjul login knap, vis brugermenu
+        loginBtn.style.display = "none";
+        userMenu.style.display = "inline-block";
+
+        // Sæt brugernavn (fallback til email)
+        userNameSpan.textContent = `Hej, ${user.displayName || user.email}`;
+        } else {
+        // Vis login knap, skjul brugermenu
+        loginBtn.style.display = "inline-block";
+        userMenu.style.display = "none";
+        }
+    });
+
+    window.logout = function() {
+        signOut(auth).then(() => {
+        window.location.href = "index.html";
+        });
+    };
+    </script>
+
+
 </body>
 </html>
