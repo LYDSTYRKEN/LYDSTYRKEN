@@ -100,14 +100,10 @@
     h2{font-size:clamp(1.2rem,4vw,1.8rem);margin:0 0 18px 0;font-weight:900}
 
     .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
-    .card{position:relative;border-radius:10px;overflow:hidden;aspect-ratio:1;border:1px solid rgba(255,255,255,0.03);background:var(--card);transition:box-shadow .18s ease,transform .12s ease}
+    .card{background:var(--card);padding:14px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);transition:box-shadow .18s ease,transform .12s ease}
     .card:hover{box-shadow:0 6px 18px var(--accent);transform:translateY(-3px)}
-    .card img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
-    .card-content{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:12px;background:linear-gradient(transparent 60%,rgba(0,0,0,0.75));transition:background .3s ease}
-    .card:hover .card-content{background:linear-gradient(transparent 40%,rgba(0,0,0,0.85))}
-    .card-content h3{margin:0;font-size:1rem;font-weight:700}
-    .features{list-style:none;margin:4px 0 0 0;padding:0;font-size:0.8rem;text-transform:none}
-    .features li{margin:2px 0}
+    .card img{width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:10px}
+    .card h3{margin:6px 0 0 0;font-size:1rem;font-weight:700}
 
     /* Vælg pakke-knapper */
     .choose-btn {
@@ -182,8 +178,18 @@
     transform: translateY(0);
     }
 
-    .price-row{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
-    .price{color:var(--green);font-weight:900;font-size:1rem}
+    .price-row {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    margin-top: 10px;
+    }
+
+    .price {
+    color: var(--green);
+    font-weight: 900;
+    font-size: 1rem;
+    }
 
         /* Brugermenu styling */
     .user-menu {
@@ -346,49 +352,30 @@
       <div class="grid">
         <div class="card">
           <img src="assets/img/pakke-1.jpg" alt="Pakkebillede 1">
-          <div class="card-content">
-            <h3>[ DEN LILLE PAKKE ]</h3>
-            <ul class="features">
-              <li>Klar lyd med god bund</li>
-              <li>Ideel til mindre fester</li>
-              <li>Op til ~25 personer</li>
-            </ul>
-            <div class="price-row">
-              <a href="pakke1.html" class="choose-btn">[ VÆLG PAKKE ]</a>
-              <span class="price">500 kr.</span>
+          <h3>[ DEN LILLE PAKKE ]</h3>
+          <p class="muted">Kan levere klar lyd med god fast bund op til cirka 25 mennesker.</p>
+             <div class="price-row">
+                 <a href="pakke1.html" class="choose-btn">[ VÆLG PAKKE ]</a>
+                 <span class="price">500 kr.</span>
             </div>
-          </div>
         </div>
         <div class="card">
           <img src="assets/img/pakke-2.jpg" alt="Pakkebillede 2">
-          <div class="card-content">
-            <h3>[ DEN UDVIDET PAKKE ]</h3>
-            <ul class="features">
-              <li>Gennemtrængende lyd og rig bas</li>
-              <li>Velegnet til mellemstore events</li>
-              <li>Op til ~50 personer</li>
-            </ul>
+          <h3>[ DEN UDVIDET PAKKE ]</h3>
+          <p class="muted">Kan levere gennemtrængende lyd op til cirka 50 mennesker.</p>
             <div class="price-row">
-              <a href="pakke2.html" class="choose-btn">[ VÆLG PAKKE ]</a>
-              <span class="price">1000 kr.</span>
+                 <a href="pakke2.html" class="choose-btn">[ VÆLG PAKKE ]</a>
+                 <span class="price">1000 kr.</span>
             </div>
-          </div>
         </div>
         <div class="card">
           <img src="assets/img/pakke-3.jpg" alt="Pakkebillede 3">
-          <div class="card-content">
-            <h3>[ DEN STORE PAKKE ]</h3>
-            <ul class="features">
-              <li>Fantastisk lyd der fylder rummet</li>
-              <li>Solid bund til de større fester</li>
-              <li>Op til ~75 personer</li>
-            </ul>
+          <h3>[ DEN STORE PAKKE ]</h3>
+          <p class="muted">Kan levere fantastisk lyd op til cirka 75 mennesker.</p>
             <div class="price-row">
-              <a href="pakke3.html" class="choose-btn">[ VÆLG PAKKE ]</a>
-              <span class="price">1500 kr.</span>
-            </div>
-          </div>
-        </div>
+                <a href="pakke3.html" class="choose-btn">[ VÆLG PAKKE ]</a>
+                <span class="price">1500 kr.</span>
+         </div>
       </div>
     </section>
 
