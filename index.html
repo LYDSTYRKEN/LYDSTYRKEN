@@ -100,36 +100,33 @@
     h2{font-size:clamp(1.2rem,4vw,1.8rem);margin:0 0 18px 0;font-weight:900}
 
     .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
-    .card{background:var(--card);padding:14px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);transition:box-shadow .18s ease,transform .12s ease}
+    .card{position:relative;border-radius:10px;overflow:hidden;aspect-ratio:1/1;border:1px solid rgba(255,255,255,0.03);transition:box-shadow .18s ease,transform .18s ease}
     .card:hover{box-shadow:0 6px 18px var(--accent);transform:translateY(-3px)}
-    .card img{width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:10px}
-    .card h3{margin:6px 0 0 0;font-size:1rem;font-weight:700}
+    .card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+    .card:hover img{transform:scale(1.08)}
+    .card .overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.7),rgba(0,0,0,0));display:flex;flex-direction:column;justify-content:flex-end;padding:14px;transition:background .3s ease}
+    .card:hover .overlay{background:linear-gradient(to top,rgba(0,0,0,0.8),rgba(0,0,0,0.2))}
+    .card h3{margin:0;font-size:1rem;font-weight:700}
+    .features{list-style:disc;margin:6px 0 0 18px;padding:0;max-height:0;overflow:hidden;opacity:0;text-transform:none;font-size:0.8rem;transition:max-height .25s ease,opacity .25s ease}
+    .card:hover .features{max-height:120px;opacity:1}
+    .price-row{display:flex;justify-content:space-between;align-items:center;margin-top:8px;gap:10px}
+    .price{color:var(--green);font-weight:900;font-size:1rem}
 
     /* Vælg pakke-knapper */
-    .choose-btn {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 10px 18px;
-    font-weight: 900;
-    color: var(--green);
-    border: 2px solid var(--green);
-    border-radius: 8px;
-    text-decoration: none;
-    background: transparent;
-    transition: all 0.2s ease;
+    .choose-btn{
+    display:inline-block;
+    padding:6px 12px;
+    font-weight:900;
+    color:var(--green);
+    border:2px solid var(--green);
+    border-radius:8px;
+    text-decoration:none;
+    background:rgba(0,0,0,0.4);
+    transition:all 0.2s ease;
     }
 
-    .choose-btn:hover {
-    background: var(--green);
-    color: #000;
-    box-shadow: 0 0 12px var(--green);
-    transform: translateY(-2px);
-    }
-
-    .choose-btn:active {
-    transform: translateY(0);
-    box-shadow: none;
-    }
+    .choose-btn:hover{background:var(--green);color:#000;box-shadow:0 0 12px var(--green);transform:translateY(-2px)}
+    .choose-btn:active{transform:translateY(0);box-shadow:none}
 
 
     /* Contact area: buttons styled like text but are actual buttons to ensure a real user gesture */
@@ -178,18 +175,7 @@
     transform: translateY(0);
     }
 
-    .price-row {
-    display: flex;
-    align-items: center;
-    gap: 40px;
-    margin-top: 10px;
-    }
-
-    .price {
-    color: var(--green);
-    font-weight: 900;
-    font-size: 1rem;
-    }
+    /* old price-row rules removed - new styles defined above */
 
         /* Brugermenu styling */
     .user-menu {
@@ -351,31 +337,50 @@
       <h2>[ PAKKER ]</h2>
       <div class="grid">
         <div class="card">
-          <img src="assets/img/pakke-1.jpg" alt="Pakkebillede 1">
-          <h3>[ DEN LILLE PAKKE ]</h3>
-          <p class="muted">Kan levere klar lyd med god fast bund op til cirka 25 mennesker.</p>
-             <div class="price-row">
-                 <a href="pakke1.html" class="choose-btn">[ VÆLG PAKKE ]</a>
-                 <span class="price">500 kr.</span>
+          <img src="assets/img/pakke-1.jpg" alt="Den Lille Pakke">
+          <div class="overlay">
+            <h3>[ DEN LILLE PAKKE ]</h3>
+            <ul class="features">
+              <li>1 × Yamaha DXR12</li>
+              <li>1 × DXS12 subwoofer</li>
+              <li>Bluetooth & stativ</li>
+            </ul>
+            <div class="price-row">
+              <a href="pakke1.html" class="choose-btn">[ VÆLG PAKKE ]</a>
+              <span class="price">500 kr.</span>
             </div>
+          </div>
         </div>
         <div class="card">
-          <img src="assets/img/pakke-2.jpg" alt="Pakkebillede 2">
-          <h3>[ DEN UDVIDET PAKKE ]</h3>
-          <p class="muted">Kan levere gennemtrængende lyd op til cirka 50 mennesker.</p>
+          <img src="assets/img/pakke-2.jpg" alt="Den Udvidet Pakke">
+          <div class="overlay">
+            <h3>[ DEN UDVIDET PAKKE ]</h3>
+            <ul class="features">
+              <li>2 × Yamaha DXR12</li>
+              <li>1 × DXS12 subwoofer</li>
+              <li>Bluetooth & stativer</li>
+            </ul>
             <div class="price-row">
-                 <a href="pakke2.html" class="choose-btn">[ VÆLG PAKKE ]</a>
-                 <span class="price">1000 kr.</span>
+              <a href="pakke2.html" class="choose-btn">[ VÆLG PAKKE ]</a>
+              <span class="price">1000 kr.</span>
             </div>
+          </div>
         </div>
         <div class="card">
-          <img src="assets/img/pakke-3.jpg" alt="Pakkebillede 3">
-          <h3>[ DEN STORE PAKKE ]</h3>
-          <p class="muted">Kan levere fantastisk lyd op til cirka 75 mennesker.</p>
+          <img src="assets/img/pakke-3.jpg" alt="Den Store Pakke">
+          <div class="overlay">
+            <h3>[ DEN STORE PAKKE ]</h3>
+            <ul class="features">
+              <li>2 × kraftige tops</li>
+              <li>2 × subwoofere</li>
+              <li>Maksimal lyd</li>
+            </ul>
             <div class="price-row">
-                <a href="pakke3.html" class="choose-btn">[ VÆLG PAKKE ]</a>
-                <span class="price">1500 kr.</span>
-         </div>
+              <a href="pakke3.html" class="choose-btn">[ VÆLG PAKKE ]</a>
+              <span class="price">1500 kr.</span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
