@@ -82,8 +82,10 @@
   <script type="module">
     // Import Firebase
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } 
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup }
       from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc, getDoc }
+      from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
     // Firebase config
     const firebaseConfig = {
@@ -99,17 +101,27 @@
     // Init Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    async function ensureUserDoc(user){
+      const ref = doc(db, "users", user.uid);
+      const snap = await getDoc(ref);
+      if(!snap.exists()){
+        await setDoc(ref, { email: user.email, newsletter: false });
+      }
+    }
 
     // Email login
     window.login = function() {
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
       signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
+        .then(async (userCredential) => {
           const user = userCredential.user;
+          await ensureUserDoc(user);
           localStorage.setItem("lydstyrkenUser", user.email);
-          alert("Logget ind som: " + user.email);
-          window.location.href = "index.html";
+          const dest = user.email === "lydstyrken.admin" ? "admin.html" : "konto.html";
+          window.location.href = dest;
         })
         .catch((error) => {
           alert("Fejl: " + error.message);
@@ -121,11 +133,11 @@
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
       createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
+        .then(async (userCredential) => {
           const user = userCredential.user;
+          await ensureUserDoc(user);
           localStorage.setItem("lydstyrkenUser", user.email);
-          alert("Bruger oprettet: " + user.email);
-          window.location.href = "index.html";
+          window.location.href = "konto.html";
         })
         .catch((error) => {
           alert("Fejl: " + error.message);
@@ -136,11 +148,12 @@
     window.googleLogin = function() {
       const provider = new GoogleAuthProvider();
       signInWithPopup(auth, provider)
-        .then((result) => {
+        .then(async (result) => {
           const user = result.user;
+          await ensureUserDoc(user);
           localStorage.setItem("lydstyrkenUser", user.displayName || user.email);
-          alert("Logget ind som: " + (user.displayName || user.email));
-          window.location.href = "index.html";
+          const dest = user.email === "lydstyrken.admin" ? "admin.html" : "konto.html";
+          window.location.href = dest;
         })
         .catch((error) => {
           alert("Fejl: " + error.message);
