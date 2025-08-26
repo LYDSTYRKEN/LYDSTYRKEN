@@ -1,1 +1,104 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Den Store Pakke - [ LYDSTYRKEN ]</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/pakke.css">
+</head>
+<body>
+  <header>
+    <div class="logo" onclick="window.location.href='index.html'">[ LYDSTYRKEN ]</div>
+    <nav aria-label="Hovednavigation">
+      <a href="index.html#pakker">[ PAKKER ]</a>
+      <a href="#">[ BYG SELV ]</a>
+      <a href="index.html#hvem">[ HVEM ER VI? ]</a>
+      <a href="index.html#kontakt">[ KONTAKT ]</a>
+      <button class="login-btn" id="loginBtn">[ LOG IND ]</button>
+    </nav>
+  </header>
 
+  <main>
+    <h1>[ DEN STORE PAKKE ]</h1>
+    <div class="package-layout">
+      <div class="package-image">
+        <img src="assets/img/pakke-3.jpg" alt="Den Store Pakke">
+        <p class="package-desc">
+          Når du skal levere lyd til de helt store arrangementer.
+          Massivt tryk og topklasse klarhed til publikum på flere hundrede.
+        </p>
+      </div>
+      <div class="package-info">
+        <h2>Indhold</h2>
+        <ul id="features"></ul>
+        <p><strong>Værdi:</strong> 50.000 kr.</p>
+        <p class="price">Pris for udlejning: 2.000 kr.</p>
+      </div>
+    </div>
+
+    <section id="kontakt" style="margin-top:28px">
+      <h2>[ KONTAKT ]</h2>
+      <div class="contact-list" aria-live="polite">
+        <div class="contact-row">
+          <div class="contact-emoji">📱</div>
+          <button class="copy-btn" data-copy="+45 42 60 34 70">[ +45 42 60 34 70 ]</button>
+        </div>
+        <div class="contact-row">
+          <div class="contact-emoji">📧</div>
+          <button class="copy-btn" data-copy="lydstyrken@gmail.com">[ lydstyrken@gmail.com ]</button>
+        </div>
+        <div class="contact-row">
+          <div class="contact-emoji">📷</div>
+          <button class="copy-btn" data-copy="@lydstyrken.pm">[ @lydstyrken.pm ]</button>
+        </div>
+        <div class="contact-row">
+          <div class="contact-emoji">📘</div>
+          <button class="copy-btn" data-copy="https://facebook.com/lydstyrken">[ facebook.com/lydstyrken ]</button>
+        </div>
+      </div>
+      <p class="muted" style="margin-top:10px">Tryk på en linje for at kopiere til udklipsholder.</p>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 [ LYDSTYRKEN ]. ALLE RETTIGHEDER FORBEHOLDES.
+  </footer>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const features = [
+      "4 × Yamaha DZR15 højtalere",
+      "4 × Yamaha DXS18 subwoofere",
+      "8-kanals mixer",
+      "2 × Mikrofon",
+      "Bluetooth-receiver",
+      "Stativ(er)",
+      "Opsætningsguide",
+      "Diverse kabler"
+    ];
+    const list = document.getElementById('features');
+    features.forEach(item => {
+      const li = document.createElement('li');
+      li.textContent = item;
+      list.appendChild(li);
+    });
+
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const text = btn.dataset.copy;
+        try {
+          await navigator.clipboard.writeText(text);
+          const toast = document.getElementById('toast');
+          toast.textContent = 'Kopieret: ' + text;
+          toast.style.opacity = '1';
+          setTimeout(() => toast.style.opacity = '0', 2000);
+        } catch {
+          alert('Kunne ikke kopiere. Kopiér manuelt: ' + text);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
