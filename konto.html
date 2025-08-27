@@ -1,55 +1,48 @@
 <!DOCTYPE html>
 <html lang="da">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Min konto - LYDSTYRKEN</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #000;
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-    .container {
-      background: #111;
-      padding: 20px;
-      border-radius: 10px;
-      width: 90%;
-      max-width: 500px;
-    }
-    h1 { color: #00ff66; }
-    label { display: block; margin: 15px 0; }
-    button {
-      padding: 10px 15px;
-      border: none;
-      border-radius: 5px;
-      background: #00ff66;
-      color: #000;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    button:hover { background: #00cc52; }
-    ul { padding-left: 20px; }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Min konto - [ LYDSTYRKEN ]</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/pakke.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Min konto</h1>
-    <p>Email: <span id="userEmail"></span></p>
-    <label><input type="checkbox" id="newsletter" /> Tilmeld nyhedsbrev</label>
-    <h2>Tidligere ordrer</h2>
-    <ul id="orders"></ul>
-    <button id="logoutBtn">Log ud</button>
-  </div>
+  <header>
+    <div class="logo" onclick="window.location.href='index.html'">[ LYDSTYRKEN ]</div>
+    <nav aria-label="Hovednavigation">
+      <a href="index.html#pakker">[ PAKKER ]</a>
+      <a href="#">[ BYG SELV ]</a>
+      <a href="index.html#hvem">[ HVEM ER VI? ]</a>
+      <a href="index.html#kontakt">[ KONTAKT ]</a>
+      <button class="login-btn" id="loginBtn">[ LOG IND ]</button>
+      <div class="user-menu" id="userMenu" style="display:none;">
+        <a href="konto.html" class="account-btn">[ MIN KONTO ]</a>
+        <div class="dropdown-menu">
+          <a href="konto.html">[ Profil ]</a>
+          <a href="tidligere-ordre.html">[ Tidligere ordre ]</a>
+          <a href="indstillinger.html">[ Indstillinger ]</a>
+          <a href="support.html">[ Support ]</a>
+          <a href="#" id="logoutLink">[ Log ud ]</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="account-card">
+      <h1>[ MIN KONTO ]</h1>
+      <p>Email: <span id="userEmail"></span></p>
+      <h2>[ TIDLIGERE ORDRE ]</h2>
+      <ul id="orders">
+        <li>Ingen ordrer endnu.</li>
+      </ul>
+    </div>
+  </main>
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-    import { getFirestore, doc, getDoc, updateDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCyKtFD4BrFjKGtPGy2cKPenkysz4h2lLI",
@@ -63,36 +56,16 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    const db = getFirestore(app);
 
-    onAuthStateChanged(auth, async (user) => {
+    onAuthStateChanged(auth, (user) => {
       if (!user) {
         window.location.href = "login.html";
-        return;
+      } else {
+        document.getElementById("userEmail").textContent = user.email;
       }
-      document.getElementById("userEmail").textContent = user.email;
-      const userRef = doc(db, "users", user.uid);
-      const snap = await getDoc(userRef);
-      if (snap.exists()) {
-        document.getElementById("newsletter").checked = snap.data().newsletter === true;
-      }
-      const ordersSnap = await getDocs(collection(userRef, "orders"));
-      ordersSnap.forEach((o) => {
-        const li = document.createElement("li");
-        li.textContent = `${o.id} - ${o.data().item || ""}`;
-        document.getElementById("orders").appendChild(li);
-      });
-      document.getElementById("newsletter").addEventListener("change", async (e) => {
-        await updateDoc(userRef, { newsletter: e.target.checked });
-      });
-    });
-
-    document.getElementById("logoutBtn").addEventListener("click", () => {
-      signOut(auth).then(() => {
-        localStorage.removeItem("lydstyrkenUser");
-        window.location.href = "index.html";
-      });
     });
   </script>
+  <script type="module" src="assets/js/auth.js"></script>
 </body>
 </html>
+
