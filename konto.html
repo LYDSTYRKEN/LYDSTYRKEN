@@ -6,6 +6,14 @@
   <title>Min konto - [ LYDSTYRKEN ]</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/pakke.css">
+  <style>
+    .option.profile{background:linear-gradient(135deg,#1a1a1a,#004d26)}
+    .option.orders{background:linear-gradient(135deg,#1a1a1a,#00264d)}
+    .option.settings{background:linear-gradient(135deg,#1a1a1a,#4d2600)}
+    .option.support{background:linear-gradient(135deg,#1a1a1a,#4d004d)}
+    .option.logout{background:linear-gradient(135deg,#1a1a1a,#333)}
+    .card.option:hover{box-shadow:0 0 20px var(--green);}
+  </style>
 </head>
 <body>
   <header>
@@ -16,27 +24,48 @@
       <a href="index.html#hvem">[ HVEM ER VI? ]</a>
       <a href="index.html#kontakt">[ KONTAKT ]</a>
       <button class="login-btn" id="loginBtn">[ LOG IND ]</button>
-      <div class="user-menu" id="userMenu" style="display:none;">
-        <a href="konto.html" class="account-btn">MIN KONTO</a>
-        <div class="dropdown-menu">
-          <a href="konto.html">Profil</a>
-          <a href="tidligere-ordre.html">Tidligere ordre</a>
-          <a href="indstillinger.html">Indstillinger</a>
-          <a href="support.html">Support</a>
-          <a href="#" id="logoutLink">Log ud</a>
-        </div>
-      </div>
+      <a href="konto.html" id="accountLink" style="display:none;">[ MIN KONTO ]</a>
     </nav>
   </header>
 
   <main>
-    <div class="account-card">
-      <h1>[ MIN KONTO ]</h1>
-      <p>Email: <span id="userEmail"></span></p>
-      <h2>[ TIDLIGERE ORDRE ]</h2>
-      <ul id="orders">
-        <li>Ingen ordrer endnu.</li>
-      </ul>
+    <h1 style="text-align:center;margin-top:40px;">[ MIN KONTO ]</h1>
+    <div class="grid">
+      <div class="card option profile" onclick="location.href='profil.html'">
+        <div class="overlay">
+          <div class="option-icon">👤</div>
+          <h3>[ PROFIL ]</h3>
+          <p>Se dine oplysninger</p>
+        </div>
+      </div>
+      <div class="card option orders" onclick="location.href='tidligere-ordre.html'">
+        <div class="overlay">
+          <div class="option-icon">🧾</div>
+          <h3>[ TIDLIGERE ORDRE ]</h3>
+          <p>Overblik over dine køb</p>
+        </div>
+      </div>
+      <div class="card option settings" onclick="location.href='indstillinger.html'">
+        <div class="overlay">
+          <div class="option-icon">⚙️</div>
+          <h3>[ INDSTILLINGER ]</h3>
+          <p>Tilpas din konto</p>
+        </div>
+      </div>
+      <div class="card option support" onclick="location.href='support.html'">
+        <div class="overlay">
+          <div class="option-icon">💬</div>
+          <h3>[ SUPPORT ]</h3>
+          <p>Få hjælp og svar</p>
+        </div>
+      </div>
+      <div class="card option logout" id="logoutLink">
+        <div class="overlay">
+          <div class="option-icon">🚪</div>
+          <h3>[ LOG UD ]</h3>
+          <p>Afslut sessionen</p>
+        </div>
+      </div>
     </div>
   </main>
 
@@ -51,21 +80,17 @@
       storageBucket: "lydstyrken-ab288.appspot.com",
       messagingSenderId: "140962566931",
       appId: "1:140962566931:web:b7f4ababaf3184bc8cc0e6",
-      measurementId: "G-Q74KMFN9YV"
+      measurementId: "G-Q74KMFN9YV",
     };
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-
     onAuthStateChanged(auth, (user) => {
       if (!user) {
-        window.location.href = "login.html";
-      } else {
-        document.getElementById("userEmail").textContent = user.email;
+        window.location.href = 'login.html';
       }
     });
   </script>
   <script type="module" src="assets/js/auth.js"></script>
 </body>
 </html>
-

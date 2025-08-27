@@ -23,14 +23,15 @@ if (loginBtn) {
   });
 }
 
-const userMenu = document.getElementById('userMenu');
+// show account link when authenticated
+const accountLink = document.getElementById('accountLink');
 onAuthStateChanged(auth, (user) => {
   if (user) {
     if (loginBtn) loginBtn.style.display = 'none';
-    if (userMenu) userMenu.style.display = 'inline-block';
+    if (accountLink) accountLink.style.display = 'inline-block';
   } else {
     if (loginBtn) loginBtn.style.display = 'inline-block';
-    if (userMenu) userMenu.style.display = 'none';
+    if (accountLink) accountLink.style.display = 'none';
   }
 });
 

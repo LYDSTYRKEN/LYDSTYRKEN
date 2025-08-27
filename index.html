@@ -174,23 +174,7 @@
     opacity: 1;
     transform: translateY(0);
     }
-    .user-menu{position:relative;display:none}
-    .user-menu> a{display:inline-block}
-    .user-menu .dropdown-menu{
-      position:absolute;top:110%;right:0;min-width:160px;
-      background:#111;border:1px solid #444;border-radius:6px;
-      display:flex;flex-direction:column;overflow:hidden;
-      opacity:0;transform:translateY(-8px);pointer-events:none;
-      box-shadow:0 4px 10px rgba(0,0,0,0.4);
-      transition:opacity .2s ease,transform .2s ease;
-    }
-    .user-menu:hover .dropdown-menu{opacity:1;transform:translateY(0);pointer-events:auto}
-    .dropdown-menu a{
-      display:block;padding:10px 16px;color:#fff;text-decoration:none;
-      border:0;border-radius:0;white-space:nowrap;
-      transition:background .2s ease,color .2s ease;
-    }
-    .dropdown-menu a:hover{background:var(--green);color:#000}
+    
   </style>
 </head>
 <body>
@@ -202,16 +186,7 @@
       <a href="#hvem">[ HVEM ER VI? ]</a>
       <a href="#kontakt">[ KONTAKT ]</a>
       <button class="login-btn" id="loginBtn">[ LOG IND ]</button>
-      <div class="user-menu" id="userMenu" style="display:none;">
-        <a href="konto.html" class="account-btn">MIN KONTO</a>
-        <div class="dropdown-menu">
-          <a href="konto.html">Profil</a>
-          <a href="tidligere-ordre.html">Tidligere ordre</a>
-          <a href="indstillinger.html">Indstillinger</a>
-          <a href="support.html">Support</a>
-          <a href="#" id="logoutLink">Log ud</a>
-        </div>
-      </div>
+      <a href="konto.html" id="accountLink" style="display:none;">[ MIN KONTO ]</a>
     </nav>
 
 
