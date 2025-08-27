@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profil - [ LYDSTYRKEN ]</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/pakke.css">
+</head>
+<body>
+  <header>
+    <div class="logo" onclick="window.location.href='index.html'">[ LYDSTYRKEN ]</div>
+    <nav aria-label="Hovednavigation">
+      <a href="index.html#pakker">[ PAKKER ]</a>
+      <a href="#">[ BYG SELV ]</a>
+      <a href="index.html#hvem">[ HVEM ER VI? ]</a>
+      <a href="index.html#kontakt">[ KONTAKT ]</a>
+      <button class="login-btn" id="loginBtn">[ LOG IND ]</button>
+      <a href="konto.html" id="accountLink" style="display:none;">[ MIN KONTO ]</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="account-card">
+      <h1>[ PROFIL ]</h1>
+      <p>Email: <span id="userEmail"></span></p>
+    </div>
+  </main>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCyKtFD4BrFjKGtPGy2cKPenkysz4h2lLI",
+      authDomain: "lydstyrken-ab288.firebaseapp.com",
+      projectId: "lydstyrken-ab288",
+      storageBucket: "lydstyrken-ab288.appspot.com",
+      messagingSenderId: "140962566931",
+      appId: "1:140962566931:web:b7f4ababaf3184bc8cc0e6",
+      measurementId: "G-Q74KMFN9YV",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        window.location.href = "login.html";
+      } else {
+        document.getElementById("userEmail").textContent = user.email;
+      }
+    });
+  </script>
+  <script type="module" src="assets/js/auth.js"></script>
+</body>
+</html>
