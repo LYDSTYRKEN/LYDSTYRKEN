@@ -17,7 +17,8 @@ const auth = getAuth(app);
 // store the page user came from
 const loginBtn = document.getElementById('loginBtn');
 if (loginBtn) {
-  loginBtn.addEventListener('click', () => {
+  loginBtn.addEventListener('click', (e) => {
+    e.preventDefault();
     localStorage.setItem('redirectAfterLogin', window.location.pathname + window.location.search + window.location.hash);
     window.location.href = 'login.html';
   });
