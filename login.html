@@ -103,13 +103,22 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    async function ensureUserDoc(user){
-      const ref = doc(db, "users", user.uid);
-      const snap = await getDoc(ref);
-      if(!snap.exists()){
-        await setDoc(ref, { email: user.email, newsletter: false });
-      }
-    }
+   async function ensureUserDoc(user){
+  const ref = doc(db, "users", user.uid);
+  const snap = await getDoc(ref);
+  if(!snap.exists()){
+    await setDoc(ref, {
+      email: user.email || "",
+      displayName: user.displayName || "",
+      newsletter: false,
+      createdAt: new Date().toISOString()
+    }, { merge: true });
+  } else {
+    // Sørg for at email altid er sat (hvis bruger logger ind med Google m.m.)
+    await setDoc(ref, { email: user.email || "" }, { merge: true });
+  }
+}
+
 
     // Email login
     window.login = function() {
