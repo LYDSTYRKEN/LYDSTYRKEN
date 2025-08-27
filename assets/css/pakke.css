@@ -44,6 +44,12 @@ nav a:active{transform:translateY(0);box-shadow:none}
 }
 .login-btn:active{transform:translateY(1px)}
 
+.user-menu{position:relative;display:none}
+.user-menu .dropdown-menu{display:none;position:absolute;top:110%;right:0;background:#111;border:1px solid #444;border-radius:4px}
+.user-menu:hover .dropdown-menu{display:block}
+.dropdown-menu a{display:block;padding:10px;color:#fff;text-decoration:none}
+.dropdown-menu a:hover{background:var(--green);color:#000}
+
 main{max-width:1100px;margin:40px auto;padding:0 18px}
 
 .package-layout{

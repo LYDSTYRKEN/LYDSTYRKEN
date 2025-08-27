@@ -16,6 +16,14 @@
       <a href="index.html#hvem">[ HVEM ER VI? ]</a>
       <a href="index.html#kontakt">[ KONTAKT ]</a>
       <button class="login-btn" id="loginBtn">[ LOG IND ]</button>
+      <div class="user-menu" id="userMenu" style="display:none;">
+        <button class="login-btn">[ MIN KONTO ]</button>
+        <div class="dropdown-menu">
+          <a href="tidligere-ordre.html">[ Tidligere ordre ]</a>
+          <a href="indstillinger.html">[ Indstillinger ]</a>
+          <a href="#" id="logoutLink">[ Log ud ]</a>
+        </div>
+      </div>
     </nav>
   </header>
 
@@ -99,5 +107,6 @@
       });
     });
   </script>
+  <script type="module" src="assets/js/auth.js"></script>
 </body>
 </html>

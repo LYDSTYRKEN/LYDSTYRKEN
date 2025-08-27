@@ -129,7 +129,9 @@
           const user = userCredential.user;
           await ensureUserDoc(user);
           localStorage.setItem("lydstyrkenUser", user.email);
-          const dest = user.email === "lydstyrken.admin" ? "admin.html" : "konto.html";
+          const redirect = localStorage.getItem("redirectAfterLogin") || "index.html";
+          localStorage.removeItem("redirectAfterLogin");
+          const dest = user.email === "lydstyrken.admin" ? "admin.html" : redirect;
           window.location.href = dest;
         })
         .catch((error) => {
@@ -146,7 +148,9 @@
           const user = userCredential.user;
           await ensureUserDoc(user);
           localStorage.setItem("lydstyrkenUser", user.email);
-          window.location.href = "konto.html";
+          const redirect = localStorage.getItem("redirectAfterLogin") || "index.html";
+          localStorage.removeItem("redirectAfterLogin");
+          window.location.href = redirect;
         })
         .catch((error) => {
           alert("Fejl: " + error.message);
@@ -161,7 +165,9 @@
           const user = result.user;
           await ensureUserDoc(user);
           localStorage.setItem("lydstyrkenUser", user.displayName || user.email);
-          const dest = user.email === "lydstyrken.admin" ? "admin.html" : "konto.html";
+          const redirect = localStorage.getItem("redirectAfterLogin") || "index.html";
+          localStorage.removeItem("redirectAfterLogin");
+          const dest = user.email === "lydstyrken.admin" ? "admin.html" : redirect;
           window.location.href = dest;
         })
         .catch((error) => {
