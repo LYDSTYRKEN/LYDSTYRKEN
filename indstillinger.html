@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Indstillinger - [ LYDSTYRKEN ]</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/pakke.css">
+</head>
+<body>
+  <header>
+    <div class="logo" onclick="window.location.href='index.html'">[ LYDSTYRKEN ]</div>
+    <nav aria-label="Hovednavigation">
+      <a href="index.html#pakker">[ PAKKER ]</a>
+      <a href="#">[ BYG SELV ]</a>
+      <a href="index.html#hvem">[ HVEM ER VI? ]</a>
+      <a href="index.html#kontakt">[ KONTAKT ]</a>
+      <button class="login-btn" id="loginBtn">[ LOG IND ]</button>
+      <div class="user-menu" id="userMenu" style="display:none;">
+        <button class="login-btn">[ MIN KONTO ]</button>
+        <div class="dropdown-menu">
+          <a href="tidligere-ordre.html">[ Tidligere ordre ]</a>
+          <a href="indstillinger.html">[ Indstillinger ]</a>
+          <a href="#" id="logoutLink">[ Log ud ]</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <h1>[ INDSTILLINGER ]</h1>
+    <p>Tilpas dine kontooplysninger her.</p>
+  </main>
+
+  <script type="module" src="assets/js/auth.js"></script>
+</body>
+</html>
