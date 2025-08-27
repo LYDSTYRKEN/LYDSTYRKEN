@@ -577,55 +577,5 @@
     });
     };
 
-    </script>
-
-<!-- /assets/js/firebase.js -->
-<script type="module">
-  // 1) Indsæt din egen config herfra Firebase Console
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyCyKtFD4BrFjKGtPGy2cKPenkysz4h2lLI",
-  authDomain: "lydstyrken-ab288.firebaseapp.com",
-  projectId: "lydstyrken-ab288",
-  storageBucket: "lydstyrken-ab288.firebasestorage.app",
-  messagingSenderId: "140962566931",
-  appId: "1:140962566931:web:b7f4ababaf3184bc8cc0e6",
-  measurementId: "G-Q74KMFN9YV"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-
-  // 2) Firebase SDK (v10) – CDN
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { 
-    getAuth, onAuthStateChanged, 
-    signInWithEmailAndPassword, createUserWithEmailAndPassword, 
-    sendPasswordResetEmail, signOut 
-  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-  import { 
-    getFirestore, doc, getDoc, setDoc 
-  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-  // 3) Init
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-
-  // 4) Gør let tilgængeligt globalt (enkelt projekt)
-  window._fb = { app, auth, db, 
-    onAuthStateChanged, signInWithEmailAndPassword, 
-    createUserWithEmailAndPassword, sendPasswordResetEmail, signOut,
-    doc, getDoc, setDoc 
-  };
-</script>
-
 </body>
 </html>
