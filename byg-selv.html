@@ -21,7 +21,7 @@
     .ls-main{flex:1;display:flex;}
     .ls-left{width:180px;background:var(--ls-green-6);padding:8px;font-size:14px;}
     .ls-left ul{list-style:none;padding:0;margin:8px 0 0;}
-    .ls-left li{margin-bottom:4px;}
+    .ls-left li{margin-bottom:4px;cursor:pointer;}
     .ls-canvas-container{flex:1;position:relative;background:#fff;}
     #ls-canvas{width:100%;height:100%;background-size:25px 25px;background-image:linear-gradient(0deg,var(--ls-green-7) 1px,transparent 1px),linear-gradient(90deg,var(--ls-green-7) 1px,transparent 1px);}
     .ls-right{width:260px;background:var(--ls-green-6);display:flex;flex-direction:column;}
@@ -29,7 +29,7 @@
     .ls-tabs{display:flex;gap:4px;margin-bottom:8px;}
     .ls-tabs button{flex:1;padding:6px;border:none;background:var(--ls-green-3);color:#fff;cursor:pointer;}
     .ls-product-list{list-style:none;padding:0;margin:0;}
-    .ls-product-list li{margin-bottom:4px;padding:4px;background:var(--ls-green-7);}
+    .ls-product-list li{margin-bottom:4px;padding:4px;background:var(--ls-green-7);cursor:pointer;}
     .ls-cart h3,.ls-products h3{margin-top:0;}
     .ls-legend{list-style:none;margin:8px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:4px;font-size:12px;}
     .ls-legend span{display:inline-block;width:20px;height:12px;margin-right:4px;vertical-align:middle;}
@@ -54,8 +54,8 @@
     <aside class="ls-left">
       <h3>Tegneværktøjer</h3>
       <ul>
-        <li>Rektangel</li>
-        <li>Polygon</li>
+        <li data-tool="rect">Rektangel</li>
+        <li data-tool="poly">Polygon</li>
         <li>Væg/Scene/Bord</li>
         <li>Målebånd</li>
       </ul>
@@ -97,5 +97,230 @@
       </div>
     </aside>
   </div>
+  <script type="module">
+    import {PRODUCTS_SEED} from './PRODUCTS_SEED.js';
+    import {calcCoverageGrid} from './utils/coverageGrid.js';
+
+    const CELL_PX = 25; // 1m grid cell
+    const area = {w:30, h:30};
+    const canvas = document.getElementById('ls-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = area.w * CELL_PX;
+    canvas.height = area.h * CELL_PX;
+
+    const speakers = [];
+    let drawMode = null;
+    let areaPoly = [];
+    let tempPoly = [];
+    let rectStart = null;
+    let lastMouse = null;
+    let dragVertex = null;
+    let dragSpeaker = null;
+
+    function hexToRgba(hex, alpha){
+      const int = parseInt(hex.slice(1),16);
+      const r=(int>>16)&255, g=(int>>8)&255, b=int&255;
+      return `rgba(${r},${g},${b},${alpha})`;
+    }
+
+    function pointInPoly(pt, poly){
+      let inside = false;
+      for(let i=0,j=poly.length-1;i<poly.length;j=i++){
+        const xi=poly[i].x, yi=poly[i].y;
+        const xj=poly[j].x, yj=poly[j].y;
+        const intersect = ((yi>pt.y)!=(yj>pt.y)) && (pt.x < (xj-xi)*(pt.y-yi)/(yj-yi)+xi);
+        if(intersect) inside = !inside;
+      }
+      return inside;
+    }
+
+    function render(){
+      const grid = calcCoverageGrid({widthM:area.w,heightM:area.h,cellSizeM:1,speakers});
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      grid.data.forEach((row,y)=>{
+        row.forEach((cell,x)=>{
+          const cellPt = {x:x+0.5, y:y+0.5};
+          const inside = !areaPoly.length || pointInPoly(cellPt, areaPoly);
+          if(inside && cell.color.alpha>0){
+            ctx.fillStyle = hexToRgba(cell.color.hex, cell.color.alpha);
+            ctx.fillRect(x*CELL_PX, y*CELL_PX, CELL_PX, CELL_PX);
+          }
+        });
+      });
+
+      // draw area polygon
+      if(areaPoly.length){
+        ctx.save();
+        ctx.beginPath();
+        areaPoly.forEach((p,i)=>{
+          const px = p.x*CELL_PX, py = p.y*CELL_PX;
+          if(i===0) ctx.moveTo(px,py); else ctx.lineTo(px,py);
+        });
+        ctx.closePath();
+        ctx.strokeStyle = '#000';
+        ctx.lineWidth = 2;
+        ctx.fillStyle = 'rgba(0,0,0,0.05)';
+        ctx.fill();
+        ctx.stroke();
+        // vertices
+        areaPoly.forEach(p=>{
+          const px=p.x*CELL_PX, py=p.y*CELL_PX;
+          ctx.fillStyle='#fff';
+          ctx.strokeStyle='#000';
+          ctx.beginPath();
+          ctx.rect(px-4,py-4,8,8);
+          ctx.fill();
+          ctx.stroke();
+        });
+        ctx.restore();
+      }
+
+      // preview shapes
+      if(drawMode==='poly' && tempPoly.length){
+        ctx.save();
+        ctx.beginPath();
+        tempPoly.forEach((p,i)=>{
+          const px=p.x*CELL_PX, py=p.y*CELL_PX;
+          if(i===0) ctx.moveTo(px,py); else ctx.lineTo(px,py);
+        });
+        if(lastMouse) ctx.lineTo(lastMouse.x*CELL_PX,lastMouse.y*CELL_PX);
+        ctx.strokeStyle='#000';
+        ctx.setLineDash([5,5]);
+        ctx.stroke();
+        ctx.restore();
+      }
+      if(drawMode==='rect' && tempPoly.length){
+        ctx.save();
+        ctx.beginPath();
+        tempPoly.forEach((p,i)=>{
+          const px=p.x*CELL_PX, py=p.y*CELL_PX;
+          if(i===0) ctx.moveTo(px,py); else ctx.lineTo(px,py);
+        });
+        ctx.closePath();
+        ctx.strokeStyle='#000';
+        ctx.setLineDash([5,5]);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      // draw speakers
+      speakers.forEach(sp=>{
+        ctx.save();
+        ctx.translate(sp.x*CELL_PX, sp.y*CELL_PX);
+        ctx.rotate(sp.rotDeg*Math.PI/180);
+        ctx.fillStyle = '#000';
+        ctx.beginPath();
+        ctx.moveTo(0,0);
+        ctx.lineTo(-5,10);
+        ctx.lineTo(5,10);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+      });
+    }
+
+    // tool selection
+    document.querySelectorAll('.ls-left li[data-tool]').forEach(li=>{
+      li.addEventListener('click', ()=>{
+        drawMode = li.dataset.tool;
+        tempPoly = [];
+        rectStart = null;
+        if(drawMode) areaPoly = [];
+        render();
+      });
+    });
+
+    // Add speaker by clicking product
+    document.querySelectorAll('.ls-product-list li').forEach((li,idx)=>{
+      li.addEventListener('click', ()=>{
+        const prod = PRODUCTS_SEED[idx];
+        speakers.push({x:area.w/2,y:area.h/2,rotDeg:0,productId:prod.id});
+        render();
+      });
+    });
+
+    // canvas interactions
+    canvas.addEventListener('mousedown', e=>{
+      const x = e.offsetX / CELL_PX;
+      const y = e.offsetY / CELL_PX;
+      if(drawMode==='rect'){
+        rectStart = {x,y};
+        tempPoly = [];
+      }else if(drawMode==='poly'){
+        tempPoly.push({x,y});
+      }else{
+        dragVertex = areaPoly.findIndex(p=>Math.hypot(p.x-x,p.y-y)<0.5);
+        if(dragVertex===-1) dragVertex=null;
+        if(dragVertex===null){
+          dragSpeaker = speakers.findIndex(sp=>Math.hypot(sp.x-x, sp.y-y) < 0.5);
+          if(dragSpeaker===-1) dragSpeaker=null;
+        }
+      }
+    });
+
+    canvas.addEventListener('mousemove', e=>{
+      const x = e.offsetX / CELL_PX;
+      const y = e.offsetY / CELL_PX;
+      if(drawMode==='rect' && rectStart){
+        const curr={x,y};
+        tempPoly=[
+          {x:rectStart.x,y:rectStart.y},
+          {x:curr.x,y:rectStart.y},
+          {x:curr.x,y:curr.y},
+          {x:rectStart.x,y:curr.y}
+        ];
+        render();
+      }else if(drawMode==='poly' && tempPoly.length){
+        lastMouse = {x,y};
+        render();
+      }else if(dragVertex!==null){
+        areaPoly[dragVertex].x = x;
+        areaPoly[dragVertex].y = y;
+        render();
+      }else if(dragSpeaker!==null){
+        speakers[dragSpeaker].x = x;
+        speakers[dragSpeaker].y = y;
+        render();
+      }
+    });
+
+    canvas.addEventListener('mouseup', e=>{
+      if(drawMode==='rect' && rectStart){
+        areaPoly = tempPoly;
+        drawMode = null;
+        rectStart = null;
+        tempPoly = [];
+      }
+      dragVertex = null;
+      dragSpeaker = null;
+      render();
+    });
+
+    canvas.addEventListener('mouseleave', ()=>{
+      rectStart=null; dragVertex=null; dragSpeaker=null; lastMouse=null;
+    });
+
+    canvas.addEventListener('dblclick', e=>{
+      if(drawMode==='poly' && tempPoly.length>=3){
+        areaPoly = tempPoly;
+        tempPoly = [];
+        drawMode = null;
+        lastMouse=null;
+        render();
+      }
+    });
+
+    // rotate via right-click
+    canvas.addEventListener('contextmenu', e=>{
+      e.preventDefault();
+      if(drawMode) return;
+      const x = e.offsetX / CELL_PX;
+      const y = e.offsetY / CELL_PX;
+      const sp = speakers.find(sp=>Math.hypot(sp.x-x, sp.y-y) < 0.5);
+      if(sp){ sp.rotDeg = (sp.rotDeg + 15) % 360; render(); }
+    });
+
+    render();
+  </script>
 </body>
 </html>
