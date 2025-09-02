@@ -5,8 +5,9 @@ import {calcCoverageGrid} from '../utils/coverageGrid.js';
 import {PRODUCTS_SEED} from '../PRODUCTS_SEED.js';
 
 // test getCoverageColor
-const color = getCoverageColor(96, {targetSPLdB:94});
-assert.equal(color.hex, '#1E7A2E');
+const color = getCoverageColor(96);
+assert.equal(color.hex, '#0B6623');
+assert.equal(color.alpha, 0.8);
 
 // test dbSum for two equal sources
 const sum = dbSum([90,90]);

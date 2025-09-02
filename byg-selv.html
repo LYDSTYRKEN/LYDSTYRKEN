@@ -105,13 +105,12 @@
         <p>Ingen produkter</p>
         <h4>Total: 0 DKK</h4>
         <ul class="ls-legend">
-          <li><span style="background:#0B6623"></span> ≤84 dB</li>
-          <li><span style="background:#1E7A2E"></span> 86 dB</li>
-          <li><span style="background:#2FA84F"></span> 88 dB</li>
-          <li><span style="background:#5FCF73"></span> 91 dB</li>
-          <li><span style="background:#7AD37A"></span> 94 dB</li>
-          <li><span style="background:#A4E1A6"></span> 97 dB</li>
-          <li><span style="background:#CDECCB"></span> ≥100 dB</li>
+          <li><span style="background:#0B6623;opacity:0"></span> ≤86 dB</li>
+          <li><span style="background:#0B6623;opacity:0.2"></span> 88 dB</li>
+          <li><span style="background:#0B6623;opacity:0.4"></span> 91 dB</li>
+          <li><span style="background:#0B6623;opacity:0.6"></span> 94 dB</li>
+          <li><span style="background:#0B6623;opacity:0.8"></span> 97 dB</li>
+          <li><span style="background:#0B6623"></span> ≥100 dB</li>
         </ul>
       </div>
       <div class="ls-cta">
@@ -164,6 +163,8 @@ const measurements = [];
 let currentMeasurement = null;
 let hoverShapeIdx = null;
 let dragShape = null;
+const SPEAKER_PICK_RADIUS = 1;
+let dragOffset = {x:0, y:0};
 
     const heatmapToggle = document.getElementById('heatmap-toggle');
     const roomTool = document.getElementById('room-tool');
@@ -315,7 +316,17 @@ let dragShape = null;
       ctx.restore();
     }
 
+    let renderQueued = false;
     function render(){
+      if(renderQueued) return;
+      renderQueued = true;
+      requestAnimationFrame(()=>{
+        renderQueued = false;
+        drawScene();
+      });
+    }
+
+    function drawScene(){
       ctx.clearRect(0,0,canvas.width,canvas.height);
       if(showHeatmap){
         const grid = calcCoverageGrid({widthM:area.w,heightM:area.h,cellSizeM:1,speakers});
@@ -368,6 +379,29 @@ let dragShape = null;
         ctx.fill();
         ctx.restore();
       });
+      drawRuler();
+    }
+
+    function drawRuler(){
+      const originX = 10;
+      const originY = canvas.height - 10;
+      const lengthM = Math.min(5, area.w);
+      ctx.save();
+      ctx.strokeStyle = '#fff';
+      ctx.fillStyle = '#fff';
+      ctx.beginPath();
+      ctx.moveTo(originX, originY);
+      ctx.lineTo(originX + lengthM*CELL_PX, originY);
+      ctx.stroke();
+      for(let i=0;i<=lengthM;i++){
+        const x = originX + i*CELL_PX;
+        ctx.beginPath();
+        ctx.moveTo(x, originY);
+        ctx.lineTo(x, originY-5);
+        ctx.stroke();
+        ctx.fillText(i+'m', x-6, originY-7);
+      }
+      ctx.restore();
     }
 
     // select drawing tool
@@ -383,10 +417,23 @@ let dragShape = null;
       });
     });
 
-    // Add speaker by clicking product
+    // Add speaker by clicking product with limits
+    const productLimits = {
+      'yamaha-dxr12': 2,
+      'yamaha-dxs12mkii': 1,
+      'dbtech-bhype12': 1
+    };
+    const productCounts = {};
     document.querySelectorAll('.ls-product-list li').forEach((li,idx)=>{
       li.addEventListener('click', ()=>{
         const prod = PRODUCTS_SEED[idx];
+        const limit = productLimits[prod.id] ?? Infinity;
+        const count = productCounts[prod.id] ?? 0;
+        if(count >= limit){
+          alert('Maks antal ' + prod.name + ' nået');
+          return;
+        }
+        productCounts[prod.id] = count + 1;
         speakers.push({x:area.w/2,y:area.h/2,rotDeg:0,productId:prod.id});
         render();
       });
@@ -425,9 +472,11 @@ let dragShape = null;
         return;
       }
 
-      const spIdx = speakers.findIndex(sp=>Math.hypot(sp.x-x, sp.y-y) < 0.5);
+      const spIdx = speakers.findIndex(sp=>Math.hypot(sp.x-x, sp.y-y) < SPEAKER_PICK_RADIUS);
       if(spIdx !== -1){
         dragIdx = spIdx;
+        dragOffset.x = x - speakers[spIdx].x;
+        dragOffset.y = y - speakers[spIdx].y;
         canvas.style.cursor = 'grabbing';
         return;
       }
@@ -532,8 +581,8 @@ let dragShape = null;
         }
         render();
       }else if(dragIdx!==null){
-        speakers[dragIdx].x = x;
-        speakers[dragIdx].y = y;
+        speakers[dragIdx].x = x - dragOffset.x;
+        speakers[dragIdx].y = y - dragOffset.y;
         canvas.style.cursor = 'grabbing';
         render();
       }else{
@@ -549,7 +598,7 @@ let dragShape = null;
           hoverShapeIdx = found;
           render();
         }
-        const overSp = speakers.findIndex(sp=>Math.hypot(sp.x-x, sp.y-y) < 0.5);
+        const overSp = speakers.findIndex(sp=>Math.hypot(sp.x-x, sp.y-y) < SPEAKER_PICK_RADIUS);
         canvas.style.cursor = overSp !== -1 ? 'move' : 'default';
       }
     });
