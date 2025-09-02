@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {getCoverageColor} from '../utils/coverageColor.js';
 import {dbSum, splAtPointFromSpeaker} from '../utils/spl.js';
+import {calcCoverageGrid} from '../utils/coverageGrid.js';
 import {PRODUCTS_SEED} from '../PRODUCTS_SEED.js';
 
 // test getCoverageColor
@@ -15,5 +16,11 @@ assert(Math.abs(sum - (90 + 10*Math.log10(2))) < 1e-6);
 const product = PRODUCTS_SEED[0];
 const spl = splAtPointFromSpeaker({x:2,y:0}, {x:0,y:0,rotDeg:0,productId:product.id}, product);
 assert(spl < product.coverage.refSPLdB);
+
+// test calcCoverageGrid returns grid with expected size and color
+const grid = calcCoverageGrid({widthM:2,heightM:1,cellSizeM:1,speakers:[{x:0,y:0,rotDeg:0,productId:product.id}]});
+assert.equal(grid.rows, 1);
+assert.equal(grid.cols, 2);
+assert.equal(grid.data[0][0].color.hex, '#0B6623');
 
 console.log('All utility tests passed');

@@ -29,7 +29,7 @@
     .ls-tabs{display:flex;gap:4px;margin-bottom:8px;}
     .ls-tabs button{flex:1;padding:6px;border:none;background:var(--ls-green-3);color:#fff;cursor:pointer;}
     .ls-product-list{list-style:none;padding:0;margin:0;}
-    .ls-product-list li{margin-bottom:4px;padding:4px;background:var(--ls-green-7);}
+    .ls-product-list li{margin-bottom:4px;padding:4px;background:var(--ls-green-7);cursor:pointer;}
     .ls-cart h3,.ls-products h3{margin-top:0;}
     .ls-legend{list-style:none;margin:8px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:4px;font-size:12px;}
     .ls-legend span{display:inline-block;width:20px;height:12px;margin-right:4px;vertical-align:middle;}
@@ -97,5 +97,88 @@
       </div>
     </aside>
   </div>
+  <script type="module">
+    import {PRODUCTS_SEED} from './PRODUCTS_SEED.js';
+    import {calcCoverageGrid} from './utils/coverageGrid.js';
+
+    const CELL_PX = 25; // 1m grid cell
+    const area = {w:20, h:20};
+    const canvas = document.getElementById('ls-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = area.w * CELL_PX;
+    canvas.height = area.h * CELL_PX;
+
+    const speakers = [];
+
+    function hexToRgba(hex, alpha){
+      const int = parseInt(hex.slice(1),16);
+      const r=(int>>16)&255, g=(int>>8)&255, b=int&255;
+      return `rgba(${r},${g},${b},${alpha})`;
+    }
+
+    function render(){
+      const grid = calcCoverageGrid({widthM:area.w,heightM:area.h,cellSizeM:1,speakers});
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      grid.data.forEach((row,y)=>{
+        row.forEach((cell,x)=>{
+          if(cell.color.alpha>0){
+            ctx.fillStyle = hexToRgba(cell.color.hex, cell.color.alpha);
+            ctx.fillRect(x*CELL_PX, y*CELL_PX, CELL_PX, CELL_PX);
+          }
+        });
+      });
+      // draw speakers
+      speakers.forEach(sp=>{
+        ctx.save();
+        ctx.translate(sp.x*CELL_PX, sp.y*CELL_PX);
+        ctx.rotate(sp.rotDeg*Math.PI/180);
+        ctx.fillStyle = '#000';
+        ctx.beginPath();
+        ctx.moveTo(0,0);
+        ctx.lineTo(-5,10);
+        ctx.lineTo(5,10);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+      });
+    }
+
+    // Add speaker by clicking product
+    document.querySelectorAll('.ls-product-list li').forEach((li,idx)=>{
+      li.addEventListener('click', ()=>{
+        const prod = PRODUCTS_SEED[idx];
+        speakers.push({x:area.w/2,y:area.h/2,rotDeg:0,productId:prod.id});
+        render();
+      });
+    });
+
+    // dragging speakers
+    let dragIdx = null;
+    canvas.addEventListener('mousedown', e=>{
+      const x = e.offsetX / CELL_PX;
+      const y = e.offsetY / CELL_PX;
+      dragIdx = speakers.findIndex(sp=>Math.hypot(sp.x-x, sp.y-y) < 0.5);
+    });
+    canvas.addEventListener('mousemove', e=>{
+      if(dragIdx!==null){
+        speakers[dragIdx].x = e.offsetX / CELL_PX;
+        speakers[dragIdx].y = e.offsetY / CELL_PX;
+        render();
+      }
+    });
+    canvas.addEventListener('mouseup', ()=> dragIdx=null);
+    canvas.addEventListener('mouseleave', ()=> dragIdx=null);
+
+    // rotate via right-click
+    canvas.addEventListener('contextmenu', e=>{
+      e.preventDefault();
+      const x = e.offsetX / CELL_PX;
+      const y = e.offsetY / CELL_PX;
+      const sp = speakers.find(sp=>Math.hypot(sp.x-x, sp.y-y) < 0.5);
+      if(sp){ sp.rotDeg = (sp.rotDeg + 15) % 360; render(); }
+    });
+
+    render();
+  </script>
 </body>
 </html>
