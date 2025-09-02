@@ -53,7 +53,8 @@
     .ls-legend span{display:inline-block;width:20px;height:12px;margin-right:4px;vertical-align:middle;}
     .ls-cta{padding:8px;display:flex;flex-direction:column;gap:8px;}
     .ls-cta button{padding:10px;background:var(--accent);color:#000;border:none;border-radius:4px;cursor:pointer;font-weight:700;}
-    .ls-onboarding{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#111;color:#fff;padding:12px;border:1px solid var(--accent);font-size:14px;}
+    .ls-onboarding{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#111;color:#fff;padding:12px 28px 12px 12px;border:1px solid var(--accent);font-size:14px;}
+    .ls-onboarding-close{position:absolute;top:4px;right:4px;background:none;border:none;color:#fff;font-size:12px;cursor:pointer;}
   </style>
 </head>
 <body>
@@ -84,7 +85,7 @@
       </aside>
     <div class="ls-canvas-container">
       <canvas id="ls-canvas"></canvas>
-      <div class="ls-onboarding">1. Tegn området → 2. Placer højttalere → 3. Tjek dækningen</div>
+      <div class="ls-onboarding"><button class="ls-onboarding-close" aria-label="Luk onboarding">×</button>1. Tegn området → 2. Placer højttalere → 3. Tjek dækningen</div>
     </div>
     <aside class="ls-right">
       <div class="ls-products">
@@ -130,6 +131,10 @@
     canvas.width = area.w * CELL_PX;
     canvas.height = area.h * CELL_PX;
     canvas.style.cursor = 'default';
+
+    const onboarding = document.querySelector('.ls-onboarding');
+    const onboardingClose = document.querySelector('.ls-onboarding-close');
+    onboardingClose.addEventListener('click', () => onboarding.remove());
 
 const speakers = [];
 const shapes = [];
