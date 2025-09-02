@@ -23,6 +23,10 @@
     .ls-left ul{list-style:none;padding:0;margin:8px 0 0;}
     .ls-left li{margin-bottom:4px;cursor:pointer;padding:4px;}
     .ls-left li.active{background:var(--ls-green-7);}
+    .ls-dropdown{position:relative;}
+    .ls-dropdown-menu{display:none;position:absolute;left:0;top:100%;background:var(--ls-green-7);padding:0;margin:4px 0 0;list-style:none;z-index:10;}
+    .ls-dropdown-menu li{margin:0;}
+    .ls-dropdown.open .ls-dropdown-menu{display:block;}
     .ls-canvas-container{flex:1;position:relative;background:#fff;}
     #ls-canvas{width:100%;height:100%;background-size:25px 25px;background-image:linear-gradient(0deg,var(--ls-green-7) 1px,transparent 1px),linear-gradient(90deg,var(--ls-green-7) 1px,transparent 1px);}
     .ls-right{width:260px;background:var(--ls-green-6);display:flex;flex-direction:column;}
@@ -52,15 +56,19 @@
     <label><input id="heatmap-toggle" type="checkbox" checked /> Heatmap</label>
   </div>
   <div class="ls-main">
-    <aside class="ls-left">
-      <h3>Tegneværktøjer</h3>
-      <ul>
-        <li data-tool="rect">Rektangel</li>
-        <li data-tool="poly">Polygon</li>
-        <li>Væg/Scene/Bord</li>
-        <li>Målebånd</li>
-      </ul>
-    </aside>
+      <aside class="ls-left">
+        <h3>Tegneværktøjer</h3>
+        <div class="ls-dropdown" id="room-tool">
+          <button id="room-tool-btn">RUMTEGNER ▾</button>
+          <ul class="ls-dropdown-menu" id="room-tool-menu">
+            <li data-tool="rect">REKTANGEL</li>
+            <li data-tool="poly">FRIHÅND</li>
+          </ul>
+        </div>
+        <ul>
+          <li data-tool="measure">Målebånd</li>
+        </ul>
+      </aside>
     <div class="ls-canvas-container">
       <canvas id="ls-canvas"></canvas>
       <div class="ls-onboarding">1. Tegn området → 2. Placer højttalere → 3. Tjek dækningen</div>
@@ -109,15 +117,22 @@
     canvas.width = area.w * CELL_PX;
     canvas.height = area.h * CELL_PX;
 
-    const speakers = [];
-    const shapes = [];
-    let tool = null;
-    let drawingRect = null;
-    let currentPolygon = null;
-    let cursorPos = null;
-    let showHeatmap = true;
+const speakers = [];
+const shapes = [];
+let tool = null;
+let drawingRect = null;
+let currentPolygon = null;
+let cursorPos = null;
+let showHeatmap = true;
+const measurements = [];
+let currentMeasurement = null;
+let hoverShapeIdx = null;
+let dragShape = null;
 
     const heatmapToggle = document.getElementById('heatmap-toggle');
+    const roomTool = document.getElementById('room-tool');
+    const roomToolBtn = document.getElementById('room-tool-btn');
+    const roomToolMenu = document.getElementById('room-tool-menu');
     heatmapToggle.addEventListener('change', () => {
       showHeatmap = heatmapToggle.checked;
       render();
@@ -135,11 +150,104 @@
       }
     });
 
-    function hexToRgba(hex, alpha){
-      const int = parseInt(hex.slice(1),16);
-      const r=(int>>16)&255, g=(int>>8)&255, b=int&255;
-      return `rgba(${r},${g},${b},${alpha})`;
-    }
+      function hexToRgba(hex, alpha){
+        const int = parseInt(hex.slice(1),16);
+        const r=(int>>16)&255, g=(int>>8)&255, b=int&255;
+        return `rgba(${r},${g},${b},${alpha})`;
+      }
+
+      const HANDLE_SIZE = 0.3; // meters
+
+      function pointInPoly(pt, pts){
+        let inside = false;
+        for(let i=0,j=pts.length-1;i<pts.length;j=i++){
+          const xi=pts[i].x, yi=pts[i].y;
+          const xj=pts[j].x, yj=pts[j].y;
+          const intersect = ((yi>pt.y)!=(yj>pt.y)) && (pt.x < (xj - xi)*(pt.y - yi)/(yj - yi) + xi);
+          if(intersect) inside = !inside;
+        }
+        return inside;
+      }
+
+      function getRectHandle(rect,x,y){
+        const right = rect.x + rect.w;
+        const bottom = rect.y + rect.h;
+        const cx = rect.x + rect.w/2;
+        const cy = rect.y + rect.h/2;
+        if(Math.abs(x-rect.x)<HANDLE_SIZE && Math.abs(y-rect.y)<HANDLE_SIZE) return 'nw';
+        if(Math.abs(x-right)<HANDLE_SIZE && Math.abs(y-rect.y)<HANDLE_SIZE) return 'ne';
+        if(Math.abs(x-rect.x)<HANDLE_SIZE && Math.abs(y-bottom)<HANDLE_SIZE) return 'sw';
+        if(Math.abs(x-right)<HANDLE_SIZE && Math.abs(y-bottom)<HANDLE_SIZE) return 'se';
+        if(Math.abs(y-rect.y)<HANDLE_SIZE && Math.abs(x-cx)<HANDLE_SIZE) return 'n';
+        if(Math.abs(y-bottom)<HANDLE_SIZE && Math.abs(x-cx)<HANDLE_SIZE) return 's';
+        if(Math.abs(x-rect.x)<HANDLE_SIZE && Math.abs(y-cy)<HANDLE_SIZE) return 'w';
+        if(Math.abs(x-right)<HANDLE_SIZE && Math.abs(y-cy)<HANDLE_SIZE) return 'e';
+        if(x>rect.x && x<right && y>rect.y && y<bottom) return 'move';
+        return null;
+      }
+
+      function getPolyHandle(poly,x,y){
+        for(let i=0;i<poly.points.length;i++){
+          const p = poly.points[i];
+          if(Math.hypot(p.x-x,p.y-y) < HANDLE_SIZE) return {mode:'vertex',idx:i};
+        }
+        if(pointInPoly({x,y}, poly.points)) return {mode:'move'};
+        return null;
+      }
+
+      function drawRectHandles(rect){
+        const handles = [
+          {x:rect.x,y:rect.y},
+          {x:rect.x+rect.w,y:rect.y},
+          {x:rect.x,y:rect.y+rect.h},
+          {x:rect.x+rect.w,y:rect.y+rect.h},
+          {x:rect.x+rect.w/2,y:rect.y},
+          {x:rect.x+rect.w/2,y:rect.y+rect.h},
+          {x:rect.x,y:rect.y+rect.h/2},
+          {x:rect.x+rect.w,y:rect.y+rect.h/2},
+          {x:rect.x+rect.w/2,y:rect.y+rect.h/2}
+        ];
+        ctx.save();
+        ctx.fillStyle = '#fff';
+        ctx.strokeStyle = '#000';
+        handles.forEach(h=>{
+          ctx.fillRect(h.x*CELL_PX-3, h.y*CELL_PX-3, 6,6);
+          ctx.strokeRect(h.x*CELL_PX-3, h.y*CELL_PX-3,6,6);
+        });
+        ctx.restore();
+      }
+
+      function drawPolyHandles(points){
+        ctx.save();
+        ctx.fillStyle = '#fff';
+        ctx.strokeStyle = '#000';
+        points.forEach(p=>{
+          ctx.beginPath();
+          ctx.arc(p.x*CELL_PX, p.y*CELL_PX, 3, 0, Math.PI*2);
+          ctx.fill();
+          ctx.stroke();
+        });
+        const cx = points.reduce((s,p)=>s+p.x,0)/points.length;
+        const cy = points.reduce((s,p)=>s+p.y,0)/points.length;
+        ctx.fillRect(cx*CELL_PX-3, cy*CELL_PX-3,6,6);
+        ctx.strokeRect(cx*CELL_PX-3, cy*CELL_PX-3,6,6);
+        ctx.restore();
+      }
+
+      function drawMeasurement(m){
+        ctx.save();
+        ctx.strokeStyle = '#f00';
+        ctx.fillStyle = '#f00';
+        ctx.beginPath();
+        ctx.moveTo(m.start.x*CELL_PX, m.start.y*CELL_PX);
+        ctx.lineTo(m.end.x*CELL_PX, m.end.y*CELL_PX);
+        ctx.stroke();
+        const dist = Math.hypot(m.end.x - m.start.x, m.end.y - m.start.y);
+        const midX = (m.start.x + m.end.x)/2 * CELL_PX;
+        const midY = (m.start.y + m.end.y)/2 * CELL_PX;
+        ctx.fillText(dist.toFixed(2) + 'm', midX + 5, midY - 5);
+        ctx.restore();
+      }
 
     function drawRect(rect, preview=false){
       ctx.save();
@@ -183,11 +291,18 @@
           });
         });
       }
-      // draw shapes
-      shapes.forEach(shape=>{
-        if(shape.type==='rect') drawRect(shape);
-        if(shape.type==='poly') drawPoly(shape.points);
-      });
+        // draw shapes
+        shapes.forEach((shape,idx)=>{
+          if(shape.type==='rect') drawRect(shape);
+          if(shape.type==='poly') drawPoly(shape.points);
+        });
+        if(hoverShapeIdx!==null){
+          const hs = shapes[hoverShapeIdx];
+          if(hs.type==='rect') drawRectHandles(hs);
+          if(hs.type==='poly') drawPolyHandles(hs.points);
+        }
+        measurements.forEach(m=>drawMeasurement(m));
+        if(currentMeasurement) drawMeasurement(currentMeasurement);
       // draw previews
       if(drawingRect){
         const rect = {
@@ -219,10 +334,15 @@
     }
 
     // select drawing tool
+    roomToolBtn.addEventListener('click', ()=>{
+      roomTool.classList.toggle('open');
+    });
+
     document.querySelectorAll('.ls-left li[data-tool]').forEach(li=>{
       li.addEventListener('click', ()=>{
         tool = li.dataset.tool;
         document.querySelectorAll('.ls-left li').forEach(el=>el.classList.toggle('active', el===li));
+        roomTool.classList.remove('open');
       });
     });
 
@@ -240,6 +360,36 @@
     canvas.addEventListener('mousedown', e=>{
       const x = e.offsetX / CELL_PX;
       const y = e.offsetY / CELL_PX;
+      if(tool === 'measure'){
+        currentMeasurement = {start:{x,y}, end:{x,y}};
+        return;
+      }
+      for(let i=shapes.length-1;i>=0;i--){
+        const sh = shapes[i];
+        let hit = null;
+        if(sh.type==='rect'){
+          const mode = getRectHandle(sh,x,y);
+          if(mode) hit = {idx:i, mode};
+        }else if(sh.type==='poly'){
+          const h = getPolyHandle(sh,x,y);
+          if(h) hit = {idx:i, ...h};
+        }
+        if(hit){
+          dragShape = hit;
+          hoverShapeIdx = i;
+          if(hit.mode==='move' && sh.type==='rect'){
+            dragShape.offsetX = x - sh.x;
+            dragShape.offsetY = y - sh.y;
+          }
+          if(hit.mode==='move' && sh.type==='poly'){
+            dragShape.startX = x;
+            dragShape.startY = y;
+            dragShape.origPoints = sh.points.map(p=>({...p}));
+          }
+          render();
+          return;
+        }
+      }
       if(tool === 'rect'){
         drawingRect = {xStart:x, yStart:y, xEnd:x, yEnd:y};
       }else if(tool === 'poly'){
@@ -263,10 +413,70 @@
       }else if(currentPolygon){
         cursorPos = {x,y};
         render();
+      }else if(currentMeasurement){
+        currentMeasurement.end = {x,y};
+        render();
+      }else if(dragShape){
+        const sh = shapes[dragShape.idx];
+        if(sh.type==='rect'){
+          switch(dragShape.mode){
+            case 'move':
+              sh.x = x - dragShape.offsetX;
+              sh.y = y - dragShape.offsetY;
+              break;
+            case 'nw':
+              sh.w += sh.x - x;
+              sh.h += sh.y - y;
+              sh.x = x; sh.y = y; break;
+            case 'ne':
+              sh.w = x - sh.x;
+              sh.h += sh.y - y;
+              sh.y = y; break;
+            case 'sw':
+              sh.w += sh.x - x;
+              sh.x = x;
+              sh.h = y - sh.y; break;
+            case 'se':
+              sh.w = x - sh.x;
+              sh.h = y - sh.y; break;
+            case 'n':
+              sh.h += sh.y - y;
+              sh.y = y; break;
+            case 's':
+              sh.h = y - sh.y; break;
+            case 'w':
+              sh.w += sh.x - x;
+              sh.x = x; break;
+            case 'e':
+              sh.w = x - sh.x; break;
+          }
+        }else if(sh.type==='poly'){
+          if(dragShape.mode==='move'){
+            const dx = x - dragShape.startX;
+            const dy = y - dragShape.startY;
+            sh.points = dragShape.origPoints.map(p=>({x:p.x+dx,y:p.y+dy}));
+          }else if(dragShape.mode==='vertex'){
+            sh.points[dragShape.idx] = {x,y};
+          }
+        }
+        render();
       }else if(dragIdx!==null){
         speakers[dragIdx].x = x;
         speakers[dragIdx].y = y;
         render();
+      }else{
+        let found = null;
+        for(let i=shapes.length-1;i>=0;i--){
+          const sh = shapes[i];
+          let hit = null;
+          if(sh.type==='rect') hit = getRectHandle(sh,x,y);
+          else if(sh.type==='poly') hit = getPolyHandle(sh,x,y);
+          if(hit){ found = i; break; }
+        }
+        if(found!==hoverShapeIdx){
+          hoverShapeIdx = found;
+          render();
+        }
       }
     });
 
@@ -282,7 +492,13 @@
         drawingRect = null;
         render();
       }
+      if(currentMeasurement){
+        measurements.push(currentMeasurement);
+        currentMeasurement = null;
+        render();
+      }
       dragIdx = null;
+      dragShape = null;
     });
 
     canvas.addEventListener('mouseleave', ()=>{
@@ -290,7 +506,12 @@
         drawingRect = null;
         render();
       }
+      if(currentMeasurement){
+        currentMeasurement = null;
+        render();
+      }
       dragIdx = null;
+      dragShape = null;
     });
 
     canvas.addEventListener('dblclick', ()=>{
