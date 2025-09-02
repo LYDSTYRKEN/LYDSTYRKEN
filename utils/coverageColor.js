@@ -1,18 +1,17 @@
-export const GREEN_PALETTE = ["#0B6623","#1E7A2E","#2FA84F","#5FCF73","#7AD37A","#A4E1A6","#CDECCB"];
+export const BASE_GREEN = "#0B6623";
 
 export function getCoverageColor(
   splDb,
-  { targetSPLdB, headroomAboveTarget = 6, falloffBelowTarget = 12, minAlpha = 0.08, maxAlpha = 0.9 }
+  _opts = {}
 ){
-  const above = splDb - targetSPLdB;
-  const clamp = (v,a,b)=>Math.min(b,Math.max(a,v));
-  const lerp = (a,b,t)=>a+(b-a)*t;
+  let alpha;
+  if(splDb <= 86) alpha = 0;           // 100% transparent
+  else if(splDb <= 88) alpha = 0.2;    // 80% transparent
+  else if(splDb <= 91) alpha = 0.4;    // 60% transparent
+  else if(splDb <= 94) alpha = 0.6;    // 40% transparent
+  else if(splDb <= 97) alpha = 0.8;    // 20% transparent
+  else if(splDb >= 100) alpha = 1;     // 0% transparent
+  else alpha = 0.8;                    // between 97 and 100 dB
 
-  const norm = above >= 0 ? clamp(above/headroomAboveTarget,0,1) : clamp(above/-falloffBelowTarget,-1,0);
-  const idx  = norm >= 0 ? Math.round(2 - norm*2) : Math.round(4 + (1+norm)*2);
-  const i    = clamp(idx, 0, GREEN_PALETTE.length-1);
-  const alpha= norm >= 0 ? lerp(0.7, maxAlpha, norm) : lerp(minAlpha, 0.6, norm+1);
-  const percent = norm >= 0 ? 50 + Math.round(norm*50) : Math.round((norm+1)*50);
-
-  return { hex: GREEN_PALETTE[i], alpha: Math.round(alpha*1000)/1000, percent, paletteIndex:i };
+  return { hex: BASE_GREEN, alpha: Math.round(alpha*1000)/1000, percent: Math.round(alpha*100), paletteIndex:0 };
 }
