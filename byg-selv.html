@@ -38,7 +38,7 @@
     .ls-dropdown-menu{display:none;position:absolute;left:0;top:100%;background:#222;padding:0;margin:4px 0 0;list-style:none;z-index:10;border-radius:4px;}
     .ls-dropdown-menu li{margin:0;padding:4px 8px;}
     .ls-dropdown.open .ls-dropdown-menu{display:block;}
-    .ls-canvas-container{flex:1;position:relative;background:var(--bg);}
+    .ls-canvas-container{flex:1;position:relative;background:var(--bg);overflow:hidden;}
     #ls-canvas{width:100%;height:100%;background-size:25px 25px;background-image:linear-gradient(0deg,rgba(255,255,255,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.05) 1px,transparent 1px);}
     .ls-right{width:260px;background:var(--card);display:flex;flex-direction:column;}
     .ls-products,.ls-cart{padding:8px;flex:1;overflow:auto;font-size:14px;}
@@ -132,6 +132,23 @@
     canvas.height = area.h * CELL_PX;
     canvas.style.cursor = 'default';
 
+    const view = {x:0, y:0, scale:1};
+    canvas.style.transformOrigin = '0 0';
+    function updateTransform(){
+      canvas.style.transform = `translate(${view.x}px, ${view.y}px) scale(${view.scale})`;
+    }
+    updateTransform();
+
+    function toWorld(e){
+      const rect = canvas.getBoundingClientRect();
+      const sx = e.clientX - rect.left;
+      const sy = e.clientY - rect.top;
+      return {
+        x: (sx - view.x) / view.scale / CELL_PX,
+        y: (sy - view.y) / view.scale / CELL_PX
+      };
+    }
+
     const onboarding = document.querySelector('.ls-onboarding');
     const onboardingClose = document.querySelector('.ls-onboarding-close');
     onboardingClose.addEventListener('click', () => onboarding.remove());
@@ -165,6 +182,7 @@ let dragShape = null;
         area.h = parseFloat(match[2]);
         canvas.width = area.w * CELL_PX;
         canvas.height = area.h * CELL_PX;
+        updateTransform();
         render();
       }
     });
@@ -376,9 +394,32 @@ let dragShape = null;
 
     // canvas interactions
     let dragIdx = null;
+    let isPanning = false;
+    let panStart = {x:0,y:0};
+
+    canvas.addEventListener('wheel', e=>{
+      e.preventDefault();
+      const rect = canvas.getBoundingClientRect();
+      const sx = e.clientX - rect.left;
+      const sy = e.clientY - rect.top;
+      const wx = (sx - view.x) / view.scale;
+      const wy = (sy - view.y) / view.scale;
+      const factor = e.deltaY > 0 ? 0.9 : 1.1;
+      view.scale *= factor;
+      view.x = sx - wx * view.scale;
+      view.y = sy - wy * view.scale;
+      updateTransform();
+    }, {passive:false});
+
     canvas.addEventListener('mousedown', e=>{
-      const x = e.offsetX / CELL_PX;
-      const y = e.offsetY / CELL_PX;
+      if(e.button===1){
+        isPanning = true;
+        panStart.x = e.clientX - view.x;
+        panStart.y = e.clientY - view.y;
+        canvas.style.cursor = 'grabbing';
+        return;
+      }
+      const {x,y} = toWorld(e);
       if(tool === 'measure'){
         currentMeasurement = {start:{x,y}, end:{x,y}};
         return;
@@ -429,8 +470,13 @@ let dragShape = null;
     });
 
     canvas.addEventListener('mousemove', e=>{
-      const x = e.offsetX / CELL_PX;
-      const y = e.offsetY / CELL_PX;
+      if(isPanning){
+        view.x = e.clientX - panStart.x;
+        view.y = e.clientY - panStart.y;
+        updateTransform();
+        return;
+      }
+      const {x,y} = toWorld(e);
       if(drawingRect){
         drawingRect.xEnd = x;
         drawingRect.yEnd = y;
@@ -509,6 +555,11 @@ let dragShape = null;
     });
 
     canvas.addEventListener('mouseup', ()=>{
+      if(isPanning){
+        isPanning = false;
+        canvas.style.cursor = 'default';
+        return;
+      }
       if(drawingRect){
         const rect = {
           x: Math.min(drawingRect.xStart, drawingRect.xEnd),
@@ -531,6 +582,10 @@ let dragShape = null;
     });
 
     canvas.addEventListener('mouseleave', ()=>{
+      if(isPanning){
+        isPanning = false;
+        canvas.style.cursor = 'default';
+      }
       if(drawingRect){
         drawingRect = null;
         render();
@@ -557,8 +612,7 @@ let dragShape = null;
 
     canvas.addEventListener('contextmenu', e=>{
       e.preventDefault();
-      const x = e.offsetX / CELL_PX;
-      const y = e.offsetY / CELL_PX;
+      const {x,y} = toWorld(e);
       if(tool === 'poly' && currentPolygon){
         if(currentPolygon.length >= 2){
           shapes.push({type:'poly', points: currentPolygon});
