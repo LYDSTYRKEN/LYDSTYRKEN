@@ -21,7 +21,8 @@
     .ls-main{flex:1;display:flex;}
     .ls-left{width:180px;background:var(--ls-green-6);padding:8px;font-size:14px;}
     .ls-left ul{list-style:none;padding:0;margin:8px 0 0;}
-    .ls-left li{margin-bottom:4px;}
+    .ls-left li{margin-bottom:4px;cursor:pointer;padding:4px;}
+    .ls-left li.active{background:var(--ls-green-7);}
     .ls-canvas-container{flex:1;position:relative;background:#fff;}
     #ls-canvas{width:100%;height:100%;background-size:25px 25px;background-image:linear-gradient(0deg,var(--ls-green-7) 1px,transparent 1px),linear-gradient(90deg,var(--ls-green-7) 1px,transparent 1px);}
     .ls-right{width:260px;background:var(--ls-green-6);display:flex;flex-direction:column;}
@@ -54,8 +55,8 @@
     <aside class="ls-left">
       <h3>Tegneværktøjer</h3>
       <ul>
-        <li>Rektangel</li>
-        <li>Polygon</li>
+        <li data-tool="rect">Rektangel</li>
+        <li data-tool="poly">Polygon</li>
         <li>Væg/Scene/Bord</li>
         <li>Målebånd</li>
       </ul>
@@ -109,11 +110,45 @@
     canvas.height = area.h * CELL_PX;
 
     const speakers = [];
+    const shapes = [];
+    let tool = null;
+    let drawingRect = null;
+    let currentPolygon = null;
+    let cursorPos = null;
 
     function hexToRgba(hex, alpha){
       const int = parseInt(hex.slice(1),16);
       const r=(int>>16)&255, g=(int>>8)&255, b=int&255;
       return `rgba(${r},${g},${b},${alpha})`;
+    }
+
+    function drawRect(rect, preview=false){
+      ctx.save();
+      ctx.strokeStyle = '#000';
+      ctx.fillStyle = preview ? 'rgba(0,0,255,0.1)' : 'rgba(0,0,0,0.2)';
+      ctx.beginPath();
+      ctx.rect(rect.x*CELL_PX, rect.y*CELL_PX, rect.w*CELL_PX, rect.h*CELL_PX);
+      ctx.fill();
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function drawPoly(points, preview=false){
+      if(points.length < 2) return;
+      ctx.save();
+      ctx.strokeStyle = '#000';
+      ctx.fillStyle = preview ? 'rgba(0,0,255,0.1)' : 'rgba(0,0,0,0.2)';
+      ctx.beginPath();
+      ctx.moveTo(points[0].x*CELL_PX, points[0].y*CELL_PX);
+      for(let i=1;i<points.length;i++){
+        ctx.lineTo(points[i].x*CELL_PX, points[i].y*CELL_PX);
+      }
+      if(!preview && points.length>2){
+        ctx.closePath();
+        ctx.fill();
+      }
+      ctx.stroke();
+      ctx.restore();
     }
 
     function render(){
@@ -127,6 +162,25 @@
           }
         });
       });
+      // draw shapes
+      shapes.forEach(shape=>{
+        if(shape.type==='rect') drawRect(shape);
+        if(shape.type==='poly') drawPoly(shape.points);
+      });
+      // draw previews
+      if(drawingRect){
+        const rect = {
+          x: Math.min(drawingRect.xStart, drawingRect.xEnd),
+          y: Math.min(drawingRect.yStart, drawingRect.yEnd),
+          w: Math.abs(drawingRect.xEnd - drawingRect.xStart),
+          h: Math.abs(drawingRect.yEnd - drawingRect.yStart)
+        };
+        drawRect(rect, true);
+      }
+      if(currentPolygon){
+        const pts = cursorPos ? [...currentPolygon, cursorPos] : currentPolygon;
+        drawPoly(pts, true);
+      }
       // draw speakers
       speakers.forEach(sp=>{
         ctx.save();
@@ -143,6 +197,14 @@
       });
     }
 
+    // select drawing tool
+    document.querySelectorAll('.ls-left li[data-tool]').forEach(li=>{
+      li.addEventListener('click', ()=>{
+        tool = li.dataset.tool;
+        document.querySelectorAll('.ls-left li').forEach(el=>el.classList.toggle('active', el===li));
+      });
+    });
+
     // Add speaker by clicking product
     document.querySelectorAll('.ls-product-list li').forEach((li,idx)=>{
       li.addEventListener('click', ()=>{
@@ -152,30 +214,90 @@
       });
     });
 
-    // dragging speakers
+    // canvas interactions
     let dragIdx = null;
     canvas.addEventListener('mousedown', e=>{
       const x = e.offsetX / CELL_PX;
       const y = e.offsetY / CELL_PX;
-      dragIdx = speakers.findIndex(sp=>Math.hypot(sp.x-x, sp.y-y) < 0.5);
+      if(tool === 'rect'){
+        drawingRect = {xStart:x, yStart:y, xEnd:x, yEnd:y};
+      }else if(tool === 'poly'){
+        if(!currentPolygon){
+          currentPolygon = [{x,y}];
+        }else{
+          currentPolygon.push({x,y});
+        }
+      }else{
+        dragIdx = speakers.findIndex(sp=>Math.hypot(sp.x-x, sp.y-y) < 0.5);
+      }
     });
+
     canvas.addEventListener('mousemove', e=>{
-      if(dragIdx!==null){
-        speakers[dragIdx].x = e.offsetX / CELL_PX;
-        speakers[dragIdx].y = e.offsetY / CELL_PX;
+      const x = e.offsetX / CELL_PX;
+      const y = e.offsetY / CELL_PX;
+      if(drawingRect){
+        drawingRect.xEnd = x;
+        drawingRect.yEnd = y;
+        render();
+      }else if(currentPolygon){
+        cursorPos = {x,y};
+        render();
+      }else if(dragIdx!==null){
+        speakers[dragIdx].x = x;
+        speakers[dragIdx].y = y;
         render();
       }
     });
-    canvas.addEventListener('mouseup', ()=> dragIdx=null);
-    canvas.addEventListener('mouseleave', ()=> dragIdx=null);
 
-    // rotate via right-click
+    canvas.addEventListener('mouseup', ()=>{
+      if(drawingRect){
+        const rect = {
+          x: Math.min(drawingRect.xStart, drawingRect.xEnd),
+          y: Math.min(drawingRect.yStart, drawingRect.yEnd),
+          w: Math.abs(drawingRect.xEnd - drawingRect.xStart),
+          h: Math.abs(drawingRect.yEnd - drawingRect.yStart)
+        };
+        shapes.push({type:'rect', ...rect});
+        drawingRect = null;
+        render();
+      }
+      dragIdx = null;
+    });
+
+    canvas.addEventListener('mouseleave', ()=>{
+      if(drawingRect){
+        drawingRect = null;
+        render();
+      }
+      dragIdx = null;
+    });
+
+    canvas.addEventListener('dblclick', ()=>{
+      if(tool === 'poly' && currentPolygon){
+        if(currentPolygon.length >= 2){
+          shapes.push({type:'poly', points: currentPolygon});
+        }
+        currentPolygon = null;
+        cursorPos = null;
+        render();
+      }
+    });
+
     canvas.addEventListener('contextmenu', e=>{
       e.preventDefault();
       const x = e.offsetX / CELL_PX;
       const y = e.offsetY / CELL_PX;
-      const sp = speakers.find(sp=>Math.hypot(sp.x-x, sp.y-y) < 0.5);
-      if(sp){ sp.rotDeg = (sp.rotDeg + 15) % 360; render(); }
+      if(tool === 'poly' && currentPolygon){
+        if(currentPolygon.length >= 2){
+          shapes.push({type:'poly', points: currentPolygon});
+        }
+        currentPolygon = null;
+        cursorPos = null;
+        render();
+      }else{
+        const sp = speakers.find(sp=>Math.hypot(sp.x-x, sp.y-y) < 0.5);
+        if(sp){ sp.rotDeg = (sp.rotDeg + 15) % 360; render(); }
+      }
     });
 
     render();
