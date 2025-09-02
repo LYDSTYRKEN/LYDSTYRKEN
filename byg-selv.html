@@ -46,10 +46,10 @@
       <option>Udendørs</option>
     </select>
     <input type="number" placeholder="Gæster" />
-    <input type="text" placeholder="Længde × Bredde (m)" />
+    <input id="dimension-input" type="text" placeholder="Længde × Bredde (m)" value="20×20" />
     <button>Undo</button>
     <button>Redo</button>
-    <label><input type="checkbox" /> Heatmap</label>
+    <label><input id="heatmap-toggle" type="checkbox" checked /> Heatmap</label>
   </div>
   <div class="ls-main">
     <aside class="ls-left">
@@ -115,6 +115,25 @@
     let drawingRect = null;
     let currentPolygon = null;
     let cursorPos = null;
+    let showHeatmap = true;
+
+    const heatmapToggle = document.getElementById('heatmap-toggle');
+    heatmapToggle.addEventListener('change', () => {
+      showHeatmap = heatmapToggle.checked;
+      render();
+    });
+
+    const dimensionInput = document.getElementById('dimension-input');
+    dimensionInput.addEventListener('change', () => {
+      const match = dimensionInput.value.match(/\s*(\d+(?:\.\d+)?)\s*[x×]\s*(\d+(?:\.\d+)?)/i);
+      if(match){
+        area.w = parseFloat(match[1]);
+        area.h = parseFloat(match[2]);
+        canvas.width = area.w * CELL_PX;
+        canvas.height = area.h * CELL_PX;
+        render();
+      }
+    });
 
     function hexToRgba(hex, alpha){
       const int = parseInt(hex.slice(1),16);
@@ -152,16 +171,18 @@
     }
 
     function render(){
-      const grid = calcCoverageGrid({widthM:area.w,heightM:area.h,cellSizeM:1,speakers});
       ctx.clearRect(0,0,canvas.width,canvas.height);
-      grid.data.forEach((row,y)=>{
-        row.forEach((cell,x)=>{
-          if(cell.color.alpha>0){
-            ctx.fillStyle = hexToRgba(cell.color.hex, cell.color.alpha);
-            ctx.fillRect(x*CELL_PX, y*CELL_PX, CELL_PX, CELL_PX);
-          }
+      if(showHeatmap){
+        const grid = calcCoverageGrid({widthM:area.w,heightM:area.h,cellSizeM:1,speakers});
+        grid.data.forEach((row,y)=>{
+          row.forEach((cell,x)=>{
+            if(cell.color.alpha>0){
+              ctx.fillStyle = hexToRgba(cell.color.hex, cell.color.alpha);
+              ctx.fillRect(x*CELL_PX, y*CELL_PX, CELL_PX, CELL_PX);
+            }
+          });
         });
-      });
+      }
       // draw shapes
       shapes.forEach(shape=>{
         if(shape.type==='rect') drawRect(shape);
