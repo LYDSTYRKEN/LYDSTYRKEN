@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>MIGGGGGG</title>
+  <title>[ LYDSTYRKEN ]</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
   <style>
     :root{
@@ -12,7 +12,8 @@
       --muted:rgba(255,255,255,0.75);
       --accent:rgba(0,255,136,0.12);
       --accent-strong:rgba(0,255,136,0.22);
-      --green:#00ff88;
+      /*--green:#60ff57; */
+      --green:#60ff57; /* Her kan vi ændre den farve vi har*/
     }
     *{box-sizing:border-box}
     html,body{height:100%}
@@ -20,7 +21,7 @@
       margin:0;
       font-family:Montserrat,system-ui,Arial,sans-serif;
       background:var(--bg);
-      color:#fff;
+      color:hsl(0, 0%, 100%);
       text-transform:uppercase;
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
@@ -203,7 +204,7 @@
   </header>
 
   <section class="hero" aria-hidden="false">
-    <h1>[ LYDSTYRKEN ]</h1>
+    <h1>[ LYDSTYRKEn ]</h1>
     <p>Professionelle højtalerløsninger til lokale priser</p>
     <a href="byg-selv.html" class="choose-btn try-btn">[ PRØV BYG SELV ]</a>
   </section>
@@ -275,21 +276,33 @@
       <h2>[ KONTAKT ]</h2>
       <div class="contact-list" aria-live="polite">
         <div class="contact-row">
-          <div class="contact-emoji">📱</div>
+          <div class="contact-emoji">
+            <img src="iconTelefon.png" alt="Telefon icon">
+          </div>
           <button class="copy-btn" data-copy="+45 42 60 34 70" aria-label="Kopier telefonnummer">[ +45 42 60 34 70 ]</button>
         </div>
         <div class="contact-row">
-          <div class="contact-emoji">📧</div>
-          <button class="copy-btn" data-copy="lydstyrken@gmail.com" aria-label="Kopier email">[ lydstyrken@gmail.com ]</button>
+          <div class="contact-emoji">
+            <img src="iconEmail.png" alt="Email icon">
+          </div>
+          <button class="copy-btn" data-copy="marius@lydstyrken.com" aria-label="Kopier email">[ lydstyrken@gmail.com ]</button>
         </div>
+<!--
         <div class="contact-row">
-          <div class="contact-emoji">📷</div>
+          <div class="contact-emoji">
+            <img src="iconInstagram.png" alt="Instagram icon">
+          </div>
           <button class="copy-btn" data-copy="@lydstyrken.pm" aria-label="Kopier instagram">[ @lydstyrken.pm ]</button>
         </div>
+-->
+<!--  
         <div class="contact-row">
-          <div class="contact-emoji">📘</div>
+          <div class="contact-emoji">
+            <img src="iconFacebook.png" alt="Facebook icon">
+            </div>
           <button class="copy-btn" data-copy="https://facebook.com/lydstyrken" aria-label="Kopier facebook link">[ facebook.com/lydstyrken ]</button>
-        </div>
+        </div> 
+-->
       </div>
       <p class="muted" style="margin-top:10px">Tryk på en linje for at kopiere til udklipsholder.</p>
     </section>
