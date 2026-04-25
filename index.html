@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LYDSTYRKEN — Professionel lyd til events og koncerter</title>
+<meta name="description" content="LYDSTYRKEN leverer professionel lyd til events, koncerter og arrangementer i hele Danmark.">
+<link rel="icon" type="image/png" href="images/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0b;
+    --bg-elev: #131316;
+    --bg-elev-2: #1c1c20;
+    --border: #2a2a2f;
+    --text: #f0eeea;
+    --text-dim: #8a8a90;
+    --text-muted: #5a5a60;
+    --accent: #ff4d2e;
+    --accent-glow: rgba(255, 77, 46, 0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Scroll progress */
+  .scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    background: var(--accent);
+    z-index: 200;
+    width: 0%;
+    transition: width 0.1s;
+  }
+
+  /* Subtil grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.012) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
+    background-size: 80px 80px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Glow */
+  .bg-glow {
+    position: fixed;
+    top: -300px;
+    right: -300px;
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 32px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     NAV
+     ═══════════════════════════════════════════════════════════ */
+
+  nav {
+    padding: 24px 0;
+    position: sticky;
+    top: 0;
+    background: rgba(10, 10, 11, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 100;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s, padding 0.3s;
+  }
+
+  nav.scrolled {
+    border-bottom-color: var(--border);
+    padding: 16px 0;
+  }
+
+  .nav-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    color: var(--text);
+  }
+
+  .logo-wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.18em;
+    background: transparent;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 22px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .logo-text,
+  .logo-bracket {
+    display: inline-block;
+    transition: transform 0.25s;
+    margin: 4px;
+  }
+
+  .logo-text {
+    transform: scaleX(1.06);
+    transform-origin: center;
+  }
+
+  .logo-bracket {
+    font-size: 1.2em;
+    line-height: 1.5;
+    transition: color 0.25s, text-shadow 0.25s, transform 0.25s;
+  }
+
+  .logo:hover .logo-bracket {
+    color: var(--accent);
+    text-shadow: 0 0 16px rgba(255, 77, 46, 0.75), 0 0 34px rgba(255, 77, 46, 0.35);
+  }
+
+  .logo:hover .logo-bracket-left { transform: translateX(-5px) scaleY(1.15); }
+  .logo:hover .logo-bracket-right { transform: translateX(5px) scaleY(1.15); }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+  }
+
+  .nav-links a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  .btn-nav {
+    border: 1px solid var(--border);
+    padding: 9px 16px;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+  .btn-nav:hover {
+    border-color: var(--accent);
+    color: var(--accent) !important;
+    background: rgba(255, 77, 46, 0.05);
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     HERO
+     ═══════════════════════════════════════════════════════════ */
+
+  .hero {
+    padding: 120px 0 100px;
+    position: relative;
+  }
+
+  .hero-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-label::before {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: clamp(48px, 9vw, 120px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 32px;
+    text-transform: uppercase;
+  }
+
+  .hero-title .accent {
+    color: var(--accent);
+    font-style: italic;
+    font-weight: 400;
+    text-transform: lowercase;
+  }
+
+  .hero-sub {
+    font-size: 19px;
+    color: var(--text-dim);
+    max-width: 560px;
+    margin-bottom: 48px;
+    line-height: 1.5;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 28px;
+    border-radius: 4px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.25s;
+    border: 1px solid transparent;
+    cursor: pointer;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #0a0a0b;
+  }
+  .btn-primary:hover {
+    background: #ff6347;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px var(--accent-glow);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border-color: var(--border);
+  }
+  .btn-secondary:hover {
+    border-color: var(--accent);
+  }
+
+  .arrow { transition: transform 0.25s; }
+  .btn:hover .arrow { transform: translateX(4px); }
+
+  /* ═══════════════════════════════════════════════════════════
+     SECTIONS
+     ═══════════════════════════════════════════════════════════ */
+
+  section { padding: 100px 0; position: relative; }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 56px;
+    max-width: 780px;
+    text-transform: uppercase;
+  }
+
+  .section-title .accent {
+    color: var(--accent);
+    font-style: italic;
+    font-weight: 400;
+    text-transform: lowercase;
+  }
+
+  /* SERVICES */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  @media (max-width: 800px) {
+    .services-grid { grid-template-columns: 1fr; }
+  }
+
+  .service-card {
+    background: var(--bg-elev);
+    padding: 40px 32px;
+    transition: background 0.3s;
+    position: relative;
+  }
+
+  .service-card:hover {
+    background: var(--bg-elev-2);
+  }
+
+  .service-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .service-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  .service-card p {
+    color: var(--text-dim);
+    font-size: 15px;
+  }
+
+  /* OM */
+  .about {
+    background: var(--bg-elev);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  @media (max-width: 800px) {
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+
+  .about-image {
+    aspect-ratio: 4/5;
+    background: var(--bg-elev-2);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .about-image::after {
+    content: 'BILLEDE';
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.2em;
+  }
+
+  .about p {
+    color: var(--text-dim);
+    font-size: 17px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+
+  .about p:first-of-type { color: var(--text); }
+
+  .about-meta {
+    margin-top: 32px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .meta-item {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+  }
+  .meta-item span {
+    display: block;
+    color: var(--text-muted);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  /* CTA */
+  .cta-block {
+    text-align: center;
+    padding: 120px 0;
+  }
+
+  .cta-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    border: 1px solid var(--accent);
+    border-radius: 100px;
+    margin-bottom: 32px;
+  }
+
+  .cta-tag .live-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: live-pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes live-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 var(--accent); }
+    50% { box-shadow: 0 0 0 6px transparent; }
+  }
+
+  .cta-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: clamp(36px, 6vw, 80px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+  }
+
+  .cta-title .accent {
+    color: var(--accent);
+    font-style: italic;
+    font-weight: 400;
+    text-transform: lowercase;
+  }
+
+  .cta-sub {
+    font-size: 17px;
+    color: var(--text-dim);
+    max-width: 540px;
+    margin: 0 auto 40px;
+  }
+
+  .cta-big {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    padding: 22px 36px;
+    background: var(--accent);
+    color: #0a0a0b;
+    text-decoration: none;
+    border-radius: 4px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: all 0.3s;
+  }
+
+  .cta-big:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 50px var(--accent-glow);
+  }
+
+  /* CONTACT BOX */
+  .contact-box {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 48px 40px;
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+
+  @media (max-width: 700px) {
+    .contact-box { grid-template-columns: 1fr; gap: 24px; padding: 32px 24px; }
+  }
+
+  .contact-box h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 8px;
+  }
+
+  .contact-box p {
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .contact-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 14px 18px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+
+  .contact-links a:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateX(4px);
+  }
+
+  .contact-links svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 56px 0 40px;
+    background: var(--bg);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 48px;
+  }
+
+  @media (max-width: 700px) {
+    .footer-grid { grid-template-columns: 1fr; }
+  }
+
+  .footer-col h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    font-weight: 400;
+  }
+
+  .footer-col a {
+    display: block;
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 14px;
+    margin-bottom: 10px;
+    transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--accent); }
+
+  .footer-tag {
+    color: var(--text-dim);
+    font-size: 14px;
+    max-width: 300px;
+    line-height: 1.6;
+    margin-top: 16px;
+  }
+
+  .footer-bottom {
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  /* Reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s, transform 0.8s;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 600px) {
+    .container { padding: 0 20px; }
+    section { padding: 60px 0; }
+    .hero { padding: 60px 0; }
+    .logo-wordmark { font-size: 18px; }
+    .nav-links { gap: 16px; }
+    .nav-links a:not(.btn-nav) { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="scroll-progress" id="progress"></div>
+<div class="bg-glow"></div>
+
+<nav id="nav">
+  <div class="container nav-inner">
+    <a href="/" class="logo" aria-label="LYDSTYRKEN">
+      <span class="logo-wordmark" aria-hidden="true">
+        <span class="logo-bracket logo-bracket-left">[</span>
+        <span class="logo-text">LYDSTYRKEN</span>
+        <span class="logo-bracket logo-bracket-right">]</span>
+      </span>
+    </a>
+    <div class="nav-links">
+      <a href="#ydelser">Ydelser</a>
+      <a href="#om">Om</a>
+      <a href="#kontakt">Kontakt</a>
+      <a href="lagersalg.html" class="btn-nav">Lagersalg →</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <div class="hero-label">EST. ODENSE — DK</div>
+    <h1 class="hero-title">
+      Lyd der<br>
+      <span class="accent">løfter</span> rummet.
+    </h1>
+    <p class="hero-sub">
+      LYDSTYRKEN leverer professionel lyd til events, koncerter og arrangementer — fra intime gigs til festivalscener.
+    </p>
+    <div class="hero-actions">
+      <a href="#kontakt" class="btn btn-primary">
+        Book et arrangement
+        <span class="arrow">→</span>
+      </a>
+      <a href="lagersalg.html" class="btn btn-secondary">
+        Se lagersalg
+      </a>
+    </div>
+  </div>
+</header>
+
+<section id="ydelser">
+  <div class="container">
+    <div class="section-label">// YDELSER</div>
+    <h2 class="section-title">Lyd til alle slags arrangementer.</h2>
+
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <span class="service-num">01</span>
+        <h3 class="service-title">Live-koncerter</h3>
+        <p>Komplet lydopsætning til bands, solister og DJ-sets. Mixerpult, monitorering og front-of-house tilpasset venue og besætning.</p>
+      </div>
+      <div class="service-card reveal">
+        <span class="service-num">02</span>
+        <h3 class="service-title">Events & arrangementer</h3>
+        <p>Konferencer, foredrag, fester og receptioner. Trådløse mikrofoner, talerstole og diskret baggrundsmusik der bare virker.</p>
+      </div>
+      <div class="service-card reveal">
+        <span class="service-num">03</span>
+        <h3 class="service-title">Festivaler & udendørs</h3>
+        <p>Skalerbare PA-løsninger til scener i alle størrelser — fra mindre byfester til større festivaler og sportsarrangementer.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="om" class="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-image"></div>
+      <div>
+        <div class="section-label">// OM</div>
+        <h2 class="section-title" style="margin-bottom: 32px;">Bag <span class="accent">LYDSTYRKEN</span> står Marius.</h2>
+        <p>Jeg startede LYDSTYRKEN, fordi jeg brænder for det øjeblik, hvor lyden falder på plads, og publikum mærker det i kroppen. Det handler ikke kun om gear — det handler om at få et arrangement til at føles rigtigt.</p>
+        <p>Med base i Odense leverer jeg lyd til alt fra intime koncerter til større events i hele Danmark. Personlig tilgang, professionelt udstyr, og en oprigtig interesse i at gøre dit arrangement bedst muligt.</p>
+
+        <div class="about-meta">
+          <div class="meta-item">
+            <span>Base</span>
+            Odense, Danmark
+          </div>
+          <div class="meta-item">
+            <span>CVR</span>
+            45880419
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="kontakt" class="cta-block">
+  <div class="container">
+    <span class="cta-tag"><span class="live-dot"></span> Budrunde i gang</span>
+    <h2 class="cta-title">
+      Lagersalg <span class="accent">via budrunde</span>
+    </h2>
+    <p class="cta-sub">
+      Udvalgt udstyr sælges via åben budrunde. Tydelig opdeling mellem privat salg og LYDSTYRKEN-salg. Højeste bud vinder.
+    </p>
+    <a href="lagersalg.html" class="cta-big">
+      Gå til budrunden
+      <span class="arrow">→</span>
+    </a>
+
+    <div class="contact-box">
+      <div>
+        <h3>Skal vi snakke?</h3>
+        <p>Skriv til os om booking, leje eller spørgsmål. Vi svarer som regel inden for 24 timer.</p>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:marius@lydstyrken.com">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M3 8l9 6 9-6M3 8v10a2 2 0 002 2h14a2 2 0 002-2V8M3 8l2-2h14l2 2"/></svg>
+          marius@lydstyrken.com
+        </a>
+        <a href="https://instagram.com/lydstyrken" target="_blank" rel="noopener">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
+          @lydstyrken
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <a href="/" class="logo" aria-label="LYDSTYRKEN">
+          <span class="logo-wordmark" aria-hidden="true">
+            <span class="logo-bracket logo-bracket-left">[</span>
+            <span class="logo-text">LYDSTYRKEN</span>
+            <span class="logo-bracket logo-bracket-right">]</span>
+          </span>
+        </a>
+        <p class="footer-tag">Professionel lyd til events og koncerter — leveret fra Odense, hele Danmark over.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Kontakt</h4>
+        <a href="mailto:marius@lydstyrken.com">marius@lydstyrken.com</a>
+        <a href="https://instagram.com/lydstyrken" target="_blank" rel="noopener">Instagram ↗</a>
+      </div>
+      <div class="footer-col">
+        <h4>Sider</h4>
+        <a href="#ydelser">Ydelser</a>
+        <a href="#om">Om</a>
+        <a href="lagersalg.html">Lagersalg</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 LYDSTYRKEN — CVR 45880419</span>
+      <span>[ ODENSE / DK ]</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ═══════════════════════════════════════════════════════════
+  //   NAV + SCROLL PROGRESS
+  // ═══════════════════════════════════════════════════════════
+  const nav = document.getElementById('nav');
+  const progress = document.getElementById('progress');
+
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    progress.style.width = (window.scrollY / total) * 100 + '%';
+  });
+
+  // Reveal on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
