@@ -35,6 +35,8 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  body.menu-open { overflow: hidden; }
+
   /* Scroll progress */
   .scroll-progress {
     position: fixed;
@@ -60,7 +62,6 @@
     z-index: 0;
   }
 
-  /* Glow */
   .bg-glow {
     position: fixed;
     top: -300px;
@@ -81,7 +82,7 @@
   }
 
   /* ═══════════════════════════════════════════════════════════
-     NAV
+     NAV + LOGO + BURGER MENU
      ═══════════════════════════════════════════════════════════ */
 
   nav {
@@ -96,10 +97,7 @@
     transition: border-color 0.3s, padding 0.3s;
   }
 
-  nav.scrolled {
-    border-bottom-color: var(--border);
-    padding: 16px 0;
-  }
+  nav.scrolled { border-bottom-color: var(--border); padding: 16px 0; }
 
   .nav-inner {
     display: flex;
@@ -170,7 +168,8 @@
     text-transform: uppercase;
     transition: color 0.2s;
   }
-  .nav-links a:hover { color: var(--text); }
+  .nav-links a:hover, .nav-links a.active { color: var(--text); }
+  .nav-links a.active { color: var(--accent); }
 
   .btn-nav {
     border: 1px solid var(--border);
@@ -183,6 +182,140 @@
     color: var(--accent) !important;
     background: rgba(255, 77, 46, 0.05);
   }
+
+  /* Burger button (skjult som default) */
+  .burger {
+    display: none;
+    width: 44px;
+    height: 44px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+
+  .burger:hover { border-color: var(--accent); }
+
+  .burger span {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    height: 2px;
+    background: var(--text);
+    transition: all 0.3s ease;
+  }
+
+  .burger span:nth-child(1) { top: 14px; }
+  .burger span:nth-child(2) { top: 21px; }
+  .burger span:nth-child(3) { top: 28px; }
+
+  body.menu-open .burger span:nth-child(1) {
+    top: 21px;
+    transform: rotate(45deg);
+    background: var(--accent);
+  }
+  body.menu-open .burger span:nth-child(2) {
+    opacity: 0;
+  }
+  body.menu-open .burger span:nth-child(3) {
+    top: 21px;
+    transform: rotate(-45deg);
+    background: var(--accent);
+  }
+
+  /* Mobile menu drawer */
+  .mobile-menu {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 10, 11, 0.97);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    z-index: 90;
+    padding: 100px 32px 40px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  body.menu-open .mobile-menu {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mobile-menu-links {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .mobile-menu-links a {
+    color: var(--text);
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: clamp(32px, 8vw, 48px);
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+    transition: color 0.2s, padding-left 0.2s;
+    transform: translateX(-20px);
+    opacity: 0;
+    transition: opacity 0.4s ease, transform 0.4s ease, color 0.2s, padding-left 0.2s;
+  }
+
+  body.menu-open .mobile-menu-links a {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  body.menu-open .mobile-menu-links a:nth-child(1) { transition-delay: 0.1s; }
+  body.menu-open .mobile-menu-links a:nth-child(2) { transition-delay: 0.15s; }
+  body.menu-open .mobile-menu-links a:nth-child(3) { transition-delay: 0.2s; }
+  body.menu-open .mobile-menu-links a:nth-child(4) { transition-delay: 0.25s; }
+  body.menu-open .mobile-menu-links a:nth-child(5) { transition-delay: 0.3s; }
+
+  .mobile-menu-links a:hover {
+    color: var(--accent);
+    padding-left: 12px;
+  }
+
+  .mobile-menu-links a.active {
+    color: var(--accent);
+  }
+
+  .mobile-menu-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-right: 16px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+  }
+
+  .mobile-menu-footer {
+    margin-top: auto;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+
+  .mobile-menu-footer a {
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .mobile-menu-footer a:hover { color: var(--accent); }
 
   /* ═══════════════════════════════════════════════════════════
      HERO
@@ -275,9 +408,7 @@
     color: var(--text);
     border-color: var(--border);
   }
-  .btn-secondary:hover {
-    border-color: var(--accent);
-  }
+  .btn-secondary:hover { border-color: var(--accent); }
 
   .arrow { transition: transform 0.25s; }
   .btn:hover .arrow { transform: translateX(4px); }
@@ -337,9 +468,7 @@
     position: relative;
   }
 
-  .service-card:hover {
-    background: var(--bg-elev-2);
-  }
+  .service-card:hover { background: var(--bg-elev-2); }
 
   .service-num {
     font-family: 'JetBrains Mono', monospace;
@@ -361,6 +490,11 @@
   .service-card p {
     color: var(--text-dim);
     font-size: 15px;
+  }
+
+  .services-cta {
+    margin-top: 40px;
+    text-align: center;
   }
 
   /* OM */
@@ -394,7 +528,7 @@
   }
 
   .about-image::after {
-    content: 'BILLEDE';
+    content: 'TEAMBILLEDE';
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
     color: var(--text-muted);
@@ -523,6 +657,7 @@
     grid-template-columns: 1fr 1fr;
     gap: 40px;
     align-items: center;
+    text-align: left;
   }
 
   @media (max-width: 700px) {
@@ -640,9 +775,15 @@
     transform: translateY(30px);
     transition: opacity 0.8s, transform 0.8s;
   }
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ═══════════════════════════════════════════════════════════
+     RESPONSIVE — burger menu kicks in
+     ═══════════════════════════════════════════════════════════ */
+
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .burger { display: block; }
   }
 
   @media (max-width: 600px) {
@@ -650,8 +791,6 @@
     section { padding: 60px 0; }
     .hero { padding: 60px 0; }
     .logo-wordmark { font-size: 18px; }
-    .nav-links { gap: 16px; }
-    .nav-links a:not(.btn-nav) { display: none; }
   }
 </style>
 </head>
@@ -662,7 +801,7 @@
 
 <nav id="nav">
   <div class="container nav-inner">
-    <a href="/" class="logo" aria-label="LYDSTYRKEN">
+    <a href="index.html" class="logo" aria-label="LYDSTYRKEN">
       <span class="logo-wordmark" aria-hidden="true">
         <span class="logo-bracket logo-bracket-left">[</span>
         <span class="logo-text">LYDSTYRKEN</span>
@@ -670,13 +809,36 @@
       </span>
     </a>
     <div class="nav-links">
-      <a href="#ydelser">Ydelser</a>
-      <a href="#om">Om</a>
+      <a href="ydelser.html">Ydelser</a>
+      <a href="om.html">Om os</a>
       <a href="#kontakt">Kontakt</a>
       <a href="lagersalg.html" class="btn-nav">Lagersalg →</a>
     </div>
+    <button class="burger" id="burger" aria-label="Åbn menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </div>
 </nav>
+
+<!-- Mobile menu drawer -->
+<div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Hovedmenu">
+  <div class="container">
+    <div class="mobile-menu-links">
+      <a href="index.html"><span class="mobile-menu-num">01</span>Forside</a>
+      <a href="ydelser.html"><span class="mobile-menu-num">02</span>Ydelser</a>
+      <a href="om.html"><span class="mobile-menu-num">03</span>Om os</a>
+      <a href="lagersalg.html"><span class="mobile-menu-num">04</span>Lagersalg</a>
+      <a href="#kontakt"><span class="mobile-menu-num">05</span>Kontakt</a>
+    </div>
+    <div class="mobile-menu-footer">
+      <a href="mailto:marius@lydstyrken.com">marius@lydstyrken.com</a>
+      <a href="https://instagram.com/lydstyrken" target="_blank" rel="noopener">@lydstyrken på Instagram ↗</a>
+      <span style="margin-top: 12px;">© 2025 LYDSTYRKEN — CVR 45880419</span>
+    </div>
+  </div>
+</div>
 
 <header class="hero">
   <div class="container">
@@ -689,8 +851,8 @@
       LYDSTYRKEN leverer professionel lyd til events, koncerter og arrangementer — fra intime gigs til festivalscener.
     </p>
     <div class="hero-actions">
-      <a href="#kontakt" class="btn btn-primary">
-        Book et arrangement
+      <a href="ydelser.html" class="btn btn-primary">
+        Se vores pakker
         <span class="arrow">→</span>
       </a>
       <a href="lagersalg.html" class="btn btn-secondary">
@@ -700,7 +862,7 @@
   </div>
 </header>
 
-<section id="ydelser">
+<section id="ydelser-preview">
   <div class="container">
     <div class="section-label">// YDELSER</div>
     <h2 class="section-title">Lyd til alle slags arrangementer.</h2>
@@ -722,18 +884,25 @@
         <p>Skalerbare PA-løsninger til scener i alle størrelser — fra mindre byfester til større festivaler og sportsarrangementer.</p>
       </div>
     </div>
+
+    <div class="services-cta">
+      <a href="ydelser.html" class="btn btn-primary">
+        Byg din pakke & få et estimat
+        <span class="arrow">→</span>
+      </a>
+    </div>
   </div>
 </section>
 
-<section id="om" class="about">
+<section id="om-preview" class="about">
   <div class="container">
     <div class="about-grid">
       <div class="about-image"></div>
       <div>
-        <div class="section-label">// OM</div>
-        <h2 class="section-title" style="margin-bottom: 32px;">Bag <span class="accent">LYDSTYRKEN</span> står Marius.</h2>
-        <p>Jeg startede LYDSTYRKEN, fordi jeg brænder for det øjeblik, hvor lyden falder på plads, og publikum mærker det i kroppen. Det handler ikke kun om gear — det handler om at få et arrangement til at føles rigtigt.</p>
-        <p>Med base i Odense leverer jeg lyd til alt fra intime koncerter til større events i hele Danmark. Personlig tilgang, professionelt udstyr, og en oprigtig interesse i at gøre dit arrangement bedst muligt.</p>
+        <div class="section-label">// HOLDET</div>
+        <h2 class="section-title" style="margin-bottom: 32px;">Et lille hold med <span class="accent">stor</span> lyd.</h2>
+        <p>Vi er fem mennesker bag LYDSTYRKEN — alle med rødder i live-lyd, events og det øjeblik, hvor lyden falder på plads og publikum mærker det i kroppen.</p>
+        <p>Med base i Odense leverer vi til arrangementer i hele Danmark. Personlig tilgang, professionelt udstyr, og en oprigtig interesse i at gøre dit arrangement bedst muligt.</p>
 
         <div class="about-meta">
           <div class="meta-item">
@@ -744,6 +913,13 @@
             <span>CVR</span>
             45880419
           </div>
+        </div>
+
+        <div style="margin-top: 32px;">
+          <a href="om.html" class="btn btn-secondary">
+            Mød hele holdet
+            <span class="arrow">→</span>
+          </a>
         </div>
       </div>
     </div>
@@ -787,7 +963,7 @@
   <div class="container">
     <div class="footer-grid">
       <div class="footer-col">
-        <a href="/" class="logo" aria-label="LYDSTYRKEN">
+        <a href="index.html" class="logo" aria-label="LYDSTYRKEN">
           <span class="logo-wordmark" aria-hidden="true">
             <span class="logo-bracket logo-bracket-left">[</span>
             <span class="logo-text">LYDSTYRKEN</span>
@@ -803,8 +979,8 @@
       </div>
       <div class="footer-col">
         <h4>Sider</h4>
-        <a href="#ydelser">Ydelser</a>
-        <a href="#om">Om</a>
+        <a href="ydelser.html">Ydelser</a>
+        <a href="om.html">Om os</a>
         <a href="lagersalg.html">Lagersalg</a>
       </div>
     </div>
@@ -816,6 +992,43 @@
 </footer>
 
 <script>
+  // ═══════════════════════════════════════════════════════════
+  //   BURGER MENU
+  // ═══════════════════════════════════════════════════════════
+  const burger = document.getElementById('burger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const body = document.body;
+
+  function toggleMenu() {
+    const isOpen = body.classList.toggle('menu-open');
+    burger.setAttribute('aria-expanded', isOpen);
+  }
+
+  function closeMenu() {
+    body.classList.remove('menu-open');
+    burger.setAttribute('aria-expanded', 'false');
+  }
+
+  burger.addEventListener('click', toggleMenu);
+
+  // Luk menu når et link bliver klikket
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      // Lille delay så animationen kan ses
+      setTimeout(closeMenu, 50);
+    });
+  });
+
+  // Luk med Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && body.classList.contains('menu-open')) closeMenu();
+  });
+
+  // Luk hvis vinduet bliver større end mobile breakpoint
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 900) closeMenu();
+  });
+
   // ═══════════════════════════════════════════════════════════
   //   NAV + SCROLL PROGRESS
   // ═══════════════════════════════════════════════════════════
