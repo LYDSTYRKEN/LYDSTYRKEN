@@ -92,48 +92,55 @@ const BANDS = [
   //   @prompteprompte — Odense-baseret hiphop/pop duo
   //   Interview udgivet 2026, uddybninger fra YouTube-video
   // ─────────────────────────────────────────────────────────────
+ {
+  id: 'promte',
+
+  name: 'PROMTE',
+  genre: 'Hiphop / Pop',
+
+  tagline: 'Dansk rap med kant og personlighed.',
+
+  bio: [
+    'PROMTE er en duo fra Odense bestående af Storm (producer, keyboards) og Asker (rapper, sangskriver, klaver). De mødtes på en musikworkshop i Højstrup, hvor Storm sad bag producerstolen og Asker arbejdede med rap og tekstskrivning. De fandt hurtigt ud af, at deres musikalske stilarter passede sammen: hård hiphop blandet med poppet stemning, fokus på danske tekster, sjove punchlines og håndværk inden for rim og semantik. Deres lyd trækker på alt fra klassisk 90\'er boom-bap til psykedelisk produktion og pop-elementer — uden at falde i en fast bås.',
+    'LYDSTYRKEN er PROMTEs tekniske afvikler på den kommende turné efter sommeren 2026. Vi sikrer, at duoens detaljerede produktion og energi kommer til sin ret på hver scene — fra klubkoncerter til større venues.'
+  ],
+
+  tech: [
+    'FOH-mix (front-of-house)',
+    'Monitor-mix og in-ear opsætning',
+    'Stage setup og patch',
+    'Trådløse systemer (vokal + instrumenter)',
+    'Live elektronisk backing fra DJ-bord',
+  ],
+
+  mainImage: 'images/bands/promte/main.jpg',
+  images: [
+    // 'images/bands/promte/live-1.jpg',
+    // 'images/bands/promte/live-2.jpg',
+    // 'images/bands/promte/live-3.jpg',
+  ],
+
+ events: [
   {
-    id: 'promte',
-
-    name: 'PROMTE',
-    genre: 'Hiphop / Pop',
-
-    tagline: 'Dansk rap med sjov og personlighed.',
-
-    bio: [
-      'PROMTE er et duoband fra Odense bestående af Storm (producer, keyboards) og Asker (rapper, sangskriver, klaver). De mødte hinanden på en musikworkshop i Holstrup i 2024, hvor Storm producerede beats og Asker skrev rap- og tekstskrivning. Hurtigt blev de klar over at deres stilarter passede perfekt sammen — de blander hård hiphop med poppet musik, med fokus på danske tekster, sjove linier og håndværk inden for rimning og semantik. Deres musik er en blanding af klassisk 90\'er hiphop, psykedelisk produktion og pop-elementos, helt uden at blive monotom. PROMTE spiller på dansk fordi sproget giver dem mere plads til kreativitet og personlighed end engelsk ville.',
-      'LYDSTYRKEN er PROMs tekniske afvikler på deres kommende turnéen efter sommeren 2026. Marius håndterer lyd, mixing og sceneopstilling, og sikrer at duoets detaljerede produktion og energi kommer perfekt til udtryk på hver scene. Med Storms bror på bas og elektronisk backing fra computeren, skabes der en komplet livearvelse fra minimalt elektronisk setup.'
-    ],
-
-    tech: [
-      'FOH-mix (front-of-house)',
-      'Monitor-mix og in-ear opsætning',
-      'Stage setup og patch',
-      'Trådløse systemer (vokal + instrumenter)',
-      'Live elektronisk backing fra DJbord',
-    ],
-
-    mainImage: 'images/bands/promte/main.jpg',
-    images: [
-      // 'images/bands/promte/live-1.jpg',
-      // 'images/bands/promte/live-2.jpg',
-      // 'images/bands/promte/live-3.jpg',
-    ],
-
-    events: [
-      // Turnédatoer bekræftes efter sommer 2026
-    ],
-
-    social: {
-      instagram: 'https://instagram.com/prompteprompte',
-      facebook: null,
-      spotify: null,
-      website: null,
-    },
-
-    bookingEmail: 'marius@lydstyrken.com',
-    bookingSubject: 'Booking-forespørgsel: PROMTE',
+    date: '2026-08-22',          // YYYY-MM-DD format
+    venue: 'Spillestedet Posten',
+    city: 'Odense',
+    description: 'Turnéåbning',
+    link: 'https://posten.dk'    // Kan være tom: ''
   },
+  // Tilføj flere events her
+],
+
+  social: {
+    instagram: 'https://instagram.com/prompteprompte',
+    facebook: null,
+    spotify: null,
+    website: null,
+  },
+
+  bookingEmail: 'marius@lydstyrken.com',
+  bookingSubject: 'Booking-forespørgsel: PROMTE',
+},
 
 ];
 
