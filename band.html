@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Band — LYDSTYRKEN</title>
+<meta name="description" content="Lyd afviklet af LYDSTYRKEN.">
+
+<!-- Open Graph — opdateres dynamisk via JS -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="LYDSTYRKEN">
+<meta property="og:description" content="Teknisk afvikling ved LYDSTYRKEN, Odense.">
+<meta property="og:image" content="https://www.lydstyrken.com/images/og-default.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="da_DK">
+<meta property="og:site_name" content="LYDSTYRKEN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.lydstyrken.com/images/og-default.jpg">
+
+<!-- Canonical sættes dynamisk -->
+<link rel="canonical" href="https://www.lydstyrken.com/band.html">
+<link rel="icon" type="image/png" href="images/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+
+<style>
+  /* ═══════════════ BAND-SIDE CSS ═══════════════ */
+
+  .accent { color: var(--accent); }
+
+  /* ─── HERO ─── */
+  .band-hero {
+    position: relative;
+    min-height: 65vh;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .band-hero-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center 20%;
+    filter: brightness(0.35);
+    transition: transform 8s ease-out;
+    transform: scale(1.04);
+  }
+
+  .band-hero.loaded .band-hero-bg { transform: scale(1); }
+
+  .band-hero-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(10, 10, 11, 0.1) 0%,
+      rgba(10, 10, 11, 0.4) 50%,
+      rgba(10, 10, 11, 0.95) 100%
+    );
+  }
+
+  .band-hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 60px 0;
+    width: 100%;
+  }
+
+  .band-tech-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 7px 14px;
+    border: 1px solid var(--accent);
+    border-radius: 100px;
+    background: rgba(255, 77, 46, 0.08);
+    margin-bottom: 24px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .band-tech-badge .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: dot-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes dot-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .band-name {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: clamp(52px, 10vw, 120px);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    color: var(--text);
+  }
+
+  .band-genre {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .band-genre::before { content: '// '; color: var(--accent); }
+
+  .band-hero-socials {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .social-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background: rgba(10, 10, 11, 0.4);
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+  }
+  .social-link:hover {
+    color: var(--text);
+    border-color: #3a3a40;
+    background: rgba(10, 10, 11, 0.7);
+  }
+  .social-link svg { width: 14px; height: 14px; }
+
+  /* ─── LAYOUT ─── */
+  .band-body {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 56px;
+    padding: 64px 0 80px;
+    align-items: start;
+  }
+  @media (max-width: 1000px) {
+    .band-body { grid-template-columns: 1fr; gap: 40px; }
+  }
+
+  /* ─── VENSTE KOLONNE ─── */
+  .band-main {}
+
+  /* Bio */
+  .band-section {
+    margin-bottom: 56px;
+  }
+
+  .band-section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .band-section-label::before {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .band-bio p {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+  }
+  .band-bio p:first-child { color: var(--text); font-size: 18px; }
+
+  /* Galleri */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  @media (max-width: 700px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  .gallery-grid-item {
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    cursor: zoom-in;
+    position: relative;
+  }
+
+  .gallery-grid-item:first-child {
+    grid-column: 1 / -1;
+    aspect-ratio: 16/7;
+  }
+  @media (max-width: 700px) {
+    .gallery-grid-item:first-child { grid-column: 1 / -1; aspect-ratio: 16/9; }
+  }
+
+  .gallery-grid-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease, filter 0.3s;
+  }
+  .gallery-grid-item:hover img { transform: scale(1.06); filter: brightness(1.1); }
+
+  .gallery-grid-item::after {
+    content: '↗';
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 28px;
+    height: 28px;
+    background: rgba(10, 10, 11, 0.7);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: var(--text);
+    opacity: 0;
+    transition: opacity 0.25s, background 0.25s;
+  }
+  .gallery-grid-item:hover::after { opacity: 1; background: var(--accent); border-color: var(--accent); }
+
+  .gallery-placeholder {
+    aspect-ratio: 4/3;
+    background: var(--bg-elev);
+    border: 1px dashed var(--border);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.2em;
+    grid-column: 1 / -1;
+  }
+
+  /* Events */
+  .events-list { display: flex; flex-direction: column; gap: 1px; }
+
+  .event-row {
+    display: grid;
+    grid-template-columns: 140px 1fr auto;
+    gap: 24px;
+    padding: 20px 24px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    align-items: center;
+    transition: background 0.2s, border-color 0.2s;
+    margin-bottom: 8px;
+  }
+  .event-row:hover { background: var(--bg-elev-2); border-color: #3a3a40; }
+
+  @media (max-width: 700px) {
+    .event-row { grid-template-columns: 1fr auto; gap: 12px; }
+    .event-date { display: none; }
+    .event-row .event-date { display: block; }
+  }
+
+  .event-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+
+  .event-info {}
+
+  .event-venue {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 2px;
+  }
+
+  .event-city {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .event-type {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 3px;
+  }
+
+  .event-link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    border: 1px solid var(--accent);
+    border-radius: 100px;
+    transition: background 0.2s, color 0.2s;
+    white-space: nowrap;
+  }
+  .event-link:hover { background: var(--accent); color: #0a0a0b; }
+
+  .no-events {
+    padding: 32px;
+    background: var(--bg-elev);
+    border: 1px dashed var(--border);
+    border-radius: var(--radius-md);
+    text-align: center;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+  }
+
+  /* ─── HØJRE SIDEBAR ─── */
+  .band-sidebar { display: flex; flex-direction: column; gap: 16px; }
+
+  .sidebar-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .sidebar-card-head {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .sidebar-card-body { padding: 20px 24px; }
+
+  /* Tech rider card */
+  .tech-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+  .tech-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.4;
+  }
+
+  .tech-list li::before {
+    content: '✓';
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* LYDSTYRKEN branding card */
+  .lyd-card {
+    background: rgba(255, 77, 46, 0.04);
+    border-color: rgba(255, 77, 46, 0.3);
+  }
+
+  .lyd-card .sidebar-card-head { border-color: rgba(255, 77, 46, 0.2); }
+
+  .lyd-body { padding: 24px; }
+
+  .lyd-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.1em;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 0.9;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .lyd-logo .lb { color: var(--accent); font-size: 1.2em; line-height: 1; }
+
+  .lyd-tagline {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+
+  /* Book CTA card */
+  .book-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px 24px;
+    text-align: center;
+  }
+
+  .book-card h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+    line-height: 1.1;
+  }
+  .book-card h3 .accent {
+    color: var(--accent);
+    font-style: italic;
+    font-weight: 400;
+    text-transform: lowercase;
+  }
+
+  .book-card p {
+    color: var(--text-dim);
+    font-size: 13px;
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+
+  .book-btn {
+    width: 100%;
+    background: var(--accent);
+    color: #0a0a0b;
+    border: none;
+    padding: 16px;
+    border-radius: var(--radius-sm);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  }
+  .book-btn:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px var(--accent-glow);
+  }
+
+  /* ─── NOT FOUND ─── */
+  .not-found {
+    padding: 120px 0;
+    text-align: center;
+  }
+  .not-found h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: clamp(36px, 5vw, 56px);
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    line-height: 1;
+  }
+  .not-found p { color: var(--text-dim); font-size: 17px; margin-bottom: 32px; }
+
+  /* ─── LIGHTBOX ─── */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 10, 11, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    cursor: zoom-out;
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox.visible { opacity: 1; }
+
+  .lightbox img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    color: var(--text);
+    font-size: 20px;
+    cursor: pointer;
+    transition: border-color 0.2s, transform 0.2s, color 0.2s;
+  }
+  .lightbox-close:hover { border-color: var(--accent); color: var(--accent); transform: rotate(90deg); }
+</style>
+</head>
+<body>
+
+<a href="#content" class="skip-link">Spring til indhold</a>
+
+<div class="scroll-progress" id="progress"></div>
+<div class="bg-glow"></div>
+
+<nav id="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="logo" aria-label="LYDSTYRKEN — Forside">
+      <span class="logo-wordmark" aria-hidden="true">
+        <span class="logo-bracket logo-bracket-left">[</span>
+        <span class="logo-text">LYDSTYRKEN</span>
+        <span class="logo-bracket logo-bracket-right">]</span>
+      </span>
+    </a>
+    <div class="nav-links">
+      <a href="ydelser.html">Ydelser</a>
+      <a href="om.html">Om os</a>
+      <a href="index.html#kontakt">Kontakt</a>
+      <a href="lagersalg.html" class="btn-nav">Lagersalg →</a>
+    </div>
+    <button class="burger" id="burger" aria-label="Åbn menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Hovedmenu">
+  <div class="container">
+    <div class="mobile-menu-links">
+      <a href="index.html"><span class="mobile-menu-num">01</span>Forside</a>
+      <a href="ydelser.html"><span class="mobile-menu-num">02</span>Ydelser</a>
+      <a href="om.html"><span class="mobile-menu-num">03</span>Om os</a>
+      <a href="lagersalg.html"><span class="mobile-menu-num">04</span>Lagersalg</a>
+      <a href="index.html#kontakt"><span class="mobile-menu-num">05</span>Kontakt</a>
+    </div>
+    <div class="mobile-menu-footer">
+      <a href="mailto:marius@lydstyrken.com">marius@lydstyrken.com</a>
+      <a href="https://instagram.com/lydstyrken" target="_blank" rel="noopener">@lydstyrken på Instagram ↗</a>
+      <span style="margin-top: 12px;">© 2025 LYDSTYRKEN — CVR 45880419</span>
+    </div>
+  </div>
+</div>
+
+<!-- Indhold indsættes via JS -->
+<div id="content"></div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" role="dialog" aria-label="Billede" aria-hidden="true">
+  <button type="button" class="lightbox-close" id="lightbox-close" aria-label="Luk">×</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <a href="index.html" class="logo" aria-label="LYDSTYRKEN">
+          <span class="logo-wordmark" aria-hidden="true">
+            <span class="logo-bracket logo-bracket-left">[</span>
+            <span class="logo-text">LYDSTYRKEN</span>
+            <span class="logo-bracket logo-bracket-right">]</span>
+          </span>
+        </a>
+        <p class="footer-tag">Professionel lyd til events og koncerter — leveret fra Odense, hele Danmark over.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Kontakt</h4>
+        <a href="mailto:marius@lydstyrken.com">marius@lydstyrken.com</a>
+        <a href="https://instagram.com/lydstyrken" target="_blank" rel="noopener">Instagram ↗</a>
+      </div>
+      <div class="footer-col">
+        <h4>Sider</h4>
+        <a href="ydelser.html">Ydelser</a>
+        <a href="om.html">Om os</a>
+        <a href="lagersalg.html">Lagersalg</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 LYDSTYRKEN — CVR 45880419</span>
+      <span>[ ODENSE / DK ]</span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+<script src="bands.js" defer></script>
+<script defer>
+  document.addEventListener('DOMContentLoaded', () => {
+
+    const params = new URLSearchParams(window.location.search);
+    const bandId = params.get('id');
+    const band = (typeof findBandById !== 'undefined') ? findBandById(bandId) : null;
+    const content = document.getElementById('content');
+
+    // ── Ikke fundet ──────────────────────────────────────────
+    if (!band) {
+      document.title = 'Band ikke fundet — LYDSTYRKEN';
+      content.innerHTML = `
+        <div class="container">
+          <div class="not-found">
+            <h1>Siden <span style="color:var(--accent);font-style:italic;font-weight:400;text-transform:lowercase;">findes ikke.</span></h1>
+            <p>Det band du leder efter er ikke registreret hos LYDSTYRKEN endnu.</p>
+            <a href="index.html" class="btn btn-primary">Gå til forsiden <span class="arrow">→</span></a>
+          </div>
+        </div>
+      `;
+      return;
+    }
+
+    // ── Meta / OG ────────────────────────────────────────────
+    document.title = `${band.name} — LYDSTYRKEN`;
+    setMeta('og:title', `${band.name} — Teknisk afvikling af LYDSTYRKEN`);
+    setMeta('og:description', band.bio[0] || '');
+    setMeta('og:url', `https://www.lydstyrken.com/${band.id}`);
+    if (band.mainImage) {
+      const ogImg = `https://www.lydstyrken.com/${band.mainImage}`;
+      setMeta('og:image', ogImg);
+      setMeta('twitter:image', ogImg);
+    }
+    document.querySelector('link[rel="canonical"]').href = `https://www.lydstyrken.com/${band.id}`;
+
+    function setMeta(prop, val) {
+      const el = document.querySelector(`meta[property="${prop}"]`);
+      if (el) el.setAttribute('content', val);
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    // ── Bygger soci-links ─────────────────────────────────────
+    function buildSocialLinks(social) {
+      if (!social) return '';
+      const icons = {
+        instagram: `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>`,
+        facebook:  `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>`,
+        spotify:   `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 13.5a9 9 0 016 0M7 10.5a12 12 0 0110 0M9 16.5a6 6 0 016 0"/></svg>`,
+        website:   `<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>`,
+      };
+      const labels = { instagram: 'Instagram', facebook: 'Facebook', spotify: 'Spotify', website: 'Website' };
+      return Object.entries(social)
+        .filter(([, url]) => url)
+        .map(([key, url]) => `
+          <a href="${escapeHtml(url)}" target="_blank" rel="noopener" class="social-link">
+            ${icons[key] || ''}
+            ${labels[key] || key}
+            ↗
+          </a>
+        `).join('');
+    }
+
+    // ── Bygger galleri ────────────────────────────────────────
+    function buildGallery(band) {
+      const allImages = [band.mainImage, ...(band.images || [])].filter(Boolean);
+      if (allImages.length === 0) {
+        return `<div class="gallery-placeholder">// BILLEDER TILFØJES</div>`;
+      }
+      return `<div class="gallery-grid">${
+        allImages.map((src, i) => `
+          <div class="gallery-grid-item" data-src="${escapeHtml(src)}" role="button" tabindex="0" aria-label="Vis billede ${i + 1}">
+            <img src="${escapeHtml(src)}" alt="${escapeHtml(band.name)} — billede ${i + 1}" loading="${i === 0 ? 'eager' : 'lazy'}" decoding="async">
+          </div>
+        `).join('')
+      }</div>`;
+    }
+
+    // ── Bygger events ─────────────────────────────────────────
+    function buildEvents(band) {
+      const upcoming = (band.events || [])
+        .filter(e => isUpcoming(e.date))
+        .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+      if (upcoming.length === 0) {
+        return `<div class="no-events">// Ingen kommende shows annonceret endnu</div>`;
+      }
+
+      return `<div class="events-list">${
+        upcoming.map(ev => `
+          <div class="event-row">
+            <div class="event-date">${formatEventDate(ev.date)}</div>
+            <div class="event-info">
+              <div class="event-venue">${escapeHtml(ev.venue)}</div>
+              <div class="event-city">${escapeHtml(ev.city)}</div>
+              ${ev.description ? `<div class="event-type">${escapeHtml(ev.description)}</div>` : ''}
+            </div>
+            ${ev.link
+              ? `<a href="${escapeHtml(ev.link)}" target="_blank" rel="noopener" class="event-link">Billetter ↗</a>`
+              : `<span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);letter-spacing:0.08em;">GRATIS</span>`
+            }
+          </div>
+        `).join('')
+      }</div>`;
+    }
+
+    // ── Render ───────────────────────────────────────────────
+    const heroBg = band.mainImage
+      ? `background-image: url('${escapeHtml(band.mainImage)}')`
+      : `background: var(--bg-elev-2)`;
+
+    const bookingSubject = encodeURIComponent(band.bookingSubject || `Booking-forespørgsel: ${band.name}`);
+    const bookingBody = encodeURIComponent(
+      `Hej Marius,\n\nJeg er interesseret i at booke ${band.name} til et arrangement.\n\nEvent-type:\nDato:\nSted:\nAntal gæster:\n\nMere info:\n\nMvh.`
+    );
+
+    content.innerHTML = `
+      <!-- ─── HERO ─── -->
+      <section class="band-hero" id="band-hero">
+        <div class="band-hero-bg" style="${heroBg}"></div>
+        <div class="band-hero-gradient"></div>
+        <div class="band-hero-content">
+          <div class="container">
+            <div class="band-tech-badge">
+              <span class="dot" aria-hidden="true"></span>
+              Lyd afviklet af LYDSTYRKEN
+            </div>
+            <h1 class="band-name">${escapeHtml(band.name)}</h1>
+            <div class="band-genre">${escapeHtml(band.genre)}</div>
+            <div class="band-hero-socials">
+              ${buildSocialLinks(band.social)}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─── BODY ─── -->
+      <div class="container">
+        <div class="band-body">
+
+          <!-- Venstre: bio + galleri + events -->
+          <div class="band-main">
+
+            ${band.bio && band.bio.length > 0 ? `
+              <section class="band-section band-bio">
+                <div class="band-section-label">// OM BANDET</div>
+                ${band.bio.map(p => `<p>${escapeHtml(p)}</p>`).join('')}
+              </section>
+            ` : ''}
+
+            <section class="band-section">
+              <div class="band-section-label">// GALLERI</div>
+              ${buildGallery(band)}
+            </section>
+
+            <section class="band-section">
+              <div class="band-section-label">// KOMMENDE SHOWS</div>
+              ${buildEvents(band)}
+            </section>
+
+          </div>
+
+          <!-- Højre: sidebar -->
+          <aside class="band-sidebar">
+
+            <!-- Book CTA -->
+            <div class="book-card">
+              <h3>Book til dit <span class="accent">event.</span></h3>
+              <p>Booking og forespørgsler håndteres af LYDSTYRKEN. Vi vender tilbage inden for 24 timer.</p>
+              <a href="mailto:${escapeHtml(band.bookingEmail || 'marius@lydstyrken.com')}?subject=${bookingSubject}&body=${bookingBody}"
+                 class="book-btn">
+                Send booking-forespørgsel →
+              </a>
+            </div>
+
+            <!-- Tech rider -->
+            ${band.tech && band.tech.length > 0 ? `
+              <div class="sidebar-card">
+                <div class="sidebar-card-head">// HVAD LYDSTYRKEN HÅNDTERER</div>
+                <div class="sidebar-card-body">
+                  <ul class="tech-list">
+                    ${band.tech.map(t => `<li>${escapeHtml(t)}</li>`).join('')}
+                  </ul>
+                </div>
+              </div>
+            ` : ''}
+
+            <!-- LYDSTYRKEN branding -->
+            <div class="sidebar-card lyd-card">
+              <div class="sidebar-card-head">// TEKNISK AFVIKLING</div>
+              <div class="lyd-body">
+                <a href="index.html" class="lyd-logo" aria-label="LYDSTYRKEN — Forside">
+                  <span class="lb">[</span>LYD<span class="lb">]</span>
+                </a>
+                <p class="lyd-tagline">LYDSTYRKEN leverer professionel lyd til events, koncerter og arrangementer — fra Odense, hele Danmark over.</p>
+                <a href="ydelser.html" class="btn btn-secondary" style="font-size:12px;padding:12px 18px;">
+                  Se vores pakker <span class="arrow">→</span>
+                </a>
+              </div>
+            </div>
+
+          </aside>
+        </div>
+      </div>
+    `;
+
+    // Trigger parallax-zoom på hero-baggrund
+    setTimeout(() => {
+      document.getElementById('band-hero').classList.add('loaded');
+    }, 50);
+
+    // ── Lightbox ──────────────────────────────────────────────
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxClose = document.getElementById('lightbox-close');
+
+    function openLightbox(src) {
+      lightboxImg.src = src;
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      requestAnimationFrame(() => lightbox.classList.add('visible'));
+    }
+    function closeLightbox() {
+      lightbox.classList.remove('visible');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      setTimeout(() => lightbox.classList.remove('open'), 250);
+    }
+
+    document.addEventListener('click', e => {
+      const item = e.target.closest('.gallery-grid-item');
+      if (item && item.dataset.src) openLightbox(item.dataset.src);
+    });
+    document.addEventListener('keydown', e => {
+      const item = document.activeElement.closest('.gallery-grid-item');
+      if (item && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openLightbox(item.dataset.src); }
+      if (e.key === 'Escape') closeLightbox();
+    });
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+  });
+</script>
+
+</body>
+</html>

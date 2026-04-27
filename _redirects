@@ -1,0 +1,36 @@
+# ════════════════════════════════════════════════════════════════
+# LYDSTYRKEN — Cloudflare Pages URL-rewrites
+# ════════════════════════════════════════════════════════════════
+#
+# Format:  /slug  /band.html?id=slug  200
+#
+# "200" = rewrite (URL forbliver /bandnavn i browseren)
+# "302" = redirect (URL ændres til /band.html?id=... i browseren)
+#
+# Vi bruger 200 så URL'en ser professionel ud når bands deler den.
+#
+# SÅDAN TILFØJER DU ET NYT BAND:
+# 1. Tilføj band-objekt i bands.js med det samme id som herunder
+# 2. Tilføj én linje:  /band-id  /band.html?id=band-id  200
+# 3. Upload billeder til images/bands/band-id/
+# 4. Commit + push — Cloudflare deployer automatisk
+#
+# ════════════════════════════════════════════════════════════════
+
+# ─── BANDS ───────────────────────────────────────────────────
+# Erstat "eksempel-band" med det rigtige band-id fra bands.js
+
+/eksempel-band   /band.html?id=eksempel-band   200
+/promte          /band.html?id=promte          200
+
+# Tilføj næste band herunder:
+# /nova-band      /band.html?id=nova-band      200
+# /the-trio       /band.html?id=the-trio       200
+
+# ════════════════════════════════════════════════════════════════
+# EVENTUEL FREMTIDIG BRUG — eksempler
+# ════════════════════════════════════════════════════════════════
+
+# Fremtidige rene URL'er for andre sider:
+# /referencer     /references.html             200
+# /udlejning      /udlejning.html              200
