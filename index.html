@@ -4,378 +4,78 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LYDSTYRKEN — Professionel lyd til events og koncerter</title>
-<meta name="description" content="LYDSTYRKEN leverer professionel lyd til events, koncerter og arrangementer i hele Danmark.">
+<meta name="description" content="LYDSTYRKEN leverer professionel lyd til events, koncerter og arrangementer i hele Danmark. Base i Odense.">
+
+<!-- Open Graph (Facebook, Messenger, Instagram, LinkedIn) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="LYDSTYRKEN — Lyd der løfter rummet">
+<meta property="og:description" content="Professionel lyd til events, koncerter og arrangementer — fra Odense, hele Danmark over.">
+<meta property="og:url" content="https://www.lydstyrken.com/">
+<meta property="og:image" content="https://www.lydstyrken.com/images/og-default.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="da_DK">
+<meta property="og:site_name" content="LYDSTYRKEN">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="LYDSTYRKEN — Lyd der løfter rummet">
+<meta name="twitter:description" content="Professionel lyd til events og koncerter. Base i Odense.">
+<meta name="twitter:image" content="https://www.lydstyrken.com/images/og-default.jpg">
+
+<link rel="canonical" href="https://www.lydstyrken.com/">
 <link rel="icon" type="image/png" href="images/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+
+<!-- Strukturerede data — hjælper Google forstå hvem du er -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "LYDSTYRKEN",
+  "description": "Professionel lyd til events, koncerter og arrangementer i hele Danmark.",
+  "url": "https://www.lydstyrken.com",
+  "email": "marius@lydstyrken.com",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Odense",
+    "addressCountry": "DK"
+  },
+  "areaServed": "DK",
+  "founder": "Marius Blæsbjerg",
+  "vatID": "DK45880419",
+  "sameAs": ["https://instagram.com/lydstyrken"]
+}
+</script>
+
 <style>
-  :root {
-    --bg: #0a0a0b;
-    --bg-elev: #131316;
-    --bg-elev-2: #1c1c20;
-    --border: #2a2a2f;
-    --text: #f0eeea;
-    --text-dim: #8a8a90;
-    --text-muted: #5a5a60;
-    --accent: #ff4d2e;
-    --accent-glow: rgba(255, 77, 46, 0.15);
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 400;
-    line-height: 1.6;
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  body.menu-open { overflow: hidden; }
-
-  /* Scroll progress */
-  .scroll-progress {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 2px;
-    background: var(--accent);
-    z-index: 200;
-    width: 0%;
-    transition: width 0.1s;
-  }
-
-  /* Subtil grid */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(255, 255, 255, 0.030) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.030) 1px, transparent 1px);
-    background-size: 50px 50px;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .bg-glow {
-    position: fixed;
-    top: -300px;
-    right: -300px;
-    width: 800px;
-    height: 800px;
-    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 75%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 32px;
-    position: relative;
-    z-index: 2;
-  }
-
-  /* ═══════════════════════════════════════════════════════════
-     NAV + LOGO + BURGER MENU
-     ═══════════════════════════════════════════════════════════ */
-
-  nav {
-    padding: 24px 0;
-    position: sticky;
-    top: 0;
-    background: rgba(10, 10, 11, 0.85);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(20px);
-    z-index: 100;
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.3s, padding 0.3s;
-  }
-
-
-  nav.scrolled { border-bottom-color: var(--border); padding: 16px 0; }
-
-  .nav-inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
- .logo {
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    color: var(--text);
-  }
-
-  .logo-wordmark {
-    display: center;
-    align-items: center;
-    gap: 1.1em;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 22px;
-    font-weight: 900;
-    line-height: 0.9;
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-
-  .logo-text, .logo-bracket {
-    display: inline-block;
-    transition: transform 0.25s;
-    margin: 4px;
-  }
-
-  .logo-text { transform: scaleX(1.06); transform-origin: center; }
-
-  .logo-bracket {
-    font-size: 1.25em;
-    line-height: 1;
-    transition: color 0.25s, text-shadow 0.25s, transform 0.25s;
-  }
-
-  .logo:hover .logo-bracket {
-    color: var(--accent);
-    text-shadow: 0 0 16px rgba(255, 77, 46, 0.75), 0 0 34px rgba(255, 77, 46, 0.35);
-  }
-
-  .logo:hover .logo-bracket-left { transform: translateX(-5px) scaleY(1.15); }
-  .logo:hover .logo-bracket-right { transform: translateX(5px) scaleY(1.15); }
-
-  .nav-links {
-    display: flex;
-    gap: 32px;
-    align-items: center;
-  }
-
-  .nav-links a {
-    color: var(--text-dim);
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    transition: color 0.2s;
-    position: relative;
-    padding: 6px 0;
-  }
-  .nav-links a:hover { color: var(--text); }
-
-  /* Active page indicator — animeret orange linje under */
-  .nav-links a.active {
-    color: var(--accent);
-  }
-  .nav-links a.active:not(.btn-nav)::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -4px;
-    height: 1px;
-    background: var(--accent);
-    transform-origin: left;
-    animation: active-line-in 0.5s cubic-bezier(0.65, 0, 0.35, 1) forwards;
-  }
-
-  @keyframes active-line-in {
-    from { transform: scaleX(0); }
-    to { transform: scaleX(1); }
-  }
-
-  .btn-nav {
-    border: 1px solid var(--border);
-    padding: 9px 16px;
-    border-radius: 4px;
-    transition: all 0.2s;
-  }
-  .btn-nav:hover {
-    border-color: var(--accent);
-    color: var(--accent) !important;
-    background: rgba(255, 77, 46, 0.05);
-  }
-  .btn-nav.active {
-    border-color: var(--accent);
-    color: var(--accent) !important;
-    background: rgba(255, 77, 46, 0.08);
-    box-shadow: 0 0 0 1px var(--accent), 0 0 20px rgba(255, 77, 46, 0.15);
-  }
-
-  /* Burger button (skjult som default) */
-  .burger {
-    display: none;
-    width: 44px;
-    height: 44px;
-    background: transparent;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    cursor: pointer;
-    position: relative;
-    transition: border-color 0.2s;
-  }
-
-  .burger:hover { border-color: var(--accent); }
-
-  .burger span {
-    position: absolute;
-    left: 12px;
-    right: 12px;
-    height: 2px;
-    background: var(--text);
-    transition: all 0.3s ease;
-  }
-
-  .burger span:nth-child(1) { top: 14px; }
-  .burger span:nth-child(2) { top: 21px; }
-  .burger span:nth-child(3) { top: 28px; }
-
-  body.menu-open .burger span:nth-child(1) {
-    top: 21px;
-    transform: rotate(45deg);
-    background: var(--accent);
-  }
-  body.menu-open .burger span:nth-child(2) {
-    opacity: 0;
-  }
-  body.menu-open .burger span:nth-child(3) {
-    top: 21px;
-    transform: rotate(-45deg);
-    background: var(--accent);
-  }
-
-  /* Mobile menu drawer */
-  .mobile-menu {
-    position: fixed;
-    inset: 0;
-    background: rgba(10, 10, 11, 0.97);
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
-    z-index: 90;
-    padding: 100px 32px 40px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.4s ease;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-  }
-
-  body.menu-open .mobile-menu {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  .mobile-menu-links {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .mobile-menu-links a {
-    color: var(--text);
-    text-decoration: none;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 800;
-    font-size: clamp(32px, 8vw, 48px);
-    letter-spacing: -0.02em;
-    text-transform: uppercase;
-    padding: 16px 0;
-    border-bottom: 1px solid var(--border);
-    transition: color 0.2s, padding-left 0.2s;
-    transform: translateX(-20px);
-    opacity: 0;
-    transition: opacity 0.4s ease, transform 0.4s ease, color 0.2s, padding-left 0.2s;
-  }
-
-  body.menu-open .mobile-menu-links a {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  body.menu-open .mobile-menu-links a:nth-child(1) { transition-delay: 0.1s; }
-  body.menu-open .mobile-menu-links a:nth-child(2) { transition-delay: 0.15s; }
-  body.menu-open .mobile-menu-links a:nth-child(3) { transition-delay: 0.2s; }
-  body.menu-open .mobile-menu-links a:nth-child(4) { transition-delay: 0.25s; }
-  body.menu-open .mobile-menu-links a:nth-child(5) { transition-delay: 0.3s; }
-
-  .mobile-menu-links a:hover {
-    color: var(--accent);
-    padding-left: 12px;
-  }
-
-  .mobile-menu-links a.active {
-    color: var(--accent);
-    padding-left: 16px;
-    position: relative;
-  }
-  .mobile-menu-links a.active::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 3px;
-    height: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 12px var(--accent);
-  }
-  .mobile-menu-links a.active .mobile-menu-num {
-    color: var(--accent);
-  }
-
-  .mobile-menu-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--text-muted);
-    margin-right: 16px;
-    font-weight: 400;
-    letter-spacing: 0.1em;
-  }
-
-  .mobile-menu-footer {
-    margin-top: auto;
-    padding-top: 32px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    color: var(--text-muted);
-    letter-spacing: 0.05em;
-  }
-
-  .mobile-menu-footer a {
-    color: var(--text-dim);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  .mobile-menu-footer a:hover { color: var(--accent); }
-
-  /* ═══════════════════════════════════════════════════════════
-     HERO
-     ═══════════════════════════════════════════════════════════ */
+  /* ═══════════════ SIDE-SPECIFIK CSS — kun forsiden ═══════════════ */
 
   .hero {
-    padding: 120px 0 100px;
+    padding: 100px 0 120px;
     position: relative;
+    z-index: 2;
+    animation: fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   .hero-label {
     font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
     color: var(--accent);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    margin-bottom: 24px;
-    display: flex;
+    letter-spacing: 0.25em;
+    margin-bottom: 32px;
+    display: inline-flex;
     align-items: center;
     gap: 12px;
   }
-
   .hero-label::before {
     content: '';
     width: 32px;
@@ -388,11 +88,11 @@
     font-weight: 800;
     font-size: clamp(48px, 9vw, 120px);
     line-height: 0.95;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.04em;
     margin-bottom: 32px;
     text-transform: uppercase;
+    max-width: 900px;
   }
-
   .hero-title .accent {
     color: var(--accent);
     font-style: italic;
@@ -401,9 +101,9 @@
   }
 
   .hero-sub {
-    font-size: 19px;
+    font-size: 20px;
     color: var(--text-dim);
-    max-width: 560px;
+    max-width: 580px;
     margin-bottom: 48px;
     line-height: 1.5;
   }
@@ -414,52 +114,12 @@
     flex-wrap: wrap;
   }
 
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    padding: 16px 28px;
-    border-radius: 4px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
-    font-size: 13px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    text-decoration: none;
-    transition: all 0.25s;
-    border: 1px solid transparent;
-    cursor: pointer;
-  }
-
-  .btn-primary {
-    background: var(--accent);
-    color: #0a0a0b;
-  }
-  .btn-primary:hover {
-    background: #ff6347;
-    transform: translateY(-2px);
-    box-shadow: 0 12px 30px var(--accent-glow);
-  }
-
-  .btn-secondary {
-    background: transparent;
-    color: var(--text);
-    border-color: var(--border);
-  }
-  .btn-secondary:hover { border-color: var(--accent); }
-
-  .arrow { transition: transform 0.25s; }
-  .btn:hover .arrow { transform: translateX(4px); }
-
-  /* ═══════════════════════════════════════════════════════════
-     SECTIONS
-     ═══════════════════════════════════════════════════════════ */
-
-  section { padding: 100px 0; position: relative; }
+  /* ─── Ydelser preview ─── */
+  #ydelser-preview { padding: 80px 0; }
 
   .section-label {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    font-size: 12px;
     color: var(--text-muted);
     letter-spacing: 0.25em;
     text-transform: uppercase;
@@ -469,14 +129,12 @@
   .section-title {
     font-family: 'Montserrat', sans-serif;
     font-weight: 800;
-    font-size: clamp(32px, 5vw, 52px);
-    line-height: 1.05;
-    letter-spacing: -0.02em;
+    font-size: clamp(32px, 5vw, 56px);
+    line-height: 1;
+    letter-spacing: -0.03em;
     margin-bottom: 56px;
-    max-width: 780px;
     text-transform: uppercase;
   }
-
   .section-title .accent {
     color: var(--accent);
     font-style: italic;
@@ -484,59 +142,68 @@
     text-transform: lowercase;
   }
 
-  /* SERVICES */
+  .accent { color: var(--accent); }
+
   .services-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    overflow: hidden;
+    gap: 24px;
+    margin-bottom: 56px;
   }
-
-  @media (max-width: 800px) {
-    .services-grid { grid-template-columns: 1fr; }
-  }
+  @media (max-width: 800px) { .services-grid { grid-template-columns: 1fr; } }
 
   .service-card {
     background: var(--bg-elev);
-    padding: 40px 32px;
-    transition: background 0.3s;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 36px 32px;
+    transition: border-color 0.3s, transform 0.3s;
     position: relative;
+    overflow: hidden;
   }
-
-  .service-card:hover { background: var(--bg-elev-2); }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent);
+    transition: width 0.4s;
+  }
+  .service-card:hover {
+    border-color: #3a3a40;
+    transform: translateY(-4px);
+  }
+  .service-card:hover::before { width: 100%; }
 
   .service-num {
     font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
     color: var(--accent);
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     display: block;
   }
 
   .service-title {
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
-    font-size: 20px;
-    margin-bottom: 12px;
+    font-size: 22px;
     text-transform: uppercase;
     letter-spacing: 0.02em;
+    margin-bottom: 14px;
   }
 
   .service-card p {
     color: var(--text-dim);
-    font-size: 15px;
+    font-size: 14px;
+    line-height: 1.6;
   }
 
-  .services-cta {
-    margin-top: 40px;
-    text-align: center;
-  }
+  .services-cta { text-align: center; }
 
-  /* OM */
+  /* ─── Om preview ─── */
   .about {
+    padding: 80px 0;
     background: var(--bg-elev);
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
@@ -544,110 +211,105 @@
 
   .about-grid {
     display: grid;
-    grid-template-columns: 1fr 1.3fr;
-    gap: 80px;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 64px;
     align-items: center;
   }
-
-  @media (max-width: 800px) {
-    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  @media (max-width: 900px) {
+    .about-grid { grid-template-columns: 1fr; gap: 32px; }
   }
 
   .about-image {
     aspect-ratio: 4/5;
-    background: var(--bg-elev-2);
-    border-radius: 8px;
+    background:
+      linear-gradient(135deg, var(--bg-elev-2) 0%, var(--bg) 100%),
+      var(--bg-elev-2);
     border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
     position: relative;
     overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
-
   .about-image::after {
-    content: 'TEAMBILLEDE';
+    content: '[ HOLDET ]';
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    font-size: 12px;
     color: var(--text-muted);
     letter-spacing: 0.2em;
   }
 
   .about p {
     color: var(--text-dim);
-    font-size: 17px;
+    font-size: 16px;
+    margin-bottom: 18px;
     line-height: 1.7;
-    margin-bottom: 20px;
   }
-
-  .about p:first-of-type { color: var(--text); }
+  .about p:first-of-type { color: var(--text); font-size: 17px; }
 
   .about-meta {
+    display: flex;
+    gap: 32px;
     margin-top: 32px;
-    padding-top: 32px;
-    border-top: 1px solid var(--border);
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
+    flex-wrap: wrap;
   }
 
   .meta-item {
     font-family: 'JetBrains Mono', monospace;
     font-size: 13px;
+    color: var(--text);
+    line-height: 1.5;
   }
   .meta-item span {
     display: block;
     color: var(--text-muted);
     font-size: 11px;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
   }
 
-  /* CTA */
-  .cta-block {
-    text-align: center;
-    padding: 120px 0;
-  }
+  /* ─── CTA-blok ─── */
+  .cta-block { padding: 100px 0; text-align: center; }
 
   .cta-tag {
     display: inline-flex;
     align-items: center;
     gap: 10px;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    font-size: 12px;
     color: var(--accent);
-    letter-spacing: 0.3em;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
+    margin-bottom: 32px;
     padding: 8px 16px;
     border: 1px solid var(--accent);
     border-radius: 100px;
-    margin-bottom: 32px;
+    background: rgba(255, 77, 46, 0.05);
   }
 
-  .cta-tag .live-dot {
-    width: 6px;
-    height: 6px;
+  .live-dot {
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
     background: var(--accent);
-    animation: live-pulse 1.5s ease-in-out infinite;
+    animation: live 1.5s ease-in-out infinite;
   }
-
-  @keyframes live-pulse {
-    0%, 100% { box-shadow: 0 0 0 0 var(--accent); }
-    50% { box-shadow: 0 0 0 6px transparent; }
+  @keyframes live {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 var(--accent); }
+    50% { opacity: 0.5; box-shadow: 0 0 0 8px transparent; }
   }
 
   .cta-title {
     font-family: 'Montserrat', sans-serif;
     font-weight: 800;
-    font-size: clamp(36px, 6vw, 80px);
-    line-height: 0.95;
+    font-size: clamp(40px, 6vw, 72px);
+    line-height: 1;
     letter-spacing: -0.03em;
     margin-bottom: 24px;
     text-transform: uppercase;
   }
-
   .cta-title .accent {
     color: var(--accent);
     font-style: italic;
@@ -656,9 +318,9 @@
   }
 
   .cta-sub {
-    font-size: 17px;
     color: var(--text-dim);
-    max-width: 540px;
+    font-size: 18px;
+    max-width: 560px;
     margin: 0 auto 40px;
   }
 
@@ -666,180 +328,82 @@
     display: inline-flex;
     align-items: center;
     gap: 16px;
-    padding: 22px 36px;
-    background: var(--accent);
-    color: #0a0a0b;
-    text-decoration: none;
-    border-radius: 4px;
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
-    font-size: 15px;
-    letter-spacing: 0.05em;
+    font-size: 16px;
+    color: var(--text);
+    text-decoration: none;
+    padding: 22px 36px;
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-sm);
+    background: rgba(255, 77, 46, 0.06);
     text-transform: uppercase;
-    transition: all 0.3s;
+    letter-spacing: 0.08em;
+    transition: background 0.25s, transform 0.25s, color 0.25s, box-shadow 0.25s;
   }
-
   .cta-big:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 20px 50px var(--accent-glow);
+    background: var(--accent);
+    color: #0a0a0b;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px var(--accent-glow);
   }
+  .cta-big .arrow { transition: transform 0.25s; }
+  .cta-big:hover .arrow { transform: translateX(6px); }
 
-  /* CONTACT BOX */
+  /* ─── Kontakt-boks ─── */
   .contact-box {
+    margin-top: 80px;
+    padding: 40px;
     background: var(--bg-elev);
     border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 48px 40px;
-    margin-top: 64px;
+    border-radius: var(--radius-lg);
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 40px;
     align-items: center;
     text-align: left;
   }
-
-  @media (max-width: 700px) {
-    .contact-box { grid-template-columns: 1fr; gap: 24px; padding: 32px 24px; }
-  }
+  @media (max-width: 700px) { .contact-box { grid-template-columns: 1fr; gap: 24px; } }
 
   .contact-box h3 {
     font-family: 'Montserrat', sans-serif;
-    font-size: 24px;
     font-weight: 700;
+    font-size: 22px;
     text-transform: uppercase;
     letter-spacing: 0.02em;
     margin-bottom: 8px;
   }
-
-  .contact-box p {
-    color: var(--text-dim);
-    font-size: 14px;
-  }
+  .contact-box p { color: var(--text-dim); font-size: 14px; }
 
   .contact-links {
     display: flex;
     flex-direction: column;
     gap: 12px;
   }
-
   .contact-links a {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     gap: 12px;
     color: var(--text);
     text-decoration: none;
-    font-size: 15px;
-    font-weight: 500;
-    padding: 14px 18px;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    transition: all 0.2s;
-  }
-
-  .contact-links a:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-    transform: translateX(4px);
-  }
-
-  .contact-links svg {
-    width: 16px;
-    height: 16px;
-    flex-shrink: 0;
-  }
-
-  /* FOOTER */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 56px 0 40px;
-    background: var(--bg);
-  }
-
-  .footer-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 48px;
-    margin-bottom: 48px;
-  }
-
-  @media (max-width: 700px) {
-    .footer-grid { grid-template-columns: 1fr; }
-  }
-
-  .footer-col h4 {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 20px;
-    font-weight: 400;
-  }
-
-  .footer-col a {
-    display: block;
-    color: var(--text-dim);
-    text-decoration: none;
     font-size: 14px;
-    margin-bottom: 10px;
     transition: color 0.2s;
   }
-  .footer-col a:hover { color: var(--accent); }
-
-  .footer-tag {
-    color: var(--text-dim);
-    font-size: 14px;
-    max-width: 300px;
-    line-height: 1.6;
-    margin-top: 16px;
-  }
-
-  .footer-bottom {
-    padding-top: 32px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 16px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    color: var(--text-muted);
-  }
-
-  /* Reveal */
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s, transform 0.8s;
-  }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-
-  /* ═══════════════════════════════════════════════════════════
-     RESPONSIVE — burger menu kicks in
-     ═══════════════════════════════════════════════════════════ */
-
-  @media (max-width: 900px) {
-    .nav-links { display: none; }
-    .burger { display: block; }
-  }
-
-  @media (max-width: 600px) {
-    .container { padding: 0 20px; }
-    section { padding: 60px 0; }
-    .hero { padding: 60px 0; }
-    .logo-wordmark { font-size: 18px; }
-  }
+  .contact-links a:hover { color: var(--accent); }
+  .contact-links svg { width: 18px; height: 18px; }
 </style>
 </head>
 <body>
+
+<a href="#main" class="skip-link">Spring til indhold</a>
 
 <div class="scroll-progress" id="progress"></div>
 <div class="bg-glow"></div>
 
 <nav id="nav">
   <div class="container nav-inner">
-    <a href="index.html" class="logo" aria-label="LYDSTYRKEN">
+    <a href="index.html" class="logo" aria-label="LYDSTYRKEN — Forside">
       <span class="logo-wordmark" aria-hidden="true">
         <span class="logo-bracket logo-bracket-left">[</span>
         <span class="logo-text">LYDSTYRKEN</span>
@@ -853,14 +417,11 @@
       <a href="lagersalg.html" class="btn-nav">Lagersalg →</a>
     </div>
     <button class="burger" id="burger" aria-label="Åbn menu" aria-expanded="false" aria-controls="mobile-menu">
-      <span></span>
-      <span></span>
-      <span></span>
+      <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
 
-<!-- Mobile menu drawer -->
 <div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Hovedmenu">
   <div class="container">
     <div class="mobile-menu-links">
@@ -877,6 +438,8 @@
     </div>
   </div>
 </div>
+
+<main id="main">
 
 <header class="hero">
   <div class="container">
@@ -905,7 +468,7 @@
     <div class="section-label">// YDELSER</div>
     <h2 class="section-title">Lyd til alle slags arrangementer.</h2>
 
-    <div class="services-grid">
+    <div class="services-grid stagger">
       <div class="service-card reveal">
         <span class="service-num">01</span>
         <h3 class="service-title">Live-koncerter</h3>
@@ -939,7 +502,7 @@
       <div>
         <div class="section-label">// HOLDET</div>
         <h2 class="section-title" style="margin-bottom: 32px;">Et lille hold med <span class="accent">stor</span> lyd.</h2>
-        <p>Vi er fem mennesker bag LYDSTYRKEN — alle med rødder i live-lyd, events og det øjeblik, hvor lyden falder på plads og publikum mærker det i kroppen.</p>
+        <p>Vi er to mennesker bag LYDSTYRKEN — begge med rødder i live-lyd, events og det øjeblik, hvor lyden falder på plads og publikum mærker det i kroppen.</p>
         <p>Med base i Odense leverer vi til arrangementer i hele Danmark. Personlig tilgang, professionelt udstyr, og en oprigtig interesse i at gøre dit arrangement bedst muligt.</p>
 
         <div class="about-meta">
@@ -985,17 +548,19 @@
       </div>
       <div class="contact-links">
         <a href="mailto:marius@lydstyrken.com">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M3 8l9 6 9-6M3 8v10a2 2 0 002 2h14a2 2 0 002-2V8M3 8l2-2h14l2 2"/></svg>
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path d="M3 8l9 6 9-6M3 8v10a2 2 0 002 2h14a2 2 0 002-2V8M3 8l2-2h14l2 2"/></svg>
           marius@lydstyrken.com
         </a>
         <a href="https://instagram.com/lydstyrken" target="_blank" rel="noopener">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
           @lydstyrken
         </a>
       </div>
     </div>
   </div>
 </section>
+
+</main>
 
 <footer>
   <div class="container">
@@ -1029,65 +594,7 @@
   </div>
 </footer>
 
-<script>
-  // ═══════════════════════════════════════════════════════════
-  //   BURGER MENU
-  // ═══════════════════════════════════════════════════════════
-  const burger = document.getElementById('burger');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const body = document.body;
-
-  function toggleMenu() {
-    const isOpen = body.classList.toggle('menu-open');
-    burger.setAttribute('aria-expanded', isOpen);
-  }
-
-  function closeMenu() {
-    body.classList.remove('menu-open');
-    burger.setAttribute('aria-expanded', 'false');
-  }
-
-  burger.addEventListener('click', toggleMenu);
-
-  // Luk menu når et link bliver klikket
-  mobileMenu.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      // Lille delay så animationen kan ses
-      setTimeout(closeMenu, 50);
-    });
-  });
-
-  // Luk med Escape
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && body.classList.contains('menu-open')) closeMenu();
-  });
-
-  // Luk hvis vinduet bliver større end mobile breakpoint
-  window.addEventListener('resize', () => {
-    if (window.innerWidth > 900) closeMenu();
-  });
-
-  // ═══════════════════════════════════════════════════════════
-  //   NAV + SCROLL PROGRESS
-  // ═══════════════════════════════════════════════════════════
-  const nav = document.getElementById('nav');
-  const progress = document.getElementById('progress');
-
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 20);
-    const total = document.documentElement.scrollHeight - window.innerHeight;
-    progress.style.width = (window.scrollY / total) * 100 + '%';
-  });
-
-  // Reveal on scroll
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add('visible');
-    });
-  }, { threshold: 0.15 });
-
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-</script>
+<script src="app.js" defer></script>
 
 </body>
 </html>

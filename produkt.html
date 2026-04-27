@@ -5,229 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Produkt — LYDSTYRKEN</title>
 <meta name="description" content="Detaljer om produkt fra LYDSTYRKEN's lagersalg.">
+
+<!-- Open Graph (sættes statisk her — opdateres dynamisk via JS hvis muligt) -->
+<meta property="og:type" content="product">
+<meta property="og:title" content="LYDSTYRKEN — Lagersalg">
+<meta property="og:description" content="Byd via mail på udvalgt brugt udstyr.">
+<meta property="og:image" content="https://www.lydstyrken.com/images/og-default.jpg">
+<meta property="og:locale" content="da_DK">
+<meta property="og:site_name" content="LYDSTYRKEN">
+<meta name="twitter:card" content="summary_large_image">
+
 <link rel="icon" type="image/png" href="images/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+
 <style>
-  :root {
-    --bg: #0a0a0b;
-    --bg-elev: #131316;
-    --bg-elev-2: #1c1c20;
-    --border: #2a2a2f;
-    --text: #f0eeea;
-    --text-dim: #8a8a90;
-    --text-muted: #5a5a60;
-    --accent: #ff4d2e;
-    --accent-glow: rgba(255, 77, 46, 0.15);
-    --green: #4ad7a5;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Montserrat', sans-serif;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  body.menu-open { overflow: hidden; }
-
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(255, 255, 255, 0.012) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
-    background-size: 80px 80px;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .bg-glow {
-    position: fixed;
-    top: -300px;
-    right: -300px;
-    width: 800px;
-    height: 800px;
-    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 60%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .scroll-progress {
-    position: fixed;
-    top: 0; left: 0;
-    height: 2px;
-    background: var(--accent);
-    z-index: 200;
-    width: 0%;
-    transition: width 0.1s;
-  }
-
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 32px;
-    position: relative;
-    z-index: 2;
-  }
-
-  /* ═══════════════ NAV ═══════════════ */
-  nav {
-    padding: 24px 0;
-    position: sticky;
-    top: 0;
-    background: rgba(10, 10, 11, 0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    z-index: 100;
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.3s, padding 0.3s;
-  }
-  nav.scrolled { border-bottom-color: var(--border); padding: 16px 0; }
-  .nav-inner { display: flex; justify-content: space-between; align-items: center; }
-   .logo {
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    color: var(--text);
-  }
-
-  .logo-wordmark {
-    display: center;
-    align-items: center;
-    gap: 1.1em;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 22px;
-    font-weight: 900;
-    line-height: 0.9;
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-
-  .logo-text, .logo-bracket {
-    display: inline-block;
-    transition: transform 0.25s;
-    margin: 4px;
-  }
-
-  .logo-text { transform: scaleX(1.06); transform-origin: center; }
-
-  .logo-bracket {
-    font-size: 1.25em;
-    line-height: 1;
-    transition: color 0.25s, text-shadow 0.25s, transform 0.25s;
-  }
-  .logo:hover .logo-bracket {
-    color: var(--accent);
-    text-shadow: 0 0 16px rgba(255, 77, 46, 0.75), 0 0 34px rgba(255, 77, 46, 0.35);
-  }
-  .logo:hover .logo-bracket-left { transform: translateX(-5px) scaleY(1.15); }
-  .logo:hover .logo-bracket-right { transform: translateX(5px) scaleY(1.15); }
-
-  .nav-links { display: flex; gap: 32px; align-items: center; }
-  .nav-links a {
-    color: var(--text-dim); text-decoration: none;
-    font-size: 13px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase;
-    transition: color 0.2s; position: relative; padding: 6px 0;
-  }
-  .nav-links a:hover { color: var(--text); }
-  .nav-links a.active { color: var(--accent); }
-  .nav-links a.active:not(.btn-nav)::after {
-    content: ''; position: absolute; left: 0; right: 0; bottom: -4px;
-    height: 1px; background: var(--accent);
-    transform-origin: left;
-    animation: active-line-in 0.5s cubic-bezier(0.65, 0, 0.35, 1) forwards;
-  }
-  @keyframes active-line-in { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-
-  .btn-nav {
-    border: 1px solid var(--border); padding: 9px 16px; border-radius: 4px;
-    transition: all 0.2s;
-  }
-  .btn-nav:hover {
-    border-color: var(--accent); color: var(--accent) !important;
-    background: rgba(255, 77, 46, 0.05);
-  }
-  .btn-nav.active {
-    border-color: var(--accent); color: var(--accent) !important;
-    background: rgba(255, 77, 46, 0.08);
-    box-shadow: 0 0 0 1px var(--accent), 0 0 20px rgba(255, 77, 46, 0.15);
-  }
-
-  .burger {
-    display: none; width: 44px; height: 44px;
-    background: transparent; border: 1px solid var(--border);
-    border-radius: 4px; cursor: pointer; position: relative;
-    transition: border-color 0.2s;
-  }
-  .burger:hover { border-color: var(--accent); }
-  .burger span {
-    position: absolute; left: 12px; right: 12px; height: 2px;
-    background: var(--text); transition: all 0.3s ease;
-  }
-  .burger span:nth-child(1) { top: 14px; }
-  .burger span:nth-child(2) { top: 21px; }
-  .burger span:nth-child(3) { top: 28px; }
-  body.menu-open .burger span:nth-child(1) { top: 21px; transform: rotate(45deg); background: var(--accent); }
-  body.menu-open .burger span:nth-child(2) { opacity: 0; }
-  body.menu-open .burger span:nth-child(3) { top: 21px; transform: rotate(-45deg); background: var(--accent); }
-
-  .mobile-menu {
-    position: fixed; inset: 0;
-    background: rgba(10, 10, 11, 0.97);
-    backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
-    z-index: 90; padding: 100px 32px 40px;
-    opacity: 0; pointer-events: none;
-    transition: opacity 0.4s ease;
-    display: flex; flex-direction: column; overflow-y: auto;
-  }
-  body.menu-open .mobile-menu { opacity: 1; pointer-events: auto; }
-  .mobile-menu-links { display: flex; flex-direction: column; gap: 4px; }
-  .mobile-menu-links a {
-    color: var(--text); text-decoration: none;
-    font-family: 'Montserrat', sans-serif; font-weight: 800;
-    font-size: clamp(32px, 8vw, 48px); letter-spacing: -0.02em; text-transform: uppercase;
-    padding: 16px 0; border-bottom: 1px solid var(--border);
-    transform: translateX(-20px); opacity: 0;
-    transition: opacity 0.4s ease, transform 0.4s ease, color 0.2s, padding-left 0.2s;
-  }
-  body.menu-open .mobile-menu-links a { transform: translateX(0); opacity: 1; }
-  body.menu-open .mobile-menu-links a:nth-child(1) { transition-delay: 0.1s; }
-  body.menu-open .mobile-menu-links a:nth-child(2) { transition-delay: 0.15s; }
-  body.menu-open .mobile-menu-links a:nth-child(3) { transition-delay: 0.2s; }
-  body.menu-open .mobile-menu-links a:nth-child(4) { transition-delay: 0.25s; }
-  body.menu-open .mobile-menu-links a:nth-child(5) { transition-delay: 0.3s; }
-  .mobile-menu-links a:hover { color: var(--accent); padding-left: 12px; }
-  .mobile-menu-links a.active {
-    color: var(--accent); padding-left: 16px; position: relative;
-  }
-  .mobile-menu-links a.active::before {
-    content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
-    width: 3px; height: 50%; background: var(--accent);
-    box-shadow: 0 0 12px var(--accent);
-  }
-  .mobile-menu-links a.active .mobile-menu-num { color: var(--accent); }
-  .mobile-menu-num {
-    font-family: 'JetBrains Mono', monospace; font-size: 11px;
-    color: var(--text-muted); margin-right: 16px;
-    font-weight: 400; letter-spacing: 0.1em;
-  }
-  .mobile-menu-footer {
-    margin-top: auto; padding-top: 32px; border-top: 1px solid var(--border);
-    display: flex; flex-direction: column; gap: 8px;
-    font-family: 'JetBrains Mono', monospace; font-size: 12px;
-    color: var(--text-muted);
-  }
-  .mobile-menu-footer a { color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
-  .mobile-menu-footer a:hover { color: var(--accent); }
-
-  /* ═══════════════ BACK LINK ═══════════════ */
+  /* ═══════════════ SIDE-SPECIFIK CSS — kun produktside ═══════════════ */
 
   .back-bar {
     padding: 24px 0;
@@ -248,49 +43,58 @@
   }
   .back-link:hover { color: var(--accent); gap: 14px; }
 
-  /* ═══════════════ HOVED-LAYOUT ═══════════════ */
-
-  .product-page {
-    padding: 48px 0 80px;
-  }
+  .product-page { padding: 48px 0 80px; }
 
   .product-layout {
     display: grid;
     grid-template-columns: 1.2fr 1fr;
     gap: 56px;
     align-items: start;
+    animation: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
-
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(15px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
   @media (max-width: 900px) {
     .product-layout { grid-template-columns: 1fr; gap: 32px; }
   }
 
-  /* === GALLERI === */
+  /* ─── GALLERI ─── */
   .gallery {
     position: sticky;
     top: 100px;
   }
-
   @media (max-width: 900px) { .gallery { position: static; } }
 
   .gallery-main {
     aspect-ratio: 4/3;
     background: var(--bg-elev);
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: var(--radius-lg);
     overflow: hidden;
     position: relative;
     margin-bottom: 12px;
+    cursor: zoom-in;
   }
 
   .gallery-main img {
-    width: 100%; height: 100%; object-fit: cover;
-    transition: opacity 0.3s;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s, transform 0.5s;
   }
+  .gallery-main:hover img { transform: scale(1.02); }
+
+  .gallery-main.no-image { cursor: default; }
+  .gallery-main.no-image:hover img { transform: none; }
 
   .gallery-main-placeholder {
-    position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
     color: var(--text-muted);
@@ -307,7 +111,7 @@
     aspect-ratio: 1;
     background: var(--bg-elev);
     border: 1px solid var(--border);
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     overflow: hidden;
     cursor: pointer;
     padding: 0;
@@ -315,11 +119,8 @@
   }
   .gallery-thumb:hover { border-color: #3a3a40; transform: translateY(-2px); }
   .gallery-thumb.active { border-color: var(--accent); }
-  .gallery-thumb img {
-    width: 100%; height: 100%; object-fit: cover;
-  }
+  .gallery-thumb img { width: 100%; height: 100%; object-fit: cover; }
 
-  /* Badge på galleri */
   .gallery-badge {
     position: absolute;
     top: 16px;
@@ -329,7 +130,7 @@
     letter-spacing: 0.15em;
     text-transform: uppercase;
     padding: 6px 12px;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     background: rgba(10, 10, 11, 0.6);
@@ -340,10 +141,12 @@
 
   .gallery-sold {
     position: absolute;
-    top: 50%; left: 50%;
+    top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%) rotate(-12deg);
     font-family: 'Montserrat', sans-serif;
-    font-size: 48px; font-weight: 800;
+    font-size: 48px;
+    font-weight: 800;
     color: var(--accent);
     border: 5px solid var(--accent);
     padding: 12px 36px;
@@ -352,12 +155,8 @@
     z-index: 3;
   }
 
-  /* === INFO PANEL === */
-
-  .info {
-    display: flex;
-    flex-direction: column;
-  }
+  /* ─── INFO PANEL ─── */
+  .info { display: flex; flex-direction: column; }
 
   .info-cat {
     font-family: 'JetBrains Mono', monospace;
@@ -366,10 +165,14 @@
     letter-spacing: 0.2em;
     text-transform: uppercase;
     margin-bottom: 16px;
-    display: flex; align-items: center; gap: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
   }
   .info-cat::before {
-    content: ''; width: 32px; height: 1px;
+    content: '';
+    width: 32px;
+    height: 1px;
     background: var(--accent);
   }
 
@@ -395,7 +198,7 @@
     padding: 16px 18px;
     background: var(--bg-elev);
     border-left: 3px solid var(--accent);
-    border-radius: 0 4px 4px 0;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
   }
   .info-condition .label {
     font-family: 'JetBrains Mono', monospace;
@@ -406,13 +209,8 @@
     margin-bottom: 6px;
     display: block;
   }
-  .info-condition .value {
-    color: var(--text);
-    font-size: 14px;
-    font-weight: 500;
-  }
+  .info-condition .value { color: var(--text); font-size: 14px; font-weight: 500; }
 
-  /* Price block */
   .price-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -423,7 +221,7 @@
   .price-card {
     background: var(--bg-elev);
     border: 1px solid var(--border);
-    border-radius: 6px;
+    border-radius: var(--radius-md);
     padding: 16px 18px;
   }
 
@@ -449,11 +247,10 @@
     font-weight: 400;
   }
 
-  /* Højeste bud kort */
   .current-bid-card {
     background: rgba(255, 77, 46, 0.06);
     border: 1px solid var(--accent);
-    border-radius: 6px;
+    border-radius: var(--radius-md);
     padding: 20px 22px;
     margin-bottom: 24px;
     display: flex;
@@ -476,15 +273,17 @@
     color: var(--accent);
     line-height: 1;
   }
+
   .live-dot {
-    width: 10px; height: 10px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
     background: var(--accent);
     animation: live 1.5s ease-in-out infinite;
   }
   @keyframes live {
     0%, 100% { opacity: 1; box-shadow: 0 0 0 0 var(--accent); }
-    50% { opacity: 0.5; box-shadow: 0 0 0 8px transparent; }
+    50%      { opacity: 0.5; box-shadow: 0 0 0 8px transparent; }
   }
 
   .bid-btn {
@@ -493,7 +292,7 @@
     color: #0a0a0b;
     border: none;
     padding: 18px;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
     font-size: 14px;
@@ -506,19 +305,94 @@
     justify-content: center;
     align-items: center;
     gap: 12px;
-    transition: all 0.25s;
+    transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
   }
-  .bid-btn:hover { background: #ff6347; transform: translateY(-2px); box-shadow: 0 12px 30px var(--accent-glow); }
+  .bid-btn:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px var(--accent-glow);
+  }
   .bid-btn .arrow { transition: transform 0.25s; }
   .bid-btn:hover .arrow { transform: translateX(4px); }
-
   .bid-btn.disabled {
-    background: var(--bg-elev-2); color: var(--text-muted);
-    cursor: not-allowed; pointer-events: none;
+    background: var(--bg-elev-2);
+    color: var(--text-muted);
+    cursor: not-allowed;
+    pointer-events: none;
   }
 
-  /* === SPECS === */
+  /* ─── STICKY MOBILE BID CTA ─── */
+  .sticky-bid {
+    display: none;
+  }
+  @media (max-width: 900px) {
+    .sticky-bid {
+      display: flex;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(10, 10, 11, 0.96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid var(--accent);
+      padding: 12px 16px;
+      gap: 12px;
+      z-index: 50;
+      align-items: center;
+      transform: translateY(100%);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .sticky-bid.visible { transform: translateY(0); }
 
+    .sticky-bid-info {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+    }
+    .sticky-bid-name {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 2px;
+    }
+    .sticky-bid-price {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+
+    .sticky-bid-btn {
+      background: var(--accent);
+      color: #0a0a0b;
+      border: none;
+      padding: 12px 18px;
+      border-radius: var(--radius-sm);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .sticky-bid-btn.disabled {
+      background: var(--bg-elev-2);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    /* Plads så footer ikke ligger bagved sticky-bar */
+    main { padding-bottom: 80px; }
+  }
+
+  /* ─── SPECS ─── */
   .specs {
     margin-top: 56px;
     padding-top: 40px;
@@ -543,10 +417,7 @@
     margin-bottom: 28px;
   }
 
-  .specs-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-  }
+  .specs-grid { display: grid; grid-template-columns: 1fr; }
 
   .spec-row {
     display: grid;
@@ -555,7 +426,6 @@
     padding: 14px 0;
     border-bottom: 1px solid var(--border);
   }
-
   @media (max-width: 600px) {
     .spec-row { grid-template-columns: 1fr; gap: 4px; padding: 12px 0; }
   }
@@ -567,17 +437,10 @@
     letter-spacing: 0.1em;
     text-transform: uppercase;
   }
+  .spec-row .value { color: var(--text); font-size: 14px; }
 
-  .spec-row .value {
-    color: var(--text);
-    font-size: 14px;
-  }
-
-  /* Not-found state */
-  .not-found {
-    padding: 120px 0;
-    text-align: center;
-  }
+  /* ─── NOT FOUND ─── */
+  .not-found { padding: 120px 0; text-align: center; }
   .not-found h1 {
     font-family: 'Montserrat', sans-serif;
     font-weight: 800;
@@ -587,82 +450,61 @@
     text-transform: uppercase;
     margin-bottom: 16px;
   }
-  .not-found p {
-    color: var(--text-dim);
-    font-size: 17px;
-    margin-bottom: 32px;
-  }
+  .not-found p { color: var(--text-dim); font-size: 17px; margin-bottom: 32px; }
 
-  .btn {
-    display: inline-flex;
+  /* ─── LIGHTBOX ─── */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 10, 11, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 200;
+    display: none;
     align-items: center;
-    gap: 12px;
-    padding: 16px 28px;
-    border-radius: 4px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
-    font-size: 13px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    text-decoration: none;
-    transition: all 0.25s;
-    border: 1px solid transparent;
+    justify-content: center;
+    padding: 40px;
+    cursor: zoom-out;
+    opacity: 0;
+    transition: opacity 0.25s;
   }
-  .btn-primary { background: var(--accent); color: #0a0a0b; }
-  .btn-primary:hover { background: #ff6347; transform: translateY(-2px); box-shadow: 0 12px 30px var(--accent-glow); }
+  .lightbox.visible { display: flex; opacity: 1; }
 
-  /* === FOOTER === */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 56px 0 40px;
-  }
-  .footer-grid {
-    display: grid; grid-template-columns: 2fr 1fr 1fr;
-    gap: 48px; margin-bottom: 48px;
-  }
-  @media (max-width: 700px) { .footer-grid { grid-template-columns: 1fr; } }
-  .footer-col h4 {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px; letter-spacing: 0.2em;
-    text-transform: uppercase; color: var(--text-muted);
-    margin-bottom: 20px; font-weight: 400;
-  }
-  .footer-col a {
-    display: block; color: var(--text-dim);
-    text-decoration: none; font-size: 14px;
-    margin-bottom: 10px; transition: color 0.2s;
-  }
-  .footer-col a:hover { color: var(--accent); }
-  .footer-tag {
-    color: var(--text-dim); font-size: 14px;
-    max-width: 300px; line-height: 1.6; margin-top: 16px;
-  }
-  .footer-bottom {
-    padding-top: 32px; border-top: 1px solid var(--border);
-    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px;
-    font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-muted);
+  .lightbox img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
   }
 
-  @media (max-width: 900px) {
-    .nav-links { display: none; }
-    .burger { display: block; }
+  .lightbox-close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    color: var(--text);
+    font-size: 20px;
+    cursor: pointer;
+    transition: border-color 0.2s, transform 0.2s;
   }
-
-  @media (max-width: 600px) {
-    .container { padding: 0 20px; }
-    .logo-wordmark { font-size: 18px; }
-    .price-grid { grid-template-columns: 1fr; }
-  }
+  .lightbox-close:hover { border-color: var(--accent); color: var(--accent); transform: rotate(90deg); }
 </style>
 </head>
 <body>
+
+<a href="#content" class="skip-link">Spring til indhold</a>
 
 <div class="scroll-progress" id="progress"></div>
 <div class="bg-glow"></div>
 
 <nav id="nav">
   <div class="container nav-inner">
-    <a href="index.html" class="logo" aria-label="LYDSTYRKEN">
+    <a href="index.html" class="logo" aria-label="LYDSTYRKEN — Forside">
       <span class="logo-wordmark" aria-hidden="true">
         <span class="logo-bracket logo-bracket-left">[</span>
         <span class="logo-text">LYDSTYRKEN</span>
@@ -708,6 +550,21 @@
   <!-- Indhold indsættes via JS baseret på ?id= URL-parameter -->
 </main>
 
+<!-- Sticky bid CTA på mobil — vises efter scroll forbi hoved-bid-knappen -->
+<div class="sticky-bid" id="sticky-bid" aria-hidden="true">
+  <div class="sticky-bid-info">
+    <div class="sticky-bid-name" id="sticky-name"></div>
+    <div class="sticky-bid-price" id="sticky-price"></div>
+  </div>
+  <a class="sticky-bid-btn" id="sticky-btn" href="#">Byd</a>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" role="dialog" aria-label="Billede" aria-hidden="true">
+  <button class="lightbox-close" id="lightbox-close" aria-label="Luk billede">×</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
 <footer>
   <div class="container">
     <div class="footer-grid">
@@ -741,195 +598,263 @@
   </div>
 </footer>
 
-<script src="products.js"></script>
-<script>
-  // ════════════════════════════════════════════════════════════════
-  //   Burger menu (samme som andre sider)
-  // ════════════════════════════════════════════════════════════════
-  const burger = document.getElementById('burger');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const body = document.body;
+<script src="app.js" defer></script>
+<script src="products.js" defer></script>
+<script defer>
+  document.addEventListener('DOMContentLoaded', () => {
 
-  function toggleMenu() {
-    const isOpen = body.classList.toggle('menu-open');
-    burger.setAttribute('aria-expanded', isOpen);
-  }
-  function closeMenu() {
-    body.classList.remove('menu-open');
-    burger.setAttribute('aria-expanded', 'false');
-  }
-  burger.addEventListener('click', toggleMenu);
-  mobileMenu.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => setTimeout(closeMenu, 50));
-  });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && body.classList.contains('menu-open')) closeMenu();
-  });
-  window.addEventListener('resize', () => {
-    if (window.innerWidth > 900) closeMenu();
-  });
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get('id');
+    const product = (typeof PRODUCTS !== 'undefined') ? findProductById(productId) : null;
+    const content = document.getElementById('content');
+    const auctionClosed = (typeof END_DATE !== 'undefined') && (END_DATE - new Date() <= 0);
 
-  // Scroll progress + nav scrolled state
-  const progress = document.getElementById('progress');
-  const navEl = document.getElementById('nav');
-  window.addEventListener('scroll', () => {
-    if (navEl) navEl.classList.toggle('scrolled', window.scrollY > 20);
-    const total = document.documentElement.scrollHeight - window.innerHeight;
-    progress.style.width = (window.scrollY / total) * 100 + '%';
-  });
-
-  // ════════════════════════════════════════════════════════════════
-  //   Hent produkt fra URL & render
-  // ════════════════════════════════════════════════════════════════
-
-  const params = new URLSearchParams(window.location.search);
-  const productId = params.get('id');
-  const product = findProductById(productId);
-  const content = document.getElementById('content');
-
-  if (!product) {
-    document.title = 'Produkt ikke fundet — LYDSTYRKEN';
-    content.innerHTML = `
-      <div class="container">
-        <div class="not-found">
-          <h1>Produkt ikke <span style="color: var(--accent); font-style: italic; font-weight: 400; text-transform: lowercase;">fundet.</span></h1>
-          <p>Det produkt du leder efter findes ikke længere — det er måske blevet solgt eller fjernet fra lagersalget.</p>
-          <a href="lagersalg.html" class="btn btn-primary">
-            Se alle produkter på lagersalg
-            <span class="arrow">→</span>
-          </a>
-        </div>
-      </div>
-    `;
-  } else {
-    document.title = `${product.name} — LYDSTYRKEN`;
-    renderProduct(product);
-  }
-
-  function renderProduct(p) {
-    const allImages = [p.image, ...(p.images || [])].filter(Boolean);
-    const hasImages = allImages.length > 0;
-
-    const mainImage = hasImages
-      ? `<img src="${allImages[0]}" alt="${p.name}" id="main-img">`
-      : `<div class="gallery-main-placeholder">PRODUKTBILLEDE</div>`;
-
-    const thumbsHtml = allImages.length > 1
-      ? `<div class="gallery-thumbs">${
-          allImages.map((src, i) => `
-            <button class="gallery-thumb${i === 0 ? ' active' : ''}" data-src="${src}" aria-label="Vis billede ${i + 1}">
-              <img src="${src}" alt="">
-            </button>
-          `).join('')
-        }</div>`
-      : '';
-
-    const badge = p.type === 'private'
-      ? '<span class="gallery-badge private">● Privat salg</span>'
-      : '<span class="gallery-badge business">● LYDSTYRKEN-salg</span>';
-
-    const sold = p.sold ? '<div class="gallery-sold">SOLGT</div>' : '';
-
-    const description = p.details || p.description;
-
-    const condition = p.condition
-      ? `<div class="info-condition">
-           <span class="label">Stand</span>
-           <span class="value">${p.condition}</span>
-         </div>`
-      : '';
-
-    const currentBidCard = p.currentBid
-      ? `<div class="current-bid-card">
-           <div>
-             <span class="label">Højeste bud (${p.bidder})</span>
-             <span class="value">${formatKr(p.currentBid)}</span>
-           </div>
-           <span class="live-dot"></span>
-         </div>`
-      : `<div class="current-bid-card">
-           <div>
-             <span class="label">Ingen bud endnu</span>
-             <span class="value">Byd fra ${formatKr(p.minPrice)}</span>
-           </div>
-         </div>`;
-
-    const subject = encodeURIComponent(`Bud på: ${p.name}`);
-    const mailBody = encodeURIComponent(`Hej Marius,\n\nJeg vil gerne byde på "${p.name}".\n\nMit bud: ___ kr.\nNavn:\nTelefon:\n\nMvh.`);
-
-    const btnDisabled = p.sold ? ' disabled' : '';
-    const btnText = p.sold ? 'Solgt' : 'Byd via mail';
-
-    const specsHtml = (p.specs && p.specs.length > 0)
-      ? `<section class="specs">
-           <div class="specs-label">// SPECIFIKATIONER</div>
-           <h2 class="specs-title">Tekniske detaljer</h2>
-           <div class="specs-grid">
-             ${p.specs.map(s => `
-               <div class="spec-row">
-                 <span class="label">${s.label}</span>
-                 <span class="value">${s.value}</span>
-               </div>
-             `).join('')}
-           </div>
-         </section>`
-      : '';
-
-    content.innerHTML = `
-      <div class="container product-page">
-        <div class="product-layout">
-          <div class="gallery">
-            <div class="gallery-main">
-              ${badge}
-              ${sold}
-              ${mainImage}
-            </div>
-            ${thumbsHtml}
-          </div>
-
-          <div class="info">
-            <div class="info-cat">${p.category}</div>
-            <h1 class="info-title">${p.name}</h1>
-            <p class="info-desc">${description}</p>
-            ${condition}
-
-            <div class="price-grid">
-              <div class="price-card">
-                <span class="label">Vejl. nypris</span>
-                <span class="value strike">${formatKr(p.newPrice)}</span>
-              </div>
-              <div class="price-card">
-                <span class="label">Mindstepris</span>
-                <span class="value">${formatKr(p.minPrice)}</span>
-              </div>
-            </div>
-
-            ${currentBidCard}
-
-            <a href="mailto:marius@lydstyrken.com?subject=${subject}&body=${mailBody}" class="bid-btn${btnDisabled}">
-              ${btnText}
-              ${p.sold ? '' : '<span class="arrow">→</span>'}
+    if (!product) {
+      document.title = 'Produkt ikke fundet — LYDSTYRKEN';
+      content.innerHTML = `
+        <div class="container">
+          <div class="not-found">
+            <h1>Produkt ikke <span style="color: var(--accent); font-style: italic; font-weight: 400; text-transform: lowercase;">fundet.</span></h1>
+            <p>Det produkt du leder efter findes ikke længere — det er måske blevet solgt eller fjernet fra lagersalget.</p>
+            <a href="lagersalg.html" class="btn btn-primary">
+              Se alle produkter på lagersalg
+              <span class="arrow">→</span>
             </a>
           </div>
         </div>
+      `;
+      return;
+    }
 
-        ${specsHtml}
-      </div>
-    `;
+    document.title = `${product.name} — LYDSTYRKEN`;
 
-    // Klik-håndtering på thumbnails — skifter hovedbillede
-    const mainImg = document.getElementById('main-img');
-    document.querySelectorAll('.gallery-thumb').forEach(thumb => {
-      thumb.addEventListener('click', () => {
-        const src = thumb.dataset.src;
-        if (mainImg && src) {
-          mainImg.src = src;
-          document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
-          thumb.classList.add('active');
+    // Opdatér Open Graph dynamisk så når folk deler produkt-link
+    // får de produktets info (virker i social embeds der executer JS;
+    // for FB/Twitter/LinkedIn der kun læser statisk HTML er fallback fint)
+    setMeta('og:title', `${product.name} — LYDSTYRKEN Lagersalg`);
+    setMeta('og:description', product.description);
+    if (product.image) setMeta('og:image', `https://www.lydstyrken.com/${product.image}`);
+
+    function setMeta(prop, val) {
+      const el = document.querySelector(`meta[property="${prop}"]`);
+      if (el) el.setAttribute('content', val);
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    renderProduct(product);
+    setupLightbox();
+    setupStickyBid(product);
+
+    // ─────────────────────────────────────────────────────────
+    function renderProduct(p) {
+      const allImages = [p.image, ...(p.images || [])].filter(Boolean);
+      const hasImages = allImages.length > 0;
+
+      const mainImage = hasImages
+        ? `<img src="${p.image}" alt="${escapeHtml(p.name)}" id="main-img">`
+        : `<div class="gallery-main-placeholder">PRODUKTBILLEDE</div>`;
+
+      const thumbsHtml = allImages.length > 1
+        ? `<div class="gallery-thumbs">${
+            allImages.map((src, i) => `
+              <button type="button" class="gallery-thumb${i === 0 ? ' active' : ''}" data-src="${src}" aria-label="Vis billede ${i + 1}">
+                <img src="${src}" alt="" loading="lazy">
+              </button>
+            `).join('')
+          }</div>`
+        : '';
+
+      const badge = p.type === 'private'
+        ? '<span class="gallery-badge private">● Privat salg</span>'
+        : '<span class="gallery-badge business">● LYDSTYRKEN-salg</span>';
+
+      const sold = p.sold ? '<div class="gallery-sold">SOLGT</div>' : '';
+      const description = p.details || p.description;
+
+      const condition = p.condition
+        ? `<div class="info-condition">
+             <span class="label">Stand</span>
+             <span class="value">${escapeHtml(p.condition)}</span>
+           </div>`
+        : '';
+
+      const currentBidCard = p.currentBid
+        ? `<div class="current-bid-card">
+             <div>
+               <span class="label">Højeste bud${p.bidder ? ` (${escapeHtml(p.bidder)})` : ''}</span>
+               <span class="value">${formatKr(p.currentBid)}</span>
+             </div>
+             <span class="live-dot" aria-hidden="true"></span>
+           </div>`
+        : `<div class="current-bid-card">
+             <div>
+               <span class="label">Ingen bud endnu</span>
+               <span class="value">Byd fra ${formatKr(p.minPrice)}</span>
+             </div>
+           </div>`;
+
+      const subject = encodeURIComponent(`Bud på: ${p.name}`);
+      const mailBody = encodeURIComponent(`Hej Marius,\n\nJeg vil gerne byde på "${p.name}".\n\nMit bud: ___ kr.\nNavn:\nTelefon:\n\nMvh.`);
+      const mailto = `mailto:marius@lydstyrken.com?subject=${subject}&body=${mailBody}`;
+
+      const disabled = p.sold || auctionClosed;
+      const btnText = p.sold ? 'Solgt' : (auctionClosed ? 'Budrunde lukket' : 'Byd via mail');
+      const btnClass = disabled ? ' disabled' : '';
+
+      const specsHtml = (p.specs && p.specs.length > 0)
+        ? `<section class="specs">
+             <div class="specs-label">// SPECIFIKATIONER</div>
+             <h2 class="specs-title">Tekniske detaljer</h2>
+             <div class="specs-grid">
+               ${p.specs.map(s => `
+                 <div class="spec-row">
+                   <span class="label">${escapeHtml(s.label)}</span>
+                   <span class="value">${escapeHtml(s.value)}</span>
+                 </div>
+               `).join('')}
+             </div>
+           </section>`
+        : '';
+
+      content.innerHTML = `
+        <div class="container product-page">
+          <div class="product-layout">
+            <div class="gallery">
+              <div class="gallery-main has-vt-name${hasImages ? '' : ' no-image'}"
+                   style="--product-vt: product-${p.id}"
+                   id="gallery-main">
+                ${badge}
+                ${sold}
+                ${mainImage}
+              </div>
+              ${thumbsHtml}
+            </div>
+
+            <div class="info">
+              <div class="info-cat">${escapeHtml(p.category)}</div>
+              <h1 class="info-title">${escapeHtml(p.name)}</h1>
+              <p class="info-desc">${escapeHtml(description)}</p>
+              ${condition}
+
+              <div class="price-grid">
+                <div class="price-card">
+                  <span class="label">Vejl. nypris</span>
+                  <span class="value strike">${formatKr(p.newPrice)}</span>
+                </div>
+                <div class="price-card">
+                  <span class="label">Mindstepris</span>
+                  <span class="value">${formatKr(p.minPrice)}</span>
+                </div>
+              </div>
+
+              ${currentBidCard}
+
+              <a href="${disabled ? '#' : mailto}"
+                 class="bid-btn${btnClass}"
+                 id="main-bid-btn"
+                 ${disabled ? 'aria-disabled="true" tabindex="-1"' : ''}>
+                ${btnText}
+                ${disabled ? '' : '<span class="arrow">→</span>'}
+              </a>
+            </div>
+          </div>
+
+          ${specsHtml}
+        </div>
+      `;
+
+      // Klik-håndtering på thumbnails — skifter hovedbillede
+      const mainImg = document.getElementById('main-img');
+      document.querySelectorAll('.gallery-thumb').forEach(thumb => {
+        thumb.addEventListener('click', () => {
+          const src = thumb.dataset.src;
+          if (mainImg && src) {
+            mainImg.src = src;
+            document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
+            thumb.classList.add('active');
+          }
+        });
+      });
+
+      // Tastatur-navigation: venstre/højre piletaster skifter mellem thumbs
+      document.addEventListener('keydown', (e) => {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+        const thumbs = [...document.querySelectorAll('.gallery-thumb')];
+        if (thumbs.length < 2) return;
+        const activeIdx = thumbs.findIndex(t => t.classList.contains('active'));
+        if (e.key === 'ArrowRight' && activeIdx < thumbs.length - 1) thumbs[activeIdx + 1].click();
+        if (e.key === 'ArrowLeft' && activeIdx > 0) thumbs[activeIdx - 1].click();
+      });
+    }
+
+    // ─────────────────────────────────────────────────────────
+    //   STICKY BID CTA (mobil) — vises når hoved-bid-knappen scrolles ud
+    // ─────────────────────────────────────────────────────────
+    function setupStickyBid(p) {
+      const sticky = document.getElementById('sticky-bid');
+      const stickyBtn = document.getElementById('sticky-btn');
+      const stickyName = document.getElementById('sticky-name');
+      const stickyPrice = document.getElementById('sticky-price');
+      const mainBtn = document.getElementById('main-bid-btn');
+      if (!sticky || !mainBtn) return;
+
+      stickyName.textContent = p.name;
+      stickyPrice.textContent = p.currentBid
+        ? `Bud: ${formatKr(p.currentBid)}`
+        : `Byd fra ${formatKr(p.minPrice)}`;
+      stickyBtn.href = mainBtn.href;
+      stickyBtn.textContent = p.sold ? 'Solgt' : (auctionClosed ? 'Lukket' : 'Byd');
+      if (p.sold || auctionClosed) stickyBtn.classList.add('disabled');
+
+      const observer = new IntersectionObserver(([entry]) => {
+        const visible = !entry.isIntersecting;
+        sticky.classList.toggle('visible', visible);
+        sticky.setAttribute('aria-hidden', String(!visible));
+      }, { threshold: 0, rootMargin: '0px 0px -80px 0px' });
+      observer.observe(mainBtn);
+    }
+
+    // ─────────────────────────────────────────────────────────
+    //   LIGHTBOX
+    // ─────────────────────────────────────────────────────────
+    function setupLightbox() {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      const closeBtn = document.getElementById('lightbox-close');
+
+      function openLightbox(src) {
+        lightboxImg.src = src;
+        lightbox.classList.add('visible');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeLightbox() {
+        lightbox.classList.remove('visible');
+        lightbox.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+
+      // Delegér klik på hovedbillede
+      document.addEventListener('click', (e) => {
+        const main = e.target.closest('.gallery-main:not(.no-image)');
+        if (main) {
+          const img = main.querySelector('img');
+          if (img && img.src) openLightbox(img.src);
         }
       });
-    });
-  }
+
+      closeBtn.addEventListener('click', closeLightbox);
+      lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) closeLightbox();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && lightbox.classList.contains('visible')) closeLightbox();
+      });
+    }
+  });
 </script>
 
 </body>

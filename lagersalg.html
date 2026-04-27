@@ -5,394 +5,40 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lagersalg — LYDSTYRKEN</title>
 <meta name="description" content="Åben budrunde på udvalgt lyd- og eventudstyr. Højeste bud vinder.">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="LYDSTYRKEN — Lagersalg via budrunde">
+<meta property="og:description" content="Åben budrunde på lyd- og eventudstyr. Byd nu — højeste bud ved udløb vinder.">
+<meta property="og:url" content="https://www.lydstyrken.com/lagersalg.html">
+<meta property="og:image" content="https://www.lydstyrken.com/images/og-lagersalg.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="da_DK">
+<meta property="og:site_name" content="LYDSTYRKEN">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="LYDSTYRKEN — Lagersalg via budrunde">
+<meta name="twitter:description" content="Åben budrunde på lyd- og eventudstyr.">
+<meta name="twitter:image" content="https://www.lydstyrken.com/images/og-lagersalg.jpg">
+
+<link rel="canonical" href="https://www.lydstyrken.com/lagersalg.html">
 <link rel="icon" type="image/png" href="images/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+
 <style>
-  :root {
-    --bg: #0a0a0b;
-    --bg-elev: #131316;
-    --bg-elev-2: #1c1c20;
-    --border: #2a2a2f;
-    --text: #f0eeea;
-    --text-dim: #8a8a90;
-    --text-muted: #5a5a60;
-    --accent: #ff4d2e;
-    --accent-glow: rgba(255, 77, 46, 0.15);
-    --green: #4ad7a5;
-  }
+  /* ═══════════════ SIDE-SPECIFIK CSS — kun lagersalg ═══════════════ */
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  .page-sub { font-size: 17px; max-width: 640px; margin-bottom: 40px; }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Montserrat', sans-serif;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    min-height: 100vh;
-  }
-
-  .scroll-progress {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 2px;
-    background: var(--accent);
-    z-index: 200;
-    width: 0%;
-    transition: width 0.1s;
-  }
-
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(255, 255, 255, 0.012) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
-    background-size: 80px 80px;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .bg-glow {
-    position: fixed;
-    top: -300px;
-    right: -300px;
-    width: 800px;
-    height: 800px;
-    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 60%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 32px;
-    position: relative;
-    z-index: 2;
-  }
-
-  /* ═══════════════════════════════════════════════════════════
-     NAV
-     ═══════════════════════════════════════════════════════════ */
-
-  nav {
-    padding: 24px 0;
-    background: rgba(10, 10, 11, 0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.3s, padding 0.3s;
-  }
-
-  nav.scrolled { border-bottom-color: var(--border); padding: 16px 0; }
-
-  .nav-inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-   .logo {
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    color: var(--text);
-  }
-
-  .logo-wordmark {
-    display: center;
-    align-items: center;
-    gap: 1.1em;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 22px;
-    font-weight: 900;
-    line-height: 0.9;
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-
-  .logo-text, .logo-bracket {
-    display: inline-block;
-    transition: transform 0.25s;
-    margin: 4px;
-  }
-
-  .logo-text { transform: scaleX(1.06); transform-origin: center; }
-
-  .logo-bracket {
-    font-size: 1.25em;
-    line-height: 1;
-    transition: color 0.25s, text-shadow 0.25s, transform 0.25s;
-  }
-  .logo:hover .logo-bracket {
-    color: var(--accent);
-    text-shadow: 0 0 16px rgba(255, 77, 46, 0.75), 0 0 34px rgba(255, 77, 46, 0.35);
-  }
-
-  .logo:hover .logo-bracket-left { transform: translateX(-3px) scaleY(1.08); }
-  .logo:hover .logo-bracket-right { transform: translateX(3px) scaleY(1.08); }
-
-  .back-link {
-    color: var(--text-dim);
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: color 0.2s, gap 0.2s;
-  }
-  .back-link:hover {
-    color: var(--accent);
-    gap: 12px;
-  }
-
-  body.menu-open { overflow: hidden; }
-
-  .nav-links {
-    display: flex;
-    gap: 32px;
-    align-items: center;
-  }
-
-  .nav-links a {
-    color: var(--text-dim);
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    transition: color 0.2s;
-    position: relative;
-    padding: 6px 0;
-  }
-  .nav-links a:hover { color: var(--text); }
-
-  /* Active page indicator — animeret orange linje under */
-  .nav-links a.active {
-    color: var(--accent);
-  }
-  .nav-links a.active:not(.btn-nav)::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -4px;
-    height: 1px;
-    background: var(--accent);
-    transform-origin: left;
-    animation: active-line-in 0.5s cubic-bezier(0.65, 0, 0.35, 1) forwards;
-  }
-
-  @keyframes active-line-in {
-    from { transform: scaleX(0); }
-    to { transform: scaleX(1); }
-  }
-
-  .btn-nav {
-    border: 1px solid var(--border);
-    padding: 9px 16px;
-    border-radius: 4px;
-    transition: all 0.2s;
-  }
-  .btn-nav:hover {
-    border-color: var(--accent);
-    color: var(--accent) !important;
-    background: rgba(255, 77, 46, 0.05);
-  }
-  .btn-nav.active {
-    border-color: var(--accent);
-    color: var(--accent) !important;
-    background: rgba(255, 77, 46, 0.08);
-    box-shadow: 0 0 0 1px var(--accent), 0 0 20px rgba(255, 77, 46, 0.15);
-  }
-
-  .burger {
-    display: none;
-    width: 44px;
-    height: 44px;
-    background: transparent;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    cursor: pointer;
-    position: relative;
-    transition: border-color 0.2s;
-  }
-  .burger:hover { border-color: var(--accent); }
-  .burger span {
-    position: absolute;
-    left: 12px;
-    right: 12px;
-    height: 2px;
-    background: var(--text);
-    transition: all 0.3s ease;
-  }
-  .burger span:nth-child(1) { top: 14px; }
-  .burger span:nth-child(2) { top: 21px; }
-  .burger span:nth-child(3) { top: 28px; }
-  body.menu-open .burger span:nth-child(1) { top: 21px; transform: rotate(45deg); background: var(--accent); }
-  body.menu-open .burger span:nth-child(2) { opacity: 0; }
-  body.menu-open .burger span:nth-child(3) { top: 21px; transform: rotate(-45deg); background: var(--accent); }
-
-  .mobile-menu {
-    position: fixed;
-    inset: 0;
-    background: rgba(10, 10, 11, 0.97);
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
-    z-index: 90;
-    padding: 100px 32px 40px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.4s ease;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-  }
-  body.menu-open .mobile-menu { opacity: 1; pointer-events: auto; }
-
-  .mobile-menu-links { display: flex; flex-direction: column; gap: 4px; }
-
-  .mobile-menu-links a {
-    color: var(--text);
-    text-decoration: none;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 800;
-    font-size: clamp(32px, 8vw, 48px);
-    letter-spacing: -0.02em;
-    text-transform: uppercase;
-    padding: 16px 0;
-    border-bottom: 1px solid var(--border);
-    transform: translateX(-20px);
-    opacity: 0;
-    transition: opacity 0.4s ease, transform 0.4s ease, color 0.2s, padding-left 0.2s;
-  }
-  body.menu-open .mobile-menu-links a { transform: translateX(0); opacity: 1; }
-  body.menu-open .mobile-menu-links a:nth-child(1) { transition-delay: 0.1s; }
-  body.menu-open .mobile-menu-links a:nth-child(2) { transition-delay: 0.15s; }
-  body.menu-open .mobile-menu-links a:nth-child(3) { transition-delay: 0.2s; }
-  body.menu-open .mobile-menu-links a:nth-child(4) { transition-delay: 0.25s; }
-  body.menu-open .mobile-menu-links a:nth-child(5) { transition-delay: 0.3s; }
-  .mobile-menu-links a:hover { color: var(--accent); padding-left: 12px; }
-  .mobile-menu-links a.active {
-    color: var(--accent);
-    padding-left: 16px;
-    position: relative;
-  }
-  .mobile-menu-links a.active::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 3px;
-    height: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 12px var(--accent);
-  }
-  .mobile-menu-links a.active .mobile-menu-num {
-    color: var(--accent);
-  }
-  .mobile-menu-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--text-muted);
-    margin-right: 16px;
-    font-weight: 400;
-    letter-spacing: 0.1em;
-  }
-  .mobile-menu-footer {
-    margin-top: auto;
-    padding-top: 32px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    color: var(--text-muted);
-  }
-  .mobile-menu-footer a {
-    color: var(--text-dim);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  .mobile-menu-footer a:hover { color: var(--accent); }
-
-  @media (max-width: 900px) {
-    .nav-links { display: none; }
-    .back-link { display: none; }
-    .burger { display: block; }
-  }
-
-  /* ═══════════════════════════════════════════════════════════
-     HEADER
-     ═══════════════════════════════════════════════════════════ */
-
-  .page-header {
-    padding: 80px 0 40px;
-  }
-
-  .page-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    color: var(--accent);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .page-label::before {
-    content: '';
-    width: 32px;
-    height: 1px;
-    background: var(--accent);
-  }
-
-  .page-title {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 800;
-    font-size: clamp(40px, 7vw, 80px);
-    line-height: 0.95;
-    letter-spacing: -0.03em;
-    margin-bottom: 24px;
-    text-transform: uppercase;
-  }
-  .page-title .accent {
-    color: var(--accent);
-    font-style: italic;
-    font-weight: 400;
-    text-transform: lowercase;
-  }
-
-  .page-sub {
-    font-size: 17px;
-    color: var(--text-dim);
-    max-width: 640px;
-    margin-bottom: 40px;
-  }
-
-  /* ═══════════════════════════════════════════════════════════
-     COUNTDOWN
-     ═══════════════════════════════════════════════════════════ */
-
+  /* ─── COUNTDOWN ─── */
   .countdown-wrap {
     background: var(--bg-elev);
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: var(--radius-lg);
     padding: 32px;
     position: relative;
     overflow: hidden;
@@ -401,7 +47,6 @@
     gap: 32px;
     align-items: center;
   }
-
   @media (max-width: 700px) {
     .countdown-wrap { grid-template-columns: 1fr; gap: 24px; padding: 24px; }
   }
@@ -409,12 +54,13 @@
   .countdown-wrap::before {
     content: '';
     position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
+    left: 0; top: 0; bottom: 0;
     width: 4px;
     background: var(--accent);
   }
+
+  .countdown-wrap.closed::before { background: var(--text-muted); }
+  .countdown-wrap.closed { opacity: 0.7; }
 
   .countdown-label {
     font-family: 'JetBrains Mono', monospace;
@@ -433,18 +79,19 @@
     letter-spacing: 0.02em;
   }
 
-  .countdown {
-    display: flex;
-    gap: 20px;
-  }
+  .countdown { display: flex; gap: 20px; }
+  @media (max-width: 600px) { .countdown { gap: 8px; } }
 
   .countdown-item {
     text-align: center;
     min-width: 64px;
     background: var(--bg);
     border: 1px solid var(--border);
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     padding: 12px 14px;
+  }
+  @media (max-width: 600px) {
+    .countdown-item { min-width: 56px; padding: 10px 12px; }
   }
 
   .countdown-num {
@@ -454,7 +101,17 @@
     color: var(--accent);
     line-height: 1;
     margin-bottom: 4px;
+    /* Lille pulse hver gang sek-tæller skifter — sat via JS class */
   }
+  .countdown-num.tick {
+    animation: tick 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes tick {
+    0%   { transform: translateY(0); opacity: 1; }
+    40%  { transform: translateY(-3px); opacity: 0.8; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+  @media (max-width: 600px) { .countdown-num { font-size: 22px; } }
 
   .countdown-unit {
     font-family: 'JetBrains Mono', monospace;
@@ -464,13 +121,8 @@
     text-transform: uppercase;
   }
 
-  /* ═══════════════════════════════════════════════════════════
-     SÅDAN VIRKER DET (3 STEPS)
-     ═══════════════════════════════════════════════════════════ */
-
-  .how {
-    margin: 56px 0 40px;
-  }
+  /* ─── HOW ─── */
+  .how { margin: 56px 0 40px; }
 
   .how-grid {
     display: grid;
@@ -478,20 +130,16 @@
     gap: 1px;
     background: var(--border);
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: var(--radius-lg);
     overflow: hidden;
   }
-
-  @media (max-width: 800px) {
-    .how-grid { grid-template-columns: 1fr; }
-  }
+  @media (max-width: 800px) { .how-grid { grid-template-columns: 1fr; } }
 
   .how-step {
     background: var(--bg-elev);
     padding: 28px;
     transition: background 0.3s;
   }
-
   .how-step:hover { background: var(--bg-elev-2); }
 
   .how-step-num {
@@ -513,28 +161,16 @@
     margin-bottom: 8px;
   }
 
-  .how-step p {
-    color: var(--text-dim);
-    font-size: 14px;
-    line-height: 1.55;
-  }
+  .how-step p { color: var(--text-dim); font-size: 14px; line-height: 1.55; }
+  .how-step strong { color: var(--text); font-weight: 600; }
 
-  .how-step strong {
-    color: var(--text);
-    font-weight: 600;
-  }
-
-  /* ═══════════════════════════════════════════════════════════
-     CONTROLS
-     ═══════════════════════════════════════════════════════════ */
-
+  /* ─── SECTION DIVIDER + CONTROLS ─── */
   .section-divider {
     margin: 56px 0 32px;
     display: flex;
     align-items: center;
     gap: 16px;
   }
-
   .section-divider h2 {
     font-family: 'Montserrat', sans-serif;
     font-weight: 800;
@@ -542,13 +178,7 @@
     text-transform: uppercase;
     letter-spacing: 0.02em;
   }
-
-  .section-divider .line {
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-
+  .section-divider .line { flex: 1; height: 1px; background: var(--border); }
   .section-divider .count {
     font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
@@ -564,28 +194,21 @@
     flex-wrap: wrap;
   }
 
-  .search-box {
-    flex: 1;
-    min-width: 240px;
-    position: relative;
-  }
+  .search-box { flex: 1; min-width: 240px; position: relative; }
 
   .search-box input {
     width: 100%;
     background: var(--bg-elev);
     border: 1px solid var(--border);
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     padding: 14px 16px 14px 44px;
     color: var(--text);
     font-family: 'Montserrat', sans-serif;
     font-size: 14px;
     transition: border-color 0.2s;
   }
-
-  .search-box input:focus {
-    outline: none;
-    border-color: var(--accent);
-  }
+  .search-box input:focus { outline: none; border-color: var(--accent); }
+  .search-box input::placeholder { color: var(--text-muted); }
 
   .search-box::before {
     content: '';
@@ -598,7 +221,7 @@
     background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%238a8a90' stroke-width='2' viewBox='0 0 24 24'><circle cx='11' cy='11' r='8'/><path d='m21 21-4.35-4.35'/></svg>") center/contain no-repeat;
   }
 
-  .filter-group {
+  .filter-group, .sort-group {
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
@@ -609,15 +232,14 @@
     border: 1px solid var(--border);
     color: var(--text-dim);
     padding: 12px 18px;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
     letter-spacing: 0.05em;
     text-transform: uppercase;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
   }
-
   .filter-btn:hover { color: var(--text); border-color: #3a3a40; }
   .filter-btn.active {
     background: var(--accent);
@@ -625,36 +247,58 @@
     border-color: var(--accent);
   }
 
-  /* ═══════════════════════════════════════════════════════════
-     PRODUCTS — kompakt 4-kolonne grid med overlay
-     ═══════════════════════════════════════════════════════════ */
+  /* Sort-select — egen variant */
+  .sort-select {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 12px 36px 12px 16px;
+    border-radius: var(--radius-sm);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%238a8a90' stroke-width='2' viewBox='0 0 24 24'><path d='M6 9l6 6 6-6'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 14px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .sort-select:hover { color: var(--text); border-color: #3a3a40; }
+  .sort-select:focus { outline: none; border-color: var(--accent); color: var(--text); }
 
+  /* ─── PRODUCTS GRID ─── */
   .products {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 16px;
     padding-bottom: 80px;
   }
+  @media (max-width: 1100px) { .products { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 800px)  { .products { grid-template-columns: repeat(2, 1fr); gap: 12px; } }
+  @media (max-width: 480px)  { .products { grid-template-columns: 1fr; } }
 
-  @media (max-width: 1100px) {
-    .products { grid-template-columns: repeat(3, 1fr); }
-  }
-  @media (max-width: 800px) {
-    .products { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-  }
-  @media (max-width: 480px) {
-    .products { grid-template-columns: 1fr; }
-  }
+  /* Fade når filter ændres */
+  .products.transitioning { opacity: 0; transition: opacity 0.15s; }
 
   .product {
     background: var(--bg-elev);
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: var(--radius-lg);
     overflow: hidden;
-    transition: all 0.3s;
+    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
     display: flex;
     flex-direction: column;
     position: relative;
+    animation: card-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes card-in {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
   .product:hover {
@@ -664,9 +308,12 @@
   }
 
   .product.sold { opacity: 0.55; }
-  .product.sold:hover { transform: none; border-color: var(--border); box-shadow: none; }
+  .product.sold:hover {
+    transform: none;
+    border-color: var(--border);
+    box-shadow: none;
+  }
 
-  /* Klikbart billed-areal ↗ produkt.html */
   .product-image {
     aspect-ratio: 1 / 1;
     background: var(--bg-elev-2);
@@ -697,7 +344,6 @@
     letter-spacing: 0.2em;
   }
 
-  /* "Klik for detaljer"-hint nederst-til-højre på billedet ved hover */
   .product-image::after {
     content: '↗';
     position: absolute;
@@ -718,7 +364,7 @@
     color: var(--text);
     opacity: 0;
     transform: translateY(4px);
-    transition: opacity 0.25s, transform 0.25s, background 0.25s, border-color 0.25s;
+    transition: opacity 0.25s, transform 0.25s, background 0.25s, border-color 0.25s, color 0.25s;
     z-index: 3;
   }
   .product:hover .product-image::after {
@@ -729,7 +375,6 @@
     border-color: var(--accent);
   }
 
-  /* Top overlay — badges */
   .badges {
     position: absolute;
     top: 10px;
@@ -751,11 +396,9 @@
     -webkit-backdrop-filter: blur(8px);
     background: rgba(10, 10, 11, 0.5);
   }
-
   .badge-private { color: var(--green); border: 1px solid var(--green); }
   .badge-business { color: var(--accent); border: 1px solid var(--accent); }
 
-  /* Top-right: live bud-pille (overlay) */
   .bid-pill {
     position: absolute;
     top: 10px;
@@ -782,13 +425,11 @@
     background: var(--accent);
     animation: live 1.5s ease-in-out infinite;
   }
-
   @keyframes live {
     0%, 100% { opacity: 1; box-shadow: 0 0 0 0 var(--accent); }
     50% { opacity: 0.5; box-shadow: 0 0 0 6px transparent; }
   }
 
-  /* Bottom overlay — kategori + navn ovenpå billedet */
   .product-overlay {
     position: absolute;
     left: 0; right: 0; bottom: 0;
@@ -820,7 +461,6 @@
     letter-spacing: 0.01em;
   }
 
-  /* SOLGT-stempel */
   .badge-sold {
     position: absolute;
     top: 50%;
@@ -837,7 +477,6 @@
     z-index: 4;
   }
 
-  /* Body — kun pris + bid-knap */
   .product-body {
     padding: 14px;
     display: flex;
@@ -852,26 +491,10 @@
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
   }
-
-  .price-line .label {
-    color: var(--text-muted);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .price-line .value {
-    color: var(--text-dim);
-  }
-
-  .price-line .value.strike {
-    text-decoration: line-through;
-    color: var(--text-muted);
-  }
-
-  .price-line .value.bid {
-    color: var(--accent);
-    font-weight: 600;
-  }
+  .price-line .label { color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+  .price-line .value { color: var(--text-dim); }
+  .price-line .value.strike { text-decoration: line-through; color: var(--text-muted); }
+  .price-line .value.bid { color: var(--accent); font-weight: 600; }
 
   .bid-btn {
     width: 100%;
@@ -879,7 +502,7 @@
     color: #0a0a0b;
     border: none;
     padding: 10px;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
     font-size: 11px;
@@ -889,14 +512,9 @@
     text-decoration: none;
     text-align: center;
     display: block;
-    transition: all 0.2s;
+    transition: background 0.2s, transform 0.2s;
   }
-
-  .bid-btn:hover {
-    background: #ff6347;
-    transform: translateY(-1px);
-  }
-
+  .bid-btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
   .bid-btn.disabled {
     background: var(--bg-elev-2);
     color: var(--text-muted);
@@ -909,75 +527,45 @@
     padding: 80px 20px;
     color: var(--text-dim);
     grid-column: 1 / -1;
+    background: var(--bg-elev);
+    border: 1px dashed var(--border);
+    border-radius: var(--radius-lg);
   }
-
-  /* FOOTER */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 56px 0 40px;
-  }
-
-  .footer-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 48px;
-    margin-bottom: 48px;
-  }
-
-  @media (max-width: 700px) {
-    .footer-grid { grid-template-columns: 1fr; }
-  }
-
-  .footer-col h4 {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.2em;
+  .empty-state h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
     text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 20px;
-    font-weight: 400;
+    margin-bottom: 12px;
+    color: var(--text);
   }
-
-  .footer-col a {
-    display: block;
-    color: var(--text-dim);
-    text-decoration: none;
-    font-size: 14px;
-    margin-bottom: 10px;
-    transition: color 0.2s;
-  }
-  .footer-col a:hover { color: var(--accent); }
-
-  .footer-bottom {
-    padding-top: 32px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 16px;
+  .empty-state p { margin-bottom: 20px; font-size: 14px; }
+  .empty-state button {
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 10px 20px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
     font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
-    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition: background 0.2s;
   }
-
-  @media (max-width: 600px) {
-    .container { padding: 0 20px; }
-    .page-header { padding: 40px 0 24px; }
-    .logo-wordmark { font-size: 18px; }
-    .back-link { font-size: 11px; }
-    .countdown-num { font-size: 22px; }
-    .countdown-item { min-width: 56px; padding: 10px 12px; }
-  }
+  .empty-state button:hover { background: rgba(255, 77, 46, 0.1); }
 </style>
 </head>
 <body>
+
+<a href="#products" class="skip-link">Spring til produkter</a>
 
 <div class="scroll-progress" id="progress"></div>
 <div class="bg-glow"></div>
 
 <nav id="nav">
   <div class="container nav-inner">
-    <a href="index.html" class="logo" aria-label="LYDSTYRKEN">
+    <a href="index.html" class="logo" aria-label="LYDSTYRKEN — Forside">
       <span class="logo-wordmark" aria-hidden="true">
         <span class="logo-bracket logo-bracket-left">[</span>
         <span class="logo-text">LYDSTYRKEN</span>
@@ -988,7 +576,7 @@
       <a href="ydelser.html">Ydelser</a>
       <a href="om.html">Om os</a>
       <a href="index.html#kontakt">Kontakt</a>
-      <a href="lagersalg.html" class="btn-nav active"> Lagersalg →</a>
+      <a href="lagersalg.html" class="btn-nav active">Lagersalg →</a>
     </div>
     <button class="burger" id="burger" aria-label="Åbn menu" aria-expanded="false" aria-controls="mobile-menu">
       <span></span><span></span><span></span>
@@ -1013,6 +601,8 @@
   </div>
 </div>
 
+<main>
+
 <header class="page-header">
   <div class="container">
     <div class="page-label">// LAGERSALG / BUDRUNDE</div>
@@ -1023,7 +613,7 @@
       Åben budrunde på udvalgt lyd- og eventudstyr. Højeste bud ved udløb får tilbudt at købe.
     </p>
 
-    <div class="countdown-wrap">
+    <div class="countdown-wrap" id="countdown-wrap">
       <div>
         <div class="countdown-label">Budrunden lukker</div>
         <div class="countdown-date" id="end-date">15. maj 2026 — kl. 22:00</div>
@@ -1052,7 +642,6 @@
 
 <div class="container">
 
-  <!-- 3-trins forklaring giver kunden et klart overblik -->
   <div class="how">
     <div class="how-grid">
       <div class="how-step">
@@ -1081,18 +670,31 @@
 
   <div class="controls">
     <div class="search-box">
-      <input type="text" id="search" placeholder="Søg efter mixer, højttaler, kabel...">
+      <label for="search" class="visually-hidden" style="position:absolute;left:-9999px;">Søg</label>
+      <input type="text" id="search" placeholder="Søg efter mixer, højttaler, kabel..." autocomplete="off">
     </div>
-    <div class="filter-group" id="filters">
+    <div class="filter-group" id="filters" role="group" aria-label="Filtrér produkter">
       <button class="filter-btn active" data-filter="all">Alle</button>
       <button class="filter-btn" data-filter="private">Privat</button>
       <button class="filter-btn" data-filter="business">LYDSTYRKEN</button>
       <button class="filter-btn" data-filter="available">Tilgængelige</button>
     </div>
+    <div class="sort-group">
+      <label for="sort" class="visually-hidden" style="position:absolute;left:-9999px;">Sortér</label>
+      <select class="sort-select" id="sort" aria-label="Sortér produkter">
+        <option value="default">Standard</option>
+        <option value="price-asc">Pris: Lav → Høj</option>
+        <option value="price-desc">Pris: Høj → Lav</option>
+        <option value="bid-active">Aktive bud først</option>
+        <option value="category">Efter kategori</option>
+      </select>
+    </div>
   </div>
 
-  <div class="products" id="products"></div>
+  <div class="products" id="products" aria-live="polite"></div>
 </div>
+
+</main>
 
 <footer>
   <div class="container">
@@ -1125,192 +727,277 @@
   </div>
 </footer>
 
-<script src="products.js"></script>
-<script>
-  // ═══════════════════════════════════════════════════════════
-  //   BURGER MENU
-  // ═══════════════════════════════════════════════════════════
-  const burger = document.getElementById('burger');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const body = document.body;
+<script src="app.js" defer></script>
+<script src="products.js" defer></script>
+<script defer>
+  // ════════════════════════════════════════════════════════════════
+  //   LAGERSALG-side: filter, sortering, søgning, URL-state, countdown
+  // ════════════════════════════════════════════════════════════════
 
-  function toggleMenu() {
-    const isOpen = body.classList.toggle('menu-open');
-    burger.setAttribute('aria-expanded', isOpen);
-  }
-  function closeMenu() {
-    body.classList.remove('menu-open');
-    burger.setAttribute('aria-expanded', 'false');
-  }
-  burger.addEventListener('click', toggleMenu);
-  mobileMenu.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => setTimeout(closeMenu, 50));
-  });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && body.classList.contains('menu-open')) closeMenu();
-  });
-  window.addEventListener('resize', () => {
-    if (window.innerWidth > 900) closeMenu();
-  });
+  document.addEventListener('DOMContentLoaded', () => {
 
-  // ═══════════════════════════════════════════════════════════
-  //   PRODUKT-DATA & END_DATE kommer fra products.js
-  //   Redigér produkter direkte i products.js
-  // ═══════════════════════════════════════════════════════════
-
-  // Defensiv kontrol: er products.js loadet korrekt?
-  if (typeof PRODUCTS === 'undefined') {
-    document.addEventListener('DOMContentLoaded', () => {
+    // Defensiv kontrol: er products.js loadet korrekt?
+    if (typeof PRODUCTS === 'undefined') {
       const grid = document.getElementById('products');
       if (grid) {
         grid.innerHTML = `
-          <div class="empty-state" style="border: 1px solid var(--accent); padding: 40px; border-radius: 8px; background: rgba(255, 77, 46, 0.05); color: var(--text);">
-            <strong style="display: block; margin-bottom: 16px; font-size: 18px;">⚠ products.js kunne ikke indlæses</strong>
-            <p style="margin-bottom: 12px;">Det betyder normalt at filen ikke er blevet uploaded til serveren.</p>
-            <p style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-dim);">Tjek at <code style="color: var(--accent);">products.js</code> ligger i samme mappe som <code style="color: var(--accent);">lagersalg.html</code>.</p>
+          <div class="empty-state" style="border-color: var(--accent); color: var(--text);">
+            <h3>⚠ products.js kunne ikke indlæses</h3>
+            <p>Tjek at <code style="color: var(--accent);">products.js</code> ligger i samme mappe som <code style="color: var(--accent);">lagersalg.html</code>.</p>
           </div>
         `;
       }
-    });
-    throw new Error('products.js er ikke loadet — tjek at filen er uploaded til serveren.');
-  }
+      return;
+    }
 
-  const products = PRODUCTS; // alias for læsevenlighed
-
-  function renderProducts(filter = 'all', search = '') {
     const grid = document.getElementById('products');
-    const searchLower = search.toLowerCase();
+    const countEl = document.getElementById('count');
+    const searchInput = document.getElementById('search');
+    const sortSelect = document.getElementById('sort');
+    const filterBtns = document.querySelectorAll('.filter-btn');
 
-    const filtered = products.filter(p => {
-      if (filter === 'private' && p.type !== 'private') return false;
-      if (filter === 'business' && p.type !== 'business') return false;
-      if (filter === 'available' && p.sold) return false;
+    // ─── URL-state: læs initial state fra ?filter=&q=&sort= ───
+    const url = new URL(window.location.href);
+    let currentFilter = url.searchParams.get('filter') || 'all';
+    let currentSort   = url.searchParams.get('sort')   || 'default';
+    let currentSearch = url.searchParams.get('q')      || '';
 
-      if (searchLower && !(
-        p.name.toLowerCase().includes(searchLower) ||
-        p.category.toLowerCase().includes(searchLower) ||
-        p.description.toLowerCase().includes(searchLower)
-      )) return false;
+    // Sync UI til state
+    searchInput.value = currentSearch;
+    sortSelect.value = currentSort;
+    filterBtns.forEach(b => b.classList.toggle('active', b.dataset.filter === currentFilter));
 
-      return true;
-    });
-
-    document.getElementById('count').textContent = filtered.length;
-
-    if (filtered.length === 0) {
-      grid.innerHTML = '<div class="empty-state">Ingen produkter matcher din søgning.</div>';
-      return;
+    function updateUrl() {
+      const u = new URL(window.location.href);
+      const setOrDelete = (k, v, defaultVal) => {
+        if (v && v !== defaultVal) u.searchParams.set(k, v);
+        else u.searchParams.delete(k);
+      };
+      setOrDelete('filter', currentFilter, 'all');
+      setOrDelete('sort',   currentSort,   'default');
+      setOrDelete('q',      currentSearch, '');
+      window.history.replaceState({}, '', u);
     }
 
-    grid.innerHTML = filtered.map(p => {
-      const badge = p.type === 'private'
-        ? '<span class="badge badge-private">● Privat</span>'
-        : '<span class="badge badge-business">● LYDSTYRKEN</span>';
+    // ─── Render ───
+    const auctionClosed = END_DATE - new Date() <= 0;
 
-      const bidPill = p.currentBid
-        ? `<div class="bid-pill"><span class="live-dot-tiny"></span>${formatKr(p.currentBid)}</div>`
-        : '';
+    function sortProducts(arr, mode) {
+      const sorted = [...arr];
+      switch (mode) {
+        case 'price-asc':
+          return sorted.sort((a, b) => (a.currentBid || a.minPrice) - (b.currentBid || b.minPrice));
+        case 'price-desc':
+          return sorted.sort((a, b) => (b.currentBid || b.minPrice) - (a.currentBid || a.minPrice));
+        case 'bid-active':
+          return sorted.sort((a, b) => {
+            if (!!a.currentBid !== !!b.currentBid) return a.currentBid ? -1 : 1;
+            return (b.currentBid || 0) - (a.currentBid || 0);
+          });
+        case 'category':
+          return sorted.sort((a, b) =>
+            a.category.localeCompare(b.category, 'da') || a.name.localeCompare(b.name, 'da'));
+        default:
+          return sorted;
+      }
+    }
 
-      const sold = p.sold ? '<div class="badge-sold">SOLGT</div>' : '';
-      const soldClass = p.sold ? ' sold' : '';
+    function renderProducts() {
+      const searchLower = currentSearch.toLowerCase().trim();
 
-      const subject = encodeURIComponent(`Bud på: ${p.name}`);
-      const body = encodeURIComponent(`Hej Marius,\n\nJeg vil gerne byde på "${p.name}".\n\nMit bud: ___ kr.\nNavn:\nTelefon:\n\nMvh.`);
+      let filtered = PRODUCTS.filter(p => {
+        if (currentFilter === 'private'   && p.type !== 'private')   return false;
+        if (currentFilter === 'business'  && p.type !== 'business')  return false;
+        if (currentFilter === 'available' && p.sold)                 return false;
+        if (searchLower && !(
+          p.name.toLowerCase().includes(searchLower) ||
+          p.category.toLowerCase().includes(searchLower) ||
+          p.description.toLowerCase().includes(searchLower)
+        )) return false;
+        return true;
+      });
 
-      const btnDisabled = p.sold ? ' disabled' : '';
-      const btnText = p.sold ? 'Solgt' : 'Byd via mail →';
+      filtered = sortProducts(filtered, currentSort);
 
-      const image = p.image
-        ? `<img src="${p.image}" alt="${p.name}">`
-        : '<span class="product-image-placeholder">BILLEDE</span>';
+      countEl.textContent = filtered.length;
 
-      // Pris-linje under billedet
-      const priceLine = p.currentBid
-        ? `<div class="price-line">
-             <span class="value bid">Bud: ${formatKr(p.currentBid)}</span>
-             <span class="value strike">${formatKr(p.newPrice)}</span>
-           </div>`
-        : `<div class="price-line">
-             <span class="label">Byd fra</span>
-             <span class="value bid">${formatKr(p.minPrice)}</span>
-           </div>`;
-
-      return `
-        <article class="product${soldClass}">
-          <a class="product-image" href="produkt.html?id=${p.id}" aria-label="Se detaljer for ${p.name}">
-            ${image}
-            <div class="badges">${badge}</div>
-            ${bidPill}
-            ${sold}
-            <div class="product-overlay">
-              <div class="product-cat">${p.category}</div>
-              <h3 class="product-name">${p.name}</h3>
-            </div>
-          </a>
-          <div class="product-body">
-            ${priceLine}
-            <a href="mailto:marius@lydstyrken.com?subject=${subject}&body=${body}" class="bid-btn${btnDisabled}">${btnText}</a>
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state">
+            <h3>Ingen produkter matcher</h3>
+            <p>Prøv et andet søgeord eller fjern filtre.</p>
+            <button id="reset-filters">Nulstil filtre</button>
           </div>
-        </article>
-      `;
-    }).join('');
-  }
+        `;
+        document.getElementById('reset-filters')?.addEventListener('click', resetFilters);
+        return;
+      }
 
-  // Scroll progress + nav scrolled state
-  const progress = document.getElementById('progress');
-  const navEl = document.getElementById('nav');
-  window.addEventListener('scroll', () => {
-    if (navEl) navEl.classList.toggle('scrolled', window.scrollY > 20);
-    const total = document.documentElement.scrollHeight - window.innerHeight;
-    progress.style.width = (window.scrollY / total) * 100 + '%';
-  });
+      grid.innerHTML = filtered.map(p => {
+        const badge = p.type === 'private'
+          ? '<span class="badge badge-private">● Privat</span>'
+          : '<span class="badge badge-business">● LYDSTYRKEN</span>';
 
-  // Search & filter
-  let currentFilter = 'all';
-  const searchInput = document.getElementById('search');
+        const bidPill = p.currentBid
+          ? `<div class="bid-pill"><span class="live-dot-tiny" aria-hidden="true"></span>${formatKr(p.currentBid)}</div>`
+          : '';
 
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      currentFilter = btn.dataset.filter;
-      renderProducts(currentFilter, searchInput.value);
-    });
-  });
+        const sold = p.sold ? '<div class="badge-sold">SOLGT</div>' : '';
+        const soldClass = p.sold ? ' sold' : '';
 
-  searchInput.addEventListener('input', e => {
-    renderProducts(currentFilter, e.target.value);
-  });
+        const subject = encodeURIComponent(`Bud på: ${p.name}`);
+        const body = encodeURIComponent(`Hej Marius,\n\nJeg vil gerne byde på "${p.name}".\n\nMit bud: ___ kr.\nNavn:\nTelefon:\n\nMvh.`);
 
-  // Countdown
-  function updateCountdown() {
-    const now = new Date();
-    const diff = END_DATE - now;
+        const disabled = p.sold || auctionClosed;
+        const btnText = p.sold ? 'Solgt' : (auctionClosed ? 'Budrunde lukket' : 'Byd via mail →');
+        const btnDisabledClass = disabled ? ' disabled' : '';
 
-    if (diff <= 0) {
-      document.getElementById('cd-days').textContent = '0';
-      document.getElementById('cd-hours').textContent = '0';
-      document.getElementById('cd-mins').textContent = '0';
-      document.getElementById('cd-secs').textContent = '0';
-      document.getElementById('end-date').textContent = 'Budrunden er lukket';
-      return;
+        const image = p.image
+          ? `<img src="${p.image}" alt="${escapeHtml(p.name)}" loading="lazy" decoding="async">`
+          : '<span class="product-image-placeholder">BILLEDE</span>';
+
+        const priceLine = p.currentBid
+          ? `<div class="price-line">
+               <span class="value bid">Bud: ${formatKr(p.currentBid)}</span>
+               <span class="value strike">${formatKr(p.newPrice)}</span>
+             </div>`
+          : `<div class="price-line">
+               <span class="label">Byd fra</span>
+               <span class="value bid">${formatKr(p.minPrice)}</span>
+             </div>`;
+
+        // View Transition: --product-vt sættes som inline style
+        // så billedet morpher fra kort → produktside
+        return `
+          <article class="product${soldClass}">
+            <a class="product-image has-vt-name"
+               style="--product-vt: product-${p.id}"
+               href="produkt.html?id=${p.id}"
+               aria-label="Se detaljer for ${escapeAttr(p.name)}">
+              ${image}
+              <div class="badges">${badge}</div>
+              ${bidPill}
+              ${sold}
+              <div class="product-overlay">
+                <div class="product-cat">${escapeHtml(p.category)}</div>
+                <h3 class="product-name">${escapeHtml(p.name)}</h3>
+              </div>
+            </a>
+            <div class="product-body">
+              ${priceLine}
+              <a href="${disabled ? '#' : `mailto:marius@lydstyrken.com?subject=${subject}&body=${body}`}"
+                 class="bid-btn${btnDisabledClass}"
+                 ${disabled ? 'aria-disabled="true" tabindex="-1"' : ''}>${btnText}</a>
+            </div>
+          </article>
+        `;
+      }).join('');
     }
 
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const mins = Math.floor((diff / (1000 * 60)) % 60);
-    const secs = Math.floor((diff / 1000) % 60);
+    // Simple HTML/attr escape — i tilfælde af at produktnavne får < > " &
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+    function escapeAttr(s) { return escapeHtml(s); }
 
-    document.getElementById('cd-days').textContent = days;
-    document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
-    document.getElementById('cd-mins').textContent = String(mins).padStart(2, '0');
-    document.getElementById('cd-secs').textContent = String(secs).padStart(2, '0');
-  }
+    // Soft re-render: kort fade-out → render → fade-in
+    let renderTimer;
+    function softRender() {
+      clearTimeout(renderTimer);
+      grid.classList.add('transitioning');
+      renderTimer = setTimeout(() => {
+        renderProducts();
+        grid.classList.remove('transitioning');
+      }, 120);
+    }
 
-  // Init
-  renderProducts();
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
+    // ─── Event handlers ───
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        updateUrl();
+        softRender();
+      });
+    });
+
+    sortSelect.addEventListener('change', () => {
+      currentSort = sortSelect.value;
+      updateUrl();
+      softRender();
+    });
+
+    // Debounce søgning så vi ikke render'er på hvert tasteslag
+    let searchTimer;
+    searchInput.addEventListener('input', e => {
+      clearTimeout(searchTimer);
+      currentSearch = e.target.value;
+      searchTimer = setTimeout(() => {
+        updateUrl();
+        renderProducts();
+      }, 150);
+    });
+
+    function resetFilters() {
+      currentFilter = 'all';
+      currentSort   = 'default';
+      currentSearch = '';
+      searchInput.value = '';
+      sortSelect.value = 'default';
+      filterBtns.forEach(b => b.classList.toggle('active', b.dataset.filter === 'all'));
+      updateUrl();
+      renderProducts();
+    }
+
+    // ─── Countdown ───
+    const cdWrap = document.getElementById('countdown-wrap');
+    const cdDays = document.getElementById('cd-days');
+    const cdHours = document.getElementById('cd-hours');
+    const cdMins = document.getElementById('cd-mins');
+    const cdSecs = document.getElementById('cd-secs');
+    const endDateEl = document.getElementById('end-date');
+    let lastSecs = null;
+
+    function updateCountdown() {
+      const diff = END_DATE - new Date();
+
+      if (diff <= 0) {
+        cdDays.textContent = '0';
+        cdHours.textContent = '00';
+        cdMins.textContent = '00';
+        cdSecs.textContent = '00';
+        endDateEl.textContent = 'Budrunden er lukket';
+        cdWrap.classList.add('closed');
+        return false;
+      }
+
+      const days  = Math.floor(diff / 86400000);
+      const hours = Math.floor((diff / 3600000) % 24);
+      const mins  = Math.floor((diff / 60000) % 60);
+      const secs  = Math.floor((diff / 1000) % 60);
+
+      cdDays.textContent = days;
+      cdHours.textContent = String(hours).padStart(2, '0');
+      cdMins.textContent = String(mins).padStart(2, '0');
+      cdSecs.textContent = String(secs).padStart(2, '0');
+
+      // Lille pulse hver gang sek skifter
+      if (lastSecs !== secs) {
+        cdSecs.classList.remove('tick');
+        // tving reflow så animationen kan starte igen
+        void cdSecs.offsetWidth;
+        cdSecs.classList.add('tick');
+        lastSecs = secs;
+      }
+      return true;
+    }
+
+    // Init
+    renderProducts();
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  });
 </script>
 
 </body>

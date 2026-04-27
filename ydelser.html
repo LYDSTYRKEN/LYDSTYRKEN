@@ -3,366 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ydelser & pakker — LYDSTYRKEN</title>
-<meta name="description" content="Vælg en pakke, tilføj ekstra udstyr og få et estimat på dit event. Send forespørgslen som forudfyldt mail.">
+<title>Ydelser & Pakker — LYDSTYRKEN</title>
+<meta name="description" content="Vælg en pakke eller byg din egen. Få et estimat på lyd, lys og personale til dit event — fra LYDSTYRKEN i Odense.">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="LYDSTYRKEN — Byg din pakke, få et estimat">
+<meta property="og:description" content="Vælg en færdig pakke eller byg din egen. Send forespørgsel som mail-udkast med ét klik.">
+<meta property="og:url" content="https://www.lydstyrken.com/ydelser.html">
+<meta property="og:image" content="https://www.lydstyrken.com/images/og-default.jpg">
+<meta property="og:locale" content="da_DK">
+<meta property="og:site_name" content="LYDSTYRKEN">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="canonical" href="https://www.lydstyrken.com/ydelser.html">
 <link rel="icon" type="image/png" href="images/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+
 <style>
-  :root {
-    --bg: #0a0a0b;
-    --bg-elev: #131316;
-    --bg-elev-2: #1c1c20;
-    --border: #2a2a2f;
-    --text: #f0eeea;
-    --text-dim: #8a8a90;
-    --text-muted: #5a5a60;
-    --accent: #ff4d2e;
-    --accent-glow: rgba(255, 77, 46, 0.15);
-    --green: #4ad7a5;
-  }
+  /* ═══════════════ SIDE-SPECIFIK CSS — ydelser ═══════════════ */
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  .accent { color: var(--accent); }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Montserrat', sans-serif;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  body.menu-open { overflow: hidden; }
-
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(255, 255, 255, 0.012) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
-    background-size: 80px 80px;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .bg-glow {
-    position: fixed;
-    top: -300px;
-    right: -300px;
-    width: 800px;
-    height: 800px;
-    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 60%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .scroll-progress {
-    position: fixed;
-    top: 0; left: 0;
-    height: 2px;
-    background: var(--accent);
-    z-index: 200;
-    width: 0%;
-    transition: width 0.1s;
-  }
-
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 32px;
-    position: relative;
-    z-index: 2;
-  }
-
-  /* ═══════════════ NAV (samme system som andre sider) ═══════════════ */
-
-  nav {
-    padding: 24px 0;
-    position: sticky;
-    top: 0;
-    background: rgba(10, 10, 11, 0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    z-index: 100;
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.3s, padding 0.3s;
-  }
-
-  nav.scrolled { border-bottom-color: var(--border); padding: 16px 0; }
-
-  .nav-inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-   .logo {
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    color: var(--text);
-  }
-
-  .logo-wordmark {
-    display: center;
-    align-items: center;
-    gap: 1.1em;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 22px;
-    font-weight: 900;
-    line-height: 0.9;
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-
-  .logo-text, .logo-bracket {
-    display: inline-block;
-    transition: transform 0.25s;
-    margin: 4px;
-  }
-
-  .logo-text { transform: scaleX(1.06); transform-origin: center; }
-
-  .logo-bracket {
-    font-size: 1.25em;
-    line-height: 1;
-    transition: color 0.25s, text-shadow 0.25s, transform 0.25s;
-  }
-
-  .logo:hover .logo-bracket {
-    color: var(--accent);
-    text-shadow: 0 0 16px rgba(255, 77, 46, 0.75), 0 0 34px rgba(255, 77, 46, 0.35);
-  }
-  .logo:hover .logo-bracket-left { transform: translateX(-5px) scaleY(1.15); }
-  .logo:hover .logo-bracket-right { transform: translateX(5px) scaleY(1.15); }
-
-  .nav-links {
-    display: flex;
-    gap: 32px;
-    align-items: center;
-  }
-
-  .nav-links a {
-    color: var(--text-dim);
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    transition: color 0.2s;
-    position: relative;
-    padding: 6px 0;
-  }
-  .nav-links a:hover { color: var(--text); }
-
-  .nav-links a.active { color: var(--accent); }
-  .nav-links a.active:not(.btn-nav)::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -4px;
-    height: 1px;
-    background: var(--accent);
-    transform-origin: left;
-    animation: active-line-in 0.5s cubic-bezier(0.65, 0, 0.35, 1) forwards;
-  }
-
-  @keyframes active-line-in {
-    from { transform: scaleX(0); }
-    to { transform: scaleX(1); }
-  }
-
-  .btn-nav {
-    border: 1px solid var(--border);
-    padding: 9px 16px;
-    border-radius: 4px;
-    transition: all 0.2s;
-  }
-  .btn-nav:hover {
-    border-color: var(--accent);
-    color: var(--accent) !important;
-    background: rgba(255, 77, 46, 0.05);
-  }
-  .btn-nav.active {
-    border-color: var(--accent);
-    color: var(--accent) !important;
-    background: rgba(255, 77, 46, 0.08);
-    box-shadow: 0 0 0 1px var(--accent), 0 0 20px rgba(255, 77, 46, 0.15);
-  }
-
-  .burger {
-    display: none;
-    width: 44px;
-    height: 44px;
-    background: transparent;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    cursor: pointer;
-    position: relative;
-    transition: border-color 0.2s;
-  }
-  .burger:hover { border-color: var(--accent); }
-  .burger span {
-    position: absolute;
-    left: 12px;
-    right: 12px;
-    height: 2px;
-    background: var(--text);
-    transition: all 0.3s ease;
-  }
-  .burger span:nth-child(1) { top: 14px; }
-  .burger span:nth-child(2) { top: 21px; }
-  .burger span:nth-child(3) { top: 28px; }
-  body.menu-open .burger span:nth-child(1) { top: 21px; transform: rotate(45deg); background: var(--accent); }
-  body.menu-open .burger span:nth-child(2) { opacity: 0; }
-  body.menu-open .burger span:nth-child(3) { top: 21px; transform: rotate(-45deg); background: var(--accent); }
-
-  .mobile-menu {
-    position: fixed;
-    inset: 0;
-    background: rgba(10, 10, 11, 0.97);
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
-    z-index: 90;
-    padding: 100px 32px 40px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.4s ease;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-  }
-  body.menu-open .mobile-menu { opacity: 1; pointer-events: auto; }
-
-  .mobile-menu-links { display: flex; flex-direction: column; gap: 4px; }
-
-  .mobile-menu-links a {
-    color: var(--text);
-    text-decoration: none;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 800;
-    font-size: clamp(32px, 8vw, 48px);
-    letter-spacing: -0.02em;
-    text-transform: uppercase;
-    padding: 16px 0;
-    border-bottom: 1px solid var(--border);
-    transform: translateX(-20px);
-    opacity: 0;
-    transition: opacity 0.4s ease, transform 0.4s ease, color 0.2s, padding-left 0.2s;
-  }
-  body.menu-open .mobile-menu-links a { transform: translateX(0); opacity: 1; }
-  body.menu-open .mobile-menu-links a:nth-child(1) { transition-delay: 0.1s; }
-  body.menu-open .mobile-menu-links a:nth-child(2) { transition-delay: 0.15s; }
-  body.menu-open .mobile-menu-links a:nth-child(3) { transition-delay: 0.2s; }
-  body.menu-open .mobile-menu-links a:nth-child(4) { transition-delay: 0.25s; }
-  body.menu-open .mobile-menu-links a:nth-child(5) { transition-delay: 0.3s; }
-
-  .mobile-menu-links a:hover { color: var(--accent); padding-left: 12px; }
-  .mobile-menu-links a.active {
-    color: var(--accent);
-    padding-left: 16px;
-    position: relative;
-  }
-  .mobile-menu-links a.active::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 3px;
-    height: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 12px var(--accent);
-  }
-  .mobile-menu-links a.active .mobile-menu-num {
-    color: var(--accent);
-  }
-  .mobile-menu-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--text-muted);
-    margin-right: 16px;
-    font-weight: 400;
-    letter-spacing: 0.1em;
-  }
-
-  .mobile-menu-footer {
-    margin-top: auto;
-    padding-top: 32px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    color: var(--text-muted);
-  }
-  .mobile-menu-footer a {
-    color: var(--text-dim);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  .mobile-menu-footer a:hover { color: var(--accent); }
-
-  /* ═══════════════ HEADER ═══════════════ */
-
-  .page-header {
-    padding: 80px 0 60px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .page-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    color: var(--accent);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .page-label::before {
-    content: '';
-    width: 32px; height: 1px;
-    background: var(--accent);
-  }
-
-  .page-title {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 800;
-    font-size: clamp(40px, 7vw, 88px);
-    line-height: 0.95;
-    letter-spacing: -0.03em;
-    margin-bottom: 24px;
-    text-transform: uppercase;
-  }
-  .page-title .accent {
-    color: var(--accent);
-    font-style: italic;
-    font-weight: 400;
-    text-transform: lowercase;
-  }
-
-  .page-sub {
-    font-size: 18px;
-    color: var(--text-dim);
-    max-width: 720px;
-    line-height: 1.5;
-  }
-
-  /* ═══════════════ STEP-NAV ═══════════════ */
-
+  /* ─── STEP-NAV ─── */
   .steps {
     display: flex;
     gap: 0;
     margin: 40px 0 56px;
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: var(--radius-lg);
     overflow: hidden;
     background: var(--bg-elev);
   }
@@ -377,7 +48,7 @@
     letter-spacing: 0.15em;
     text-transform: uppercase;
     border-right: 1px solid var(--border);
-    transition: all 0.2s;
+    transition: background 0.2s, color 0.2s;
     position: relative;
   }
   .step-pill:last-child { border-right: none; }
@@ -390,15 +61,9 @@
     margin-right: 8px;
   }
 
-  .step-pill.active {
-    background: var(--accent);
-    color: #0a0a0b;
-  }
+  .step-pill.active { background: var(--accent); color: #0a0a0b; }
   .step-pill.active .step-num { color: #0a0a0b; }
-
-  .step-pill.done {
-    color: var(--text);
-  }
+  .step-pill.done { color: var(--text); }
 
   @media (max-width: 700px) {
     .steps { flex-direction: column; }
@@ -406,8 +71,7 @@
     .step-pill:last-child { border-bottom: none; }
   }
 
-  /* ═══════════════ PAKKER (STEP 1) ═══════════════ */
-
+  /* ─── PAKKER ─── */
   .step-section { padding: 0 0 80px; }
 
   .step-heading {
@@ -419,7 +83,12 @@
     text-transform: uppercase;
     margin-bottom: 12px;
   }
-  .step-heading .accent { color: var(--accent); font-style: italic; font-weight: 400; text-transform: lowercase; }
+  .step-heading .accent {
+    color: var(--accent);
+    font-style: italic;
+    font-weight: 400;
+    text-transform: lowercase;
+  }
 
   .step-desc {
     color: var(--text-dim);
@@ -437,10 +106,10 @@
   .package {
     background: var(--bg-elev);
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: var(--radius-lg);
     padding: 28px 24px;
     cursor: pointer;
-    transition: all 0.25s;
+    transition: border-color 0.25s, transform 0.25s, background 0.25s;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -512,10 +181,7 @@
     margin-right: 6px;
   }
 
-  .package-includes {
-    list-style: none;
-    margin-top: auto;
-  }
+  .package-includes { list-style: none; margin-top: auto; }
 
   .package-includes li {
     font-size: 13px;
@@ -542,7 +208,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s;
+    transition: background 0.2s, border-color 0.2s;
   }
   .package.selected .package-check {
     background: var(--accent);
@@ -557,8 +223,7 @@
   }
   .package.selected .package-check svg { opacity: 1; }
 
-  /* ═══════════════ TILVALG (STEP 2) ═══════════════ */
-
+  /* ─── TILVALG (STEP 2) ─── */
   .addons-section {
     background: var(--bg-elev);
     border-top: 1px solid var(--border);
@@ -571,10 +236,7 @@
     grid-template-columns: 240px 1fr;
     gap: 32px;
   }
-
-  @media (max-width: 800px) {
-    .addons-categories { grid-template-columns: 1fr; }
-  }
+  @media (max-width: 800px) { .addons-categories { grid-template-columns: 1fr; } }
 
   .category-list {
     display: flex;
@@ -584,7 +246,6 @@
     top: 100px;
     height: fit-content;
   }
-
   @media (max-width: 800px) {
     .category-list {
       flex-direction: row;
@@ -599,17 +260,16 @@
     border: 1px solid var(--border);
     color: var(--text-dim);
     padding: 12px 16px;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
     text-align: left;
     white-space: nowrap;
   }
-
   .category-btn:hover { color: var(--text); border-color: #3a3a40; }
   .category-btn.active {
     background: var(--accent);
@@ -617,33 +277,24 @@
     border-color: var(--accent);
   }
 
-  .category-count {
-    color: inherit;
-    opacity: 0.6;
-    margin-left: 6px;
-  }
+  .category-count { color: inherit; opacity: 0.6; margin-left: 6px; }
 
-  .addons-list {
-    display: grid;
-    gap: 12px;
-  }
+  .addons-list { display: grid; gap: 12px; }
 
   .addon {
     background: var(--bg);
     border: 1px solid var(--border);
-    border-radius: 6px;
+    border-radius: var(--radius-md);
     padding: 18px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 16px;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: border-color 0.2s, background 0.2s;
   }
 
-  .addon:hover {
-    border-color: #3a3a40;
-  }
+  .addon:hover { border-color: #3a3a40; }
 
   .addon.selected {
     border-color: var(--accent);
@@ -659,10 +310,7 @@
     margin-bottom: 4px;
   }
 
-  .addon-desc {
-    font-size: 12px;
-    color: var(--text-dim);
-  }
+  .addon-desc { font-size: 12px; color: var(--text-dim); }
 
   .addon-right {
     display: flex;
@@ -684,7 +332,7 @@
     align-items: center;
     background: var(--bg-elev);
     border: 1px solid var(--border);
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     overflow: hidden;
   }
 
@@ -711,28 +359,21 @@
     color: var(--text);
   }
 
-  /* ═══════════════ EVENT-INFO (STEP 3) ═══════════════ */
-
-  .event-form {
-    padding: 80px 0;
-  }
+  /* ─── EVENT-INFO (STEP 3) ─── */
+  .event-form { padding: 80px 0; }
 
   .form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 16px;
   }
-
-  @media (max-width: 700px) {
-    .form-grid { grid-template-columns: 1fr; }
-  }
+  @media (max-width: 700px) { .form-grid { grid-template-columns: 1fr; } }
 
   .form-field {
     display: flex;
     flex-direction: column;
     gap: 8px;
   }
-
   .form-field.full { grid-column: 1 / -1; }
 
   .form-field label {
@@ -748,7 +389,7 @@
   .form-field select {
     background: var(--bg-elev);
     border: 1px solid var(--border);
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     padding: 14px 16px;
     color: var(--text);
     font-family: 'Montserrat', sans-serif;
@@ -770,8 +411,7 @@
     font-family: 'Montserrat', sans-serif;
   }
 
-  /* ═══════════════ SUMMARY / FOOTER BAR ═══════════════ */
-
+  /* ─── SUMMARY BAR (sticky bottom) ─── */
   .summary-bar {
     position: sticky;
     bottom: 0;
@@ -799,11 +439,7 @@
     flex-wrap: wrap;
   }
 
-  .summary-item {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
+  .summary-item { display: flex; flex-direction: column; gap: 2px; }
 
   .summary-label {
     font-family: 'JetBrains Mono', monospace;
@@ -838,7 +474,7 @@
     color: #0a0a0b;
     border: none;
     padding: 16px 28px;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
     font-size: 13px;
@@ -849,97 +485,22 @@
     display: inline-flex;
     align-items: center;
     gap: 12px;
-    transition: all 0.25s;
+    transition: background 0.25s, transform 0.25s, box-shadow 0.25s, opacity 0.25s;
     white-space: nowrap;
   }
 
   .send-btn:hover:not(:disabled) {
-    background: #ff6347;
+    background: var(--accent-hover);
     transform: translateY(-2px);
     box-shadow: 0 12px 30px var(--accent-glow);
   }
 
-  .send-btn:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-  }
+  .send-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
   .send-btn .arrow { transition: transform 0.25s; }
   .send-btn:hover:not(:disabled) .arrow { transform: translateX(4px); }
 
-  /* ═══════════════ FOOTER ═══════════════ */
-
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 56px 0 40px;
-  }
-
-  .footer-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 48px;
-    margin-bottom: 48px;
-  }
-
-  @media (max-width: 700px) { .footer-grid { grid-template-columns: 1fr; } }
-
-  .footer-col h4 {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 20px;
-    font-weight: 400;
-  }
-
-  .footer-col a {
-    display: block;
-    color: var(--text-dim);
-    text-decoration: none;
-    font-size: 14px;
-    margin-bottom: 10px;
-    transition: color 0.2s;
-  }
-  .footer-col a:hover { color: var(--accent); }
-
-  .footer-tag {
-    color: var(--text-dim);
-    font-size: 14px;
-    max-width: 300px;
-    line-height: 1.6;
-    margin-top: 16px;
-  }
-
-  .footer-bottom {
-    padding-top: 32px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 16px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    color: var(--text-muted);
-  }
-
-  /* Reveal */
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.7s, transform 0.7s;
-  }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-
-  @media (max-width: 900px) {
-    .nav-links { display: none; }
-    .burger { display: block; }
-  }
-
   @media (max-width: 600px) {
-    .container { padding: 0 20px; }
-    .page-header { padding: 60px 0 40px; }
-    .logo-wordmark { font-size: 18px; }
     .summary-info { gap: 16px; width: 100%; }
     .summary-value.price { font-size: 18px; }
     .send-btn { width: 100%; justify-content: center; }
@@ -948,12 +509,14 @@
 </head>
 <body>
 
+<a href="#step-1" class="skip-link">Spring til pakker</a>
+
 <div class="scroll-progress" id="progress"></div>
 <div class="bg-glow"></div>
 
 <nav id="nav">
   <div class="container nav-inner">
-    <a href="index.html" class="logo" aria-label="LYDSTYRKEN">
+    <a href="index.html" class="logo" aria-label="LYDSTYRKEN — Forside">
       <span class="logo-wordmark" aria-hidden="true">
         <span class="logo-bracket logo-bracket-left">[</span>
         <span class="logo-text">LYDSTYRKEN</span>
@@ -989,6 +552,8 @@
   </div>
 </div>
 
+<main>
+
 <header class="page-header">
   <div class="container">
     <div class="page-label">// YDELSER & PAKKER</div>
@@ -999,8 +564,7 @@
       Vælg en færdig pakke eller byg din egen, tilføj ekstra udstyr eller ydelser, og send forespørgslen som mail-udkast med ét klik. Alle priser er <strong style="color: var(--text);">vejledende</strong> — du får et endeligt tilbud fra os.
     </p>
 
-    <!-- Trin-indikator -->
-    <div class="steps">
+    <div class="steps" role="navigation" aria-label="Trin">
       <div class="step-pill active" id="step-pill-1"><span class="step-num">01</span> Vælg pakke</div>
       <div class="step-pill" id="step-pill-2"><span class="step-num">02</span> Tilvalg</div>
       <div class="step-pill" id="step-pill-3"><span class="step-num">03</span> Event-info</div>
@@ -1009,40 +573,29 @@
   </div>
 </header>
 
-<!-- ═══════════════════════════════════════════════════════════
-     STEP 1 — VÆLG PAKKE
-═══════════════════════════════════════════════════════════ -->
 <section class="step-section" id="step-1">
   <div class="container">
     <div style="padding-top: 40px;">
       <h2 class="step-heading">Start med en <span class="accent">pakke</span>.</h2>
       <p class="step-desc">Vælg den pakke der ligner dit arrangement bedst — du kan tilpasse alt i næste trin. Eller vælg "Byg selv" for at starte fra bunden.</p>
 
-      <div class="packages-grid" id="packages-grid">
-        <!-- Pakker indsættes via JS -->
-      </div>
+      <div class="packages-grid" id="packages-grid"></div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════════
-     STEP 2 — TILVALG
-═══════════════════════════════════════════════════════════ -->
 <section class="addons-section" id="step-2">
   <div class="container">
     <h2 class="step-heading">Tilføj <span class="accent">ekstra</span> udstyr eller ydelser.</h2>
     <p class="step-desc">Klik for at tilføje. Brug + og − for at justere antal hvor det giver mening.</p>
 
     <div class="addons-categories">
-      <div class="category-list" id="category-list"></div>
-      <div class="addons-list" id="addons-list"></div>
+      <div class="category-list" id="category-list" role="group" aria-label="Filtrér tilvalg efter kategori"></div>
+      <div class="addons-list" id="addons-list" aria-live="polite"></div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════════
-     STEP 3 — EVENT-INFO
-═══════════════════════════════════════════════════════════ -->
 <section class="event-form" id="step-3">
   <div class="container">
     <h2 class="step-heading">Fortæl os om <span class="accent">eventet</span>.</h2>
@@ -1051,11 +604,11 @@
     <div class="form-grid">
       <div class="form-field">
         <label for="f-name">Dit navn</label>
-        <input type="text" id="f-name" placeholder="Fx. Anne Hansen">
+        <input type="text" id="f-name" placeholder="Fx. Anne Hansen" autocomplete="name">
       </div>
       <div class="form-field">
         <label for="f-phone">Telefonnummer</label>
-        <input type="tel" id="f-phone" placeholder="Fx. +45 12 34 56 78">
+        <input type="tel" id="f-phone" placeholder="Fx. +45 12 34 56 78" autocomplete="tel">
       </div>
       <div class="form-field">
         <label for="f-event-type">Type af event</label>
@@ -1091,10 +644,9 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════════
-     SUMMARY BAR (sticky bottom)
-═══════════════════════════════════════════════════════════ -->
-<div class="summary-bar">
+</main>
+
+<div class="summary-bar" id="step-4">
   <div class="container">
     <div class="summary-inner">
       <div class="summary-info">
@@ -1111,7 +663,7 @@
           <span class="summary-value price" id="sum-price">0 kr.</span>
         </div>
       </div>
-      <button class="send-btn" id="send-btn" disabled>
+      <button class="send-btn" id="send-btn" type="button" disabled>
         Send forespørgsel
         <span class="arrow">→</span>
       </button>
@@ -1154,7 +706,8 @@
   </div>
 </footer>
 
-<script>
+<script src="app.js" defer></script>
+<script defer>
   // ════════════════════════════════════════════════════════════════
   //   PAKKER — REDIGÉR HER
   // ════════════════════════════════════════════════════════════════
@@ -1239,14 +792,6 @@
   // ════════════════════════════════════════════════════════════════
   //   TILVALG — REDIGÉR HER
   // ════════════════════════════════════════════════════════════════
-  // Hver tilvalg har:
-  //   id           — unik
-  //   category     — gruppe i listen
-  //   name         — vises på kortet
-  //   desc         — kort beskrivelse
-  //   price        — pris pr. stk
-  //   maxQty       — maksimum antal (default 1, brug højere for kabler/mikrofoner)
-  // ════════════════════════════════════════════════════════════════
 
   const ADDONS = [
     // Mikrofoner
@@ -1293,6 +838,10 @@
 
   const formatKr = n => n.toLocaleString('da-DK') + ' kr.';
 
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
   // ════════════════════════════════════════════════════════════════
   //   RENDER PAKKER
   // ════════════════════════════════════════════════════════════════
@@ -1300,20 +849,20 @@
   function renderPackages() {
     const grid = document.getElementById('packages-grid');
     grid.innerHTML = PACKAGES.map((p, i) => `
-      <button class="package${state.selectedPackage === p.id ? ' selected' : ''}" data-id="${p.id}">
-        <div class="package-check">
+      <button type="button" class="package${state.selectedPackage === p.id ? ' selected' : ''}" data-id="${p.id}" aria-pressed="${state.selectedPackage === p.id}">
+        <div class="package-check" aria-hidden="true">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <div class="package-num">${String(i + 1).padStart(2, '0')}</div>
-        <div class="package-name">${p.name}</div>
-        <div class="package-tag">${p.tag}</div>
+        <div class="package-name">${escapeHtml(p.name)}</div>
+        <div class="package-tag">${escapeHtml(p.tag)}</div>
         <div class="package-price">
           ${p.price === 0
             ? '<span class="from">FRA</span>0 kr.'
             : `<span class="from">FRA</span>${formatKr(p.price)}`}
         </div>
         <ul class="package-includes">
-          ${p.includes.map(x => `<li>${x}</li>`).join('')}
+          ${p.includes.map(x => `<li>${escapeHtml(x)}</li>`).join('')}
         </ul>
       </button>
     `).join('');
@@ -1323,7 +872,6 @@
         state.selectedPackage = el.dataset.id;
         renderPackages();
         updateSummary();
-        // Scroll til næste step på desktop
         if (window.innerWidth > 700) {
           document.getElementById('step-2').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
@@ -1341,7 +889,7 @@
 
     list.innerHTML = categories.map(cat => {
       const count = cat === 'Alle' ? ADDONS.length : ADDONS.filter(a => a.category === cat).length;
-      return `<button class="category-btn${state.activeCategory === cat ? ' active' : ''}" data-cat="${cat}">${cat}<span class="category-count">(${count})</span></button>`;
+      return `<button type="button" class="category-btn${state.activeCategory === cat ? ' active' : ''}" data-cat="${escapeHtml(cat)}">${escapeHtml(cat)}<span class="category-count">(${count})</span></button>`;
     }).join('');
 
     list.querySelectorAll('.category-btn').forEach(btn => {
@@ -1363,17 +911,17 @@
       const qty = state.addons[a.id] || 0;
       const selected = qty > 0;
       return `
-        <div class="addon${selected ? ' selected' : ''}" data-id="${a.id}">
+        <div class="addon${selected ? ' selected' : ''}" data-id="${a.id}" role="button" tabindex="0" aria-pressed="${selected}">
           <div class="addon-info">
-            <div class="addon-name">${a.name}</div>
-            <div class="addon-desc">${a.desc}</div>
+            <div class="addon-name">${escapeHtml(a.name)}</div>
+            <div class="addon-desc">${escapeHtml(a.desc)}</div>
           </div>
           <div class="addon-right">
             <div class="addon-price">+${formatKr(a.price)}</div>
             <div class="addon-qty">
-              <button data-action="dec" data-id="${a.id}" ${qty === 0 ? 'disabled' : ''}>−</button>
-              <span>${qty}</span>
-              <button data-action="inc" data-id="${a.id}" ${qty >= a.maxQty ? 'disabled' : ''}>+</button>
+              <button type="button" data-action="dec" data-id="${a.id}" ${qty === 0 ? 'disabled' : ''} aria-label="Færre">−</button>
+              <span aria-live="polite">${qty}</span>
+              <button type="button" data-action="inc" data-id="${a.id}" ${qty >= a.maxQty ? 'disabled' : ''} aria-label="Flere">+</button>
             </div>
           </div>
         </div>
@@ -1389,6 +937,12 @@
         if (state.addons[id] === 0) delete state.addons[id];
         renderAddons();
         updateSummary();
+      });
+      el.addEventListener('keydown', e => {
+        if ((e.key === 'Enter' || e.key === ' ') && !e.target.closest('.addon-qty')) {
+          e.preventDefault();
+          el.click();
+        }
       });
     });
 
@@ -1440,10 +994,8 @@
     document.getElementById('sum-addons').textContent = countAddons();
     document.getElementById('sum-price').textContent = formatKr(calculateTotal());
 
-    // Send-knap aktiv kun når en pakke er valgt
     document.getElementById('send-btn').disabled = !state.selectedPackage;
 
-    // Step-pills
     document.getElementById('step-pill-1').classList.toggle('done', !!state.selectedPackage);
     document.getElementById('step-pill-2').classList.toggle('done', countAddons() > 0);
   }
@@ -1462,13 +1014,11 @@
     const location = document.getElementById('f-location').value.trim();
     const notes = document.getElementById('f-notes').value.trim();
 
-    // Subject
     const subjectParts = ['Forespørgsel'];
     if (pkg) subjectParts.push(pkg.name);
     if (eventType) subjectParts.push(eventType);
     const subject = subjectParts.join(' — ');
 
-    // Body
     const lines = [];
     lines.push('Hej LYDSTYRKEN,');
     lines.push('');
@@ -1543,51 +1093,16 @@
     return `mailto:marius@lydstyrken.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   }
 
-  document.getElementById('send-btn').addEventListener('click', () => {
-    if (!state.selectedPackage) return;
-    window.location.href = buildMailtoLink();
-  });
+  document.addEventListener('DOMContentLoaded', () => {
+    renderPackages();
+    renderCategories();
+    renderAddons();
+    updateSummary();
 
-  // ════════════════════════════════════════════════════════════════
-  //   INIT
-  // ════════════════════════════════════════════════════════════════
-
-  renderPackages();
-  renderCategories();
-  renderAddons();
-  updateSummary();
-
-  // Burger menu
-  const burger = document.getElementById('burger');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const body = document.body;
-
-  function toggleMenu() {
-    const isOpen = body.classList.toggle('menu-open');
-    burger.setAttribute('aria-expanded', isOpen);
-  }
-  function closeMenu() {
-    body.classList.remove('menu-open');
-    burger.setAttribute('aria-expanded', 'false');
-  }
-  burger.addEventListener('click', toggleMenu);
-  mobileMenu.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => setTimeout(closeMenu, 50));
-  });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && body.classList.contains('menu-open')) closeMenu();
-  });
-  window.addEventListener('resize', () => {
-    if (window.innerWidth > 900) closeMenu();
-  });
-
-  // Scroll progress + nav scrolled
-  const progress = document.getElementById('progress');
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 20);
-    const total = document.documentElement.scrollHeight - window.innerHeight;
-    progress.style.width = (window.scrollY / total) * 100 + '%';
+    document.getElementById('send-btn').addEventListener('click', () => {
+      if (!state.selectedPackage) return;
+      window.location.href = buildMailtoLink();
+    });
   });
 </script>
 
