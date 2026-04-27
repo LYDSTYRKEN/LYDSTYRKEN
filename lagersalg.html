@@ -101,44 +101,38 @@
     align-items: center;
   }
 
-  .logo {
+   .logo {
     text-decoration: none;
-    display: inline-flex;
+    display: flex;
     align-items: center;
     color: var(--text);
   }
 
   .logo-wordmark {
-    display: inline-flex;
+    display: center;
     align-items: center;
-    gap: 0.18em;
-    background: transparent;
-    color: #fff;
+    gap: 1.1em;
     font-family: 'Montserrat', sans-serif;
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 900;
-    line-height: 1;
-    letter-spacing: 0;
+    line-height: 0.9;
     text-transform: uppercase;
     white-space: nowrap;
   }
 
-  .logo-text,
-  .logo-bracket {
+  .logo-text, .logo-bracket {
     display: inline-block;
+    transition: transform 0.25s;
+    margin: 4px;
   }
 
-  .logo-text {
-    transform: scaleX(1.06);
-    transform-origin: center;
-  }
+  .logo-text { transform: scaleX(1.06); transform-origin: center; }
 
   .logo-bracket {
-    font-size: 1.28em;
-    line-height: 0.78;
+    font-size: 1.25em;
+    line-height: 1;
     transition: color 0.25s, text-shadow 0.25s, transform 0.25s;
   }
-
   .logo:hover .logo-bracket {
     color: var(--accent);
     text-shadow: 0 0 16px rgba(255, 77, 46, 0.75), 0 0 34px rgba(255, 77, 46, 0.35);
@@ -424,7 +418,7 @@
 
   .countdown-label {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    font-size: 14px;
     color: var(--text-muted);
     letter-spacing: 0.2em;
     text-transform: uppercase;
@@ -441,7 +435,7 @@
 
   .countdown {
     display: flex;
-    gap: 12px;
+    gap: 20px;
   }
 
   .countdown-item {
@@ -455,7 +449,7 @@
 
   .countdown-num {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 26px;
+    font-size: 35px;
     font-weight: 500;
     color: var(--accent);
     line-height: 1;
@@ -994,7 +988,7 @@
       <a href="ydelser.html">Ydelser</a>
       <a href="om.html">Om os</a>
       <a href="index.html#kontakt">Kontakt</a>
-      <a href="lagersalg.html" class="btn-nav active">Lagersalg →</a>
+      <a href="lagersalg.html" class="btn-nav active"> Lagersalg →</a>
     </div>
     <button class="burger" id="burger" aria-label="Åbn menu" aria-expanded="false" aria-controls="mobile-menu">
       <span></span><span></span><span></span>

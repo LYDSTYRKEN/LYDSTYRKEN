@@ -42,7 +42,7 @@ const PRODUCTS = [
     ],
     newPrice: 16000,
     minPrice: 2000,
-    currentBid: 2200,
+    currentBid: 2000,
     bidder: "PT",
     image: "",
     images: []

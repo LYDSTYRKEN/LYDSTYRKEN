@@ -91,16 +91,38 @@
   }
   nav.scrolled { border-bottom-color: var(--border); padding: 16px 0; }
   .nav-inner { display: flex; justify-content: space-between; align-items: center; }
-  .logo { text-decoration: none; display: inline-flex; align-items: center; color: var(--text); }
-  .logo-wordmark {
-    display: inline-flex; align-items: center; gap: 0.18em;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 22px; font-weight: 900; line-height: 1;
-    text-transform: uppercase; white-space: nowrap;
+   .logo {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    color: var(--text);
   }
-  .logo-text, .logo-bracket { display: inline-block; transition: transform 0.25s; margin: 4px; }
+
+  .logo-wordmark {
+    display: center;
+    align-items: center;
+    gap: 1.1em;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 22px;
+    font-weight: 900;
+    line-height: 0.9;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .logo-text, .logo-bracket {
+    display: inline-block;
+    transition: transform 0.25s;
+    margin: 4px;
+  }
+
   .logo-text { transform: scaleX(1.06); transform-origin: center; }
-  .logo-bracket { font-size: 1.2em; line-height: 1.5; transition: color 0.25s, text-shadow 0.25s, transform 0.25s; }
+
+  .logo-bracket {
+    font-size: 1.25em;
+    line-height: 1;
+    transition: color 0.25s, text-shadow 0.25s, transform 0.25s;
+  }
   .logo:hover .logo-bracket {
     color: var(--accent);
     text-shadow: 0 0 16px rgba(255, 77, 46, 0.75), 0 0 34px rgba(255, 77, 46, 0.35);

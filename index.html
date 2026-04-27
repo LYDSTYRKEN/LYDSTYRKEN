@@ -105,43 +105,36 @@
     align-items: center;
   }
 
-  .logo {
+ .logo {
     text-decoration: none;
-    display: inline-flex;
+    display: flex;
     align-items: center;
     color: var(--text);
   }
 
   .logo-wordmark {
-    display: inline-flex;
+    display: center;
     align-items: center;
-    gap: 0.18em;
-    background: transparent;
-    color: #fff;
+    gap: 1.1em;
     font-family: 'Montserrat', sans-serif;
     font-size: 22px;
     font-weight: 900;
-    line-height: 1;
-    letter-spacing: 0;
+    line-height: 0.9;
     text-transform: uppercase;
     white-space: nowrap;
   }
 
-  .logo-text,
-  .logo-bracket {
+  .logo-text, .logo-bracket {
     display: inline-block;
     transition: transform 0.25s;
     margin: 4px;
   }
 
-  .logo-text {
-    transform: scaleX(1.06);
-    transform-origin: center;
-  }
+  .logo-text { transform: scaleX(1.06); transform-origin: center; }
 
   .logo-bracket {
-    font-size: 1.2em;
-    line-height: 1.5;
+    font-size: 1.25em;
+    line-height: 1;
     transition: color 0.25s, text-shadow 0.25s, transform 0.25s;
   }
 
