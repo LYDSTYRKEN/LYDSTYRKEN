@@ -164,8 +164,8 @@ nav {
   position: sticky;
   top: 0;
   background: rgba(10, 10, 11, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   z-index: 100;
   border-bottom: 1px solid transparent;
   transition: border-color 0.3s, padding 0.3s;
@@ -258,6 +258,7 @@ nav.scrolled { border-bottom-color: var(--border); padding: 16px 0; }
 .btn-nav {
   border: 1px solid var(--border);
   padding: 9px 16px;
+  width: 130px;
   border-radius: var(--radius-sm);
   transition: border-color 0.2s, color 0.2s, background 0.2s, box-shadow 0.2s;
 }
