@@ -100,19 +100,19 @@
 
   .logo {
     text-decoration: none;
-    display: inline-flex;
+    display: flex;
     align-items: center;
     color: var(--text);
   }
 
   .logo-wordmark {
-    display: inline-flex;
+    display: center;
     align-items: center;
-    gap: 0.18em;
+    gap: 1.1em;
     font-family: 'Montserrat', sans-serif;
     font-size: 22px;
     font-weight: 900;
-    line-height: 1;
+    line-height: 0.9;
     text-transform: uppercase;
     white-space: nowrap;
   }
@@ -126,8 +126,8 @@
   .logo-text { transform: scaleX(1.06); transform-origin: center; }
 
   .logo-bracket {
-    font-size: 1.2em;
-    line-height: 1.5;
+    font-size: 1.25em;
+    line-height: 1;
     transition: color 0.25s, text-shadow 0.25s, transform 0.25s;
   }
 
@@ -794,32 +794,17 @@
       Holdet bag <span class="accent">lydstyrken.</span>
     </h1>
     <p class="page-sub">
-      Vi er fem mennesker fra Odense, der brænder for live-lyd, events og det øjeblik hvor lyden falder på plads og publikum mærker det i kroppen.
+      Vi er to mennesker fra Odense, der brænder for live-lyd, events og det øjeblik hvor lyden falder på plads.
     </p>
   </div>
 </header>
 
-<section class="story">
-  <div class="container">
-    <div class="story-grid">
-      <div>
-        <div class="story-label">// HISTORIEN</div>
-        <h2 class="story-heading">Det startede med <span class="accent">én</span> mixerpult.</h2>
-      </div>
-      <div class="story-text">
-        <p>LYDSTYRKEN startede som et enmandsforetagende fra Odense med ambitionen om at levere ærlig, professionel lyd til arrangementer i alle størrelser — uden den store overhead.</p>
-        <p>I dag er vi et lille hold på fem, der hver især bringer noget unikt med ind: teknisk forståelse, koordinerings-evne, øre for detaljer og en oprigtig glæde ved at få et arrangement til at lyde rigtigt. Vi tror på personlig kontakt, gennemsigtige priser og et resultat der står mål med dine forventninger.</p>
-        <p>Lige fra mindre tale-arrangementer til større festivaler — vi møder dig hvor du er, og finder den rigtige løsning sammen.</p>
-      </div>
-    </div>
-  </div>
-</section>
+
 
 <!-- ═══════════════════════════════════════════════════════════
      TEAM SECTION
      For hver person, redigér: name, role, bio, tags, image
      image kan være tom (viser initial-placeholder) eller en URL
-     fx "images/team/marius.jpg"
 ═══════════════════════════════════════════════════════════ -->
 
 <section class="team">
@@ -827,7 +812,7 @@
     <div class="team-header">
       <div class="page-label">// HOLDET</div>
       <h2 style="font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: clamp(32px, 5vw, 52px); line-height: 1.05; letter-spacing: -0.02em; text-transform: uppercase;">
-        Fem ansigter, <span style="color: var(--accent); font-style: italic; font-weight: 400; text-transform: lowercase;">én</span> lyd.
+        To ansigter, <span style="color: var(--accent); font-style: italic; font-weight: 400; text-transform: lowercase;">én</span> lyd.
       </h2>
     </div>
 
@@ -835,51 +820,118 @@
 
       <article class="member reveal">
         <div class="member-photo">
-          <img src="images/team/marius.png" alt="Marius Blæsbjerg">
+          <img src="images/Profil/Marius-Blaesbjerg.png" alt="Marius Blæsbjerg">
           <span class="badge-num">01</span>
         </div>
         <div class="member-body">
-          <h3 class="member-name">Marius</h3>
-          <div class="member-role">Founder · Lyd-tekniker</div>
+          <h3 class="member-name">Marius Blæsbjerg</h3>
+          <div class="member-role">Founder · Lydtekniker</div>
           <p class="member-bio">Manden bag det hele. Marius står for det meste af front-of-house og koordinerer dagligt med kunder, leverandører og resten af holdet. Brænder for det øjeblik hvor lyden bare sidder.</p>
           <div class="member-meta">
-            <span class="member-tag">FOH</span>
+            <span class="member-tag">Lydtekniker</span>
             <span class="member-tag">Booking</span>
-            <span class="member-tag">Mixing</span>
+            <span class="member-tag">Logistik</span>
           </div>
         </div>
       </article>
 
       <article class="member reveal">
         <div class="member-photo">
-          <span class="member-photo-placeholder">P</span>
+          <img src="images/Profil/Pernille-Brix-Lyng.jpg" alt="Pernille">
           <span class="badge-num">02</span>
         </div>
         <div class="member-body">
           <h3 class="member-name">Pernille</h3>
-          <div class="member-role">Event-koordinator</div>
+          <div class="member-role">Logistikkoordinator · Lystekniker</div>
           <p class="member-bio">Holder styr på datoer, kontakter og logistik så ingenting falder mellem to stole. Pernille sikrer at hver kunde får det de er blevet lovet — og lidt til.</p>
           <div class="member-meta">
+            <span class="member-tag">Lystekniker</span>
             <span class="member-tag">Logistik</span>
-            <span class="member-tag">Kommunikation</span>
             <span class="member-tag">Planlægning</span>
           </div>
         </div>
       </article>
 
+    </div>
+  </div>
+</section>
+
+<section class="story">
+  <div class="container">
+    <div class="story-grid">
+      <div>
+        <div class="story-label">// HISTORIEN</div>
+        <h2 class="story-heading">Det startede med <span class="accent">én</span> mixer </h2>
+      </div>
+      <div class="story-text">
+        <p>LYDSTYRKEN startede som et enmandsforetagende fra Odense med ambitionen om at levere ærlig, professionel lyd til arrangementer i alle størrelser — uden den store overhead.</p>
+        <p>I dag er vi et lille hold, der hver især bringer noget unikt med ind: teknisk forståelse, koordinerings-evne, øre for detaljer og en oprigtig glæde ved at få et arrangement til at lyde rigtigt. Vi tror på personlig kontakt, gennemsigtige priser og et resultat der står mål med dine forventninger.</p>
+        <p>Lige fra mindre tale-arrangementer til større festivaler — vi møder dig hvor du er, og finder den rigtige løsning sammen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="team">
+  <div class="container">
+    <div class="team-header">
+      <div class="page-label">// Prakikanter</div>
+      <h2 style="font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: clamp(32px, 5vw, 52px); line-height: 1.05; letter-spacing: -0.02em; text-transform: uppercase;">
+        FIRE STUDERNE <span style="color: var(--accent); font-style: italic; font-weight: 400; text-transform: lowercase;">ét</span> Mål.
+      </h2>
+    </div>
+
+    <div class="team-grid">
+
       <article class="member reveal">
         <div class="member-photo">
-          <span class="member-photo-placeholder">L</span>
+           <span class="member-photo-placeholder">L</span>
+          <span class="badge-num">01</span>
+        </div>
+        <div class="member-body">
+          <h3 class="member-name">Liam Horsmann</h3>
+          <div class="member-role"> Datamatiker · [2.semester]</div>
+          <!-- <p class="member-bio"></p>-->
+          <div class="member-meta">
+            <span class="member-tag">C#</span>
+            <span class="member-tag">MySQL</span>
+            <span class="member-tag">WPF</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="member reveal">
+        <div class="member-photo">
+          <span class="member-photo-placeholder">R</span>
+          <span class="badge-num">02</span>
+        </div>
+        <div class="member-body">
+          <h3 class="member-name">Rasmus Kornbek</h3>
+          <div class="member-role">Datamatiker · [2.semester]</div>
+          <!-- <p class="member-bio"></p>-->
+          <div class="member-meta">
+            <span class="member-tag">C#</span>
+            <span class="member-tag">MySQL</span>
+            <span class="member-tag">WPF</span>
+            <span class="member-tag">Rust</span>
+            <span class="member-tag">Python</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="member reveal">
+        <div class="member-photo">
+          <span class="member-photo-placeholder">M</span>
           <span class="badge-num">03</span>
         </div>
         <div class="member-body">
-          <h3 class="member-name">Liam</h3>
-          <div class="member-role">Lys & Visuals</div>
-          <p class="member-bio">Når lyden er på plads, skal stemningen også være det. Liam programmerer lys, styrer DMX og sørger for at det visuelle understøtter musikken — uden at stjæle billedet.</p>
+          <h3 class="member-name">Mathias Krogh</h3>
+          <div class="member-role">Datamatiker · [2.semester]</div>
+          <!-- <p class="member-bio"></p>-->
           <div class="member-meta">
-            <span class="member-tag">Lys-design</span>
-            <span class="member-tag">DMX</span>
-            <span class="member-tag">Visuals</span>
+            <span class="member-tag">C#</span>
+            <span class="member-tag">MySQL</span>
+            <span class="member-tag">WPF</span>
           </div>
         </div>
       </article>
@@ -890,30 +942,14 @@
           <span class="badge-num">04</span>
         </div>
         <div class="member-body">
-          <h3 class="member-name">Rasmus</h3>
-          <div class="member-role">Lyd-tekniker · Monitor</div>
-          <p class="member-bio">Rasmus passer monitoring og backline på live-jobs. Har god kontakt med musikere og ved præcis hvordan man får et band til at lyde og føle sig trygt på scenen.</p>
+          <h3 class="member-name">Asbjørn Andersen</h3>
+          <div class="member-role">Datamatiker · [2.semester]</div>
+       <!-- <p class="member-bio"></p> -->
           <div class="member-meta">
-            <span class="member-tag">Monitor</span>
-            <span class="member-tag">Backline</span>
-            <span class="member-tag">Live-lyd</span>
-          </div>
-        </div>
-      </article>
-
-      <article class="member reveal">
-        <div class="member-photo">
-          <span class="member-photo-placeholder">K</span>
-          <span class="badge-num">05</span>
-        </div>
-        <div class="member-body">
-          <h3 class="member-name">Kasper</h3>
-          <div class="member-role">Logistik & Opsætning</div>
-          <p class="member-bio">Holder lageret kørende og leder opsætning på arrangementer. Har styr på kabler, cases, transport og at alt kommer hjem igen i ét stykke.</p>
-          <div class="member-meta">
-            <span class="member-tag">Setup</span>
-            <span class="member-tag">Lager</span>
-            <span class="member-tag">Transport</span>
+            <span class="member-tag">C#</span>
+            <span class="member-tag">MySQL</span>
+            <span class="member-tag">WPF</span>
+            <span class="member-tag">PlantUML</span>
           </div>
         </div>
       </article>
@@ -953,8 +989,8 @@
 
 <section class="cta-strip">
   <div class="container">
-    <h2>Klar til at <span class="accent">snakke</span>?</h2>
-    <p>Skriv til os om booking, leje eller spørgsmål. Vi svarer som regel inden for 24 timer.</p>
+    <h2>Klar til at skrue op for<span class="accent"> Lydstyrken</span>?</h2>
+    <p>Skriv til os om booking, leje eller spørgsmål. Vi svarer som regel inden for 12 timer.</p>
     <div class="cta-actions">
       <a href="ydelser.html" class="btn btn-primary">
         Byg din pakke
