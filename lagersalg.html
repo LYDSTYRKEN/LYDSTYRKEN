@@ -58,6 +58,17 @@
     z-index: 0;
   }
 
+  .bg-glow {
+    position: fixed;
+    top: -300px;
+    right: -300px;
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
   .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -78,8 +89,11 @@
     position: sticky;
     top: 0;
     z-index: 100;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s, padding 0.3s;
   }
+
+  nav.scrolled { border-bottom-color: var(--border); padding: 16px 0; }
 
   .nav-inner {
     display: flex;
@@ -166,9 +180,31 @@
     letter-spacing: 0.05em;
     text-transform: uppercase;
     transition: color 0.2s;
+    position: relative;
+    padding: 6px 0;
   }
   .nav-links a:hover { color: var(--text); }
-  .nav-links a.active { color: var(--accent); }
+
+  /* Active page indicator — animeret orange linje under */
+  .nav-links a.active {
+    color: var(--accent);
+  }
+  .nav-links a.active:not(.btn-nav)::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -4px;
+    height: 1px;
+    background: var(--accent);
+    transform-origin: left;
+    animation: active-line-in 0.5s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  }
+
+  @keyframes active-line-in {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
 
   .btn-nav {
     border: 1px solid var(--border);
@@ -180,6 +216,12 @@
     border-color: var(--accent);
     color: var(--accent) !important;
     background: rgba(255, 77, 46, 0.05);
+  }
+  .btn-nav.active {
+    border-color: var(--accent);
+    color: var(--accent) !important;
+    background: rgba(255, 77, 46, 0.08);
+    box-shadow: 0 0 0 1px var(--accent), 0 0 20px rgba(255, 77, 46, 0.15);
   }
 
   .burger {
@@ -249,7 +291,25 @@
   body.menu-open .mobile-menu-links a:nth-child(4) { transition-delay: 0.25s; }
   body.menu-open .mobile-menu-links a:nth-child(5) { transition-delay: 0.3s; }
   .mobile-menu-links a:hover { color: var(--accent); padding-left: 12px; }
-  .mobile-menu-links a.active { color: var(--accent); }
+  .mobile-menu-links a.active {
+    color: var(--accent);
+    padding-left: 16px;
+    position: relative;
+  }
+  .mobile-menu-links a.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 12px var(--accent);
+  }
+  .mobile-menu-links a.active .mobile-menu-num {
+    color: var(--accent);
+  }
   .mobile-menu-num {
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
@@ -572,14 +632,24 @@
   }
 
   /* ═══════════════════════════════════════════════════════════
-     PRODUCTS
+     PRODUCTS — kompakt 4-kolonne grid med overlay
      ═══════════════════════════════════════════════════════════ */
 
   .products {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
     padding-bottom: 80px;
+  }
+
+  @media (max-width: 1100px) {
+    .products { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 800px) {
+    .products { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  }
+  @media (max-width: 480px) {
+    .products { grid-template-columns: 1fr; }
   }
 
   .product {
@@ -590,186 +660,130 @@
     transition: all 0.3s;
     display: flex;
     flex-direction: column;
+    position: relative;
   }
 
   .product:hover {
-    border-color: #3a3a40;
-    transform: translateY(-4px);
+    border-color: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
   }
 
-  .product.sold { opacity: 0.5; }
+  .product.sold { opacity: 0.55; }
+  .product.sold:hover { transform: none; border-color: var(--border); box-shadow: none; }
 
+  /* Klikbart billed-areal ↗ produkt.html */
   .product-image {
-    aspect-ratio: 4/3;
+    aspect-ratio: 1 / 1;
     background: var(--bg-elev-2);
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-bottom: 1px solid var(--border);
+    display: block;
     overflow: hidden;
+    text-decoration: none;
+    color: inherit;
   }
 
   .product-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s;
+    transition: transform 0.5s ease;
   }
-  .product:hover .product-image img { transform: scale(1.05); }
+  .product:hover .product-image img { transform: scale(1.06); }
 
   .product-image-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    font-size: 10px;
     color: var(--text-muted);
     letter-spacing: 0.2em;
   }
 
+  /* "Klik for detaljer"-hint nederst-til-højre på billedet ved hover */
+  .product-image::after {
+    content: '↗';
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    background: rgba(10, 10, 11, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.25s, transform 0.25s, background 0.25s, border-color 0.25s;
+    z-index: 3;
+  }
+  .product:hover .product-image::after {
+    opacity: 1;
+    transform: translateY(0);
+    background: var(--accent);
+    color: #0a0a0b;
+    border-color: var(--accent);
+  }
+
+  /* Top overlay — badges */
   .badges {
     position: absolute;
-    top: 12px;
-    left: 12px;
+    top: 10px;
+    left: 10px;
     display: flex;
     gap: 6px;
     flex-wrap: wrap;
-    z-index: 1;
+    z-index: 2;
   }
 
   .badge {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
+    font-size: 9px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    padding: 5px 10px;
+    padding: 4px 8px;
     border-radius: 3px;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
+    background: rgba(10, 10, 11, 0.5);
   }
 
-  .badge-private {
-    background: rgba(74, 215, 165, 0.15);
-    color: var(--green);
-    border: 1px solid var(--green);
-  }
+  .badge-private { color: var(--green); border: 1px solid var(--green); }
+  .badge-business { color: var(--accent); border: 1px solid var(--accent); }
 
-  .badge-business {
-    background: rgba(255, 77, 46, 0.15);
-    color: var(--accent);
-    border: 1px solid var(--accent);
-  }
-
-  .badge-sold {
+  /* Top-right: live bud-pille (overlay) */
+  .bid-pill {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-12deg);
-    font-family: 'Montserrat', sans-serif;
-    font-size: 24px;
-    font-weight: 800;
-    color: var(--accent);
-    border: 3px solid var(--accent);
-    padding: 6px 20px;
-    letter-spacing: 0.1em;
-    background: rgba(10, 10, 11, 0.7);
-  }
-
-  .product-body {
-    padding: 22px;
+    top: 10px;
+    right: 10px;
     display: flex;
-    flex-direction: column;
-    flex: 1;
-  }
-
-  .product-cat {
+    align-items: center;
+    gap: 6px;
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
-    color: var(--text-muted);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-
-  .product-name {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 1.25;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
-  }
-
-  .product-desc {
-    color: var(--text-dim);
-    font-size: 13px;
-    margin-bottom: 18px;
-    flex: 1;
-  }
-
-  .price-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 0;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 14px;
-  }
-
-  .price-item span {
-    display: block;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
-    color: var(--text-muted);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-bottom: 3px;
-  }
-
-  .price-value {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-  }
-
-  .price-value.strike {
-    text-decoration: line-through;
-    color: var(--text-muted);
-    font-weight: 400;
-  }
-
-  .current-bid {
-    background: rgba(255, 77, 46, 0.08);
+    color: var(--accent);
+    background: rgba(10, 10, 11, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 5px 9px;
     border: 1px solid var(--accent);
-    padding: 12px 14px;
-    border-radius: 4px;
-    margin-bottom: 14px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    border-radius: 100px;
+    z-index: 2;
+    font-weight: 500;
   }
-
-  .current-bid-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    color: var(--accent);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-bottom: 4px;
-    display: block;
-  }
-
-  .current-bid-value {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--accent);
-    line-height: 1;
-  }
-
-  .live-dot {
-    width: 8px;
-    height: 8px;
+  .bid-pill .live-dot-tiny {
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
     background: var(--accent);
     animation: live 1.5s ease-in-out infinite;
@@ -777,7 +791,92 @@
 
   @keyframes live {
     0%, 100% { opacity: 1; box-shadow: 0 0 0 0 var(--accent); }
-    50% { opacity: 0.5; box-shadow: 0 0 0 8px transparent; }
+    50% { opacity: 0.5; box-shadow: 0 0 0 6px transparent; }
+  }
+
+  /* Bottom overlay — kategori + navn ovenpå billedet */
+  .product-overlay {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    padding: 32px 14px 14px;
+    background: linear-gradient(to top,
+      rgba(10, 10, 11, 0.92) 0%,
+      rgba(10, 10, 11, 0.7) 60%,
+      rgba(10, 10, 11, 0) 100%);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .product-cat {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .product-name {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1.2;
+    color: var(--text);
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+  }
+
+  /* SOLGT-stempel */
+  .badge-sold {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-12deg);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--accent);
+    border: 3px solid var(--accent);
+    padding: 5px 18px;
+    letter-spacing: 0.1em;
+    background: rgba(10, 10, 11, 0.7);
+    z-index: 4;
+  }
+
+  /* Body — kun pris + bid-knap */
+  .product-body {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .price-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+  }
+
+  .price-line .label {
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .price-line .value {
+    color: var(--text-dim);
+  }
+
+  .price-line .value.strike {
+    text-decoration: line-through;
+    color: var(--text-muted);
+  }
+
+  .price-line .value.bid {
+    color: var(--accent);
+    font-weight: 600;
   }
 
   .bid-btn {
@@ -785,11 +884,11 @@
     background: var(--accent);
     color: #0a0a0b;
     border: none;
-    padding: 13px;
+    padding: 10px;
     border-radius: 4px;
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
-    font-size: 13px;
+    font-size: 11px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     cursor: pointer;
@@ -801,7 +900,7 @@
 
   .bid-btn:hover {
     background: #ff6347;
-    transform: translateY(-2px);
+    transform: translateY(-1px);
   }
 
   .bid-btn.disabled {
@@ -880,8 +979,9 @@
 <body>
 
 <div class="scroll-progress" id="progress"></div>
+<div class="bg-glow"></div>
 
-<nav>
+<nav id="nav">
   <div class="container nav-inner">
     <a href="index.html" class="logo" aria-label="LYDSTYRKEN">
       <span class="logo-wordmark" aria-hidden="true">
@@ -1031,6 +1131,7 @@
   </div>
 </footer>
 
+<script src="products.js"></script>
 <script>
   // ═══════════════════════════════════════════════════════════
   //   BURGER MENU
@@ -1059,248 +1160,28 @@
   });
 
   // ═══════════════════════════════════════════════════════════
-  //   BUDRUNDE-INDSTILLINGER
+  //   PRODUKT-DATA & END_DATE kommer fra products.js
+  //   Redigér produkter direkte i products.js
   // ═══════════════════════════════════════════════════════════
 
-  const END_DATE = new Date('2026-05-15T22:00:00');
+  // Defensiv kontrol: er products.js loadet korrekt?
+  if (typeof PRODUCTS === 'undefined') {
+    document.addEventListener('DOMContentLoaded', () => {
+      const grid = document.getElementById('products');
+      if (grid) {
+        grid.innerHTML = `
+          <div class="empty-state" style="border: 1px solid var(--accent); padding: 40px; border-radius: 8px; background: rgba(255, 77, 46, 0.05); color: var(--text);">
+            <strong style="display: block; margin-bottom: 16px; font-size: 18px;">⚠ products.js kunne ikke indlæses</strong>
+            <p style="margin-bottom: 12px;">Det betyder normalt at filen ikke er blevet uploaded til serveren.</p>
+            <p style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-dim);">Tjek at <code style="color: var(--accent);">products.js</code> ligger i samme mappe som <code style="color: var(--accent);">lagersalg.html</code>.</p>
+          </div>
+        `;
+      }
+    });
+    throw new Error('products.js er ikke loadet — tjek at filen er uploaded til serveren.');
+  }
 
-  // ═══════════════════════════════════════════════════════════
-  //   PRODUKTER — REDIGÉR HER
-  // ═══════════════════════════════════════════════════════════
-  //
-  // type:        "private" eller "business"
-  // category:    "Mixer", "Højttaler", "Mikrofon", "Kabel", "Lys", "Andet"
-  // newPrice:    Vejledende nypris i kr.
-  // minPrice:    Mindstepris (laveste bud du accepterer)
-  // currentBid:  Aktuelt højeste bud — opdatér når der kommer nye bud
-  // bidder:      Initialer på højeste byder — fx "MJ"
-  // image:       URL til billede (fx "images/mixer.jpg")
-  // sold:        true når produktet er solgt
-  //
-  // ═══════════════════════════════════════════════════════════
-
-  const products = [
-    {
-      id: 1,
-      name: "Yamaha MG10XU Mixer",
-      category: "Mixer",
-      type: "business",
-      description: "10-kanals mixerpult med USB og indbyggede effekter. Velholdt og fuldt funktionsdygtig.",
-      newPrice: 2999,
-      minPrice: 1500,
-      currentBid: 1650,
-      bidder: "MJ",
-      image: ""
-    },
-    {
-      id: 2,
-      name: "RCF ART 712-A MK4 (par)",
-      category: "Højttaler",
-      type: "business",
-      description: "Aktive PA-højttalere, 1400W peak. Pålidelige og kraftfulde — perfekt til mindre events.",
-      newPrice: 14000,
-      minPrice: 8000,
-      currentBid: 8500,
-      bidder: "PT",
-      image: ""
-    },
-    {
-      id: 3,
-      name: "Shure SM58 Mikrofon",
-      category: "Mikrofon",
-      type: "private",
-      description: "Klassisk dynamisk vokalmikrofon. Sjælden brugt, kommer med original boks.",
-      newPrice: 999,
-      minPrice: 400,
-      currentBid: 450,
-      bidder: "AK",
-      image: ""
-    },
-    {
-      id: 4,
-      name: "Sennheiser e835 (sæt af 3)",
-      category: "Mikrofon",
-      type: "private",
-      description: "Tre dynamiske vokalmikrofoner, fungerer perfekt. Ideelle til kor og bands.",
-      newPrice: 2400,
-      minPrice: 900,
-      currentBid: null,
-      bidder: null,
-      image: ""
-    },
-    {
-      id: 5,
-      name: "DMX-styret LED PAR (sæt af 4)",
-      category: "Lys",
-      type: "private",
-      description: "RGBW LED PAR-spots med DMX-styring. Sæt af 4 stk. Inkl. fjernbetjening.",
-      newPrice: 4800,
-      minPrice: 1800,
-      currentBid: 2100,
-      bidder: "LH",
-      image: ""
-    },
-    {
-      id: 6,
-      name: "XLR-kabler 5m (10 stk.)",
-      category: "Kabel",
-      type: "private",
-      description: "Sæt af 10 XLR-kabler à 5 meter. Alle testede og fungerer fejlfrit.",
-      newPrice: 1500,
-      minPrice: 500,
-      currentBid: 600,
-      bidder: "TJ",
-      image: ""
-    },
-    {
-      id: 7,
-      name: "Behringer X32 Producer",
-      category: "Mixer",
-      type: "private",
-      description: "Digital mixerpult, 16 kanaler. Velholdt med originalt cover.",
-      newPrice: 12000,
-      minPrice: 6000,
-      currentBid: 6500,
-      bidder: "RM",
-      image: ""
-    },
-    {
-      id: 8,
-      name: "DI-bokse Radial JDI (par)",
-      category: "Andet",
-      type: "private",
-      description: "Passive DI-bokse i broadcast-kvalitet. Sælges som par.",
-      newPrice: 3600,
-      minPrice: 1500,
-      currentBid: null,
-      bidder: null,
-      image: ""
-    },
-    {
-      id: 9,
-      name: "Mikrofonstativ K&M (5 stk.)",
-      category: "Andet",
-      type: "private",
-      description: "Fem solide K&M mikrofonstativer med boom-arm. Brugt men i god stand.",
-      newPrice: 2500,
-      minPrice: 800,
-      currentBid: 850,
-      bidder: "FN",
-      image: ""
-    },
-    {
-      id: 10,
-      name: "Subwoofer RCF Sub 8003-AS II",
-      category: "Højttaler",
-      type: "private",
-      description: "Aktiv 18\" subwoofer, 2200W peak. Giver det nødvendige bund i lyden.",
-      newPrice: 18000,
-      minPrice: 9500,
-      currentBid: 10200,
-      bidder: "BH",
-      image: ""
-    },
-    {
-      id: 11,
-      name: "Trådløst mikrofonsystem Sennheiser EW100",
-      category: "Mikrofon",
-      type: "private",
-      description: "Komplet trådløst system med håndholdt mikrofon. Velegnet til foredrag og events.",
-      newPrice: 4500,
-      minPrice: 1800,
-      currentBid: null,
-      bidder: null,
-      image: ""
-    },
-    {
-      id: 12,
-      name: "Højttalerstativer K&M (par)",
-      category: "Andet",
-      type: "private",
-      description: "To kraftige højttalerstativer op til 50 kg. Inkl. transporttasker.",
-      newPrice: 1800,
-      minPrice: 600,
-      currentBid: 700,
-      bidder: "JS",
-      image: ""
-    },
-    {
-      id: 13,
-      name: "Multikabel 12-kanal 30m",
-      category: "Kabel",
-      type: "private",
-      description: "Stage box med 12 sends og 4 returns, 30 meter. Sælges med original transporttaske.",
-      newPrice: 4200,
-      minPrice: 1500,
-      currentBid: 1700,
-      bidder: "EW",
-      image: ""
-    },
-    {
-      id: 14,
-      name: "Power Conditioner Furman M-8x2",
-      category: "Andet",
-      type: "private",
-      description: "Strømfordeler med overspændingsbeskyttelse. 8 udtag, 19\" rack.",
-      newPrice: 1400,
-      minPrice: 500,
-      currentBid: null,
-      bidder: null,
-      image: ""
-    },
-    {
-      id: 15,
-      name: "Moving Head LED Spot",
-      category: "Lys",
-      type: "private",
-      description: "DMX-styret moving head med gobo-hjul og prismeeffekter. God stand.",
-      newPrice: 3500,
-      minPrice: 1200,
-      currentBid: 1300,
-      bidder: "MD",
-      image: ""
-    },
-    {
-      id: 16,
-      name: "In-ear monitor Shure SE215",
-      category: "Andet",
-      type: "private",
-      description: "Professionelle in-ear monitorer. Velholdte med originale ørepuder.",
-      newPrice: 1200,
-      minPrice: 400,
-      currentBid: 500,
-      bidder: "PJ",
-      image: ""
-    },
-    {
-      id: 17,
-      name: "Speakon-kabler 10m (6 stk.)",
-      category: "Kabel",
-      type: "private",
-      description: "Sæt af 6 Speakon-kabler à 10 meter. Solid kvalitet, alle fungerer.",
-      newPrice: 2400,
-      minPrice: 800,
-      currentBid: null,
-      bidder: null,
-      image: ""
-    },
-    {
-      id: 18,
-      name: "Røgmaskine Antari Z-1500",
-      category: "Lys",
-      type: "private",
-      description: "Klassisk røgmaskine, 1500W. DMX-styring inkluderet. Perfekt til mindre arrangementer.",
-      newPrice: 3200,
-      minPrice: 1000,
-      currentBid: 1100,
-      bidder: "OL",
-      image: ""
-    }
-  ];
-
-  // ═══════════════════════════════════════════════════════════
-
-  const formatKr = n => n.toLocaleString('da-DK') + ' kr.';
+  const products = PRODUCTS; // alias for læsevenlighed
 
   function renderProducts(filter = 'all', search = '') {
     const grid = document.getElementById('products');
@@ -1329,22 +1210,15 @@
 
     grid.innerHTML = filtered.map(p => {
       const badge = p.type === 'private'
-        ? '<span class="badge badge-private">● Privat salg</span>'
+        ? '<span class="badge badge-private">● Privat</span>'
         : '<span class="badge badge-business">● LYDSTYRKEN</span>';
+
+      const bidPill = p.currentBid
+        ? `<div class="bid-pill"><span class="live-dot-tiny"></span>${formatKr(p.currentBid)}</div>`
+        : '';
 
       const sold = p.sold ? '<div class="badge-sold">SOLGT</div>' : '';
       const soldClass = p.sold ? ' sold' : '';
-
-      const bidContent = p.currentBid
-        ? `<div>
-             <span class="current-bid-label">Højeste bud (${p.bidder})</span>
-             <span class="current-bid-value">${formatKr(p.currentBid)}</span>
-           </div>
-           <span class="live-dot"></span>`
-        : `<div>
-             <span class="current-bid-label">Ingen bud endnu</span>
-             <span class="current-bid-value">Byd fra ${formatKr(p.minPrice)}</span>
-           </div>`;
 
       const subject = encodeURIComponent(`Bud på: ${p.name}`);
       const body = encodeURIComponent(`Hej Marius,\n\nJeg vil gerne byde på "${p.name}".\n\nMit bud: ___ kr.\nNavn:\nTelefon:\n\nMvh.`);
@@ -1354,30 +1228,33 @@
 
       const image = p.image
         ? `<img src="${p.image}" alt="${p.name}">`
-        : `<span class="product-image-placeholder">BILLEDE</span>`;
+        : '<span class="product-image-placeholder">BILLEDE</span>';
+
+      // Pris-linje under billedet
+      const priceLine = p.currentBid
+        ? `<div class="price-line">
+             <span class="value bid">Bud: ${formatKr(p.currentBid)}</span>
+             <span class="value strike">${formatKr(p.newPrice)}</span>
+           </div>`
+        : `<div class="price-line">
+             <span class="label">Byd fra</span>
+             <span class="value bid">${formatKr(p.minPrice)}</span>
+           </div>`;
 
       return `
         <article class="product${soldClass}">
-          <div class="product-image">
+          <a class="product-image" href="produkt.html?id=${p.id}" aria-label="Se detaljer for ${p.name}">
             ${image}
             <div class="badges">${badge}</div>
+            ${bidPill}
             ${sold}
-          </div>
-          <div class="product-body">
-            <div class="product-cat">${p.category}</div>
-            <h3 class="product-name">${p.name}</h3>
-            <p class="product-desc">${p.description}</p>
-            <div class="price-row">
-              <div class="price-item">
-                <span>Vejl. nypris</span>
-                <div class="price-value strike">${formatKr(p.newPrice)}</div>
-              </div>
-              <div class="price-item" style="text-align: right;">
-                <span>Mindstepris</span>
-                <div class="price-value">${formatKr(p.minPrice)}</div>
-              </div>
+            <div class="product-overlay">
+              <div class="product-cat">${p.category}</div>
+              <h3 class="product-name">${p.name}</h3>
             </div>
-            <div class="current-bid">${bidContent}</div>
+          </a>
+          <div class="product-body">
+            ${priceLine}
             <a href="mailto:marius@lydstyrken.com?subject=${subject}&body=${body}" class="bid-btn${btnDisabled}">${btnText}</a>
           </div>
         </article>
@@ -1385,9 +1262,11 @@
     }).join('');
   }
 
-  // Scroll progress
+  // Scroll progress + nav scrolled state
   const progress = document.getElementById('progress');
+  const navEl = document.getElementById('nav');
   window.addEventListener('scroll', () => {
+    if (navEl) navEl.classList.toggle('scrolled', window.scrollY > 20);
     const total = document.documentElement.scrollHeight - window.innerHeight;
     progress.style.width = (window.scrollY / total) * 100 + '%';
   });

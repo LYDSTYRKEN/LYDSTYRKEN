@@ -167,9 +167,31 @@
     letter-spacing: 0.05em;
     text-transform: uppercase;
     transition: color 0.2s;
+    position: relative;
+    padding: 6px 0;
   }
-  .nav-links a:hover, .nav-links a.active { color: var(--text); }
-  .nav-links a.active { color: var(--accent); }
+  .nav-links a:hover { color: var(--text); }
+
+  /* Active page indicator — animeret orange linje under */
+  .nav-links a.active {
+    color: var(--accent);
+  }
+  .nav-links a.active:not(.btn-nav)::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -4px;
+    height: 1px;
+    background: var(--accent);
+    transform-origin: left;
+    animation: active-line-in 0.5s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  }
+
+  @keyframes active-line-in {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
 
   .btn-nav {
     border: 1px solid var(--border);
@@ -181,6 +203,12 @@
     border-color: var(--accent);
     color: var(--accent) !important;
     background: rgba(255, 77, 46, 0.05);
+  }
+  .btn-nav.active {
+    border-color: var(--accent);
+    color: var(--accent) !important;
+    background: rgba(255, 77, 46, 0.08);
+    box-shadow: 0 0 0 1px var(--accent), 0 0 20px rgba(255, 77, 46, 0.15);
   }
 
   /* Burger button (skjult som default) */
@@ -285,6 +313,22 @@
   }
 
   .mobile-menu-links a.active {
+    color: var(--accent);
+    padding-left: 16px;
+    position: relative;
+  }
+  .mobile-menu-links a.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 12px var(--accent);
+  }
+  .mobile-menu-links a.active .mobile-menu-num {
     color: var(--accent);
   }
 
@@ -826,7 +870,7 @@
 <div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Hovedmenu">
   <div class="container">
     <div class="mobile-menu-links">
-      <a href="index.html"><span class="mobile-menu-num">01</span>Forside</a>
+      <a href="index.html" class="active"><span class="mobile-menu-num">01</span>Forside</a>
       <a href="ydelser.html"><span class="mobile-menu-num">02</span>Ydelser</a>
       <a href="om.html"><span class="mobile-menu-num">03</span>Om os</a>
       <a href="lagersalg.html"><span class="mobile-menu-num">04</span>Lagersalg</a>

@@ -47,6 +47,17 @@
     z-index: 0;
   }
 
+  .bg-glow {
+    position: fixed;
+    top: -300px;
+    right: -300px;
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
   .scroll-progress {
     position: fixed;
     top: 0; left: 0;
@@ -75,8 +86,11 @@
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     z-index: 100;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s, padding 0.3s;
   }
+
+  nav.scrolled { border-bottom-color: var(--border); padding: 16px 0; }
 
   .nav-inner {
     display: flex;
@@ -138,9 +152,28 @@
     letter-spacing: 0.05em;
     text-transform: uppercase;
     transition: color 0.2s;
+    position: relative;
+    padding: 6px 0;
   }
   .nav-links a:hover { color: var(--text); }
+
   .nav-links a.active { color: var(--accent); }
+  .nav-links a.active:not(.btn-nav)::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -4px;
+    height: 1px;
+    background: var(--accent);
+    transform-origin: left;
+    animation: active-line-in 0.5s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  }
+
+  @keyframes active-line-in {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
 
   .btn-nav {
     border: 1px solid var(--border);
@@ -152,6 +185,12 @@
     border-color: var(--accent);
     color: var(--accent) !important;
     background: rgba(255, 77, 46, 0.05);
+  }
+  .btn-nav.active {
+    border-color: var(--accent);
+    color: var(--accent) !important;
+    background: rgba(255, 77, 46, 0.08);
+    box-shadow: 0 0 0 1px var(--accent), 0 0 20px rgba(255, 77, 46, 0.15);
   }
 
   /* Burger */
@@ -232,7 +271,25 @@
   body.menu-open .mobile-menu-links a:nth-child(5) { transition-delay: 0.3s; }
 
   .mobile-menu-links a:hover { color: var(--accent); padding-left: 12px; }
-  .mobile-menu-links a.active { color: var(--accent); }
+  .mobile-menu-links a.active {
+    color: var(--accent);
+    padding-left: 16px;
+    position: relative;
+  }
+  .mobile-menu-links a.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 12px var(--accent);
+  }
+  .mobile-menu-links a.active .mobile-menu-num {
+    color: var(--accent);
+  }
 
   .mobile-menu-num {
     font-family: 'JetBrains Mono', monospace;
@@ -690,6 +747,7 @@
 <body>
 
 <div class="scroll-progress" id="progress"></div>
+<div class="bg-glow"></div>
 
 <nav id="nav">
   <div class="container nav-inner">
@@ -777,7 +835,7 @@
 
       <article class="member reveal">
         <div class="member-photo">
-          <span class="member-photo-placeholder">M</span>
+          <img src="images/team/marius.png" alt="Marius Blæsbjerg">
           <span class="badge-num">01</span>
         </div>
         <div class="member-body">
@@ -967,9 +1025,11 @@
     if (window.innerWidth > 900) closeMenu();
   });
 
-  // Scroll progress
+  // Scroll progress + nav scrolled
   const progress = document.getElementById('progress');
+  const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
     const total = document.documentElement.scrollHeight - window.innerHeight;
     progress.style.width = (window.scrollY / total) * 100 + '%';
   });
