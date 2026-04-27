@@ -55,9 +55,9 @@
     position: fixed;
     inset: 0;
     background-image:
-      linear-gradient(rgba(255, 255, 255, 0.012) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
-    background-size: 80px 80px;
+      linear-gradient(rgba(255, 255, 255, 0.030) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.030) 1px, transparent 1px);
+    background-size: 50px 50px;
     pointer-events: none;
     z-index: 0;
   }
@@ -68,7 +68,7 @@
     right: -300px;
     width: 800px;
     height: 800px;
-    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 60%);
+    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 75%);
     pointer-events: none;
     z-index: 0;
   }
@@ -90,12 +90,13 @@
     position: sticky;
     top: 0;
     background: rgba(10, 10, 11, 0.85);
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(20px);
     z-index: 100;
     border-bottom: 1px solid transparent;
     transition: border-color 0.3s, padding 0.3s;
   }
+
 
   nav.scrolled { border-bottom-color: var(--border); padding: 16px 0; }
 
