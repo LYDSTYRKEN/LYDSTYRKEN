@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Tema-config: én linje styrer hele sitet (se theme-config.js) -->
+<script src="theme-config.js"></script>
+<title>Leje- og forretningsbetingelser — LYDSTYRKEN</title>
+<meta name="description" content="LYDSTYRKENs leje- og forretningsbetingelser for udlejning af lyd- og lystutstyr og teknisk afvikling.">
+<meta name="robots" content="index,follow">
+
+<link rel="canonical" href="https://www.lydstyrken.com/lejebetingelser.html">
+<link rel="icon" type="image/png" href="images/Branding/mini-logo-(100 x 100px).png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="themes.css">
+<link rel="stylesheet" href="styles.css">
+
+<style>
+  /* Genbruger samme legal-CSS som privatlivspolitik */
+  .accent { color: var(--accent); }
+
+  .legal-section { padding: 60px 0 100px; }
+  .legal-wrap { max-width: 760px; }
+
+  .legal-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .legal-meta strong { color: var(--text-dim); font-weight: 400; margin-right: 8px; }
+
+  .legal-wrap h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-top: 48px;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+  .legal-wrap h2:first-of-type { margin-top: 0; }
+
+  .legal-wrap h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 17px;
+    margin-top: 28px;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+
+  .legal-wrap p,
+  .legal-wrap li {
+    color: var(--text-dim);
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 14px;
+  }
+
+  .legal-wrap ul,
+  .legal-wrap ol { margin-left: 24px; margin-bottom: 18px; }
+  .legal-wrap li { margin-bottom: 8px; }
+  .legal-wrap li::marker { color: var(--accent); }
+
+  .legal-wrap a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .legal-wrap a:hover { border-color: var(--accent); }
+
+  .info-box {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--accent);
+    border-radius: var(--radius-md);
+    padding: 20px 24px;
+    margin: 24px 0 32px;
+  }
+  .info-box p { margin-bottom: 0; }
+  .info-box strong { color: var(--text); }
+
+  .toc {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 24px 28px;
+    margin-bottom: 48px;
+  }
+  .toc-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .toc ol { margin-left: 18px; margin-bottom: 0; }
+  .toc li { margin-bottom: 6px; font-size: 15px; }
+  .toc a { color: var(--text-dim); border-bottom: none; }
+  .toc a:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Spring til indhold</a>
+
+<div class="scroll-progress" id="progress"></div>
+<div class="bg-glow"></div>
+
+<nav id="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="logo" aria-label="LYDSTYRKEN — Forside">
+      <span class="logo-wordmark" aria-hidden="true">
+        <span class="logo-bracket logo-bracket-left">[</span>
+        <span class="logo-text">LYDSTYRKEN</span>
+        <span class="logo-bracket logo-bracket-right">]</span>
+      </span>
+    </a>
+    <div class="nav-links">
+      <a href="ydelser.html">Ydelser</a>
+      <a href="om.html">Om os</a>
+      <a href="kontakt.html">Kontakt</a>
+      <a href="lagersalg.html" class="btn-nav">Lagersalg →</a>
+    </div>
+    <button class="burger" id="burger" aria-label="Åbn menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Hovedmenu">
+  <div class="container">
+    <div class="mobile-menu-links">
+      <a href="index.html"><span class="mobile-menu-num">01</span>Forside</a>
+      <a href="ydelser.html"><span class="mobile-menu-num">02</span>Ydelser</a>
+      <a href="om.html"><span class="mobile-menu-num">03</span>Om os</a>
+      <a href="lagersalg.html"><span class="mobile-menu-num">04</span>Lagersalg</a>
+      <a href="kontakt.html"><span class="mobile-menu-num">05</span>Kontakt</a>
+    </div>
+    <div class="mobile-menu-footer">
+      <a href="mailto:marius@lydstyrken.com">marius@lydstyrken.com</a>
+      <a href="https://instagram.com/lydstyrken" target="_blank" rel="noopener">@lydstyrken på Instagram ↗</a>
+      <span style="margin-top: 12px;">© 2025 LYDSTYRKEN — CVR 45880419</span>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+
+<header class="page-header">
+  <div class="container">
+    <div class="page-label">// JURIDISK</div>
+    <h1 class="page-title">
+      Leje- og <span class="accent">betingelser.</span>
+    </h1>
+    <p class="page-sub">
+      Generelle vilkår for udlejning af lyd- og lysudstyr samt teknisk afvikling fra LYDSTYRKEN.
+    </p>
+  </div>
+</header>
+
+<section class="legal-section">
+  <div class="container">
+    <div class="legal-wrap">
+
+      <div class="legal-meta">
+        <span><strong>Senest opdateret:</strong>April 2026</span>
+        <br>
+        <span><strong>Gælder for:</strong>Alle aftaler indgået med LYDSTYRKEN v/Marius Blæsbjerg, CVR 45880419</span>
+      </div>
+
+      <div class="toc">
+        <div class="toc-label">// Indhold</div>
+        <ol>
+          <li><a href="#aftalen">Aftalegrundlag</a></li>
+          <li><a href="#tilbud">Tilbud, booking og bekræftelse</a></li>
+          <li><a href="#priser">Priser, betaling og fakturering</a></li>
+          <li><a href="#aflysning">Aflysning og ændringer</a></li>
+          <li><a href="#udlejning">Udlejning af udstyr</a></li>
+          <li><a href="#ansvar">Ansvar og forsikring</a></li>
+          <li><a href="#force-majeure">Force majeure</a></li>
+          <li><a href="#tvister">Tvister og lovvalg</a></li>
+          <li><a href="#kontakt">Kontakt</a></li>
+        </ol>
+      </div>
+
+
+      <h2 id="aftalen">1. Aftalegrundlag</h2>
+      <p>
+        Disse betingelser gælder for alle aftaler om udlejning af udstyr, teknisk afvikling og undervisning indgået mellem LYDSTYRKEN v/Marius Blæsbjerg (herefter "LYDSTYRKEN") og kunden.
+      </p>
+      <p>
+        Aftalen anses for indgået når kunden skriftligt — fx pr. mail — har bekræftet et tilbud fra LYDSTYRKEN. Mundtlige aftaler er kun bindende hvis de efterfølgende bekræftes skriftligt af begge parter.
+      </p>
+
+
+      <h2 id="tilbud">2. Tilbud, booking og bekræftelse</h2>
+      <p>
+        Alle tilbud fra LYDSTYRKEN er gældende i 14 dage fra udstedelsesdato, medmindre andet er anført. Et tilbud bliver først til en bindende booking når kunden skriftligt accepterer det.
+      </p>
+      <p>
+        Vi forbeholder os ret til at afvise opgaver hvor vi vurderer at vi ikke kan levere den ønskede kvalitet — fx hvis venuet, tidsrammen eller formålet ikke passer til det udstyr eller de ressourcer vi har til rådighed.
+      </p>
+
+
+      <h2 id="priser">3. Priser, betaling og fakturering</h2>
+
+      <h3>Priser</h3>
+      <p>
+        Priser fremgår af det specifikke tilbud. Hvis intet andet er aftalt, forstås priser som ekskl. moms. LYDSTYRKEN er momsregistreret når omsætningsgrænsen overskrides — indtil da faktureres uden moms.
+      </p>
+
+      <h3>Betalingsbetingelser</h3>
+      <ul>
+        <li>Standard betalingsfrist er <strong>8 dage netto</strong> fra fakturadato.</li>
+        <li>Ved store opgaver kan der efter aftale betales et depositum på op til 50 % senest 14 dage før eventet.</li>
+        <li>Ved forsinket betaling beregnes morarente i overensstemmelse med renteloven, samt et fast rykkergebyr på 100 kr. pr. rykker (op til 3 rykkere).</li>
+      </ul>
+
+      <h3>Ekstra omkostninger</h3>
+      <p>
+        Hvis et arrangement varer længere end aftalt, eller hvis der opstår ekstra opgaver på dagen (fx ekstra mikrofoner, transport ud over det aftalte, ekstra teknikertimer), faktureres dette efter LYDSTYRKENs gældende takster. Vi orienterer kunden inden vi pådrager ekstraomkostninger, hvis det er praktisk muligt.
+      </p>
+
+
+      <h2 id="aflysning">4. Aflysning og ændringer</h2>
+      <p>
+        Hvis kunden aflyser en bekræftet booking, gælder følgende:
+      </p>
+      <ul>
+        <li><strong>Mere end 30 dage før eventet:</strong> Ingen omkostninger.</li>
+        <li><strong>14–30 dage før eventet:</strong> 25 % af det aftalte beløb faktureres.</li>
+        <li><strong>7–13 dage før eventet:</strong> 50 % af det aftalte beløb faktureres.</li>
+        <li><strong>Mindre end 7 dage før eventet:</strong> 100 % af det aftalte beløb faktureres.</li>
+      </ul>
+      <p>
+        Mindre ændringer i opgavens omfang (fx ekstra mikrofon eller flytning af tidspunkt med få timer) håndterer vi pragmatisk og uden gebyr, så længe det er muligt.
+      </p>
+      <p>
+        Hvis LYDSTYRKEN aflyser en bekræftet opgave af årsager der ikke skyldes force majeure (se afsnit 7), refunderer vi det fulde betalte beløb, og hjælper aktivt med at finde en alternativ leverandør.
+      </p>
+
+
+      <h2 id="udlejning">5. Udlejning af udstyr</h2>
+
+      <h3>Lejeperiode</h3>
+      <p>
+        Udlejning regnes pr. påbegyndt dag, medmindre andet er aftalt. Udstyr skal afhentes og afleveres på de tidspunkter og adresser der fremgår af tilbuddet.
+      </p>
+
+      <h3>Lejers ansvar</h3>
+      <p>
+        Lejer (kunden) er ansvarlig for det udlejede udstyr fra det tidspunkt det forlader LYDSTYRKENs lager til det er retableret samme sted i samme stand. Det betyder bl.a.:
+      </p>
+      <ul>
+        <li>Udstyr skal opbevares tørt, sikkert og uden for adgang for uvedkommende.</li>
+        <li>Udstyr må ikke videreudlejes eller udlånes til tredjepart uden skriftlig aftale.</li>
+        <li>Udstyr må kun bruges til det formål der er aftalt.</li>
+        <li>Eventuelle skader, fejl eller manglende dele skal meldes til LYDSTYRKEN hurtigst muligt.</li>
+      </ul>
+
+      <h3>Skader og bortkomst</h3>
+      <p>
+        Lejer hæfter for skader på og bortkomst af udlejet udstyr i lejeperioden, også ved tyveri og hærværk. Erstatning beregnes ud fra reparationspris eller — hvis udstyret ikke kan repareres — genanskaffelsesværdien. Lejer opfordres til at sikre at egen forsikring dækker leje af udstyr.
+      </p>
+
+
+      <h2 id="ansvar">6. Ansvar og forsikring</h2>
+      <p>
+        LYDSTYRKEN er ansvarlig efter dansk rets almindelige regler for skader vi forvolder ved fejl eller forsømmelse. Vi er ikke ansvarlige for:
+      </p>
+      <ul>
+        <li>Indirekte tab, fx tabt fortjeneste, omdømmeskader eller mistede billetindtægter.</li>
+        <li>Skader på lokaler, scener eller eksisterende installationer der ikke skyldes grov uagtsomhed fra vores side.</li>
+        <li>Skader der opstår pga. forhold uden for vores kontrol — herunder strømudfald, vejrforhold (ved udendørs events), eller fejl i kundens eget udstyr.</li>
+      </ul>
+      <p>
+        Vores erstatningsansvar er i alle tilfælde begrænset til det beløb kunden har betalt for den konkrete opgave.
+      </p>
+
+
+      <h2 id="force-majeure">7. Force majeure</h2>
+      <p>
+        Hverken LYDSTYRKEN eller kunden er ansvarlig for manglende opfyldelse af aftalen, hvis det skyldes force majeure — fx krig, epidemi/pandemi, naturkatastrofer, strejke, nedbrud i strømforsyning eller andre forhold uden for parternes rimelige kontrol.
+      </p>
+      <p>
+        I sådanne situationer aftaler vi i fællesskab den rimelige løsning — typisk omplanlægning eller delvis refusion af det betalte.
+      </p>
+
+
+      <h2 id="tvister">8. Tvister og lovvalg</h2>
+      <p>
+        Aftaler indgået med LYDSTYRKEN er underlagt dansk ret. Eventuelle tvister søges først løst ved dialog. Hvis det ikke er muligt, afgøres tvister ved Retten i Odense som første instans.
+      </p>
+
+
+      <h2 id="kontakt">9. Kontakt</h2>
+      <p>
+        Spørgsmål til disse betingelser kan rettes til:
+      </p>
+      <div class="info-box">
+        <p>
+          <strong>LYDSTYRKEN v/Marius Blæsbjerg</strong><br>
+          Seebladsgade 1, 5000 Odense C<br>
+          CVR: 45880419<br>
+          E-mail: <a href="mailto:marius@lydstyrken.com">marius@lydstyrken.com</a>
+        </p>
+      </div>
+
+      <p style="margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 13px; color: var(--text-muted);">
+        LYDSTYRKEN forbeholder sig ret til at opdatere disse betingelser. Den til enhver tid gældende version findes på lydstyrken.com/lejebetingelser.html.
+      </p>
+
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <a href="index.html" class="logo" aria-label="LYDSTYRKEN">
+          <span class="logo-wordmark" aria-hidden="true">
+            <span class="logo-bracket logo-bracket-left">[</span>
+            <span class="logo-text">LYDSTYRKEN</span>
+            <span class="logo-bracket logo-bracket-right">]</span>
+          </span>
+        </a>
+        <p class="footer-tag">Professionel lyd til events og koncerter — leveret fra Odense, hele Danmark over.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Kontakt</h4>
+        <a href="mailto:marius@lydstyrken.com">marius@lydstyrken.com</a>
+        <a href="https://instagram.com/lydstyrken" target="_blank" rel="noopener">Instagram ↗</a>
+        <a href="kontakt.html">Kontakt-side</a>
+      </div>
+      <div class="footer-col">
+        <h4>Sider</h4>
+        <a href="index.html">Forside</a>
+        <a href="ydelser.html">Ydelser</a>
+        <a href="om.html">Om os</a>
+        <a href="lagersalg.html">Lagersalg</a>
+        <a href="faq.html">FAQ</a>
+      </div>
+      <div class="footer-col">
+        <h4>Juridisk</h4>
+        <a href="privatlivspolitik.html">Privatlivspolitik</a>
+        <a href="lejebetingelser.html">Lejebetingelser</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 LYDSTYRKEN — CVR 45880419</span>
+      <span>[ ODENSE / DK ]</span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+
+</body>
+</html>

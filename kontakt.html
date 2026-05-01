@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Tema-config: én linje styrer hele sitet (se theme-config.js) -->
+<script src="theme-config.js"></script>
+<title>Kontakt — LYDSTYRKEN</title>
+<meta name="description" content="Skriv eller besøg LYDSTYRKEN — vi har til huse på Seebladsgade 1 i Odense og svarer som regel inden for 12 timer.">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="LYDSTYRKEN — Kontakt">
+<meta property="og:description" content="Skriv til LYDSTYRKEN om booking, leje eller spørgsmål. Vi sidder i Odense.">
+<meta property="og:url" content="https://www.lydstyrken.com/kontakt.html">
+<meta property="og:image" content="https://www.lydstyrken.com/images/Branding/mini-logo-(100 x 100px).png">
+<meta property="og:locale" content="da_DK">
+<meta property="og:site_name" content="LYDSTYRKEN">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="canonical" href="https://www.lydstyrken.com/kontakt.html">
+<link rel="icon" type="image/png" href="images/Branding/mini-logo-(100 x 100px).png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="themes.css">
+<link rel="stylesheet" href="styles.css">
+
+<style>
+  /* ═══════════════ SIDE-SPECIFIK CSS — kontakt ═══════════════ */
+
+  .accent { color: var(--accent); }
+
+  .contact-section { padding: 80px 0 100px; }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  @media (max-width: 900px) { .contact-grid { grid-template-columns: 1fr; gap: 40px; } }
+
+  .contact-intro h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: clamp(28px, 4vw, 40px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .contact-intro h2 .accent {
+    color: var(--accent);
+    font-style: italic;
+    font-weight: 400;
+    text-transform: lowercase;
+  }
+  .contact-intro p {
+    color: var(--text-dim);
+    font-size: 17px;
+    line-height: 1.6;
+    margin-bottom: 16px;
+    max-width: 520px;
+  }
+
+  .response-time {
+    margin-top: 28px;
+    padding: 20px 24px;
+    background: var(--accent-soft);
+    border-left: 2px solid var(--accent);
+    border-radius: var(--radius-sm);
+    max-width: 520px;
+  }
+  .response-time-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .response-time p {
+    font-size: 15px;
+    color: var(--text);
+    margin: 0;
+  }
+
+  /* Højre kolonne — kontakt-kort */
+  .contact-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .contact-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    transition: border-color 0.25s, transform 0.25s, background 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .contact-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent);
+    transition: width 0.4s;
+  }
+  .contact-card:hover {
+    border-color: #3a3a40;
+    transform: translateY(-2px);
+  }
+  .contact-card:hover::before { width: 100%; }
+
+  .contact-card.no-link { cursor: default; }
+  .contact-card.no-link:hover { transform: none; }
+
+  .contact-icon {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    transition: border-color 0.25s, background 0.25s;
+  }
+  .contact-card:hover .contact-icon {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+  .contact-icon svg { width: 20px; height: 20px; }
+
+  .contact-card-body { flex: 1; min-width: 0; }
+
+  .contact-card-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .contact-card-value {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--text);
+    word-break: break-word;
+  }
+  .contact-card:hover .contact-card-value { color: var(--accent); }
+
+  .contact-card-extra {
+    margin-top: 6px;
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  /* CVR-blok som info-strip */
+  .cvr-strip {
+    margin-top: 24px;
+    padding: 20px 24px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+  .cvr-strip span strong {
+    color: var(--text-muted);
+    font-weight: 400;
+    margin-right: 8px;
+  }
+
+  /* CTA i bunden */
+  .contact-cta {
+    margin-top: 80px;
+    padding: 56px 40px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    text-align: center;
+  }
+  .contact-cta h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: clamp(24px, 4vw, 36px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .contact-cta h3 .accent {
+    color: var(--accent);
+    font-style: italic;
+    font-weight: 400;
+    text-transform: lowercase;
+  }
+  .contact-cta p {
+    color: var(--text-dim);
+    font-size: 16px;
+    margin-bottom: 28px;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Spring til indhold</a>
+
+<div class="scroll-progress" id="progress"></div>
+<div class="bg-glow"></div>
+
+<nav id="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="logo" aria-label="LYDSTYRKEN — Forside">
+      <span class="logo-wordmark" aria-hidden="true">
+        <span class="logo-bracket logo-bracket-left">[</span>
+        <span class="logo-text">LYDSTYRKEN</span>
+        <span class="logo-bracket logo-bracket-right">]</span>
+      </span>
+    </a>
+    <div class="nav-links">
+      <a href="ydelser.html">Ydelser</a>
+      <a href="om.html">Om os</a>
+      <a href="kontakt.html" class="active">Kontakt</a>
+      <a href="lagersalg.html" class="btn-nav">Lagersalg →</a>
+    </div>
+    <button class="burger" id="burger" aria-label="Åbn menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Hovedmenu">
+  <div class="container">
+    <div class="mobile-menu-links">
+      <a href="index.html"><span class="mobile-menu-num">01</span>Forside</a>
+      <a href="ydelser.html"><span class="mobile-menu-num">02</span>Ydelser</a>
+      <a href="om.html"><span class="mobile-menu-num">03</span>Om os</a>
+      <a href="lagersalg.html"><span class="mobile-menu-num">04</span>Lagersalg</a>
+      <a href="kontakt.html" class="active"><span class="mobile-menu-num">05</span>Kontakt</a>
+    </div>
+    <div class="mobile-menu-footer">
+      <a href="mailto:marius@lydstyrken.com">marius@lydstyrken.com</a>
+      <a href="https://instagram.com/lydstyrken" target="_blank" rel="noopener">@lydstyrken på Instagram ↗</a>
+      <span style="margin-top: 12px;">© 2025 LYDSTYRKEN — CVR 45880419</span>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+
+<header class="page-header">
+  <div class="container">
+    <div class="page-label">// KONTAKT</div>
+    <h1 class="page-title">
+      Lad os <span class="accent">snakke.</span>
+    </h1>
+    <p class="page-sub">
+      Skriv til os om booking, leje, undervisning eller bare et par hurtige spørgsmål — vi vender tilbage hurtigst muligt.
+    </p>
+  </div>
+</header>
+
+<section class="contact-section">
+  <div class="container">
+    <div class="contact-grid">
+
+      <!-- VENSTRE: Intro -->
+      <div class="contact-intro">
+        <h2>Vi sidder i <span class="accent">Odense.</span></h2>
+        <p>
+          LYDSTYRKEN drives fra Seebladsgade i Odense C, og vi tager imod opgaver i hele Danmark. Skriv til os på mail eller skriv en besked på Instagram — vi læser begge steder.
+        </p>
+        <p>
+          Hvis du allerede ved hvad du skal bruge, kan du gå direkte til <a href="ydelser.html" style="color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent);">pakke-oversigten</a> og sende en forespørgsel som mail-udkast.
+        </p>
+
+        <div class="response-time">
+          <div class="response-time-label">// Svartid</div>
+          <p>Vi svarer som regel inden for 12 timer — og gør hvad vi kan for at vende hurtigere tilbage hvis der er noget, der haster.</p>
+        </div>
+      </div>
+
+      <!-- HØJRE: Kontakt-kort -->
+      <div class="contact-cards">
+
+        <a href="mailto:marius@lydstyrken.com" class="contact-card">
+          <div class="contact-icon" aria-hidden="true">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M3 8l9 6 9-6M3 8v10a2 2 0 002 2h14a2 2 0 002-2V8M3 8l2-2h14l2 2"/></svg>
+          </div>
+          <div class="contact-card-body">
+            <div class="contact-card-label">// Mail</div>
+            <div class="contact-card-value">marius@lydstyrken.com</div>
+            <div class="contact-card-extra">Bedste vej for booking og længere forespørgsler.</div>
+          </div>
+        </a>
+
+        <a href="https://instagram.com/lydstyrken" target="_blank" rel="noopener" class="contact-card">
+          <div class="contact-icon" aria-hidden="true">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
+          </div>
+          <div class="contact-card-body">
+            <div class="contact-card-label">// Instagram</div>
+            <div class="contact-card-value">@lydstyrken</div>
+            <div class="contact-card-extra">Hverdag, billeder fra opgaver og hurtige beskeder.</div>
+          </div>
+        </a>
+
+        <div class="contact-card no-link">
+          <div class="contact-icon" aria-hidden="true">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div class="contact-card-body">
+            <div class="contact-card-label">// Adresse</div>
+            <div class="contact-card-value">Seebladsgade 1, 5000 Odense C</div>
+            <div class="contact-card-extra">Forbi-besøg sker efter aftale — skriv først.</div>
+          </div>
+        </div>
+
+        <div class="cvr-strip">
+          <span><strong>CVR</strong>45880419</span>
+          <span><strong>Reg.</strong>LYDSTYRKEN v/Marius Blæsbjerg</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CTA i bunden -->
+    <div class="contact-cta">
+      <h3>Klar til at <span class="accent">booke</span>?</h3>
+      <p>Brug pakke-oversigten til at sammensætte en forespørgsel. Du sender den som mail — så har vi hvad vi skal bruge for at give dig et tilbud.</p>
+      <div class="cta-actions" style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+        <a href="ydelser.html" class="btn btn-primary">
+          Se pakker og byg estimat
+          <span class="arrow">→</span>
+        </a>
+        <a href="mailto:marius@lydstyrken.com" class="btn btn-secondary">
+          Skriv direkte til os
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <a href="index.html" class="logo" aria-label="LYDSTYRKEN">
+          <span class="logo-wordmark" aria-hidden="true">
+            <span class="logo-bracket logo-bracket-left">[</span>
+            <span class="logo-text">LYDSTYRKEN</span>
+            <span class="logo-bracket logo-bracket-right">]</span>
+          </span>
+        </a>
+        <p class="footer-tag">Professionel lyd til events og koncerter — leveret fra Odense, hele Danmark over.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Kontakt</h4>
+        <a href="mailto:marius@lydstyrken.com">marius@lydstyrken.com</a>
+        <a href="https://instagram.com/lydstyrken" target="_blank" rel="noopener">Instagram ↗</a>
+        <a href="kontakt.html">Kontakt-side</a>
+      </div>
+      <div class="footer-col">
+        <h4>Sider</h4>
+        <a href="index.html">Forside</a>
+        <a href="ydelser.html">Ydelser</a>
+        <a href="om.html">Om os</a>
+        <a href="lagersalg.html">Lagersalg</a>
+        <a href="faq.html">FAQ</a>
+      </div>
+      <div class="footer-col">
+        <h4>Juridisk</h4>
+        <a href="privatlivspolitik.html">Privatlivspolitik</a>
+        <a href="lejebetingelser.html">Lejebetingelser</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 LYDSTYRKEN — CVR 45880419</span>
+      <span>[ ODENSE / DK ]</span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+
+</body>
+</html>

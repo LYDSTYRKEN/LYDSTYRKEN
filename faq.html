@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Tema-config: én linje styrer hele sitet (se theme-config.js) -->
+<script src="theme-config.js"></script>
+<title>FAQ — Spørgsmål og svar — LYDSTYRKEN</title>
+<meta name="description" content="Svar på de mest almindelige spørgsmål om LYDSTYRKENs ydelser — pris, transport, vejr, opsætning og udlejning.">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="LYDSTYRKEN — FAQ">
+<meta property="og:description" content="Hvor langt kører I? Hvad sker der hvis det regner? Få svar på de spørgsmål vi oftest får.">
+<meta property="og:url" content="https://www.lydstyrken.com/faq.html">
+<meta property="og:image" content="https://www.lydstyrken.com/images/Branding/mini-logo-(100 x 100px).png">
+<meta property="og:locale" content="da_DK">
+<meta property="og:site_name" content="LYDSTYRKEN">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="canonical" href="https://www.lydstyrken.com/faq.html">
+<link rel="icon" type="image/png" href="images/Branding/mini-logo-(100 x 100px).png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="themes.css">
+<link rel="stylesheet" href="styles.css">
+
+<!-- FAQ schema for Google search-visning -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Hvor langt kører I?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Vi tager opgaver i hele Danmark. Vores base er i Odense, så Fyn og det øvrige Sjælland og Jylland er overkommeligt. Transport regnes ind i tilbuddet, så du ved præcis hvad det koster."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Hvad sker der hvis det regner ved et udendørs event?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Vi kommer altid med plan B. Vi medbringer presenninger og har erfaring med at sikre udstyr i regnvejr, og vi rådgiver gerne forud om hvad der skal være på plads — fx tag over scenen eller backup-plan ved kraftigt regn."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Hvor meget plads kræver et PA?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Det afhænger af pakken. Til en lille tale-pakke skal du typisk regne med ca. 2x2 meter ved hver side af scenen. Til større festpakker eller koncerter ca. 2x3 meter til hver side, plus plads til mixerpult bagest i lokalet."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Hvor lang tid tager opsætning?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Små tale- og fest-pakker tager typisk 30–60 minutter at sætte op. Større koncert- og festival-pakker kan tage 2–4 timer. Vi kommer i god tid før dit event så vi har tid til at teste og rette ind."
+      }
+    }
+  ]
+}
+</script>
+
+<style>
+  /* ═══════════════ SIDE-SPECIFIK CSS — FAQ ═══════════════ */
+
+  .accent { color: var(--accent); }
+
+  .faq-section { padding: 60px 0 100px; }
+
+  .faq-wrap { max-width: 820px; }
+
+  .faq-categories {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .faq-cat {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .faq-cat:hover { border-color: var(--accent); color: var(--accent); }
+  .faq-cat.active {
+    background: var(--accent);
+    color: #0a0a0b;
+    border-color: var(--accent);
+  }
+
+  .faq-group {
+    margin-bottom: 48px;
+  }
+
+  .faq-group-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .faq-group-title::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+  }
+  .faq-item:first-child { border-top: 1px solid var(--border); }
+
+  .faq-q {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 22px 0;
+    text-align: left;
+    cursor: pointer;
+    color: var(--text);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 17px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    transition: color 0.2s;
+  }
+  .faq-q:hover { color: var(--accent); }
+  .faq-q .icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    transition: transform 0.3s;
+    margin-top: 2px;
+  }
+  .faq-item.open .faq-q .icon { transform: rotate(45deg); }
+  .faq-q .icon svg { width: 100%; height: 100%; }
+
+  .faq-a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .faq-item.open .faq-a { max-height: 600px; }
+
+  .faq-a-inner {
+    padding-bottom: 24px;
+    color: var(--text-dim);
+    font-size: 16px;
+    line-height: 1.7;
+    max-width: 680px;
+  }
+  .faq-a-inner p { margin-bottom: 12px; }
+  .faq-a-inner p:last-child { margin-bottom: 0; }
+  .faq-a-inner a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent); }
+
+  /* CTA i bunden */
+  .faq-cta {
+    margin-top: 80px;
+    padding: 48px 40px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    text-align: center;
+  }
+  .faq-cta h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: clamp(22px, 3vw, 32px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .faq-cta h3 .accent {
+    color: var(--accent);
+    font-style: italic;
+    font-weight: 400;
+    text-transform: lowercase;
+  }
+  .faq-cta p {
+    color: var(--text-dim);
+    font-size: 16px;
+    margin-bottom: 28px;
+  }
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Spring til indhold</a>
+
+<div class="scroll-progress" id="progress"></div>
+<div class="bg-glow"></div>
+
+<nav id="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="logo" aria-label="LYDSTYRKEN — Forside">
+      <span class="logo-wordmark" aria-hidden="true">
+        <span class="logo-bracket logo-bracket-left">[</span>
+        <span class="logo-text">LYDSTYRKEN</span>
+        <span class="logo-bracket logo-bracket-right">]</span>
+      </span>
+    </a>
+    <div class="nav-links">
+      <a href="ydelser.html">Ydelser</a>
+      <a href="om.html">Om os</a>
+      <a href="kontakt.html">Kontakt</a>
+      <a href="lagersalg.html" class="btn-nav">Lagersalg →</a>
+    </div>
+    <button class="burger" id="burger" aria-label="Åbn menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Hovedmenu">
+  <div class="container">
+    <div class="mobile-menu-links">
+      <a href="index.html"><span class="mobile-menu-num">01</span>Forside</a>
+      <a href="ydelser.html"><span class="mobile-menu-num">02</span>Ydelser</a>
+      <a href="om.html"><span class="mobile-menu-num">03</span>Om os</a>
+      <a href="lagersalg.html"><span class="mobile-menu-num">04</span>Lagersalg</a>
+      <a href="kontakt.html"><span class="mobile-menu-num">05</span>Kontakt</a>
+    </div>
+    <div class="mobile-menu-footer">
+      <a href="mailto:marius@lydstyrken.com">marius@lydstyrken.com</a>
+      <a href="https://instagram.com/lydstyrken" target="_blank" rel="noopener">@lydstyrken på Instagram ↗</a>
+      <span style="margin-top: 12px;">© 2025 LYDSTYRKEN — CVR 45880419</span>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+
+<header class="page-header">
+  <div class="container">
+    <div class="page-label">// FAQ</div>
+    <h1 class="page-title">
+      Det vi <span class="accent">ofte</span> bliver spurgt om.
+    </h1>
+    <p class="page-sub">
+      Find svar på de typiske spørgsmål om vores ydelser, transport, opsætning og udlejning. Står dit spørgsmål ikke her — så skriv til os.
+    </p>
+  </div>
+</header>
+
+<section class="faq-section">
+  <div class="container">
+    <div class="faq-wrap">
+
+      <!-- ─── BOOKING & PRIS ─── -->
+      <div class="faq-group">
+        <div class="faq-group-title">Booking &amp; pris</div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">
+            <span>Hvor lang tid før mit event skal jeg booke?</span>
+            <span class="icon" aria-hidden="true"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>Jo tidligere jo bedre — især i sommerhalvåret. For de fleste opgaver er 4–8 uger god tid, men vi tager også gerne sidste-øjebliks-bookinger hvis vi har en tekniker ledig.</p>
+              <p>Giv os et kald eller skriv så hurtigt du ved hvilken dato det er — så kan vi reservere udstyr og folk.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">
+            <span>Hvad koster en pakke?</span>
+            <span class="icon" aria-hidden="true"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>Vores pakker starter fra omkring 1.200 kr. for en lille tale-opsætning og op til 9.500 kr. for større fester. Større festivaler og koncerter prises individuelt.</p>
+              <p>Brug vores <a href="ydelser.html">pakke-konfigurator</a> til at få et estimat på et øjeblik — eller skriv til os så laver vi et konkret tilbud.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">
+            <span>Hvornår skal jeg betale?</span>
+            <span class="icon" aria-hidden="true"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>Standard betalingsfrist er 8 dage netto fra fakturadato — vi sender fakturaen efter eventet. Ved større opgaver kan vi aftale et depositum forud.</p>
+              <p>Se <a href="lejebetingelser.html">lejebetingelserne</a> for de fulde betingelser.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">
+            <span>Kan jeg aflyse eller flytte min booking?</span>
+            <span class="icon" aria-hidden="true"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>Ja, og vi prøver altid at finde en løsning. Aflysning mere end 30 dage før eventet er gratis. Tættere på datoen gælder de aflysningsregler der står i <a href="lejebetingelser.html">lejebetingelserne</a>.</p>
+              <p>Mindre ændringer (fx en time mere eller en ekstra mikrofon) håndterer vi pragmatisk og uden gebyr.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ─── TRANSPORT & OPSÆTNING ─── -->
+      <div class="faq-group">
+        <div class="faq-group-title">Transport &amp; opsætning</div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">
+            <span>Hvor langt kører I?</span>
+            <span class="icon" aria-hidden="true"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>Vi tager opgaver i hele Danmark. Vores base er i Odense, så Fyn og det meste af Jylland og Sjælland er inden for rækkevidde. Transport regnes altid med i tilbuddet, så du ved præcis hvad det koster.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">
+            <span>Hvor lang tid tager opsætning?</span>
+            <span class="icon" aria-hidden="true"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>Små tale- og fest-pakker tager typisk 30–60 minutter at sætte op. Mellemstore koncert- og festpakker tager 1–2 timer. Festival- og store live-koncert-opsætninger kan tage 2–4 timer.</p>
+              <p>Vi kommer altid i god tid før eventet, så vi kan teste, rette ind og være klar når dine gæster ankommer.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">
+            <span>Hvor meget plads kræver et PA?</span>
+            <span class="icon" aria-hidden="true"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>Det afhænger af pakken. Som tommelfingerregel:</p>
+              <p>• <strong>Lille pakke (tale/fest):</strong> ca. 2×2 m ved hver side af scenen<br>
+                 • <strong>Mellem pakke:</strong> ca. 2×2,5 m ved hver side<br>
+                 • <strong>Stor pakke / koncert:</strong> ca. 2×3 m ved hver side, plus plads til mixerpult bagest i lokalet (1×1,5 m).</p>
+              <p>Vi rådgiver gerne ud fra venuets mål — send os et plantegning eller et par billeder, så finder vi det rigtige.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">
+            <span>Hvad har I brug for fra mig på dagen?</span>
+            <span class="icon" aria-hidden="true"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>Som minimum: en kontaktperson på stedet der kender lokalet, og let adgang til 230V strøm i nærheden af scenen. Til større opsætninger har vi brug for 2-3 stik på separate sikringer.</p>
+              <p>Vi sender altid en kort tjekliste forud, så du ved præcis hvad vi har brug for.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ─── UDENDØRS & VEJR ─── -->
+      <div class="faq-group">
+        <div class="faq-group-title">Udendørs &amp; vejr</div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">
+            <span>Hvad sker der hvis det regner?</span>
+            <span class="icon" aria-hidden="true"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>Vi medbringer altid presenninger og har erfaring med at sikre udstyr i regnvejr. Til udendørs events anbefaler vi at scenen er overdækket — vi rådgiver gerne i god tid om hvordan det bør gøres.</p>
+              <p>Ved kraftigt regn eller torden kan det være nødvendigt at pause showet kortvarigt af sikkerhedsgrunde. Det aftaler vi i god tid forinden hvordan I vil håndtere.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">
+            <span>Skal jeg sørge for strøm til udendørs events?</span>
+            <span class="icon" aria-hidden="true"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>Ja — vi har brug for stabil 230V strøm. Til mindre udendørs events kan vi typisk trække fra et nærliggende hus eller telt. Til større events er en generator ofte den bedste løsning, og vi hjælper gerne med at koordinere det.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ─── UDLEJNING ─── -->
+      <div class="faq-group">
+        <div class="faq-group-title">Udlejning &amp; selvafvikling</div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">
+            <span>Kan jeg leje udstyr uden teknisk afvikling?</span>
+            <span class="icon" aria-hidden="true"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>Ja, det tilbyder vi. Vi vil gerne sikre at du føler dig tryg ved at bruge udstyret, så vi tilbyder en kort gennemgang ved afhentning, og vi er tilgængelige på telefonen hvis der opstår noget.</p>
+              <p>Hvis du er usikker, kan vi også lave en kort indføring (2 timer fra 1.800 kr.), så du kan klare det selv næste gang.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">
+            <span>Hvad sker der hvis noget går i stykker?</span>
+            <span class="icon" aria-hidden="true"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></span>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              <p>Almindelig slitage står vi selv for. Hvis udstyr går i stykker pga. uagtsomhed eller bortkommer, hæfter lejer for omkostningen — så tjek gerne om din egen forsikring dækker leje af udstyr.</p>
+              <p>De fulde betingelser står i <a href="lejebetingelser.html">lejebetingelserne</a>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- CTA -->
+      <div class="faq-cta">
+        <h3>Står dit spørgsmål <span class="accent">ikke</span> her?</h3>
+        <p>Skriv til os — vi svarer som regel inden for 12 timer.</p>
+        <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+          <a href="mailto:marius@lydstyrken.com" class="btn btn-primary">
+            Skriv til os
+            <span class="arrow">→</span>
+          </a>
+          <a href="kontakt.html" class="btn btn-secondary">
+            Se alle kontaktoplysninger
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <a href="index.html" class="logo" aria-label="LYDSTYRKEN">
+          <span class="logo-wordmark" aria-hidden="true">
+            <span class="logo-bracket logo-bracket-left">[</span>
+            <span class="logo-text">LYDSTYRKEN</span>
+            <span class="logo-bracket logo-bracket-right">]</span>
+          </span>
+        </a>
+        <p class="footer-tag">Professionel lyd til events og koncerter — leveret fra Odense, hele Danmark over.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Kontakt</h4>
+        <a href="mailto:marius@lydstyrken.com">marius@lydstyrken.com</a>
+        <a href="https://instagram.com/lydstyrken" target="_blank" rel="noopener">Instagram ↗</a>
+        <a href="kontakt.html">Kontakt-side</a>
+      </div>
+      <div class="footer-col">
+        <h4>Sider</h4>
+        <a href="index.html">Forside</a>
+        <a href="ydelser.html">Ydelser</a>
+        <a href="om.html">Om os</a>
+        <a href="lagersalg.html">Lagersalg</a>
+        <a href="faq.html">FAQ</a>
+      </div>
+      <div class="footer-col">
+        <h4>Juridisk</h4>
+        <a href="privatlivspolitik.html">Privatlivspolitik</a>
+        <a href="lejebetingelser.html">Lejebetingelser</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 LYDSTYRKEN — CVR 45880419</span>
+      <span>[ ODENSE / DK ]</span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+<script defer>
+  // FAQ Accordion-funktionalitet
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.faq-item').forEach(item => {
+      const btn = item.querySelector('.faq-q');
+      btn.addEventListener('click', () => {
+        const isOpen = item.classList.contains('open');
+        // Lukker alle åbne items først (én ad gangen-mode)
+        document.querySelectorAll('.faq-item.open').forEach(other => {
+          if (other !== item) {
+            other.classList.remove('open');
+            other.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+          }
+        });
+        item.classList.toggle('open');
+        btn.setAttribute('aria-expanded', !isOpen);
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

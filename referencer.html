@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Tema-config: én linje styrer hele sitet (se theme-config.js) -->
+<script src="theme-config.js"></script>
+<title>Referencer &amp; cases — LYDSTYRKEN</title>
+<meta name="description" content="Et udvalg af events LYDSTYRKEN har afviklet — fra mindre fester til festivaler og koncerter.">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="LYDSTYRKEN — Referencer">
+<meta property="og:description" content="Se hvad vi har lavet — koncerter, festivaler, events og mere.">
+<meta property="og:url" content="https://www.lydstyrken.com/referencer.html">
+<meta property="og:image" content="https://www.lydstyrken.com/images/Branding/mini-logo-(100 x 100px).png">
+<meta property="og:locale" content="da_DK">
+<meta property="og:site_name" content="LYDSTYRKEN">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="canonical" href="https://www.lydstyrken.com/referencer.html">
+<link rel="icon" type="image/png" href="images/Branding/mini-logo-(100 x 100px).png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="themes.css">
+<link rel="stylesheet" href="styles.css">
+
+<style>
+  /* ═══════════════ SIDE-SPECIFIK CSS — referencer ═══════════════ */
+
+  .accent { color: var(--accent); }
+
+  .ref-section { padding: 60px 0 100px; }
+
+  /* Stats bar i top */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-bottom: 64px;
+  }
+  @media (max-width: 700px) {
+    .stats-bar { grid-template-columns: repeat(2, 1fr); }
+  }
+  .stat {
+    background: var(--bg-elev);
+    padding: 28px 24px;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: clamp(32px, 4vw, 44px);
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  /* Cases-grid */
+  .cases-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 800px) { .cases-grid { grid-template-columns: 1fr; } }
+
+  .case-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.3s, transform 0.3s;
+    position: relative;
+  }
+  .case-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent);
+    transition: width 0.4s;
+  }
+  .case-card:hover {
+    border-color: #3a3a40;
+    transform: translateY(-4px);
+  }
+  .case-card:hover::before { width: 100%; }
+
+  /* Placeholder-billede */
+  .case-image {
+    aspect-ratio: 16/10;
+    background:
+      linear-gradient(135deg, var(--bg-elev-2) 0%, var(--bg) 100%);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .case-image::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(color-mix(in srgb, var(--accent) 4%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, var(--accent) 4%, transparent) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  .case-image-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    z-index: 1;
+    background: var(--bg);
+    padding: 8px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+  }
+
+  /* Når billedet er sat: <div class="case-image" style="background-image:url(...)"> */
+  .case-image[style*="background-image"] { background-color: transparent; }
+  .case-image[style*="background-image"]::before { display: none; }
+  .case-image[style*="background-image"] .case-image-label { display: none; }
+
+  .case-image-overlay {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    z-index: 2;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .case-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    background: rgba(10, 10, 11, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 5px 10px;
+    border: 1px solid var(--accent);
+    border-radius: 3px;
+  }
+
+  .case-body {
+    padding: 28px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .case-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .case-meta-item { display: inline-flex; align-items: center; gap: 6px; }
+  .case-meta-item::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .case-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 12px;
+    line-height: 1.15;
+  }
+
+  .case-text {
+    color: var(--text-dim);
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex: 1;
+  }
+
+  .case-quote {
+    margin-top: 16px;
+    padding: 16px 20px;
+    background: var(--bg);
+    border-left: 2px solid var(--accent);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    color: var(--text);
+    font-style: italic;
+    line-height: 1.5;
+  }
+  .case-quote-attr {
+    display: block;
+    margin-top: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-style: normal;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* CTA */
+  .ref-cta {
+    margin-top: 80px;
+    padding: 48px 40px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    text-align: center;
+  }
+  .ref-cta h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: clamp(24px, 4vw, 36px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .ref-cta h3 .accent {
+    color: var(--accent);
+    font-style: italic;
+    font-weight: 400;
+    text-transform: lowercase;
+  }
+  .ref-cta p {
+    color: var(--text-dim);
+    font-size: 16px;
+    margin-bottom: 28px;
+  }
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Spring til indhold</a>
+
+<div class="scroll-progress" id="progress"></div>
+<div class="bg-glow"></div>
+
+<nav id="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="logo" aria-label="LYDSTYRKEN — Forside">
+      <span class="logo-wordmark" aria-hidden="true">
+        <span class="logo-bracket logo-bracket-left">[</span>
+        <span class="logo-text">LYDSTYRKEN</span>
+        <span class="logo-bracket logo-bracket-right">]</span>
+      </span>
+    </a>
+    <div class="nav-links">
+      <a href="ydelser.html">Ydelser</a>
+      <a href="om.html">Om os</a>
+      <a href="kontakt.html">Kontakt</a>
+      <a href="lagersalg.html" class="btn-nav">Lagersalg →</a>
+    </div>
+    <button class="burger" id="burger" aria-label="Åbn menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Hovedmenu">
+  <div class="container">
+    <div class="mobile-menu-links">
+      <a href="index.html"><span class="mobile-menu-num">01</span>Forside</a>
+      <a href="ydelser.html"><span class="mobile-menu-num">02</span>Ydelser</a>
+      <a href="om.html"><span class="mobile-menu-num">03</span>Om os</a>
+      <a href="lagersalg.html"><span class="mobile-menu-num">04</span>Lagersalg</a>
+      <a href="kontakt.html"><span class="mobile-menu-num">05</span>Kontakt</a>
+    </div>
+    <div class="mobile-menu-footer">
+      <a href="mailto:marius@lydstyrken.com">marius@lydstyrken.com</a>
+      <a href="https://instagram.com/lydstyrken" target="_blank" rel="noopener">@lydstyrken på Instagram ↗</a>
+      <span style="margin-top: 12px;">© 2025 LYDSTYRKEN — CVR 45880419</span>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+
+<header class="page-header">
+  <div class="container">
+    <div class="page-label">// REFERENCER</div>
+    <h1 class="page-title">
+      Det vi <span class="accent">har</span> lavet.
+    </h1>
+    <p class="page-sub">
+      Et udvalg af events LYDSTYRKEN har stået bag — fra intime fester til større festival-scener.
+    </p>
+  </div>
+</header>
+
+<section class="ref-section">
+  <div class="container">
+
+    <!-- ═══════════════ STATS BAR ═══════════════
+         Opdatér tallene her efterhånden som virksomheden vokser.
+         Hold dem konkrete og verificerbare.
+    ═══════════════════════════════════════════════ -->
+    <div class="stats-bar">
+      <div class="stat">
+        <div class="stat-num">30+</div>
+        <div class="stat-label">Events afviklet</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">5.000+</div>
+        <div class="stat-label">Publikummer</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">12+</div>
+        <div class="stat-label">Bands &amp; artister</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">Hele DK</div>
+        <div class="stat-label">Vores rækkevidde</div>
+      </div>
+    </div>
+
+
+    <!-- ═══════════════ CASES ═══════════════
+         For hver case — udfyld:
+         1. case-tag (kategori)
+         2. case-meta (sted + årstal)
+         3. case-title (eventets navn)
+         4. case-text (1-3 sætninger om opgaven)
+         5. case-quote (valgfrit, kundeudtalelse)
+         6. style="background-image: url('images/cases/...')" på .case-image
+    ═══════════════════════════════════════════════ -->
+
+    <div class="cases-grid stagger">
+
+      <!-- ─── CASE 1 ─── -->
+      <article class="case-card reveal">
+        <div class="case-image">
+          <span class="case-image-label">// Billede tilføjes</span>
+          <div class="case-image-overlay">
+            <span class="case-tag">Festival</span>
+          </div>
+        </div>
+        <div class="case-body">
+          <div class="case-meta">
+            <span class="case-meta-item">2025</span>
+            <span class="case-meta-item">Odense</span>
+            <span class="case-meta-item">~ 800 publikummer</span>
+          </div>
+          <h2 class="case-title">[Eventets navn]</h2>
+          <p class="case-text">
+            Kort beskrivelse af opgaven — fx: "Fuld lyd-afvikling af tre-dages festival med 12 bands fordelt på to scener. Vi stod for FOH, monitor-mix, line-check og scene-skift mellem hver act."
+          </p>
+          <div class="case-quote">
+            "Eksempel-citat fra kunde der beskriver samarbejdet og resultatet."
+            <span class="case-quote-attr">— Kontaktperson, organisation</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─── CASE 2 ─── -->
+      <article class="case-card reveal">
+        <div class="case-image">
+          <span class="case-image-label">// Billede tilføjes</span>
+          <div class="case-image-overlay">
+            <span class="case-tag">Live-koncert</span>
+          </div>
+        </div>
+        <div class="case-body">
+          <div class="case-meta">
+            <span class="case-meta-item">2025</span>
+            <span class="case-meta-item">Odense</span>
+            <span class="case-meta-item">~ 200 publikummer</span>
+          </div>
+          <h2 class="case-title">[Bandnavn — koncert]</h2>
+          <p class="case-text">
+            Kort beskrivelse af opgaven — fx: "PROMTE's release-koncert med komplet PA-løsning, monitor-mix til musikere og multitrack-optagelse af showet."
+          </p>
+        </div>
+      </article>
+
+      <!-- ─── CASE 3 ─── -->
+      <article class="case-card reveal">
+        <div class="case-image">
+          <span class="case-image-label">// Billede tilføjes</span>
+          <div class="case-image-overlay">
+            <span class="case-tag">Velgørenhed</span>
+          </div>
+        </div>
+        <div class="case-body">
+          <div class="case-meta">
+            <span class="case-meta-item">2026</span>
+            <span class="case-meta-item">Odense</span>
+            <span class="case-meta-item">Hele dagen</span>
+          </div>
+          <h2 class="case-title">Stafet for Livet</h2>
+          <p class="case-text">
+            Kort beskrivelse af opgaven — fx: "Lyd og PA gennem hele dagens program — fra åbningstale til afslutning. Trådløse mikrofoner til alle talere og baggrundsmusik mellem indslag."
+          </p>
+        </div>
+      </article>
+
+      <!-- ─── CASE 4 ─── -->
+      <article class="case-card reveal">
+        <div class="case-image">
+          <span class="case-image-label">// Billede tilføjes</span>
+          <div class="case-image-overlay">
+            <span class="case-tag">Konference</span>
+          </div>
+        </div>
+        <div class="case-body">
+          <div class="case-meta">
+            <span class="case-meta-item">2025</span>
+            <span class="case-meta-item">Fyn</span>
+            <span class="case-meta-item">~ 150 deltagere</span>
+          </div>
+          <h2 class="case-title">[Konferencens navn]</h2>
+          <p class="case-text">
+            Kort beskrivelse af opgaven.
+          </p>
+        </div>
+      </article>
+
+      <!-- ─── CASE 5 ─── -->
+      <article class="case-card reveal">
+        <div class="case-image">
+          <span class="case-image-label">// Billede tilføjes</span>
+          <div class="case-image-overlay">
+            <span class="case-tag">Bryllup</span>
+          </div>
+        </div>
+        <div class="case-body">
+          <div class="case-meta">
+            <span class="case-meta-item">2025</span>
+            <span class="case-meta-item">Sjælland</span>
+            <span class="case-meta-item">~ 100 gæster</span>
+          </div>
+          <h2 class="case-title">[Bryllup eller fest]</h2>
+          <p class="case-text">
+            Kort beskrivelse af opgaven.
+          </p>
+        </div>
+      </article>
+
+      <!-- ─── CASE 6 ─── -->
+      <article class="case-card reveal">
+        <div class="case-image">
+          <span class="case-image-label">// Billede tilføjes</span>
+          <div class="case-image-overlay">
+            <span class="case-tag">Skoleforestilling</span>
+          </div>
+        </div>
+        <div class="case-body">
+          <div class="case-meta">
+            <span class="case-meta-item">2025</span>
+            <span class="case-meta-item">Odense</span>
+            <span class="case-meta-item">3 forestillinger</span>
+          </div>
+          <h2 class="case-title">[Skole / Gymnasium]</h2>
+          <p class="case-text">
+            Kort beskrivelse — fx: "Lyd til musikalske skoleforestillinger med live-band og 25 sangere. Trådløse headsets, baggrundsmix og afvikling alle aftener."
+          </p>
+        </div>
+      </article>
+
+    </div>
+
+
+    <!-- CTA -->
+    <div class="ref-cta">
+      <h3>Skal vi være med på <span class="accent">dit næste</span> event?</h3>
+      <p>Vi tager både små og store opgaver — og vi laver gerne et tilbud uden forpligtelser.</p>
+      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+        <a href="ydelser.html" class="btn btn-primary">
+          Se pakker og byg estimat
+          <span class="arrow">→</span>
+        </a>
+        <a href="kontakt.html" class="btn btn-secondary">
+          Skriv til os
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <a href="index.html" class="logo" aria-label="LYDSTYRKEN">
+          <span class="logo-wordmark" aria-hidden="true">
+            <span class="logo-bracket logo-bracket-left">[</span>
+            <span class="logo-text">LYDSTYRKEN</span>
+            <span class="logo-bracket logo-bracket-right">]</span>
+          </span>
+        </a>
+        <p class="footer-tag">Professionel lyd til events og koncerter — leveret fra Odense, hele Danmark over.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Kontakt</h4>
+        <a href="mailto:marius@lydstyrken.com">marius@lydstyrken.com</a>
+        <a href="https://instagram.com/lydstyrken" target="_blank" rel="noopener">Instagram ↗</a>
+        <a href="kontakt.html">Kontakt-side</a>
+      </div>
+      <div class="footer-col">
+        <h4>Sider</h4>
+        <a href="index.html">Forside</a>
+        <a href="ydelser.html">Ydelser</a>
+        <a href="om.html">Om os</a>
+        <a href="lagersalg.html">Lagersalg</a>
+        <a href="faq.html">FAQ</a>
+      </div>
+      <div class="footer-col">
+        <h4>Juridisk</h4>
+        <a href="privatlivspolitik.html">Privatlivspolitik</a>
+        <a href="lejebetingelser.html">Lejebetingelser</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 LYDSTYRKEN — CVR 45880419</span>
+      <span>[ ODENSE / DK ]</span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Tema-config: én linje styrer hele sitet (se theme-config.js) -->
+<script src="theme-config.js"></script>
+<title>Privatlivspolitik — LYDSTYRKEN</title>
+<meta name="description" content="LYDSTYRKENs privatlivspolitik — sådan behandler vi dine personoplysninger når du kontakter os eller booker en opgave.">
+<meta name="robots" content="index,follow">
+
+<link rel="canonical" href="https://www.lydstyrken.com/privatlivspolitik.html">
+<link rel="icon" type="image/png" href="images/Branding/mini-logo-(100 x 100px).png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="themes.css">
+<link rel="stylesheet" href="styles.css">
+
+<style>
+  /* ═══════════════ SIDE-SPECIFIK CSS — privatlivspolitik ═══════════════ */
+
+  .accent { color: var(--accent); }
+
+  .legal-section { padding: 60px 0 100px; }
+
+  .legal-wrap {
+    max-width: 760px;
+  }
+
+  .legal-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .legal-meta strong { color: var(--text-dim); font-weight: 400; margin-right: 8px; }
+
+  .legal-wrap h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-top: 48px;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+  .legal-wrap h2:first-of-type { margin-top: 0; }
+
+  .legal-wrap h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 17px;
+    margin-top: 28px;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+
+  .legal-wrap p,
+  .legal-wrap li {
+    color: var(--text-dim);
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 14px;
+  }
+
+  .legal-wrap ul,
+  .legal-wrap ol {
+    margin-left: 24px;
+    margin-bottom: 18px;
+  }
+  .legal-wrap li { margin-bottom: 8px; }
+  .legal-wrap li::marker { color: var(--accent); }
+
+  .legal-wrap a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .legal-wrap a:hover { border-color: var(--accent); }
+
+  .info-box {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--accent);
+    border-radius: var(--radius-md);
+    padding: 20px 24px;
+    margin: 24px 0 32px;
+  }
+  .info-box p { margin-bottom: 0; }
+  .info-box strong { color: var(--text); }
+
+  /* TOC i toppen */
+  .toc {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 24px 28px;
+    margin-bottom: 48px;
+  }
+  .toc-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .toc ol {
+    margin-left: 18px;
+    margin-bottom: 0;
+  }
+  .toc li {
+    margin-bottom: 6px;
+    font-size: 15px;
+  }
+  .toc a {
+    color: var(--text-dim);
+    border-bottom: none;
+  }
+  .toc a:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Spring til indhold</a>
+
+<div class="scroll-progress" id="progress"></div>
+<div class="bg-glow"></div>
+
+<nav id="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="logo" aria-label="LYDSTYRKEN — Forside">
+      <span class="logo-wordmark" aria-hidden="true">
+        <span class="logo-bracket logo-bracket-left">[</span>
+        <span class="logo-text">LYDSTYRKEN</span>
+        <span class="logo-bracket logo-bracket-right">]</span>
+      </span>
+    </a>
+    <div class="nav-links">
+      <a href="ydelser.html">Ydelser</a>
+      <a href="om.html">Om os</a>
+      <a href="kontakt.html">Kontakt</a>
+      <a href="lagersalg.html" class="btn-nav">Lagersalg →</a>
+    </div>
+    <button class="burger" id="burger" aria-label="Åbn menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Hovedmenu">
+  <div class="container">
+    <div class="mobile-menu-links">
+      <a href="index.html"><span class="mobile-menu-num">01</span>Forside</a>
+      <a href="ydelser.html"><span class="mobile-menu-num">02</span>Ydelser</a>
+      <a href="om.html"><span class="mobile-menu-num">03</span>Om os</a>
+      <a href="lagersalg.html"><span class="mobile-menu-num">04</span>Lagersalg</a>
+      <a href="kontakt.html"><span class="mobile-menu-num">05</span>Kontakt</a>
+    </div>
+    <div class="mobile-menu-footer">
+      <a href="mailto:marius@lydstyrken.com">marius@lydstyrken.com</a>
+      <a href="https://instagram.com/lydstyrken" target="_blank" rel="noopener">@lydstyrken på Instagram ↗</a>
+      <span style="margin-top: 12px;">© 2025 LYDSTYRKEN — CVR 45880419</span>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+
+<header class="page-header">
+  <div class="container">
+    <div class="page-label">// JURIDISK</div>
+    <h1 class="page-title">
+      Privatlivs<span class="accent">politik.</span>
+    </h1>
+    <p class="page-sub">
+      Sådan behandler LYDSTYRKEN dine personoplysninger når du kontakter os, booker en opgave eller bruger hjemmesiden.
+    </p>
+  </div>
+</header>
+
+<section class="legal-section">
+  <div class="container">
+    <div class="legal-wrap">
+
+      <div class="legal-meta">
+        <span><strong>Senest opdateret:</strong>April 2026</span>
+        <br>
+        <span><strong>Dataansvarlig:</strong>LYDSTYRKEN v/Marius Blæsbjerg — CVR 45880419</span>
+      </div>
+
+      <div class="toc">
+        <div class="toc-label">// Indhold</div>
+        <ol>
+          <li><a href="#dataansvarlig">Hvem er dataansvarlig?</a></li>
+          <li><a href="#hvad-vi-indsamler">Hvilke oplysninger vi indsamler</a></li>
+          <li><a href="#hvorfor">Hvorfor vi indsamler oplysningerne</a></li>
+          <li><a href="#opbevaring">Hvor længe vi opbevarer oplysningerne</a></li>
+          <li><a href="#deling">Hvem vi deler oplysningerne med</a></li>
+          <li><a href="#cookies">Cookies og hjemmesidedata</a></li>
+          <li><a href="#dine-rettigheder">Dine rettigheder</a></li>
+          <li><a href="#klage">Klagemuligheder</a></li>
+          <li><a href="#kontakt">Kontakt</a></li>
+        </ol>
+      </div>
+
+
+      <h2 id="dataansvarlig">1. Hvem er dataansvarlig?</h2>
+      <p>
+        LYDSTYRKEN v/Marius Blæsbjerg er dataansvarlig for de personoplysninger der behandles i forbindelse med vores ydelser og brugen af hjemmesiden lydstyrken.com.
+      </p>
+      <div class="info-box">
+        <p>
+          <strong>LYDSTYRKEN v/Marius Blæsbjerg</strong><br>
+          Seebladsgade 1, 5000 Odense C<br>
+          CVR: 45880419<br>
+          E-mail: <a href="mailto:marius@lydstyrken.com">marius@lydstyrken.com</a>
+        </p>
+      </div>
+
+
+      <h2 id="hvad-vi-indsamler">2. Hvilke oplysninger vi indsamler</h2>
+      <p>
+        Vi indsamler kun de oplysninger der er nødvendige for at kunne levere vores ydelser, kommunikere med dig og overholde lovkrav. Det drejer sig typisk om:
+      </p>
+
+      <h3>Når du kontakter os eller booker</h3>
+      <ul>
+        <li>Navn</li>
+        <li>E-mailadresse</li>
+        <li>Telefonnummer (hvis du oplyser det)</li>
+        <li>Oplysninger om dit arrangement (dato, sted, type, antal gæster osv.)</li>
+        <li>Eventuelle særlige ønsker eller tekniske krav</li>
+      </ul>
+
+      <h3>Når vi udsteder faktura</h3>
+      <ul>
+        <li>Faktureringsadresse</li>
+        <li>CVR-nummer (for erhvervskunder)</li>
+        <li>Betalingsoplysninger og fakturahistorik</li>
+      </ul>
+
+      <h3>Når du besøger hjemmesiden</h3>
+      <p>
+        Hjemmesiden hostes statisk og indsamler ikke selv personoplysninger. Vi bruger ikke analyse-cookies, sporings-pixels eller tredjepartsannoncer. Se afsnit 6 om cookies for detaljer.
+      </p>
+
+
+      <h2 id="hvorfor">3. Hvorfor vi indsamler oplysningerne</h2>
+      <p>
+        Vi behandler dine oplysninger til ét eller flere af følgende formål:
+      </p>
+      <ul>
+        <li><strong>At besvare din forespørgsel</strong> og udarbejde et tilbud — retsgrundlag: dit samtykke samt vores legitime interesse i at drive virksomhed (Databeskyttelsesforordningen art. 6, stk. 1, litra a og f).</li>
+        <li><strong>At indgå og opfylde en aftale</strong> om levering af lyd- og lystekniske ydelser — retsgrundlag: aftalens opfyldelse (art. 6, stk. 1, litra b).</li>
+        <li><strong>At opfylde bogføringspligten</strong> efter bogføringsloven, som kræver at fakturaer og bilag opbevares i op til 5 år — retsgrundlag: retlig forpligtelse (art. 6, stk. 1, litra c).</li>
+      </ul>
+
+
+      <h2 id="opbevaring">4. Hvor længe vi opbevarer oplysningerne</h2>
+      <ul>
+        <li><strong>Forespørgsler der ikke fører til en aftale:</strong> Slettes som udgangspunkt inden for 12 måneder.</li>
+        <li><strong>Kommunikation om gennemførte opgaver:</strong> Opbevares i op til 3 år efter sidste kontakt, så vi kan håndtere eventuelle reklamationer eller opfølgende spørgsmål.</li>
+        <li><strong>Bogføringsmateriale (fakturaer, kontrakter):</strong> Opbevares i 5 år efter regnskabsårets udgang, jævnfør bogføringsloven.</li>
+      </ul>
+
+
+      <h2 id="deling">5. Hvem vi deler oplysningerne med</h2>
+      <p>
+        Vi sælger eller udveksler aldrig dine oplysninger til markedsføringsformål. Vi deler kun oplysninger med tredjeparter når det er nødvendigt for at levere vores ydelser eller overholde loven:
+      </p>
+      <ul>
+        <li><strong>Bogføringssystem (Dinero):</strong> Til udstedelse af fakturaer og regnskab.</li>
+        <li><strong>Bank (Sydbank):</strong> Til håndtering af betalinger.</li>
+        <li><strong>Freelancere og samarbejdspartnere:</strong> Hvis vi skal koordinere en opgave med en ekstra tekniker, deler vi kun de oplysninger der er strengt nødvendige (typisk dato, sted og kontaktperson).</li>
+        <li><strong>Myndigheder:</strong> Hvis vi er retligt forpligtet hertil, fx ved skattesager.</li>
+      </ul>
+
+
+      <h2 id="cookies">6. Cookies og hjemmesidedata</h2>
+      <p>
+        Hjemmesiden lydstyrken.com bruger ikke analytiske cookies, sporings-pixels eller tredjepartsannoncer. Der gemmes kun det allernødvendigste i din browser — typisk indstillinger for visning af sider — og det indeholder ingen personoplysninger.
+      </p>
+      <p>
+        Hvis vi senere indfører fx besøgsstatistik, vil dette afsnit blive opdateret, og du vil blive bedt om samtykke første gang du besøger siden.
+      </p>
+
+
+      <h2 id="dine-rettigheder">7. Dine rettigheder</h2>
+      <p>
+        Efter Databeskyttelsesforordningen (GDPR) har du følgende rettigheder:
+      </p>
+      <ul>
+        <li><strong>Indsigt:</strong> Du kan få at vide hvilke oplysninger vi har om dig.</li>
+        <li><strong>Berigtigelse:</strong> Du kan få rettet forkerte oplysninger.</li>
+        <li><strong>Sletning:</strong> Du kan i visse tilfælde få slettet oplysninger om dig — undtaget oplysninger vi er retligt forpligtet til at opbevare (fx bogføringsmateriale).</li>
+        <li><strong>Begrænsning af behandling:</strong> Du kan i visse tilfælde få begrænset behandlingen af dine oplysninger.</li>
+        <li><strong>Dataportabilitet:</strong> Du kan få udleveret dine oplysninger i et struktureret format.</li>
+        <li><strong>Indsigelse:</strong> Du kan gøre indsigelse mod vores behandling af dine oplysninger.</li>
+        <li><strong>Tilbagetrækning af samtykke:</strong> Hvis behandlingen sker på grundlag af samtykke, kan du til enhver tid trække samtykket tilbage.</li>
+      </ul>
+      <p>
+        Skriv til <a href="mailto:marius@lydstyrken.com">marius@lydstyrken.com</a> hvis du vil gøre brug af én eller flere af dine rettigheder. Vi svarer som regel inden for 12 timer og senest inden for én måned.
+      </p>
+
+
+      <h2 id="klage">8. Klagemuligheder</h2>
+      <p>
+        Hvis du mener at vi behandler dine oplysninger i strid med reglerne, har du ret til at klage til Datatilsynet:
+      </p>
+      <div class="info-box">
+        <p>
+          <strong>Datatilsynet</strong><br>
+          Carl Jacobsens Vej 35, 2500 Valby<br>
+          Telefon: 33 19 32 00<br>
+          Web: <a href="https://www.datatilsynet.dk" target="_blank" rel="noopener">www.datatilsynet.dk</a>
+        </p>
+      </div>
+
+
+      <h2 id="kontakt">9. Kontakt</h2>
+      <p>
+        Hvis du har spørgsmål til denne privatlivspolitik eller til vores behandling af dine oplysninger, er du velkommen til at kontakte os:
+      </p>
+      <p>
+        E-mail: <a href="mailto:marius@lydstyrken.com">marius@lydstyrken.com</a><br>
+        Adresse: Seebladsgade 1, 5000 Odense C
+      </p>
+
+      <p style="margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 13px; color: var(--text-muted);">
+        Denne privatlivspolitik er udarbejdet på dansk og fortolkes efter dansk ret.
+      </p>
+
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <a href="index.html" class="logo" aria-label="LYDSTYRKEN">
+          <span class="logo-wordmark" aria-hidden="true">
+            <span class="logo-bracket logo-bracket-left">[</span>
+            <span class="logo-text">LYDSTYRKEN</span>
+            <span class="logo-bracket logo-bracket-right">]</span>
+          </span>
+        </a>
+        <p class="footer-tag">Professionel lyd til events og koncerter — leveret fra Odense, hele Danmark over.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Kontakt</h4>
+        <a href="mailto:marius@lydstyrken.com">marius@lydstyrken.com</a>
+        <a href="https://instagram.com/lydstyrken" target="_blank" rel="noopener">Instagram ↗</a>
+        <a href="kontakt.html">Kontakt-side</a>
+      </div>
+      <div class="footer-col">
+        <h4>Sider</h4>
+        <a href="index.html">Forside</a>
+        <a href="ydelser.html">Ydelser</a>
+        <a href="om.html">Om os</a>
+        <a href="lagersalg.html">Lagersalg</a>
+        <a href="faq.html">FAQ</a>
+      </div>
+      <div class="footer-col">
+        <h4>Juridisk</h4>
+        <a href="privatlivspolitik.html">Privatlivspolitik</a>
+        <a href="lejebetingelser.html">Lejebetingelser</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 LYDSTYRKEN — CVR 45880419</span>
+      <span>[ ODENSE / DK ]</span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+
+</body>
+</html>
