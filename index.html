@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Tema-config: én linje styrer hele sitet (se theme-config.js) -->
+<script src="theme-config.js"></script>
 <title>[ LYDSTYRKEN ]</title>
 <meta name="description" content="LYDSTYRKEN leverer professionel lyd til events, koncerter og arrangementer i hele Danmark. Base i Odense.">
 
@@ -28,6 +31,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="themes.css">
 <link rel="stylesheet" href="styles.css">
 
 <!-- Strukturerede data — hjælper Google forstå hvem du er -->
@@ -55,7 +59,7 @@
   /* ═══════════════ SIDE-SPECIFIK CSS — kun forsiden ═══════════════ */
 
   .hero {
-    padding: 100px 0 120px;
+    padding: clamp(80px, 8vh, 160px) 0 clamp(100px, 10vh, 200px);
     position: relative;
     z-index: 2;
     animation: fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
@@ -86,12 +90,12 @@
   .hero-title {
     font-family: 'Montserrat', sans-serif;
     font-weight: 800;
-    font-size: clamp(48px, 9vw, 120px);
+    font-size: clamp(48px, 10vw, 200px);
     line-height: 0.95;
     letter-spacing: -0.04em;
     margin-bottom: 32px;
     text-transform: uppercase;
-    max-width: 900px;
+    max-width: 1500px;
   }
   .hero-title .accent {
     color: var(--accent);
@@ -101,9 +105,9 @@
   }
 
   .hero-sub {
-    font-size: 20px;
+    font-size: clamp(18px, 1.4vw, 26px);
     color: var(--text-dim);
-    max-width: 580px;
+    max-width: 720px;
     margin-bottom: 48px;
     line-height: 1.5;
   }
@@ -129,7 +133,7 @@
   .section-title {
     font-family: 'Montserrat', sans-serif;
     font-weight: 800;
-    font-size: clamp(32px, 5vw, 56px);
+    font-size: clamp(32px, 6vw, 96px);
     line-height: 1;
     letter-spacing: -0.03em;
     margin-bottom: 56px;
@@ -156,7 +160,7 @@
     background: var(--bg-elev);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: 36px 32px;
+    padding: clamp(28px, 2.5vw, 56px) clamp(24px, 2vw, 48px);
     transition: border-color 0.3s, transform 0.3s;
     position: relative;
     overflow: hidden;
@@ -187,15 +191,16 @@
   .service-title {
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
-    font-size: 22px;
+    font-size: clamp(20px, 1.8vw, 32px);
     text-transform: uppercase;
     letter-spacing: 0.02em;
     margin-bottom: 14px;
+    line-height: 1.15;
   }
 
   .service-card p {
     color: var(--text-dim);
-    font-size: 14px;
+    font-size: clamp(14px, 1.05vw, 17px);
     line-height: 1.6;
   }
 
@@ -286,7 +291,7 @@
     padding: 8px 16px;
     border: 1px solid var(--accent);
     border-radius: 100px;
-    background: rgba(255, 77, 46, 0.05);
+    background: color-mix(in srgb, var(--accent) 5%, transparent);
   }
 
   .live-dot {
@@ -336,7 +341,7 @@
     padding: 22px 36px;
     border: 1px solid var(--accent);
     border-radius: var(--radius-sm);
-    background: rgba(255, 77, 46, 0.06);
+    background: color-mix(in srgb, var(--accent) 6%, transparent);
     text-transform: uppercase;
     letter-spacing: 0.08em;
     transition: background 0.25s, transform 0.25s, color 0.25s, box-shadow 0.25s;
@@ -413,7 +418,7 @@
     <div class="nav-links">
       <a href="ydelser.html">Ydelser</a>
       <a href="om.html">Om os</a>
-      <a href="#kontakt">Kontakt</a>
+      <a href="kontakt.html">Kontakt</a>
       <a href="lagersalg.html" class="btn-nav">Lagersalg →</a>
     </div>
     <button class="burger" id="burger" aria-label="Åbn menu" aria-expanded="false" aria-controls="mobile-menu">
@@ -429,7 +434,7 @@
       <a href="ydelser.html"><span class="mobile-menu-num">02</span>Ydelser</a>
       <a href="om.html"><span class="mobile-menu-num">03</span>Om os</a>
       <a href="lagersalg.html"><span class="mobile-menu-num">04</span>Lagersalg</a>
-      <a href="#kontakt"><span class="mobile-menu-num">05</span>Kontakt</a>
+      <a href="kontakt.html"><span class="mobile-menu-num">05</span>Kontakt</a>
     </div>
     <div class="mobile-menu-footer">
       <a href="mailto:marius@lydstyrken.com">marius@lydstyrken.com</a>
@@ -544,7 +549,7 @@
     <div class="contact-box">
       <div>
         <h3>Skal vi snakke?</h3>
-        <p>Skriv til os om booking, leje eller spørgsmål. Vi svarer som regel inden for 24 timer.</p>
+        <p>Skriv til os om booking, leje eller spørgsmål. Vi svarer som regel inden for 12 timer.</p>
       </div>
       <div class="contact-links">
         <a href="mailto:marius@lydstyrken.com">
@@ -579,12 +584,19 @@
         <h4>Kontakt</h4>
         <a href="mailto:marius@lydstyrken.com">marius@lydstyrken.com</a>
         <a href="https://instagram.com/lydstyrken" target="_blank" rel="noopener">Instagram ↗</a>
+        <a href="kontakt.html">Kontakt-side</a>
       </div>
       <div class="footer-col">
         <h4>Sider</h4>
         <a href="ydelser.html">Ydelser</a>
         <a href="om.html">Om os</a>
         <a href="lagersalg.html">Lagersalg</a>
+        <a href="faq.html">FAQ</a>
+      </div>
+      <div class="footer-col">
+        <h4>Juridisk</h4>
+        <a href="privatlivspolitik.html">Privatlivspolitik</a>
+        <a href="lejebetingelser.html">Lejebetingelser</a>
       </div>
     </div>
     <div class="footer-bottom">
