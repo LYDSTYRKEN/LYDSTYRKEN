@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Tema-config: én linje styrer hele sitet (se theme-config.js) -->
+<script src="theme-config.js"></script>
 <title>Lagersalg — LYDSTYRKEN</title>
 <meta name="description" content="Åben budrunde på udvalgt lyd- og eventudstyr. Højeste bud vinder.">
 
@@ -23,10 +26,11 @@
 <meta name="twitter:image" content="https://www.lydstyrken.com/images/og-lagersalg.jpg">
 
 <link rel="canonical" href="https://www.lydstyrken.com/lagersalg.html">
-<link rel="icon" type="image/png" href="images/logo.png">
+<link rel="icon" type="image/png" href="images/Branding/mini-logo-(100 x 100px).png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="themes.css">
 <link rel="stylesheet" href="styles.css">
 
 <style>
@@ -553,7 +557,7 @@
     letter-spacing: 0.1em;
     transition: background 0.2s;
   }
-  .empty-state button:hover { background: rgba(255, 77, 46, 0.1); }
+  .empty-state button:hover { background: color-mix(in srgb, var(--accent) 10%, transparent); }
 </style>
 </head>
 <body>
@@ -575,7 +579,7 @@
     <div class="nav-links">
       <a href="ydelser.html">Ydelser</a>
       <a href="om.html">Om os</a>
-      <a href="index.html#kontakt">Kontakt</a>
+      <a href="kontakt.html">Kontakt</a>
       <a href="lagersalg.html" class="btn-nav active">Lagersalg →</a>
     </div>
     <button class="burger" id="burger" aria-label="Åbn menu" aria-expanded="false" aria-controls="mobile-menu">
@@ -591,7 +595,7 @@
       <a href="ydelser.html"><span class="mobile-menu-num">02</span>Ydelser</a>
       <a href="om.html"><span class="mobile-menu-num">03</span>Om os</a>
       <a href="lagersalg.html" class="active"><span class="mobile-menu-num">04</span>Lagersalg</a>
-      <a href="index.html#kontakt"><span class="mobile-menu-num">05</span>Kontakt</a>
+      <a href="kontakt.html"><span class="mobile-menu-num">05</span>Kontakt</a>
     </div>
     <div class="mobile-menu-footer">
       <a href="mailto:marius@lydstyrken.com">marius@lydstyrken.com</a>
@@ -707,17 +711,25 @@
             <span class="logo-bracket logo-bracket-right">]</span>
           </span>
         </a>
+        <p class="footer-tag">Professionel lyd til events og koncerter — leveret fra Odense, hele Danmark over.</p>
       </div>
       <div class="footer-col">
         <h4>Kontakt</h4>
         <a href="mailto:marius@lydstyrken.com">marius@lydstyrken.com</a>
         <a href="https://instagram.com/lydstyrken" target="_blank" rel="noopener">Instagram ↗</a>
+        <a href="kontakt.html">Kontakt-side</a>
       </div>
       <div class="footer-col">
         <h4>Sider</h4>
         <a href="index.html">Forside</a>
         <a href="ydelser.html">Ydelser</a>
         <a href="om.html">Om os</a>
+        <a href="faq.html">FAQ</a>
+      </div>
+      <div class="footer-col">
+        <h4>Juridisk</h4>
+        <a href="privatlivspolitik.html">Privatlivspolitik</a>
+        <a href="lejebetingelser.html">Lejebetingelser</a>
       </div>
     </div>
     <div class="footer-bottom">
