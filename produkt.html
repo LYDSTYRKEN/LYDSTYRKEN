@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Tema-config: én linje styrer hele sitet (se theme-config.js) -->
+<script src="theme-config.js"></script>
 <title>Produkt — LYDSTYRKEN</title>
 <meta name="description" content="Detaljer om produkt fra LYDSTYRKEN's lagersalg.">
 
@@ -15,10 +18,11 @@
 <meta property="og:site_name" content="LYDSTYRKEN">
 <meta name="twitter:card" content="summary_large_image">
 
-<link rel="icon" type="image/png" href="images/logo.png">
+<link rel="icon" type="image/png" href="images/Branding/mini-logo-(100 x 100px).png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="themes.css">
 <link rel="stylesheet" href="styles.css">
 
 <style>
@@ -248,7 +252,7 @@
   }
 
   .current-bid-card {
-    background: rgba(255, 77, 46, 0.06);
+    background: color-mix(in srgb, var(--accent) 6%, transparent);
     border: 1px solid var(--accent);
     border-radius: var(--radius-md);
     padding: 20px 22px;
@@ -514,7 +518,7 @@
     <div class="nav-links">
       <a href="ydelser.html">Ydelser</a>
       <a href="om.html">Om os</a>
-      <a href="index.html#kontakt">Kontakt</a>
+      <a href="kontakt.html">Kontakt</a>
       <a href="lagersalg.html" class="btn-nav active">Lagersalg →</a>
     </div>
     <button class="burger" id="burger" aria-label="Åbn menu" aria-expanded="false" aria-controls="mobile-menu">
@@ -530,7 +534,7 @@
       <a href="ydelser.html"><span class="mobile-menu-num">02</span>Ydelser</a>
       <a href="om.html"><span class="mobile-menu-num">03</span>Om os</a>
       <a href="lagersalg.html" class="active"><span class="mobile-menu-num">04</span>Lagersalg</a>
-      <a href="index.html#kontakt"><span class="mobile-menu-num">05</span>Kontakt</a>
+      <a href="kontakt.html"><span class="mobile-menu-num">05</span>Kontakt</a>
     </div>
     <div class="mobile-menu-footer">
       <a href="mailto:marius@lydstyrken.com">marius@lydstyrken.com</a>
@@ -582,6 +586,7 @@
         <h4>Kontakt</h4>
         <a href="mailto:marius@lydstyrken.com">marius@lydstyrken.com</a>
         <a href="https://instagram.com/lydstyrken" target="_blank" rel="noopener">Instagram ↗</a>
+        <a href="kontakt.html">Kontakt-side</a>
       </div>
       <div class="footer-col">
         <h4>Sider</h4>
@@ -589,6 +594,12 @@
         <a href="ydelser.html">Ydelser</a>
         <a href="om.html">Om os</a>
         <a href="lagersalg.html">Lagersalg</a>
+        <a href="faq.html">FAQ</a>
+      </div>
+      <div class="footer-col">
+        <h4>Juridisk</h4>
+        <a href="privatlivspolitik.html">Privatlivspolitik</a>
+        <a href="lejebetingelser.html">Lejebetingelser</a>
       </div>
     </div>
     <div class="footer-bottom">
