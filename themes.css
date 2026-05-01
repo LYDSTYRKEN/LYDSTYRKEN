@@ -1,0 +1,281 @@
+/* ════════════════════════════════════════════════════════════════
+   LYDSTYRKEN — TEMA-FARVER
+   ════════════════════════════════════════════════════════════════
+
+   Sådan skifter du tema:
+   ─────────────────────────
+   Åbn theme-config.js og ændr SITE_THEME-konstanten øverst.
+   ÉN linje, ét sted, hele sitet skifter.
+
+   ─────────────────────────
+   ARKITEKTUR
+   ─────────────────────────
+   Denne fil indeholder UDELUKKENDE farve-tokens for alle temaer.
+   styles.css indeholder kun strukturelle tokens (radius, nav-height).
+
+   Indlæs i denne rækkefølge i hver HTML-fil:
+     <head>
+       <script src="theme-config.js"></script>     <!-- sætter data-theme -->
+       ...
+       <link rel="stylesheet" href="themes.css">   <!-- definerer farver -->
+       <link rel="stylesheet" href="styles.css">   <!-- bruger farverne -->
+     </head>
+
+   ─────────────────────────
+   TILFØJ ET NYT TEMA
+   ─────────────────────────
+   Kopiér en eksisterende [data-theme="..."] blok, giv den nyt navn,
+   og tilføj navnet til listen i theme-config.js's kommentar.
+
+   ════════════════════════════════════════════════════════════════ */
+
+
+/* ─── ORANGE (default — LYDSTYRKEN brand) ─────────────────── */
+:root,
+[data-theme="orange"] {
+  --bg: #0a0a0b;
+  --bg-elev: #131316;
+  --bg-elev-2: #1c1c20;
+  --border: #2a2a2f;
+  --text: #f0eeea;
+  --text-dim: #8a8a90;
+  --text-muted: #5a5a60;
+
+  --accent: #ff4d2e;
+  --accent-hover: #ff6347;
+  --accent-glow: rgba(255, 77, 46, 0.15);
+  --accent-soft: rgba(255, 77, 46, 0.08);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
+
+
+/* ─── GRØN ──────────────────────────────────────────────── */
+[data-theme="green"] {
+  --bg: #0a0b0a;
+  --bg-elev: #131613;
+  --bg-elev-2: #1c201c;
+  --border: #2a2f2a;
+  --text: #f0eeea;
+  --text-dim: #8a908a;
+  --text-muted: #5a605a;
+
+  --accent: #4ad7a5;
+  --accent-hover: #6be0b6;
+  --accent-glow: rgba(74, 215, 165, 0.18);
+  --accent-soft: rgba(74, 215, 165, 0.08);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
+
+
+/* ─── DANSKFLAG (Dannebrog rød) ───────────────────────────── */
+[data-theme="danskflag"] {
+  --bg: #0b0a0a;
+  --bg-elev: #161313;
+  --bg-elev-2: #201c1c;
+  --border: #2f2a2a;
+  --text: #f0eeea;
+  --text-dim: #908a8a;
+  --text-muted: #605a5a;
+
+  --accent: #C8102E;
+  --accent-hover: #e62740;
+  --accent-glow: rgba(200, 16, 46, 0.18);
+  --accent-soft: rgba(200, 16, 46, 0.08);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--text);
+  --bracket-right: var(--text);
+}
+
+
+/* ─── PRIDE (pink primær + regnbue-detalje på brackets) ──── */
+[data-theme="pride"] {
+  --bg: #0a0a0b;
+  --bg-elev: #141316;
+  --bg-elev-2: #1d1c20;
+  --border: #2c2a2f;
+  --text: #f0eeea;
+  --text-dim: #8a8a90;
+  --text-muted: #5a5a60;
+
+  --accent: #ff4d8c;
+  --accent-hover: #ff6ba0;
+  --accent-glow: rgba(255, 77, 140, 0.18);
+  --accent-soft: rgba(255, 77, 140, 0.08);
+
+  --green: #4ad7a5;
+
+  --bracket-left: #ff4d4d;
+  --bracket-right: #5b3eff;
+}
+
+[data-theme="pride"] .logo:hover .logo-bracket-left {
+  text-shadow:
+    0 0 16px rgba(255, 77, 77, 0.75),
+    0 0 34px rgba(255, 165, 0, 0.4);
+}
+[data-theme="pride"] .logo:hover .logo-bracket-right {
+  text-shadow:
+    0 0 16px rgba(91, 62, 255, 0.75),
+    0 0 34px rgba(0, 200, 255, 0.4);
+}
+
+
+/* ─── MONOCHROME (rent sort/hvid, ingen farve-accent) ────── */
+[data-theme="monochrome"] {
+  --bg: #0a0a0a;
+  --bg-elev: #141414;
+  --bg-elev-2: #1d1d1d;
+  --border: #2c2c2c;
+  --text: #f0f0f0;
+  --text-dim: #909090;
+  --text-muted: #606060;
+
+  --accent: #f0f0f0;
+  --accent-hover: #ffffff;
+  --accent-glow: rgba(240, 240, 240, 0.08);
+  --accent-soft: rgba(240, 240, 240, 0.05);
+
+  --green: #f0f0f0;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
+
+[data-theme="monochrome"] .accent {
+  color: var(--text) !important;
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   ━━━ NYE TEMAER ━━━
+   ════════════════════════════════════════════════════════════════ */
+
+
+/* ─── ELECTRIC (neon blå — koncert/club-vibe) ─────────────── */
+/* Energisk, moderne, ungt publikum. Passer godt til DJ-events,
+   live-koncerter og natklub-arrangementer. */
+[data-theme="electric"] {
+  --bg: #08090d;
+  --bg-elev: #11131a;
+  --bg-elev-2: #1a1d27;
+  --border: #2a2f3d;
+  --text: #f0eeea;
+  --text-dim: #8a90a0;
+  --text-muted: #5a607a;
+
+  --accent: #3a86ff;
+  --accent-hover: #5a9eff;
+  --accent-glow: rgba(58, 134, 255, 0.22);
+  --accent-soft: rgba(58, 134, 255, 0.10);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
+
+
+/* ─── SUNSET (varm koral — festival/sommer-vibe) ─────────── */
+/* Varm, indbydende, festlig. Passer godt til byfester,
+   sommerfestivaler og bryllupper. */
+[data-theme="sunset"] {
+  --bg: #0c0a0a;
+  --bg-elev: #161312;
+  --bg-elev-2: #201d1b;
+  --border: #2f2c2a;
+  --text: #f5ede6;
+  --text-dim: #9a8e85;
+  --text-muted: #6a5e55;
+
+  --accent: #f72585;
+  --accent-hover: #fa4f9c;
+  --accent-glow: rgba(247, 37, 133, 0.18);
+  --accent-soft: rgba(247, 37, 133, 0.08);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
+
+
+/* ─── MIDNIGHT (mørk lilla — eksklusiv aften) ─────────────── */
+/* Sofistikeret, dyb, mystisk. Passer godt til premiere-events,
+   gallaer og natlige koncerter. */
+[data-theme="midnight"] {
+  --bg: #08070d;
+  --bg-elev: #110f1a;
+  --bg-elev-2: #181527;
+  --border: #2a273d;
+  --text: #ede8f5;
+  --text-dim: #8a85a0;
+  --text-muted: #5a557a;
+
+  --accent: #b388ff;
+  --accent-hover: #c9a3ff;
+  --accent-glow: rgba(179, 136, 255, 0.20);
+  --accent-soft: rgba(179, 136, 255, 0.10);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
+
+
+/* ─── FOREST (dyb skovgrøn — outdoor/jord) ────────────────── */
+/* Naturlig, jordnær, autentisk. Passer godt til outdoor-events,
+   skoleforestillinger og kultur-arrangementer. */
+[data-theme="forest"] {
+  --bg: #0a0c0a;
+  --bg-elev: #131613;
+  --bg-elev-2: #1c211c;
+  --border: #2a302a;
+  --text: #ecf0e8;
+  --text-dim: #889080;
+  --text-muted: #586055;
+
+  --accent: #2a9d8f;
+  --accent-hover: #3ab4a4;
+  --accent-glow: rgba(42, 157, 143, 0.20);
+  --accent-soft: rgba(42, 157, 143, 0.10);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
+
+
+/* ─── GOLD (mat guld — luksus/jubilæum) ───────────────────── */
+/* Eksklusiv, klassisk, tidløs. Passer godt til konferencer,
+   firmajubilæer og prisuddelinger. */
+[data-theme="gold"] {
+  --bg: #0b0a08;
+  --bg-elev: #14130f;
+  --bg-elev-2: #1d1c17;
+  --border: #2c2a23;
+  --text: #f0ebde;
+  --text-dim: #968d76;
+  --text-muted: #665e4d;
+
+  --accent: #d4a017;
+  --accent-hover: #e6b32a;
+  --accent-glow: rgba(212, 160, 23, 0.20);
+  --accent-soft: rgba(212, 160, 23, 0.08);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
