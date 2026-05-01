@@ -3,8 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ydelser & Pakker — LYDSTYRKEN</title>
-<meta name="description" content="Vælg en pakke eller byg din egen. Få et estimat på lyd, lys og personale til dit event — fra LYDSTYRKEN i Odense.">
+
+<!-- Tema-config: én linje styrer hele sitet (se theme-config.js) -->
+<script src="theme-config.js"></script>
+<title>Ydelser &amp; pakker — LYDSTYRKEN</title>
+<meta name="description" content="Pakker fra 500 kr — vælg om du vil leje udstyret eller have os med til at sætte op og afvikle. Byg din egen pakke og få et estimat med ét klik.">
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="LYDSTYRKEN — Byg din pakke, få et estimat">
@@ -16,16 +19,144 @@
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="canonical" href="https://www.lydstyrken.com/ydelser.html">
-<link rel="icon" type="image/png" href="images/logo.png">
+<link rel="icon" type="image/png" href="images/Branding/mini-logo-(100 x 100px).png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="themes.css">
 <link rel="stylesheet" href="styles.css">
 
 <style>
   /* ═══════════════ SIDE-SPECIFIK CSS — ydelser ═══════════════ */
 
   .accent { color: var(--accent); }
+
+  /* ─── SERVICE MODE TOGGLE (Med afvikling vs Kun udlejning) ─── */
+  .service-mode-wrap {
+    margin: 8px 0 32px;
+  }
+  .service-mode-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .service-mode {
+    display: inline-flex;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 4px;
+    gap: 4px;
+  }
+  .service-mode-btn {
+    padding: 12px 22px;
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 100px;
+    transition: background 0.25s, color 0.25s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: 0.01em;
+  }
+  .service-mode-btn:hover { color: var(--text); }
+  .service-mode-btn.active {
+    background: var(--accent);
+    color: #0a0a0b;
+  }
+  .service-mode-btn .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    background: rgba(255, 255, 255, 0.12);
+    padding: 2px 7px;
+    border-radius: 100px;
+    letter-spacing: 0.1em;
+  }
+  .service-mode-btn.active .badge { background: rgba(0, 0, 0, 0.15); }
+
+  .service-mode-info {
+    margin-top: 14px;
+    padding: 14px 18px;
+    background: var(--bg-elev);
+    border-left: 2px solid var(--accent);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.55;
+    max-width: 640px;
+  }
+  .service-mode-info strong { color: var(--text); }
+
+  /* ─── KATEGORI-FILTER PÅ PAKKER (Tale / Lyttekoncert / Fest) ─── */
+  .pkg-categories {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 24px 0 28px;
+  }
+  .pkg-cat-btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .pkg-cat-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .pkg-cat-btn.active {
+    background: var(--accent);
+    color: #0a0a0b;
+    border-color: var(--accent);
+  }
+
+  /* ─── DUAL PRIS PÅ PAKKE-KORT ─── */
+  .package-price-secondary {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 6px;
+    letter-spacing: 0.05em;
+  }
+  .package-price-secondary.highlight {
+    color: var(--accent);
+  }
+
+  /* Når en pakke ikke er tilgængelig i den aktuelle mode */
+  .package.disabled {
+    opacity: 0.45;
+    pointer-events: none;
+    filter: grayscale(0.4);
+  }
+  .package-unavailable-note {
+    display: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+  .package.disabled .package-unavailable-note { display: block; }
+
+  /* "Pris efter aftale" */
+  .package-price.on-request {
+    font-size: 18px;
+  }
+  .package-price.on-request .from { display: none; }
 
   /* ─── STEP-NAV ─── */
   .steps {
@@ -137,7 +268,7 @@
 
   .package.selected {
     border-color: var(--accent);
-    background: rgba(255, 77, 46, 0.05);
+    background: color-mix(in srgb, var(--accent) 5%, transparent);
   }
   .package.selected::before { transform: scaleX(1); }
 
@@ -298,7 +429,7 @@
 
   .addon.selected {
     border-color: var(--accent);
-    background: rgba(255, 77, 46, 0.05);
+    background: color-mix(in srgb, var(--accent) 5%, transparent);
   }
 
   .addon-info { flex: 1; min-width: 0; }
@@ -526,7 +657,7 @@
     <div class="nav-links">
       <a href="ydelser.html" class="active">Ydelser</a>
       <a href="om.html">Om os</a>
-      <a href="index.html#kontakt">Kontakt</a>
+      <a href="kontakt.html">Kontakt</a>
       <a href="lagersalg.html" class="btn-nav">Lagersalg →</a>
     </div>
     <button class="burger" id="burger" aria-label="Åbn menu" aria-expanded="false" aria-controls="mobile-menu">
@@ -542,7 +673,7 @@
       <a href="ydelser.html" class="active"><span class="mobile-menu-num">02</span>Ydelser</a>
       <a href="om.html"><span class="mobile-menu-num">03</span>Om os</a>
       <a href="lagersalg.html"><span class="mobile-menu-num">04</span>Lagersalg</a>
-      <a href="index.html#kontakt"><span class="mobile-menu-num">05</span>Kontakt</a>
+      <a href="kontakt.html"><span class="mobile-menu-num">05</span>Kontakt</a>
     </div>
     <div class="mobile-menu-footer">
       <a href="mailto:marius@lydstyrken.com">marius@lydstyrken.com</a>
@@ -556,12 +687,12 @@
 
 <header class="page-header">
   <div class="container">
-    <div class="page-label">// YDELSER & PAKKER</div>
+    <div class="page-label">// YDELSER &amp; PAKKER</div>
     <h1 class="page-title">
       Byg din pakke. <span class="accent">Få et estimat.</span>
     </h1>
     <p class="page-sub">
-      Vælg en færdig pakke eller byg din egen, tilføj ekstra udstyr eller ydelser, og send forespørgslen som mail-udkast med ét klik. Alle priser er <strong style="color: var(--text);">vejledende</strong> — du får et endeligt tilbud fra os.
+      Vælg en standard-pakke eller byg din egen. Du kan leje udstyret og afvikle selv, eller få os med til opsætning og afvikling. Send forespørgslen som mail-udkast med ét klik — alle priser er <strong style="color: var(--text);">vejledende</strong>.
     </p>
 
     <div class="steps" role="navigation" aria-label="Trin">
@@ -578,6 +709,31 @@
     <div style="padding-top: 40px;">
       <h2 class="step-heading">Start med en <span class="accent">pakke</span>.</h2>
       <p class="step-desc">Vælg den pakke der ligner dit arrangement bedst — du kan tilpasse alt i næste trin. Eller vælg "Byg selv" for at starte fra bunden.</p>
+
+      <!-- ═══════ SERVICE-MODE TOGGLE ═══════ -->
+      <div class="service-mode-wrap">
+        <div class="service-mode-label">// Hvad har du brug for?</div>
+        <div class="service-mode" role="group" aria-label="Vælg om du vil leje eller have os til at afvikle">
+          <button type="button" class="service-mode-btn active" data-mode="afvikling" aria-pressed="true">
+            Med afvikling <span class="badge">Mest valgt</span>
+          </button>
+          <button type="button" class="service-mode-btn" data-mode="udlejning" aria-pressed="false">
+            Kun udlejning
+          </button>
+        </div>
+        <div class="service-mode-info" id="service-mode-info">
+          <strong>Med afvikling:</strong> Vi sætter op før eventet, er tilstede under afviklingen og pakker ned bagefter — du skal bare være vært.
+        </div>
+      </div>
+
+      <!-- ═══════ KATEGORI-FILTER ═══════ -->
+      <div class="pkg-categories" role="group" aria-label="Filtrér pakker efter type">
+        <button type="button" class="pkg-cat-btn active" data-pkg-cat="alle">Alle</button>
+        <button type="button" class="pkg-cat-btn" data-pkg-cat="Tale">Tale &amp; foredrag</button>
+        <button type="button" class="pkg-cat-btn" data-pkg-cat="Lyttekoncert">Lyttekoncert</button>
+        <button type="button" class="pkg-cat-btn" data-pkg-cat="Fest">Fest &amp; koncert</button>
+        <button type="button" class="pkg-cat-btn" data-pkg-cat="Byg-selv">Byg selv</button>
+      </div>
 
       <div class="packages-grid" id="packages-grid"></div>
     </div>
@@ -691,12 +847,19 @@
         <h4>Kontakt</h4>
         <a href="mailto:marius@lydstyrken.com">marius@lydstyrken.com</a>
         <a href="https://instagram.com/lydstyrken" target="_blank" rel="noopener">Instagram ↗</a>
+        <a href="kontakt.html">Kontakt-side</a>
       </div>
       <div class="footer-col">
         <h4>Sider</h4>
         <a href="index.html">Forside</a>
         <a href="om.html">Om os</a>
         <a href="lagersalg.html">Lagersalg</a>
+        <a href="faq.html">FAQ</a>
+      </div>
+      <div class="footer-col">
+        <h4>Juridisk</h4>
+        <a href="privatlivspolitik.html">Privatlivspolitik</a>
+        <a href="lejebetingelser.html">Lejebetingelser</a>
       </div>
     </div>
     <div class="footer-bottom">
@@ -712,74 +875,192 @@
   //   PAKKER — REDIGÉR HER
   // ════════════════════════════════════════════════════════════════
   // Hver pakke har:
-  //  id          — unik tekst
-  //  name        — vises på kortet
-  //  tag         — kort sætning under navnet
-  //  price       — startpris (vejledende)
-  //  includes    — liste over hvad der er med
-  //  buildable   — true betyder "byg selv" (starter fra 0)
+  //  id              — unik tekst
+  //  category        — 'Tale', 'Lyttekoncert', 'Fest' eller 'Byg-selv'
+  //  name            — vises på kortet
+  //  tag             — kort sætning under navnet (typisk publikum)
+  //  prices          — { afvikling: <kr eller null>, udlejning: <kr eller null>, onRequest: <bool> }
+  //                     null = ikke tilgængelig i den mode
+  //                     onRequest: true = "Pris efter aftale"
+  //  gear            — udstyr (samme i begge modes)
+  //  buildable       — true betyder "byg selv" (starter fra 0)
+  //
+  // OBS: Lyttekoncert-pakker har bevidst ingen udlejnings-pris,
+  // fordi disse opsætninger kræver fagligt øre. Tale-Overdøvende og
+  // Fest-Overdøvende findes kun som ren udlejning, fordi store
+  // venues normalt har deres eget afviklings-hold.
   // ════════════════════════════════════════════════════════════════
 
   const PACKAGES = [
+
+    // ─── TALE ───
     {
-      id: 'tale',
-      name: 'Tale & Foredrag',
-      tag: 'Op til ~50 deltagere',
-      price: 2500,
-      includes: [
-        '2x aktive PA-højttalere på stativ',
-        '2x kabelmikrofoner',
-        'Lille mixerpult (4-8 kanaler)',
-        'Alle nødvendige kabler',
-        'Personlig opsætning og test'
+      id: 'tale-lille',
+      category: 'Tale',
+      name: 'Tale — Lille',
+      tag: '30–150 publikum',
+      prices: { afvikling: 1200, udlejning: 500 },
+      gear: [
+        '1 mixerpult (4–8 kanaler)',
+        '1 aktiv PA-højttaler på stativ',
+        '1 mikrofon (kabel eller trådløs)',
+        'Stativer + alle kabler'
       ]
     },
     {
-      id: 'fest',
-      name: 'Fest & Bryllup',
-      tag: '50–150 gæster',
-      price: 4500,
-      includes: [
-        '2x PA-højttalere + subwoofer',
-        '4x mikrofoner (2 trådløse)',
-        'Mixerpult med effekter',
-        'Baggrundslys (LED PAR)',
-        'Setup, drift og pickup'
+      id: 'tale-mellem',
+      category: 'Tale',
+      name: 'Tale — Mellem',
+      tag: '100–350 publikum',
+      prices: { afvikling: 1800, udlejning: 900 },
+      gear: [
+        '1 mixerpult (4–8 kanaler)',
+        '2 aktive PA-højttalere på stativ',
+        '1 mikrofon (kabel eller trådløs)',
+        'Stativer + alle kabler'
       ]
     },
     {
-      id: 'koncert',
-      name: 'Live-koncert',
-      tag: 'Bands op til 6 personer',
-      price: 7500,
-      includes: [
-        'Fuld PA + subwoofere',
-        'Digital mixerpult, 16 kanaler',
-        '4x monitor-højttalere',
-        'Mikrofoner til band (vokal + instr.)',
-        'Stage box, kabling, drift'
+      id: 'tale-stor',
+      category: 'Tale',
+      name: 'Tale — Stor',
+      tag: '300–1.000 publikum',
+      prices: { afvikling: 3500, udlejning: 1200 },
+      gear: [
+        '1 mixerpult (4–8 kanaler)',
+        '4 aktive PA-højttalere på stativ',
+        '1–2 mikrofoner (kabel eller trådløs)',
+        'Stativer + alle kabler'
       ]
     },
     {
-      id: 'festival',
-      name: 'Festival / Stort event',
-      tag: '200+ gæster, udendørs',
-      price: 12500,
-      includes: [
-        'Skalerbar PA-løsning',
-        'Stort digital mixerpult',
-        'Komplet monitor-system',
-        'Tekniker-team on-site',
-        'Skræddersys efter behov'
+      id: 'tale-overdoevende',
+      category: 'Tale',
+      name: 'Tale — Overdøvende',
+      tag: '800+ publikum',
+      prices: { afvikling: null, udlejning: 2000 },
+      gear: [
+        '1 mixerpult + de-feedback enhed',
+        '4 aktive PA-højttalere (12")',
+        '2 PA-højttalere (10")',
+        'Trådløst pro-mikrofonsystem',
+        'Stativer + alle kabler'
       ]
     },
+
+    // ─── LYTTEKONCERT ───
+    {
+      id: 'koncert-lille',
+      category: 'Lyttekoncert',
+      name: 'Lyttekoncert — Lille',
+      tag: '30–120 publikum',
+      prices: { afvikling: 2300, udlejning: null },
+      gear: [
+        'Digital mixerpult (8–12 kanaler)',
+        '2 aktive PA-højttalere',
+        'Subwoofer',
+        'Mikrofoner til vokal og instrumenter',
+        'Monitor på scenen',
+        'Stativer + alle kabler'
+      ]
+    },
+    {
+      id: 'koncert-mellem',
+      category: 'Lyttekoncert',
+      name: 'Lyttekoncert — Mellem',
+      tag: '80–250 publikum',
+      prices: { afvikling: 3200, udlejning: null },
+      gear: [
+        'Digital mixerpult (16 kanaler)',
+        '2 aktive PA-højttalere + subwoofer',
+        'Mikrofon-pakke til band',
+        '2 monitorer på scenen',
+        'Stage box + multikabel',
+        'Stativer + alle kabler'
+      ]
+    },
+    {
+      id: 'koncert-stor',
+      category: 'Lyttekoncert',
+      name: 'Lyttekoncert — Stor',
+      tag: '200–500 publikum',
+      prices: { afvikling: 5500, udlejning: null },
+      gear: [
+        'Digital mixerpult (24+ kanaler)',
+        'Skaleret PA-løsning + subs',
+        'Komplet mikrofon-pakke',
+        '4 monitorer + monitor-mix',
+        'Stage box + multikabel',
+        'Stativer + alle kabler'
+      ]
+    },
+
+    // ─── FEST ───
+    {
+      id: 'fest-lille',
+      category: 'Fest',
+      name: 'Fest — Lille',
+      tag: '30–100 gæster',
+      prices: { afvikling: 3000, udlejning: 500 },
+      gear: [
+        'Mixer + Bluetooth-modtager',
+        '2 aktive PA-højttalere (10")',
+        'Subwoofer (12")',
+        'Stativer + alle kabler'
+      ]
+    },
+    {
+      id: 'fest-mellem',
+      category: 'Fest',
+      name: 'Fest — Mellem',
+      tag: '100–200 gæster',
+      prices: { afvikling: 4200, udlejning: 1000 },
+      gear: [
+        'Mixer + Bluetooth-modtager',
+        '2 aktive PA-højttalere (12")',
+        '1 ekstra PA-højttaler (10")',
+        'Subwoofer (12")',
+        'Stativer + alle kabler'
+      ]
+    },
+    {
+      id: 'fest-stor',
+      category: 'Fest',
+      name: 'Fest — Stor',
+      tag: '200–400 gæster',
+      prices: { afvikling: 6500, udlejning: 1500 },
+      gear: [
+        'Mixerpult (4–8 kanaler)',
+        '4 aktive PA-højttalere (12")',
+        'Subwoofer (18")',
+        'Mikrofon (kabel eller trådløs)',
+        'Stativer + alle kabler'
+      ]
+    },
+    {
+      id: 'fest-kaempe',
+      category: 'Fest',
+      name: 'Fest — Kæmpe',
+      tag: '400–1.000 gæster',
+      prices: { afvikling: null, udlejning: 2500, onRequest: true },
+      gear: [
+        'Mixerpult (4–8 kanaler)',
+        '4 PA-højttalere (15") + 4 (12")',
+        'Subwoofer (18") + (12")',
+        'Stativer + alle kabler',
+        'Skaleres efter venue'
+      ]
+    },
+
+    // ─── BYG SELV ───
     {
       id: 'byg-selv',
+      category: 'Byg-selv',
       name: 'Byg selv',
       tag: 'Start fra bunden',
-      price: 0,
+      prices: { afvikling: 0, udlejning: 0 },
       buildable: true,
-      includes: [
+      gear: [
         'Vælg kun det du har brug for',
         'Mix af enkelt-komponenter',
         'Perfekt til specielle behov',
@@ -831,6 +1112,8 @@
   // ════════════════════════════════════════════════════════════════
 
   const state = {
+    serviceMode: 'afvikling',  // 'afvikling' eller 'udlejning'
+    packageCategory: 'alle',    // 'alle', 'Tale', 'Lyttekoncert', 'Fest', 'Byg-selv'
     selectedPackage: null,
     addons: {}, // { id: quantity }
     activeCategory: 'Alle'
@@ -842,32 +1125,73 @@
     return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   }
 
+  // Returnerer den aktuelle pris for en pakke i den aktive mode (eller null)
+  function getPackagePrice(pkg) {
+    return pkg.prices[state.serviceMode];
+  }
+
   // ════════════════════════════════════════════════════════════════
-  //   RENDER PAKKER
+  //   RENDER PAKKER (med service-mode og kategori-filter)
   // ════════════════════════════════════════════════════════════════
 
   function renderPackages() {
     const grid = document.getElementById('packages-grid');
-    grid.innerHTML = PACKAGES.map((p, i) => `
-      <button type="button" class="package${state.selectedPackage === p.id ? ' selected' : ''}" data-id="${p.id}" aria-pressed="${state.selectedPackage === p.id}">
-        <div class="package-check" aria-hidden="true">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div class="package-num">${String(i + 1).padStart(2, '0')}</div>
-        <div class="package-name">${escapeHtml(p.name)}</div>
-        <div class="package-tag">${escapeHtml(p.tag)}</div>
-        <div class="package-price">
-          ${p.price === 0
-            ? '<span class="from">FRA</span>0 kr.'
-            : `<span class="from">FRA</span>${formatKr(p.price)}`}
-        </div>
-        <ul class="package-includes">
-          ${p.includes.map(x => `<li>${escapeHtml(x)}</li>`).join('')}
-        </ul>
-      </button>
-    `).join('');
 
-    grid.querySelectorAll('.package').forEach(el => {
+    // Filter på kategori
+    let visiblePackages = PACKAGES;
+    if (state.packageCategory !== 'alle') {
+      visiblePackages = PACKAGES.filter(p => p.category === state.packageCategory);
+    }
+
+    grid.innerHTML = visiblePackages.map((p, i) => {
+      const priceInMode = getPackagePrice(p);
+      const priceInOtherMode = p.prices[state.serviceMode === 'afvikling' ? 'udlejning' : 'afvikling'];
+      const otherModeLabel = state.serviceMode === 'afvikling' ? 'udlejning' : 'med afvikling';
+      const isUnavailable = priceInMode === null && !p.buildable;
+      const isOnRequest = p.prices.onRequest && state.serviceMode === 'afvikling';
+
+      // Bygger pris-label
+      let priceHtml;
+      if (p.buildable) {
+        priceHtml = '<span class="from">FRA</span>0 kr.';
+      } else if (isUnavailable) {
+        priceHtml = '<span class="from">—</span>';
+      } else if (isOnRequest) {
+        priceHtml = 'Pris efter aftale';
+      } else {
+        priceHtml = `<span class="from">FRA</span>${formatKr(priceInMode)}`;
+      }
+
+      // Sekundær pris-info (hvis tilgængelig i den anden mode)
+      let secondaryHtml = '';
+      if (!p.buildable && priceInOtherMode !== null && !isUnavailable) {
+        secondaryHtml = `<span class="package-price-secondary">${formatKr(priceInOtherMode)} ${otherModeLabel}</span>`;
+      }
+
+      const isSelected = state.selectedPackage === p.id;
+      const cssClass = `package${isSelected ? ' selected' : ''}${isUnavailable ? ' disabled' : ''}`;
+
+      return `
+        <button type="button" class="${cssClass}" data-id="${p.id}" aria-pressed="${isSelected}" ${isUnavailable ? 'aria-disabled="true" tabindex="-1"' : ''}>
+          <div class="package-check" aria-hidden="true">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="package-num">${String(i + 1).padStart(2, '0')}</div>
+          <div class="package-name">${escapeHtml(p.name)}</div>
+          <div class="package-tag">${escapeHtml(p.tag)}</div>
+          <div class="package-price${isOnRequest ? ' on-request' : ''}">
+            ${priceHtml}
+          </div>
+          ${secondaryHtml}
+          <ul class="package-includes">
+            ${p.gear.map(x => `<li>${escapeHtml(x)}</li>`).join('')}
+          </ul>
+          <div class="package-unavailable-note">// Ikke tilgængelig i denne mode</div>
+        </button>
+      `;
+    }).join('');
+
+    grid.querySelectorAll('.package:not(.disabled)').forEach(el => {
       el.addEventListener('click', () => {
         state.selectedPackage = el.dataset.id;
         renderPackages();
@@ -875,6 +1199,60 @@
         if (window.innerWidth > 700) {
           document.getElementById('step-2').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
+      });
+    });
+  }
+
+  // ════════════════════════════════════════════════════════════════
+  //   RENDER SERVICE-MODE TOGGLE + KATEGORI-FILTER
+  // ════════════════════════════════════════════════════════════════
+
+  function setupServiceModeToggle() {
+    document.querySelectorAll('.service-mode-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const newMode = btn.dataset.mode;
+        if (state.serviceMode === newMode) return;
+        state.serviceMode = newMode;
+
+        // Hvis valgt pakke ikke har pris i den nye mode, ryd valget
+        if (state.selectedPackage) {
+          const currentPkg = PACKAGES.find(p => p.id === state.selectedPackage);
+          if (currentPkg && getPackagePrice(currentPkg) === null && !currentPkg.buildable) {
+            state.selectedPackage = null;
+          }
+        }
+
+        // Opdatér UI
+        document.querySelectorAll('.service-mode-btn').forEach(b => {
+          const isActive = b.dataset.mode === newMode;
+          b.classList.toggle('active', isActive);
+          b.setAttribute('aria-pressed', isActive);
+        });
+
+        // Opdatér info-tekst
+        const info = document.getElementById('service-mode-info');
+        if (newMode === 'afvikling') {
+          info.innerHTML = '<strong>Med afvikling:</strong> Vi sætter op før eventet, er tilstede under afviklingen og pakker ned bagefter — du skal bare være vært.';
+        } else {
+          info.innerHTML = '<strong>Kun udlejning:</strong> Du henter eller får leveret udstyret (transport tillægges), sætter selv op og afvikler. Vi giver en kort gennemgang og er på telefonen hvis du har brug for hjælp.';
+        }
+
+        renderPackages();
+        updateSummary();
+      });
+    });
+  }
+
+  function setupCategoryFilter() {
+    document.querySelectorAll('.pkg-cat-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const newCat = btn.dataset.pkgCat;
+        if (state.packageCategory === newCat) return;
+        state.packageCategory = newCat;
+        document.querySelectorAll('.pkg-cat-btn').forEach(b => {
+          b.classList.toggle('active', b.dataset.pkgCat === newCat);
+        });
+        renderPackages();
       });
     });
   }
@@ -975,7 +1353,10 @@
     let total = 0;
     if (state.selectedPackage) {
       const pkg = PACKAGES.find(p => p.id === state.selectedPackage);
-      if (pkg) total += pkg.price;
+      if (pkg) {
+        const price = getPackagePrice(pkg);
+        if (price !== null) total += price;
+      }
     }
     for (const id in state.addons) {
       const addon = ADDONS.find(a => a.id === id);
@@ -990,9 +1371,18 @@
 
   function updateSummary() {
     const pkg = PACKAGES.find(p => p.id === state.selectedPackage);
-    document.getElementById('sum-package').textContent = pkg ? pkg.name : 'Vælg pakke';
+    const modeLabel = state.serviceMode === 'afvikling' ? 'Med afvikling' : 'Kun udlejning';
+    document.getElementById('sum-package').textContent = pkg
+      ? `${pkg.name} (${modeLabel})`
+      : 'Vælg pakke';
     document.getElementById('sum-addons').textContent = countAddons();
-    document.getElementById('sum-price').textContent = formatKr(calculateTotal());
+
+    // Hvis pakken er "Pris efter aftale", vis det i stedet for tal
+    let totalDisplay = formatKr(calculateTotal());
+    if (pkg && pkg.prices.onRequest && state.serviceMode === 'afvikling') {
+      totalDisplay = 'På forespørgsel';
+    }
+    document.getElementById('sum-price').textContent = totalDisplay;
 
     document.getElementById('send-btn').disabled = !state.selectedPackage;
 
@@ -1014,8 +1404,11 @@
     const location = document.getElementById('f-location').value.trim();
     const notes = document.getElementById('f-notes').value.trim();
 
+    const modeLabel = state.serviceMode === 'afvikling' ? 'Med afvikling' : 'Kun udlejning';
+
     const subjectParts = ['Forespørgsel'];
     if (pkg) subjectParts.push(pkg.name);
+    subjectParts.push(modeLabel);
     if (eventType) subjectParts.push(eventType);
     const subject = subjectParts.join(' — ');
 
@@ -1029,10 +1422,24 @@
     lines.push('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
     if (pkg) {
       lines.push(`${pkg.name} (${pkg.tag})`);
-      lines.push(`Startpris: ${formatKr(pkg.price)}`);
+      lines.push(`Service: ${modeLabel}`);
+      const price = getPackagePrice(pkg);
+      if (pkg.prices.onRequest && state.serviceMode === 'afvikling') {
+        lines.push(`Startpris: På forespørgsel`);
+      } else if (price !== null) {
+        lines.push(`Startpris: ${formatKr(price)}`);
+      }
       lines.push('');
-      lines.push('Inkluderet:');
-      pkg.includes.forEach(x => lines.push(`  • ${x}`));
+      lines.push('Inkluderet udstyr:');
+      pkg.gear.forEach(x => lines.push(`  • ${x}`));
+
+      if (state.serviceMode === 'afvikling' && !pkg.buildable) {
+        lines.push('');
+        lines.push('Inkluderet service:');
+        lines.push('  • Opsætning før eventet');
+        lines.push('  • Tekniker til stede under afviklingen');
+        lines.push('  • Nedpakning bagefter');
+      }
     }
 
     const addonEntries = Object.entries(state.addons);
@@ -1055,7 +1462,11 @@
     lines.push('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
     lines.push('  ESTIMAT');
     lines.push('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-    lines.push(`Vejledende total: ${formatKr(calculateTotal())}`);
+    if (pkg && pkg.prices.onRequest && state.serviceMode === 'afvikling') {
+      lines.push('Vejledende total: På forespørgsel');
+    } else {
+      lines.push(`Vejledende total: ${formatKr(calculateTotal())}`);
+    }
     lines.push('(Endelig pris afhænger af specifikke krav, transport og dato)');
 
     if (eventType || guests || date || location || notes) {
@@ -1094,6 +1505,8 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
+    setupServiceModeToggle();
+    setupCategoryFilter();
     renderPackages();
     renderCategories();
     renderAddons();
