@@ -3,23 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Tema-config: én linje styrer hele sitet (se theme-config.js) -->
+<script src="theme-config.js"></script>
 <title>Om os — LYDSTYRKEN</title>
-<meta name="description" content="Mød holdet bag LYDSTYRKEN — to mennesker fra Odense der brænder for live-lyd og events.">
+<meta name="description" content="Mød holdet bag LYDSTYRKEN — Marius, Pernille og fire datamatikerstuderende der bygger fremtidens lagersystem.">
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="LYDSTYRKEN — Om os">
-<meta property="og:description" content="Holdet bag LYDSTYRKEN. To mennesker fra Odense, fokus på personlig kontakt og ærlige priser.">
+<meta property="og:description" content="Holdet bag LYDSTYRKEN. Personlig kontakt, ærlige priser og 6 års erfaring inden for lyd.">
 <meta property="og:url" content="https://www.lydstyrken.com/om.html">
-<meta property="og:image" content="https://www.lydstyrken.com/images/og-default.jpg">
+<meta property="og:image" content="https://www.lydstyrken.com/images/Branding/mini-logo-(100 x 100px).png">
 <meta property="og:locale" content="da_DK">
 <meta property="og:site_name" content="LYDSTYRKEN">
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="canonical" href="https://www.lydstyrken.com/om.html">
-<link rel="icon" type="image/png" href="images/logo.png">
+<link rel="icon" type="image/png" href="images/Branding/mini-logo-(100 x 100px).png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="themes.css">
 <link rel="stylesheet" href="styles.css">
 
 <style>
@@ -50,7 +54,7 @@
   .story-heading {
     font-family: 'Montserrat', sans-serif;
     font-weight: 800;
-    font-size: clamp(28px, 4vw, 40px);
+    font-size: clamp(28px, 4.5vw, 64px);
     line-height: 1.1;
     letter-spacing: -0.02em;
     text-transform: uppercase;
@@ -64,7 +68,7 @@
 
   .story-text p {
     color: var(--text-dim);
-    font-size: 17px;
+    font-size: clamp(16px, 1.15vw, 20px);
     line-height: 1.7;
     margin-bottom: 18px;
   }
@@ -82,7 +86,7 @@
   .team-header h2 {
     font-family: 'Montserrat', sans-serif;
     font-weight: 800;
-    font-size: clamp(32px, 5vw, 52px);
+    font-size: clamp(32px, 5.5vw, 88px);
     line-height: 1.05;
     letter-spacing: -0.02em;
     text-transform: uppercase;
@@ -100,6 +104,32 @@
     gap: 24px;
   }
 
+  /* På store skærme får kerne-holdet (Marius + Pernille) ekstra plads.
+     Vi targeter team-grid med 2 kort = .has-2-members eller bruger
+     auto-fit med højere min-width via media query. */
+  @media (min-width: 900px) {
+    .team-grid {
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 32px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+  }
+  @media (min-width: 1400px) {
+    .team-grid {
+      grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
+      gap: 40px;
+      max-width: 1400px;
+    }
+  }
+  @media (min-width: 1900px) {
+    .team-grid {
+      grid-template-columns: repeat(auto-fit, minmax(520px, 1fr));
+      gap: 48px;
+      max-width: 1600px;
+    }
+  }
+
   .member {
     background: var(--bg);
     border: 1px solid var(--border);
@@ -107,8 +137,13 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    transition: border-color 0.3s, transform 0.3s;
+    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
     position: relative;
+    text-align: left;
+    font-family: inherit;
+    color: inherit;
+    width: 100%;
+    padding: 0;
   }
   .member::before {
     content: '';
@@ -119,11 +154,46 @@
     background: var(--accent);
     transition: width 0.4s;
   }
-  .member:hover {
+
+  /* Klikbare medlemmer (Marius + Pernille) får cursor + hover-effekt */
+  .member.is-clickable { cursor: pointer; }
+  .member.is-clickable:hover {
     border-color: #3a3a40;
     transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
   }
-  .member:hover::before { width: 100%; }
+  .member.is-clickable:hover::before { width: 100%; }
+  .member.is-clickable:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  /* "Læs mere"-indikator vises kun på klikbare medlemmer */
+  .member-readmore {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: color 0.25s, gap 0.25s;
+  }
+  .member.is-clickable .member-readmore { display: flex; }
+  .member.is-clickable:hover .member-readmore {
+    color: var(--accent);
+    gap: 12px;
+  }
+  .member-readmore-arrow {
+    transition: transform 0.25s;
+  }
+  .member.is-clickable:hover .member-readmore-arrow {
+    transform: translateX(3px);
+  }
 
   .member-photo {
     aspect-ratio: 1;
@@ -139,7 +209,7 @@
     width: 100%; height: 100%; object-fit: cover;
     transition: transform 0.5s;
   }
-  .member:hover .member-photo img { transform: scale(1.05); }
+  .member.is-clickable:hover .member-photo img { transform: scale(1.05); }
 
   .member-photo-placeholder {
     font-family: 'Montserrat', sans-serif;
@@ -250,7 +320,7 @@
 
   .value {
     background: var(--bg-elev);
-    padding: 40px 32px;
+    padding: clamp(32px, 3vw, 64px) clamp(24px, 2.5vw, 48px);
     transition: background 0.3s;
   }
   .value:hover { background: var(--bg-elev-2); }
@@ -266,21 +336,22 @@
   .value h3 {
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
-    font-size: 20px;
+    font-size: clamp(18px, 1.6vw, 28px);
     text-transform: uppercase;
     letter-spacing: 0.02em;
     margin-bottom: 12px;
+    line-height: 1.15;
   }
 
-  .value p { color: var(--text-dim); font-size: 15px; }
+  .value p { color: var(--text-dim); font-size: clamp(14px, 1.05vw, 17px); line-height: 1.6; }
 
   /* ─── CTA STRIP ─── */
-  .cta-strip { padding: 80px 0 100px; text-align: center; }
+  .cta-strip { padding: clamp(60px, 6vh, 120px) 0 clamp(80px, 8vh, 140px); text-align: center; }
 
   .cta-strip h2 {
     font-family: 'Montserrat', sans-serif;
     font-weight: 800;
-    font-size: clamp(32px, 5vw, 56px);
+    font-size: clamp(32px, 5.5vw, 96px);
     line-height: 1;
     letter-spacing: -0.03em;
     margin-bottom: 20px;
@@ -295,8 +366,8 @@
 
   .cta-strip p {
     color: var(--text-dim);
-    font-size: 17px;
-    max-width: 540px;
+    font-size: clamp(16px, 1.2vw, 22px);
+    max-width: 720px;
     margin: 0 auto 36px;
   }
 
@@ -306,6 +377,182 @@
     justify-content: center;
     flex-wrap: wrap;
   }
+
+
+  /* ═══════════════ MODAL — medarbejder-popup ═══════════════ */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 10, 11, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-backdrop.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  body.modal-open { overflow: hidden; }
+
+  .modal {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    max-width: 720px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: translateY(20px) scale(0.98);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+  }
+  .modal-backdrop.open .modal {
+    transform: translateY(0) scale(1);
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+    background: rgba(10, 10, 11, 0.85);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    cursor: pointer;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+    z-index: 5;
+  }
+  .modal-close:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #0a0a0b;
+  }
+  .modal-close svg { width: 18px; height: 18px; }
+
+  .modal-header {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 28px;
+    padding: 36px 36px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  @media (max-width: 600px) {
+    .modal-header {
+      grid-template-columns: 1fr;
+      padding: 28px 24px 20px;
+    }
+  }
+
+  .modal-photo {
+    aspect-ratio: 1;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--bg-elev-2);
+    border: 1px solid var(--border);
+  }
+  .modal-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  @media (max-width: 600px) {
+    .modal-photo { max-width: 200px; margin: 0 auto; }
+  }
+
+  .modal-title-block { padding-top: 8px; }
+
+  .modal-name {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: clamp(28px, 4vw, 36px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .modal-role {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .modal-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .modal-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 5px 10px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+  }
+
+  .modal-body {
+    padding: 32px 36px 36px;
+  }
+  @media (max-width: 600px) {
+    .modal-body { padding: 24px; }
+  }
+
+  .modal-body h3 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-top: 28px;
+    margin-bottom: 14px;
+  }
+  .modal-body h3:first-child { margin-top: 0; }
+
+  .modal-body p {
+    color: var(--text-dim);
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 14px;
+  }
+  .modal-body p:last-child { margin-bottom: 0; }
+
+  .modal-contact {
+    margin-top: 24px;
+    padding: 20px 24px;
+    background: var(--bg);
+    border-left: 2px solid var(--accent);
+    border-radius: var(--radius-sm);
+  }
+  .modal-contact a {
+    color: var(--accent);
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .modal-contact a:hover { border-color: var(--accent); }
 </style>
 </head>
 <body>
@@ -327,7 +574,7 @@
     <div class="nav-links">
       <a href="ydelser.html">Ydelser</a>
       <a href="om.html" class="active">Om os</a>
-      <a href="index.html#kontakt">Kontakt</a>
+      <a href="kontakt.html">Kontakt</a>
       <a href="lagersalg.html" class="btn-nav">Lagersalg →</a>
     </div>
     <button class="burger" id="burger" aria-label="Åbn menu" aria-expanded="false" aria-controls="mobile-menu">
@@ -343,7 +590,7 @@
       <a href="ydelser.html"><span class="mobile-menu-num">02</span>Ydelser</a>
       <a href="om.html" class="active"><span class="mobile-menu-num">03</span>Om os</a>
       <a href="lagersalg.html"><span class="mobile-menu-num">04</span>Lagersalg</a>
-      <a href="index.html#kontakt"><span class="mobile-menu-num">05</span>Kontakt</a>
+      <a href="kontakt.html"><span class="mobile-menu-num">05</span>Kontakt</a>
     </div>
     <div class="mobile-menu-footer">
       <a href="mailto:marius@lydstyrken.com">marius@lydstyrken.com</a>
@@ -362,15 +609,19 @@
       Holdet bag <span class="accent">lydstyrken.</span>
     </h1>
     <p class="page-sub">
-      Vi er to mennesker fra Odense, der brænder for live-lyd, events og det øjeblik hvor lyden falder på plads.
+      Et lille hold fra Odense der brænder for live-lyd og det øjeblik hvor lyden falder helt på plads.
     </p>
   </div>
 </header>
 
+
 <!-- ═══════════════════════════════════════════════════════════
-     TEAM SECTION — kerne-holdet
-     For hver person, redigér: name, role, bio, tags, image
-     image kan være tom (viser initial-placeholder) eller en URL
+     TEAM SECTION — kerne-holdet (klikbare for detaljer)
+     For Marius + Pernille: udfyld også data-attributter:
+       data-bio        = den korte bio på kortet
+       data-long-bio   = den længere bio i modal'en (HTML tilladt)
+       data-role-detail = beskrivelse af rolle
+       data-experience  = ansvar/erfaring
 ═══════════════════════════════════════════════════════════ -->
 
 <section class="team">
@@ -382,7 +633,11 @@
 
     <div class="team-grid stagger">
 
-      <article class="member reveal">
+      <!-- ─── MARIUS ─── -->
+      <button class="member is-clickable reveal"
+              type="button"
+              aria-label="Læs mere om Marius Blæsbjerg"
+              data-modal="marius">
         <div class="member-photo">
           <img src="images/Profil/Marius-Blaesbjerg.png" alt="Marius Blæsbjerg" loading="lazy">
           <span class="badge-num">01</span>
@@ -390,57 +645,82 @@
         <div class="member-body">
           <h3 class="member-name">Marius Blæsbjerg</h3>
           <div class="member-role">Founder · Lydtekniker</div>
-          <p class="member-bio">Manden bag det hele. Marius står for det meste af front-of-house og koordinerer dagligt med kunder, leverandører og resten af holdet. Brænder for det øjeblik hvor lyden bare sidder.</p>
+          <p class="member-bio">
+            Marius er dit første møde med os. Han håndterer den daglige kontakt med kunder og leverandører og sørger for at tingene glider. Med 6 års erfaring inden for lyd ved han præcis hvad der skal til.
+          </p>
           <div class="member-meta">
             <span class="member-tag">Lydtekniker</span>
             <span class="member-tag">Booking</span>
             <span class="member-tag">Logistik</span>
           </div>
+          <div class="member-readmore">
+            Læs mere
+            <span class="member-readmore-arrow">→</span>
+          </div>
         </div>
-      </article>
+      </button>
 
-      <article class="member reveal">
+      <!-- ─── PERNILLE ─── -->
+      <button class="member is-clickable reveal"
+              type="button"
+              aria-label="Læs mere om Pernille Brix Lyng"
+              data-modal="pernille">
         <div class="member-photo">
-          <img src="images/Profil/Pernille-Brix-Lyng.jpg" alt="Pernille" loading="lazy">
+          <img src="images/Profil/Pernille-Brix-Lyng.jpg" alt="Pernille Brix Lyng" loading="lazy">
           <span class="badge-num">02</span>
         </div>
         <div class="member-body">
-          <h3 class="member-name">Pernille</h3>
+          <h3 class="member-name">Pernille Brix Lyng</h3>
           <div class="member-role">Logistikkoordinator · Lystekniker</div>
-          <p class="member-bio">Holder styr på datoer, kontakter og logistik så ingenting falder mellem to stole. Pernille sikrer at hver kunde får det de er blevet lovet — og lidt til.</p>
+          <p class="member-bio">
+            Pernille sikrer at ord bliver til handling. Datoer, kontakter og logistik er hendes domæne — og det er hendes overblik der garanterer at du får præcis det vi har lovet.
+          </p>
           <div class="member-meta">
             <span class="member-tag">Lystekniker</span>
             <span class="member-tag">Logistik</span>
             <span class="member-tag">Planlægning</span>
           </div>
+          <div class="member-readmore">
+            Læs mere
+            <span class="member-readmore-arrow">→</span>
+          </div>
         </div>
-      </article>
+      </button>
 
     </div>
   </div>
 </section>
+
 
 <section class="story">
   <div class="container">
     <div class="story-grid">
       <div>
         <div class="story-label">// HISTORIEN</div>
-        <h2 class="story-heading">Det startede med <span class="accent">én</span> mixer </h2>
+        <h2 class="story-heading">Det startede med <span class="accent">én</span> mixer.</h2>
       </div>
       <div class="story-text">
-        <p>LYDSTYRKEN startede som et enmandsforetagende fra Odense med ambitionen om at levere ærlig, professionel lyd til arrangementer i alle størrelser — uden den store overhead.</p>
-        <p>I dag er vi et lille hold, der hver især bringer noget unikt med ind: teknisk forståelse, koordinerings-evne, øre for detaljer og en oprigtig glæde ved at få et arrangement til at lyde rigtigt. Vi tror på personlig kontakt, gennemsigtige priser og et resultat der står mål med dine forventninger.</p>
+        <p>LYDSTYRKEN startede som et enmandsforetagende fra Odense — drevet af et ønske om at levere ærlig, professionel lyd til arrangementer i alle størrelser, uden den store overhead.</p>
+        <p>I dag er vi et lille hold der hver især bringer noget unikt med ind: teknisk forståelse, koordinerings-evne, øre for detaljer og en oprigtig glæde ved at få et arrangement til at lyde rigtigt. Vi tror på personlig kontakt, gennemsigtige priser og et resultat der står mål med dine forventninger.</p>
         <p>Lige fra mindre tale-arrangementer til større festivaler — vi møder dig hvor du er, og finder den rigtige løsning sammen.</p>
       </div>
     </div>
   </div>
 </section>
 
+
+<!-- ═══════════════════════════════════════════════════════════
+     PRAKTIKANTER — IKKE klikbare (ingen modal)
+═══════════════════════════════════════════════════════════ -->
+
 <section class="team">
   <div class="container">
     <div class="team-header">
       <div class="page-label">// PRAKTIKANTER</div>
       <h2>Fire studerende, <span class="accent">ét</span> mål.</h2>
+      <p style="color:var(--text-dim);font-size:17px;line-height:1.6;max-width:680px;margin-top:16px;">
+        Liam, Rasmus, Mathias og Asbjørn er i gang med at bygge et lagersystem der gør LYDSTYRKENs pakning hurtigere, skarpere og mere fejlfri. Det er ikke et skoleprojekt — det er et rigtigt værktøj.
+      </p>
     </div>
 
     <div class="team-grid stagger">
@@ -516,6 +796,7 @@
   </div>
 </section>
 
+
 <section class="values">
   <div class="container">
     <div class="values-header">
@@ -527,12 +808,12 @@
       <div class="value">
         <span class="value-num">01</span>
         <h3>Personlig kontakt</h3>
-        <p>Du taler med en person, ikke et call center. Vi tager os tid til at forstå dit arrangement og finder den rigtige løsning sammen.</p>
+        <p>Du taler med en person, ikke et call-center. Vi tager os tid til at forstå dit arrangement og finder den rigtige løsning sammen.</p>
       </div>
       <div class="value">
         <span class="value-num">02</span>
         <h3>Ærlige priser</h3>
-        <p>Ingen skjulte gebyrer eller pludselige tillæg. Vi giver et klart estimat fra start, så du ved hvad du får.</p>
+        <p>Ingen skjulte gebyrer, ingen pludselige tillæg. Du får et klart estimat fra start, så du ved hvad du betaler for.</p>
       </div>
       <div class="value">
         <span class="value-num">03</span>
@@ -543,6 +824,7 @@
   </div>
 </section>
 
+
 <section class="cta-strip">
   <div class="container">
     <h2>Klar til at skrue op for <span class="accent">lydstyrken</span>?</h2>
@@ -552,12 +834,29 @@
         Byg din pakke
         <span class="arrow">→</span>
       </a>
-      <a href="mailto:marius@lydstyrken.com" class="btn btn-secondary">
+      <a href="kontakt.html" class="btn btn-secondary">
         Skriv til os
       </a>
     </div>
   </div>
 </section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     MODAL — popper op når man klikker på Marius eller Pernille
+═══════════════════════════════════════════════════════════ -->
+
+<div class="modal-backdrop" id="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-name" aria-hidden="true">
+  <div class="modal" id="modal">
+    <button class="modal-close" id="modal-close" type="button" aria-label="Luk dialog">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+        <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <!-- Indhold injiceres dynamisk af JS -->
+    <div id="modal-inner"></div>
+  </div>
+</div>
 
 </main>
 
@@ -578,12 +877,20 @@
         <h4>Kontakt</h4>
         <a href="mailto:marius@lydstyrken.com">marius@lydstyrken.com</a>
         <a href="https://instagram.com/lydstyrken" target="_blank" rel="noopener">Instagram ↗</a>
+        <a href="kontakt.html">Kontakt-side</a>
       </div>
       <div class="footer-col">
         <h4>Sider</h4>
         <a href="index.html">Forside</a>
         <a href="ydelser.html">Ydelser</a>
+        <a href="om.html">Om os</a>
         <a href="lagersalg.html">Lagersalg</a>
+        <a href="faq.html">FAQ</a>
+      </div>
+      <div class="footer-col">
+        <h4>Juridisk</h4>
+        <a href="privatlivspolitik.html">Privatlivspolitik</a>
+        <a href="lejebetingelser.html">Lejebetingelser</a>
       </div>
     </div>
     <div class="footer-bottom">
@@ -594,6 +901,149 @@
 </footer>
 
 <script src="app.js" defer></script>
+<script defer>
+  // ════════════════════════════════════════════════════════════════
+  //   MEDARBEJDER-MODAL DATA
+  //   Tilføj/redigér tekster her — én post pr. medarbejder.
+  // ════════════════════════════════════════════════════════════════
+
+  const TEAM_DETAILS = {
+
+    marius: {
+      name: 'Marius Blæsbjerg',
+      photo: 'images/Profil/Marius-Blaesbjerg.png',
+      role: 'Founder · Lydtekniker',
+      tags: ['Lydtekniker', 'Booking', 'Logistik', 'Front-of-house', 'Kundekontakt'],
+      sections: [
+        {
+          heading: '// Rolle',
+          paragraphs: [
+            'Marius er dit første møde med os. Han håndterer den daglige kontakt med kunder og leverandører — og sørger for at tingene glider fra første mail til sidste kabel er pakket op.',
+            'Med 6 års erfaring inden for lyd ved han præcis hvad der skal til for at en opsætning ikke bare fungerer — men rammer plet.'
+          ]
+        },
+        {
+          heading: '// Baggrund',
+          paragraphs: [
+            'Marius har en scenekunstnerisk baggrund som musicalperformer og har optrådt i omkring 12 år på både store og små scener — i både professionelle og amatørproduktioner, primært på Fyn og i Jylland. Han er i gang med at afslutte SGK (4. semester).',
+            'Sideløbende har han opbygget praktisk erfaring inden for AV og lyd: tre års lærlingeforløb som lydtekniker, og de seneste to år som teknisk rådgiver for organisationer, foreninger og kommunale institutioner.'
+          ]
+        },
+        {
+          heading: '// Kontakt',
+          isContact: true,
+          contact: 'marius@lydstyrken.com'
+        }
+      ]
+    },
+
+    pernille: {
+      name: 'Pernille Brix Lyng',
+      photo: 'images/Profil/Pernille-Brix-Lyng.jpg',
+      role: 'Logistikkoordinator · Lystekniker',
+      tags: ['Lystekniker', 'Logistik', 'Planlægning', 'Koordinering'],
+      sections: [
+        {
+          heading: '// Rolle',
+          paragraphs: [
+            'Pernille er den der sikrer at ord bliver til handling. Datoer, kontakter og logistik er hendes domæne — og når du arbejder med os, er det hendes overblik der garanterer at du får præcis det vi har lovet dig.',
+            'Pernille arbejder desuden med lys og ved hvilken rolle det spiller når en oplevelse skal sidde helt rigtigt.'
+          ]
+        }
+      ]
+    }
+  };
+
+
+  // ════════════════════════════════════════════════════════════════
+  //   MODAL-FUNKTIONALITET
+  // ════════════════════════════════════════════════════════════════
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const backdrop = document.getElementById('modal-backdrop');
+    const modal = document.getElementById('modal');
+    const inner = document.getElementById('modal-inner');
+    const closeBtn = document.getElementById('modal-close');
+    let lastFocusedElement = null;
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    function buildModalHTML(person) {
+      const tagsHtml = person.tags.map(t => `<span class="modal-tag">${escapeHtml(t)}</span>`).join('');
+
+      const sectionsHtml = person.sections.map(sec => {
+        if (sec.isContact) {
+          return `
+            <div class="modal-contact">
+              <h3 style="margin-top:0;">${escapeHtml(sec.heading)}</h3>
+              <a href="mailto:${escapeHtml(sec.contact)}">${escapeHtml(sec.contact)}</a>
+            </div>
+          `;
+        }
+        const paragraphs = sec.paragraphs.map(p => `<p>${escapeHtml(p)}</p>`).join('');
+        return `
+          <h3>${escapeHtml(sec.heading)}</h3>
+          ${paragraphs}
+        `;
+      }).join('');
+
+      return `
+        <div class="modal-header">
+          <div class="modal-photo">
+            <img src="${escapeHtml(person.photo)}" alt="${escapeHtml(person.name)}">
+          </div>
+          <div class="modal-title-block">
+            <h2 id="modal-name" class="modal-name">${escapeHtml(person.name)}</h2>
+            <div class="modal-role">${escapeHtml(person.role)}</div>
+            <div class="modal-tags">${tagsHtml}</div>
+          </div>
+        </div>
+        <div class="modal-body">
+          ${sectionsHtml}
+        </div>
+      `;
+    }
+
+    function openModal(personId) {
+      const person = TEAM_DETAILS[personId];
+      if (!person) return;
+      lastFocusedElement = document.activeElement;
+      inner.innerHTML = buildModalHTML(person);
+      backdrop.classList.add('open');
+      backdrop.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('modal-open');
+      // Flyt fokus til luk-knap for tastaturbrugere
+      requestAnimationFrame(() => closeBtn.focus());
+    }
+
+    function closeModal() {
+      backdrop.classList.remove('open');
+      backdrop.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('modal-open');
+      if (lastFocusedElement) lastFocusedElement.focus();
+    }
+
+    // Klik på medarbejder-kort
+    document.querySelectorAll('.member.is-clickable[data-modal]').forEach(el => {
+      el.addEventListener('click', () => openModal(el.dataset.modal));
+    });
+
+    // Klik på luk-knap
+    closeBtn.addEventListener('click', closeModal);
+
+    // Klik udenfor modal
+    backdrop.addEventListener('click', (e) => {
+      if (e.target === backdrop) closeModal();
+    });
+
+    // ESC for at lukke
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && backdrop.classList.contains('open')) closeModal();
+    });
+  });
+</script>
 
 </body>
 </html>
