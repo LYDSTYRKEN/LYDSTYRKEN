@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Tema-config: én linje styrer hele sitet (se theme-config.js) -->
-<script src="theme-config.js"></script>
+<!-- Tema-config: én linje styrer hele sitet (se theme.js) -->
+<script src="theme.js"></script>
 <title>Ydelser &amp; pakker — LYDSTYRKEN</title>
 <meta name="description" content="Pakker fra 500 kr — vælg om du vil leje udstyret eller have os med til at sætte op og afvikle. Byg din egen pakke og få et estimat med ét klik.">
 
@@ -636,6 +636,542 @@
     .summary-value.price { font-size: 18px; }
     .send-btn { width: 100%; justify-content: center; }
   }
+
+  /* ════════════════════════════════════════════════════════════════
+     ━━━ MODE-TABS (Hjælp mig vælge / Avanceret) ━━━
+     ════════════════════════════════════════════════════════════════ */
+
+  .mode-tabs-wrap {
+    margin: 32px 0 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .mode-tabs {
+    display: inline-flex;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 5px;
+    gap: 4px;
+  }
+
+  .mode-tab {
+    padding: 12px 24px;
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: clamp(13px, 1vw, 15px);
+    cursor: pointer;
+    border-radius: 100px;
+    transition: background 0.25s, color 0.25s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+  }
+  .mode-tab:hover { color: var(--text); }
+  .mode-tab.active {
+    background: var(--accent);
+    color: #0a0a0b;
+  }
+  .mode-tab svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* ════════════════════════════════════════════════════════════════
+     ━━━ SIMPLE MODE — guidet flow ━━━
+     ════════════════════════════════════════════════════════════════ */
+
+  .simple-mode { padding: 60px 0 120px; }
+  .advanced-mode { display: none; padding: 0 0 60px; }
+
+  /* Når avanceret-mode er aktiv */
+  body[data-mode="advanced"] .simple-mode { display: none; }
+  body[data-mode="advanced"] .advanced-mode { display: block; }
+
+  .step-num-old-q {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .question-block {
+    margin-bottom: 64px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s, transform 0.5s;
+    pointer-events: none;
+  }
+  .question-block.active,
+  .question-block.answered {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .question-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: clamp(28px, 3.5vw, 48px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .question-title .accent {
+    color: var(--accent);
+    font-style: italic;
+    font-weight: 400;
+    text-transform: lowercase;
+  }
+
+  .question-sub {
+    color: var(--text-dim);
+    font-size: clamp(15px, 1.1vw, 18px);
+    margin-bottom: 32px;
+    max-width: 640px;
+  }
+
+  /* Spørgsmåls-kort grid (3 store eller 4 mindre) */
+  .answer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .answer-grid.two-col {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  }
+
+  .answer-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: clamp(28px, 2.5vw, 44px) clamp(24px, 2vw, 36px);
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    color: inherit;
+    transition: border-color 0.25s, transform 0.25s, background 0.25s;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 160px;
+  }
+  .answer-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent);
+    transition: width 0.4s;
+  }
+  .answer-card:hover {
+    border-color: #3a3a40;
+    transform: translateY(-2px);
+  }
+  .answer-card:hover::before { width: 100%; }
+  .answer-card.selected {
+    border-color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 5%, var(--bg-elev));
+  }
+  .answer-card.selected::before { width: 100%; }
+
+  .answer-card-icon {
+    font-size: clamp(28px, 2.5vw, 40px);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .answer-card-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: clamp(18px, 1.5vw, 24px);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+  }
+
+  .answer-card-desc {
+    color: var(--text-dim);
+    font-size: clamp(13px, 0.95vw, 15px);
+    line-height: 1.5;
+  }
+
+  .answer-card-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+
+  /* ════════════════════════════════════════════════════════════════
+     ━━━ ANBEFALING (resultat efter alle spørgsmål) ━━━
+     ════════════════════════════════════════════════════════════════ */
+
+  .recommendation {
+    margin-top: 48px;
+    padding: clamp(32px, 3.5vw, 56px);
+    background: linear-gradient(135deg, var(--bg-elev) 0%, color-mix(in srgb, var(--accent) 4%, var(--bg-elev)) 100%);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-lg);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s, transform 0.6s;
+    pointer-events: none;
+  }
+  .recommendation.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .recommendation-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .recommendation-label::before,
+  .recommendation-label::after {
+    content: '';
+    height: 1px;
+    background: var(--accent);
+    flex: 1;
+    max-width: 32px;
+  }
+  .recommendation-label::after { max-width: 40px; }
+
+  .recommendation-name {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: clamp(28px, 3.5vw, 48px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .recommendation-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .recommendation-meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .recommendation-meta-item::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+
+  .recommendation-price {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: clamp(36px, 4.5vw, 64px);
+    color: var(--accent);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .recommendation-price-from {
+    font-size: 0.4em;
+    color: var(--text-dim);
+    margin-right: 8px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .recommendation-price-note {
+    color: var(--text-dim);
+    font-size: 13px;
+    margin-bottom: 32px;
+  }
+
+  .recommendation-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 40px;
+    margin-bottom: 32px;
+    padding: 28px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  @media (max-width: 800px) {
+    .recommendation-grid { grid-template-columns: 1fr; gap: 28px; }
+  }
+
+  .recommendation-section h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .recommendation-section ul {
+    list-style: none;
+    padding: 0;
+  }
+  .recommendation-section li {
+    color: var(--text-dim);
+    font-size: 14px;
+    line-height: 1.6;
+    padding-left: 20px;
+    position: relative;
+    margin-bottom: 6px;
+  }
+  .recommendation-section li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .recommendation-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .recommendation-actions .btn {
+    flex: 1;
+    min-width: 240px;
+    justify-content: center;
+  }
+
+  /* ════════════════════════════════════════════════════════════════
+     ━━━ SUMMARY-BAR i avanceret mode skal kun vises i avanceret ━━━
+     ════════════════════════════════════════════════════════════════ */
+  body:not([data-mode="advanced"]) .summary-bar { display: none; }
+
+  /* ════════════════════════════════════════════════════════════════
+     ━━━ KATEGORI-FARVER & LOGOER (Tale / Fest / Koncert) ━━━
+     ════════════════════════════════════════════════════════════════
+     Hver kategori har sin egen accent-tone der harmonerer med
+     LYDSTYRKEN-orange men adskiller de tre veje visuelt.
+  */
+
+  :root {
+    --cat-tale: #4a9eff;       /* rolig blå — som en mikrofon-LED */
+    --cat-fest: #ff4d2e;       /* den klassiske LYDSTYRKEN-orange */
+    --cat-koncert: #b388ff;    /* lilla/violet — koncert-vibe */
+  }
+
+  .answer-card[data-q1] {
+    overflow: hidden;
+  }
+
+  /* Logo-wrap øverst på kortet */
+  .answer-card-logo {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    transition: color 0.25s, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .answer-card-logo svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  /* Tale-kort: blå tone */
+  .answer-card[data-q1="tale"] .answer-card-logo,
+  .answer-card[data-q1="tale"] .answer-card-num {
+    color: var(--cat-tale);
+  }
+  .answer-card[data-q1="tale"]:hover {
+    border-color: var(--cat-tale);
+  }
+  .answer-card[data-q1="tale"]:hover .answer-card-title {
+    color: var(--cat-tale);
+  }
+  .answer-card[data-q1="tale"]:hover .answer-card-logo {
+    transform: translateY(-2px);
+  }
+  .answer-card[data-q1="tale"]::before {
+    background: var(--cat-tale);
+  }
+  .answer-card[data-q1="tale"].selected {
+    border-color: var(--cat-tale);
+    background: color-mix(in srgb, var(--cat-tale) 6%, var(--bg-elev));
+  }
+  .answer-card[data-q1="tale"].selected .answer-card-title {
+    color: var(--cat-tale);
+  }
+
+  /* Fest-kort: orange tone */
+  .answer-card[data-q1="fest"] .answer-card-logo,
+  .answer-card[data-q1="fest"] .answer-card-num {
+    color: var(--cat-fest);
+  }
+  .answer-card[data-q1="fest"]:hover {
+    border-color: var(--cat-fest);
+  }
+  .answer-card[data-q1="fest"]:hover .answer-card-title {
+    color: var(--cat-fest);
+  }
+  .answer-card[data-q1="fest"]:hover .answer-card-logo {
+    transform: translateY(-2px) rotate(-3deg);
+  }
+  .answer-card[data-q1="fest"]::before {
+    background: var(--cat-fest);
+  }
+  .answer-card[data-q1="fest"].selected {
+    border-color: var(--cat-fest);
+    background: color-mix(in srgb, var(--cat-fest) 6%, var(--bg-elev));
+  }
+  .answer-card[data-q1="fest"].selected .answer-card-title {
+    color: var(--cat-fest);
+  }
+
+  /* Koncert-kort: lilla tone */
+  .answer-card[data-q1="koncert"] .answer-card-logo,
+  .answer-card[data-q1="koncert"] .answer-card-num {
+    color: var(--cat-koncert);
+  }
+  .answer-card[data-q1="koncert"]:hover {
+    border-color: var(--cat-koncert);
+  }
+  .answer-card[data-q1="koncert"]:hover .answer-card-title {
+    color: var(--cat-koncert);
+  }
+  .answer-card[data-q1="koncert"]:hover .answer-card-logo {
+    transform: scale(1.05);
+  }
+  .answer-card[data-q1="koncert"]::before {
+    background: var(--cat-koncert);
+  }
+  .answer-card[data-q1="koncert"].selected {
+    border-color: var(--cat-koncert);
+    background: color-mix(in srgb, var(--cat-koncert) 6%, var(--bg-elev));
+  }
+  .answer-card[data-q1="koncert"].selected .answer-card-title {
+    color: var(--cat-koncert);
+  }
+
+  /* Smooth transition på alle title-farveskift */
+  .answer-card-title {
+    transition: color 0.25s;
+  }
+
+  /* ─── KONCERT-TYPE (lyttekoncert vs dansekoncert) ─── */
+  /* Bruger samme lilla tone som "live-musik"-valget for visuel kontinuitet */
+  .answer-card[data-q3b] .answer-card-logo,
+  .answer-card[data-q3b] .answer-card-num {
+    color: var(--cat-koncert);
+  }
+  .answer-card[data-q3b]:hover {
+    border-color: var(--cat-koncert);
+  }
+  .answer-card[data-q3b]::before {
+    background: var(--cat-koncert);
+  }
+  .answer-card[data-q3b].selected {
+    border-color: var(--cat-koncert);
+    background: color-mix(in srgb, var(--cat-koncert) 6%, var(--bg-elev));
+  }
+
+  /* Når en kategori er valgt, farves anbefalingen i den tone */
+  .recommendation[data-cat="tale"] {
+    border-color: var(--cat-tale);
+    background: linear-gradient(135deg, var(--bg-elev) 0%, color-mix(in srgb, var(--cat-tale) 4%, var(--bg-elev)) 100%);
+  }
+  .recommendation[data-cat="tale"] .recommendation-label,
+  .recommendation[data-cat="tale"] .recommendation-price,
+  .recommendation[data-cat="tale"] .recommendation-section li::before,
+  .recommendation[data-cat="tale"] .recommendation-meta-item::before {
+    color: var(--cat-tale);
+  }
+  .recommendation[data-cat="tale"] .recommendation-label::before,
+  .recommendation[data-cat="tale"] .recommendation-label::after,
+  .recommendation[data-cat="tale"] .recommendation-meta-item::before {
+    background: var(--cat-tale);
+  }
+
+  .recommendation[data-cat="fest"] {
+    border-color: var(--cat-fest);
+    background: linear-gradient(135deg, var(--bg-elev) 0%, color-mix(in srgb, var(--cat-fest) 4%, var(--bg-elev)) 100%);
+  }
+  .recommendation[data-cat="fest"] .recommendation-label,
+  .recommendation[data-cat="fest"] .recommendation-price,
+  .recommendation[data-cat="fest"] .recommendation-section li::before,
+  .recommendation[data-cat="fest"] .recommendation-meta-item::before {
+    color: var(--cat-fest);
+  }
+  .recommendation[data-cat="fest"] .recommendation-label::before,
+  .recommendation[data-cat="fest"] .recommendation-label::after,
+  .recommendation[data-cat="fest"] .recommendation-meta-item::before {
+    background: var(--cat-fest);
+  }
+
+  .recommendation[data-cat="koncert"] {
+    border-color: var(--cat-koncert);
+    background: linear-gradient(135deg, var(--bg-elev) 0%, color-mix(in srgb, var(--cat-koncert) 4%, var(--bg-elev)) 100%);
+  }
+  .recommendation[data-cat="koncert"] .recommendation-label,
+  .recommendation[data-cat="koncert"] .recommendation-price,
+  .recommendation[data-cat="koncert"] .recommendation-section li::before,
+  .recommendation[data-cat="koncert"] .recommendation-meta-item::before {
+    color: var(--cat-koncert);
+  }
+  .recommendation[data-cat="koncert"] .recommendation-label::before,
+  .recommendation[data-cat="koncert"] .recommendation-label::after,
+  .recommendation[data-cat="koncert"] .recommendation-meta-item::before {
+    background: var(--cat-koncert);
+  }
+
+  /* "Start forfra"-knap i simple mode (efter anbefaling) */
+  .restart-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 10px 18px;
+    border-radius: var(--radius-sm);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+    margin-top: 24px;
+  }
+  .restart-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
 </style>
 </head>
 <body>
@@ -689,20 +1225,312 @@
   <div class="container">
     <div class="page-label">// YDELSER &amp; PAKKER</div>
     <h1 class="page-title">
-      Byg din pakke. <span class="accent">Få et estimat.</span>
+      Find den rigtige <span class="accent">pakke.</span>
     </h1>
     <p class="page-sub">
-      Vælg en standard-pakke eller byg din egen. Du kan leje udstyret og afvikle selv, eller få os med til opsætning og afvikling. Send forespørgslen som mail-udkast med ét klik — alle priser er <strong style="color: var(--text);">vejledende</strong>.
+      Lad os hjælpe dig med at finde den rigtige løsning på 30 sekunder. Eller hop direkte til den fulde pakke-oversigt hvis du allerede ved hvad du har brug for.
     </p>
 
-    <div class="steps" role="navigation" aria-label="Trin">
+    <!-- ═══════ MODE-TABS ═══════ -->
+    <div class="mode-tabs-wrap">
+      <div class="mode-tabs" role="tablist" aria-label="Vælg hvordan du vil finde din pakke">
+        <button type="button" class="mode-tab active" data-mode="simple" role="tab" aria-selected="true">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Hjælp mig vælge
+        </button>
+        <button type="button" class="mode-tab" data-mode="advanced" role="tab" aria-selected="false">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Se alle pakker
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ════════════════════════════════════════════════════════════════
+     SIMPLE MODE — guidet flow (default)
+═══════════════════════════════════════════════════════════════════ -->
+
+<section class="simple-mode" id="simple-mode" aria-labelledby="simple-mode-title">
+
+  <div class="container">
+
+    <!-- ─── SPØRGSMÅL 1 ─── -->
+    <div class="question-block active" data-question="1" id="question-1">
+      <span class="step-num-old-q">// Spørgsmål 1 af 3</span>
+      <h2 class="question-title" id="simple-mode-title">Hvilken type <span class="accent">arrangement</span>?</h2>
+      <p class="question-sub">Vælg det der ligger tættest på dit event — du kan altid skifte senere.</p>
+
+      <div class="answer-grid">
+        <button type="button" class="answer-card" data-q1="tale">
+          <div class="answer-card-logo" aria-hidden="true">
+            <!-- TALE-LOGO: Mikrofon med bracket-frame — sender beskeden ud -->
+            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">
+              <!-- Bracket-frame, signatur fra LYDSTYRKEN logo -->
+              <path d="M8 8 L4 8 L4 56 L8 56" />
+              <path d="M56 8 L60 8 L60 56 L56 56" />
+              <!-- Mikrofon-stick (rektangel) -->
+              <rect x="28" y="14" width="8" height="20" rx="0" />
+              <!-- Mikrofon-stand -->
+              <line x1="32" y1="34" x2="32" y2="46" />
+              <line x1="22" y1="46" x2="42" y2="46" />
+              <!-- Lyd-bølger der stråler ud -->
+              <line x1="20" y1="22" x2="14" y2="22" opacity="0.5" />
+              <line x1="44" y1="22" x2="50" y2="22" opacity="0.5" />
+              <line x1="22" y1="16" x2="18" y2="12" opacity="0.3" />
+              <line x1="42" y1="16" x2="46" y2="12" opacity="0.3" />
+            </svg>
+          </div>
+          <div class="answer-card-num">01</div>
+          <div class="answer-card-title">Tale &amp; foredrag</div>
+          <div class="answer-card-desc">Konference, foredrag, oplæg, taler. Folk skal kunne høre — ikke nødvendigvis danse.</div>
+        </button>
+
+        <button type="button" class="answer-card" data-q1="fest">
+          <div class="answer-card-logo" aria-hidden="true">
+            <!-- FEST-LOGO: PA-højttaler med energi-bølger — kommer fra anlægget, ud i rummet -->
+            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">
+              <!-- Bracket-frame -->
+              <path d="M8 8 L4 8 L4 56 L8 56" />
+              <path d="M56 8 L60 8 L60 56 L56 56" />
+              <!-- Højttaler kabinet -->
+              <rect x="20" y="14" width="24" height="36" rx="0" />
+              <!-- Højttaler driver (stor cirkel = bass) -->
+              <circle cx="32" cy="36" r="7" />
+              <circle cx="32" cy="36" r="2.5" fill="currentColor" />
+              <!-- Tweeter (lille cirkel øverst) -->
+              <circle cx="32" cy="22" r="3" />
+              <!-- Energi/bass-bølger -->
+              <line x1="14" y1="38" x2="10" y2="38" opacity="0.6" />
+              <line x1="50" y1="38" x2="54" y2="38" opacity="0.6" />
+              <line x1="14" y1="32" x2="11" y2="29" opacity="0.4" />
+              <line x1="50" y1="32" x2="53" y2="29" opacity="0.4" />
+              <line x1="14" y1="44" x2="11" y2="47" opacity="0.4" />
+              <line x1="50" y1="44" x2="53" y2="47" opacity="0.4" />
+            </svg>
+          </div>
+          <div class="answer-card-num">02</div>
+          <div class="answer-card-title">Fest &amp; dans</div>
+          <div class="answer-card-desc">Bryllup, fødselsdag, fest, reception. Stemning, baggrundsmusik og lyd der kan skrues op.</div>
+        </button>
+
+        <button type="button" class="answer-card" data-q1="koncert">
+          <div class="answer-card-logo" aria-hidden="true">
+            <!-- KONCERT-LOGO: Waveform mellem to brackets — den live-lyd der spilles -->
+            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">
+              <!-- Bracket-frame -->
+              <path d="M8 8 L4 8 L4 56 L8 56" />
+              <path d="M56 8 L60 8 L60 56 L56 56" />
+              <!-- Waveform — opret-linjer der danner lyd-mønster -->
+              <line x1="14" y1="32" x2="14" y2="32" />
+              <line x1="18" y1="28" x2="18" y2="36" />
+              <line x1="22" y1="22" x2="22" y2="42" />
+              <line x1="26" y1="26" x2="26" y2="38" />
+              <line x1="30" y1="16" x2="30" y2="48" />
+              <line x1="34" y1="20" x2="34" y2="44" />
+              <line x1="38" y1="24" x2="38" y2="40" />
+              <line x1="42" y1="14" x2="42" y2="50" />
+              <line x1="46" y1="26" x2="46" y2="38" />
+              <line x1="50" y1="30" x2="50" y2="34" />
+            </svg>
+          </div>
+          <div class="answer-card-num">03</div>
+          <div class="answer-card-title">Live-musik</div>
+          <div class="answer-card-desc">Koncert, band, sangaften. Der skal lyttes — med vokal, instrumenter og monitor.</div>
+        </button>
+      </div>
+    </div>
+
+    <!-- ─── SPØRGSMÅL 1b — kun synlig hvis koncert er valgt ─── -->
+    <div class="question-block" data-question="1b" id="question-1b">
+      <span class="step-num-old-q">// Hvilken slags koncert?</span>
+      <h2 class="question-title">Hvilken <span class="accent">slags</span> koncert?</h2>
+      <p class="question-sub">Det vigtigste tekniske valg: skal anlægget kunne overdøve et syngende publikum, eller er det stille lytning?</p>
+
+      <div class="answer-grid two-col">
+        <button type="button" class="answer-card" data-q3b="lyttekoncert">
+          <div class="answer-card-logo" aria-hidden="true">
+            <!-- LYTTEKONCERT-LOGO: små, præcise lydbølger fra én scene-kilde -->
+            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">
+              <path d="M8 8 L4 8 L4 56 L8 56" />
+              <path d="M56 8 L60 8 L60 56 L56 56" />
+              <!-- En central scene/kilde -->
+              <circle cx="32" cy="32" r="4" fill="currentColor" />
+              <!-- Forsigtige, præcise bølger -->
+              <path d="M22 32 Q22 26 26 24" />
+              <path d="M42 32 Q42 26 38 24" />
+              <path d="M22 32 Q22 38 26 40" />
+              <path d="M42 32 Q42 38 38 40" />
+              <!-- Yderbølger (svagere) -->
+              <path d="M16 32 Q16 22 24 18" opacity="0.4" />
+              <path d="M48 32 Q48 22 40 18" opacity="0.4" />
+            </svg>
+          </div>
+          <div class="answer-card-num">01</div>
+          <div class="answer-card-title">Lyttekoncert</div>
+          <div class="answer-card-desc">Publikum sidder eller står stille og lytter. Sangerinden/bandet kan høres klart — der skal ikke overdøves noget.</div>
+        </button>
+        <button type="button" class="answer-card" data-q3b="dansekoncert">
+          <div class="answer-card-logo" aria-hidden="true">
+            <!-- DANSEKONCERT-LOGO: kraftige, energiske bølger med sub-bass cirkel -->
+            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">
+              <path d="M8 8 L4 8 L4 56 L8 56" />
+              <path d="M56 8 L60 8 L60 56 L56 56" />
+              <!-- Sub-bass: stor fyldt cirkel -->
+              <circle cx="32" cy="32" r="8" fill="currentColor" />
+              <!-- Energiske bølger udad -->
+              <circle cx="32" cy="32" r="14" opacity="0.7" />
+              <circle cx="32" cy="32" r="20" opacity="0.4" />
+              <circle cx="32" cy="32" r="26" opacity="0.2" />
+            </svg>
+          </div>
+          <div class="answer-card-num">02</div>
+          <div class="answer-card-title">Dansekoncert</div>
+          <div class="answer-card-desc">Publikum synger med, danser, festen er i gang. Anlægget skal kunne overdøve dem — kraftig PA og sub-bass.</div>
+        </button>
+      </div>
+    </div>
+
+    <!-- ─── SPØRGSMÅL 2 ─── -->
+    <div class="question-block" data-question="2" id="question-2">
+      <span class="step-num-old-q">// Spørgsmål 2 af 3</span>
+      <h2 class="question-title">Hvor <span class="accent">stort</span> er det?</h2>
+      <p class="question-sub">Cirka antal gæster eller publikummer. Du behøver ikke være præcis.</p>
+
+      <div class="answer-grid">
+        <button type="button" class="answer-card" data-q2="lille">
+          <div class="answer-card-num">01</div>
+          <div class="answer-card-title">Under 100</div>
+          <div class="answer-card-desc">Mindre forsamling — mindre venue, intim ramme.</div>
+        </button>
+        <button type="button" class="answer-card" data-q2="mellem">
+          <div class="answer-card-num">02</div>
+          <div class="answer-card-title">100 – 300</div>
+          <div class="answer-card-desc">Mellemstort event — klassisk konference- eller fest-størrelse.</div>
+        </button>
+        <button type="button" class="answer-card" data-q2="stor">
+          <div class="answer-card-num">03</div>
+          <div class="answer-card-title">300 – 500</div>
+          <div class="answer-card-desc">Større venue — kræver mere PA-kraft og evt. flere mikrofoner.</div>
+        </button>
+        <button type="button" class="answer-card" data-q2="kaempe">
+          <div class="answer-card-num">04</div>
+          <div class="answer-card-title">500+</div>
+          <div class="answer-card-desc">Stort event eller festival — skaleret løsning, evt. flere højttaler-zoner.</div>
+        </button>
+      </div>
+    </div>
+
+    <!-- ─── SPØRGSMÅL 3 ─── -->
+    <div class="question-block" data-question="3" id="question-3">
+      <span class="step-num-old-q">// Spørgsmål 3 af 3</span>
+      <h2 class="question-title">Skal vi være med på <span class="accent">dagen</span>?</h2>
+      <p class="question-sub">Vi kan enten levere udstyret og lade dig klare resten — eller komme med selv og tage hele afviklingen.</p>
+
+      <div class="answer-grid two-col">
+        <button type="button" class="answer-card" data-q3="afvikling">
+          <div class="answer-card-logo" aria-hidden="true">
+            <!-- "Vi gør det" — to figurer foran en pult -->
+            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">
+              <path d="M8 8 L4 8 L4 56 L8 56" />
+              <path d="M56 8 L60 8 L60 56 L56 56" />
+              <!-- Mixerpult -->
+              <rect x="14" y="38" width="36" height="14" />
+              <line x1="20" y1="42" x2="20" y2="48" />
+              <line x1="26" y1="42" x2="26" y2="48" />
+              <line x1="32" y1="42" x2="32" y2="48" />
+              <line x1="38" y1="42" x2="38" y2="48" />
+              <line x1="44" y1="42" x2="44" y2="48" />
+              <!-- To personer over pulten -->
+              <circle cx="24" cy="22" r="4" />
+              <line x1="24" y1="26" x2="24" y2="36" />
+              <circle cx="40" cy="22" r="4" />
+              <line x1="40" y1="26" x2="40" y2="36" />
+            </svg>
+          </div>
+          <div class="answer-card-num">01 — Mest valgte</div>
+          <div class="answer-card-title">Ja tak — kør på</div>
+          <div class="answer-card-desc">Vi sætter op før eventet, er tilstede under afviklingen og pakker ned bagefter. Du skal bare være vært.</div>
+        </button>
+        <button type="button" class="answer-card" data-q3="udlejning">
+          <div class="answer-card-logo" aria-hidden="true">
+            <!-- "Du klarer det" — kasse med stropper -->
+            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">
+              <path d="M8 8 L4 8 L4 56 L8 56" />
+              <path d="M56 8 L60 8 L60 56 L56 56" />
+              <!-- Flightcase -->
+              <rect x="16" y="20" width="32" height="28" />
+              <!-- Lukke-stropper -->
+              <line x1="22" y1="20" x2="22" y2="48" />
+              <line x1="42" y1="20" x2="42" y2="48" />
+              <!-- Håndtag -->
+              <rect x="28" y="14" width="8" height="6" />
+              <!-- Hjul nederst -->
+              <circle cx="22" cy="52" r="2" fill="currentColor" />
+              <circle cx="42" cy="52" r="2" fill="currentColor" />
+            </svg>
+          </div>
+          <div class="answer-card-num">02</div>
+          <div class="answer-card-title">Nej, vi klarer det selv</div>
+          <div class="answer-card-desc">Du henter (eller får leveret) udstyret og afvikler selv. Vi giver en kort gennemgang og er på telefonen hvis det driller.</div>
+        </button>
+      </div>
+    </div>
+
+    <!-- ─── ANBEFALING (vises efter alle 3 spørgsmål) ─── -->
+    <div class="recommendation" id="recommendation" aria-live="polite">
+      <div class="recommendation-label">Vi anbefaler</div>
+      <h3 class="recommendation-name" id="rec-name">—</h3>
+      <div class="recommendation-meta" id="rec-meta">
+        <span class="recommendation-meta-item" id="rec-size">—</span>
+        <span class="recommendation-meta-item" id="rec-service">—</span>
+      </div>
+      <div class="recommendation-price" id="rec-price">—</div>
+      <p class="recommendation-price-note">Vejledende startpris — endelig pris afhænger af venue, transport og dato.</p>
+
+      <div class="recommendation-grid">
+        <div class="recommendation-section">
+          <h4>// Inkluderet udstyr</h4>
+          <ul id="rec-gear"></ul>
+        </div>
+        <div class="recommendation-section" id="rec-service-section">
+          <h4>// Inkluderet service</h4>
+          <ul id="rec-service-list"></ul>
+        </div>
+      </div>
+
+      <div class="recommendation-actions">
+        <a href="#" class="btn btn-primary" id="rec-send-btn">
+          Send forespørgsel
+          <span class="arrow">→</span>
+        </a>
+        <button type="button" class="btn btn-secondary" id="rec-customize-btn">
+          Tilpas yderligere
+        </button>
+      </div>
+
+      <button type="button" class="restart-btn" id="rec-restart-btn">
+        ↺ Start forfra
+      </button>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════════════════════════════
+     AVANCERET MODE — den fulde konfigurator (skjult som default)
+═══════════════════════════════════════════════════════════════════ -->
+
+<div class="advanced-mode" id="advanced-mode">
+  <div class="container">
+    <div class="steps" role="navigation" aria-label="Trin" style="margin-top: 32px;">
       <div class="step-pill active" id="step-pill-1"><span class="step-num">01</span> Vælg pakke</div>
       <div class="step-pill" id="step-pill-2"><span class="step-num">02</span> Tilvalg</div>
       <div class="step-pill" id="step-pill-3"><span class="step-num">03</span> Event-info</div>
       <div class="step-pill" id="step-pill-4"><span class="step-num">04</span> Send forespørgsel</div>
     </div>
   </div>
-</header>
 
 <section class="step-section" id="step-1">
   <div class="container">
@@ -799,6 +1627,8 @@
     </div>
   </div>
 </section>
+
+</div> <!-- /.advanced-mode -->
 
 </main>
 
@@ -1504,7 +2334,299 @@
     return `mailto:marius@lydstyrken.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   }
 
+  // ════════════════════════════════════════════════════════════════
+  //   SIMPLE MODE — guidet flow med 3 (eller 4 ved koncert) spørgsmål
+  // ════════════════════════════════════════════════════════════════
+
+  // Svar fra brugeren på spørgsmålene
+  const simpleState = {
+    q1: null,   // 'tale' | 'fest' | 'koncert'
+    q1b: null,  // KUN hvis q1 = 'koncert': 'lyttekoncert' | 'dansekoncert'
+    q2: null,   // 'lille' | 'mellem' | 'stor' | 'kaempe'
+    q3: null    // 'afvikling' | 'udlejning'
+  };
+
+  // Mapping: (kategori, størrelse) → pakke-ID
+  // For koncert er "kategori" enten 'lyttekoncert' eller 'dansekoncert'
+  const SIMPLE_TO_PACKAGE = {
+    // Tale (foredrag, konference)
+    'tale-lille':    'tale-lille',
+    'tale-mellem':   'tale-mellem',
+    'tale-stor':     'tale-stor',
+    'tale-kaempe':   'tale-overdoevende',
+
+    // Fest (bryllup, fødselsdag)
+    'fest-lille':    'fest-lille',
+    'fest-mellem':   'fest-mellem',
+    'fest-stor':     'fest-stor',
+    'fest-kaempe':   'fest-kaempe',
+
+    // Lyttekoncert (publikum lytter — bruger Lyttekoncert-pakker)
+    'lyttekoncert-lille':  'koncert-lille',
+    'lyttekoncert-mellem': 'koncert-mellem',
+    'lyttekoncert-stor':   'koncert-stor',
+    'lyttekoncert-kaempe': 'koncert-stor',  // Vi har ikke kæmpe-lyttekoncert
+
+    // Dansekoncert (publikum festen — bruger Fest-pakker fordi de har sub-bass-kraft)
+    'dansekoncert-lille':  'fest-lille',
+    'dansekoncert-mellem': 'fest-mellem',
+    'dansekoncert-stor':   'fest-stor',
+    'dansekoncert-kaempe': 'fest-kaempe',
+  };
+
+  // Returnerer den effektive kategori brugt i mapping ('tale', 'fest', 'lyttekoncert', 'dansekoncert')
+  function getEffectiveCategory() {
+    if (simpleState.q1 === 'koncert') return simpleState.q1b;
+    return simpleState.q1;
+  }
+
+  // Tjek om brugeren har besvaret nok til at vi kan beregne anbefaling
+  function hasAllAnswers() {
+    if (!simpleState.q1 || !simpleState.q2 || !simpleState.q3) return false;
+    // Hvis koncert er valgt, kræver vi også q1b
+    if (simpleState.q1 === 'koncert' && !simpleState.q1b) return false;
+    return true;
+  }
+
+  // Vis et bestemt spørgsmål med animation
+  function showQuestion(num) {
+    const q = document.querySelector(`.question-block[data-question="${num}"]`);
+    if (!q) return;
+    q.classList.add('active');
+    setTimeout(() => {
+      q.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+
+  // Skjul et spørgsmål (bruges når brugeren skifter væk fra koncert)
+  function hideQuestion(num) {
+    const q = document.querySelector(`.question-block[data-question="${num}"]`);
+    if (!q) return;
+    q.classList.remove('active');
+    q.classList.remove('answered');
+  }
+
+  // Markér det valgte svar visuelt
+  function markSelected(questionNum, value) {
+    const dataAttr = `q${questionNum}`;
+    document.querySelectorAll(`.question-block[data-question="${questionNum}"] .answer-card`).forEach(card => {
+      card.classList.toggle('selected', card.dataset[dataAttr] === value);
+    });
+    document.querySelector(`.question-block[data-question="${questionNum}"]`).classList.add('answered');
+  }
+
+  // Når alle spørgsmål er besvaret — beregn anbefaling og vis
+  function computeRecommendation() {
+    if (!hasAllAnswers()) return;
+
+    const effectiveCat = getEffectiveCategory();
+    const lookupKey = `${effectiveCat}-${simpleState.q2}`;
+    let packageId = SIMPLE_TO_PACKAGE[lookupKey];
+    if (!packageId) return;
+
+    let pkg = PACKAGES.find(p => p.id === packageId);
+    if (!pkg) return;
+
+    // Tjek om den valgte service-mode er tilgængelig for denne pakke
+    let serviceMode = simpleState.q3;
+    let price = pkg.prices[serviceMode];
+
+    // Hvis service-mode ikke er tilgængelig, fald tilbage til den anden mode
+    if (price === null) {
+      const fallbackMode = serviceMode === 'afvikling' ? 'udlejning' : 'afvikling';
+      const fallbackPrice = pkg.prices[fallbackMode];
+      if (fallbackPrice !== null) {
+        serviceMode = fallbackMode;
+        price = fallbackPrice;
+      }
+    }
+
+    // Sæt state så advanced-mode er klar til "Tilpas yderligere"
+    state.serviceMode = serviceMode;
+    state.selectedPackage = pkg.id;
+    state.packageCategory = 'alle';
+
+    // Render anbefalingen — overgiv også q1 så vi kan farve den korrekt
+    renderRecommendation(pkg, serviceMode, price, simpleState.q1);
+  }
+
+  function renderRecommendation(pkg, serviceMode, price, category) {
+    document.getElementById('rec-name').textContent = pkg.name;
+
+    document.getElementById('rec-size').textContent = pkg.tag;
+    document.getElementById('rec-service').textContent =
+      serviceMode === 'afvikling' ? 'Med afvikling' : 'Kun udlejning';
+
+    // Sæt kategori-farve på anbefalingen
+    const rec = document.getElementById('recommendation');
+    rec.dataset.cat = category;
+
+    // Pris
+    const priceEl = document.getElementById('rec-price');
+    if (pkg.prices.onRequest && serviceMode === 'afvikling') {
+      priceEl.innerHTML = 'På forespørgsel';
+    } else {
+      priceEl.innerHTML = `<span class="recommendation-price-from">FRA</span>${formatKr(price)}`;
+    }
+
+    // Udstyr
+    const gearList = document.getElementById('rec-gear');
+    gearList.innerHTML = pkg.gear.map(g => `<li>${escapeHtml(g)}</li>`).join('');
+
+    // Service
+    const serviceList = document.getElementById('rec-service-list');
+    if (serviceMode === 'afvikling' && !pkg.buildable) {
+      serviceList.innerHTML = `
+        <li>Opsætning før eventet</li>
+        <li>Tekniker tilstede under afviklingen</li>
+        <li>Nedpakning bagefter</li>
+        <li>Du skal bare være vært</li>
+      `;
+    } else {
+      serviceList.innerHTML = `
+        <li>Du henter eller får leveret udstyret</li>
+        <li>Kort gennemgang ved afhentning</li>
+        <li>Vi er på telefonen hvis du har brug for hjælp</li>
+      `;
+    }
+
+    // Vis anbefaling
+    rec.classList.add('show');
+    setTimeout(() => {
+      rec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 200);
+  }
+
+  function setupSimpleMode() {
+    // Spørgsmål 1: type
+    document.querySelectorAll('[data-q1]').forEach(card => {
+      card.addEventListener('click', () => {
+        const newQ1 = card.dataset.q1;
+        const wasKoncert = simpleState.q1 === 'koncert';
+        simpleState.q1 = newQ1;
+        markSelected(1, simpleState.q1);
+
+        if (newQ1 === 'koncert') {
+          // Vis q1b (koncert-type)
+          showQuestion('1b');
+        } else {
+          // Skjul q1b og ryd q1b-state hvis man havde valgt koncert tidligere
+          if (wasKoncert) {
+            simpleState.q1b = null;
+            hideQuestion('1b');
+            document.querySelectorAll('[data-q3b]').forEach(c => c.classList.remove('selected'));
+          }
+          // Spring direkte til q2 hvis ikke besvaret
+          if (!simpleState.q2) showQuestion(2);
+        }
+
+        if (hasAllAnswers()) computeRecommendation();
+      });
+    });
+
+    // Spørgsmål 1b: koncert-type (kun synlig hvis q1 = koncert)
+    document.querySelectorAll('[data-q3b]').forEach(card => {
+      card.addEventListener('click', () => {
+        simpleState.q1b = card.dataset.q3b;
+        // Markér i blokken med data-question="1b"
+        document.querySelectorAll('.question-block[data-question="1b"] .answer-card').forEach(c => {
+          c.classList.toggle('selected', c.dataset.q3b === simpleState.q1b);
+        });
+        document.querySelector('.question-block[data-question="1b"]').classList.add('answered');
+
+        if (!simpleState.q2) showQuestion(2);
+        if (hasAllAnswers()) computeRecommendation();
+      });
+    });
+
+    // Spørgsmål 2: størrelse
+    document.querySelectorAll('[data-q2]').forEach(card => {
+      card.addEventListener('click', () => {
+        simpleState.q2 = card.dataset.q2;
+        markSelected(2, simpleState.q2);
+        if (!simpleState.q3) showQuestion(3);
+        if (hasAllAnswers()) computeRecommendation();
+      });
+    });
+
+    // Spørgsmål 3: service-mode
+    document.querySelectorAll('[data-q3]').forEach(card => {
+      card.addEventListener('click', () => {
+        simpleState.q3 = card.dataset.q3;
+        markSelected(3, simpleState.q3);
+        if (hasAllAnswers()) computeRecommendation();
+      });
+    });
+
+    // "Send forespørgsel" på anbefalingen
+    document.getElementById('rec-send-btn').addEventListener('click', (e) => {
+      e.preventDefault();
+      if (!state.selectedPackage) return;
+      window.location.href = buildMailtoLink();
+    });
+
+    // "Tilpas yderligere" — skift til avanceret mode
+    document.getElementById('rec-customize-btn').addEventListener('click', () => {
+      switchToMode('advanced');
+      renderPackages();
+      updateSummary();
+      setTimeout(() => {
+        document.getElementById('step-2').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 300);
+    });
+
+    // "Start forfra"
+    document.getElementById('rec-restart-btn').addEventListener('click', () => {
+      simpleState.q1 = null;
+      simpleState.q1b = null;
+      simpleState.q2 = null;
+      simpleState.q3 = null;
+      document.querySelectorAll('.answer-card').forEach(c => c.classList.remove('selected'));
+      document.querySelectorAll('.question-block').forEach((q) => {
+        q.classList.remove('answered');
+        const qNum = q.dataset.question;
+        if (qNum === '1') q.classList.add('active');
+        else q.classList.remove('active');
+      });
+      const rec = document.getElementById('recommendation');
+      rec.classList.remove('show');
+      delete rec.dataset.cat;
+      document.getElementById('question-1').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
+  // ════════════════════════════════════════════════════════════════
+  //   MODE-TABS — skift mellem simple og advanced
+  // ════════════════════════════════════════════════════════════════
+
+  function switchToMode(mode) {
+    document.body.dataset.mode = mode;
+    document.querySelectorAll('.mode-tab').forEach(t => {
+      const isActive = t.dataset.mode === mode;
+      t.classList.toggle('active', isActive);
+      t.setAttribute('aria-selected', isActive);
+    });
+  }
+
+  function setupModeTabs() {
+    document.querySelectorAll('.mode-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        switchToMode(tab.dataset.mode);
+        if (tab.dataset.mode === 'advanced') {
+          // Scroll til toppen af advanced-mode
+          setTimeout(() => {
+            document.getElementById('advanced-mode').scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 100);
+        }
+      });
+    });
+    // Default: simple mode
+    document.body.dataset.mode = 'simple';
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
+    setupModeTabs();
+    setupSimpleMode();
     setupServiceModeToggle();
     setupCategoryFilter();
     renderPackages();

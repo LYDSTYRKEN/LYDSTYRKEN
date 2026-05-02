@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Tema-config: én linje styrer hele sitet (se theme-config.js) -->
-<script src="theme-config.js"></script>
+<!-- Tema-config: én linje styrer hele sitet (se theme.js) -->
+<script src="theme.js"></script>
 <title>[ LYDSTYRKEN ]</title>
 <meta name="description" content="LYDSTYRKEN leverer professionel lyd til events, koncerter og arrangementer i hele Danmark. Base i Odense.">
 
@@ -56,29 +56,54 @@
 </script>
 
 <style>
-  /* ═══════════════ SIDE-SPECIFIK CSS — kun forsiden ═══════════════ */
+  /* ═══════════════ FORSIDE — LYDSTYRKEN ═══════════════ */
+
+  .accent { color: var(--accent); }
+
+  /* ═══════════════ HERO — atmosfærisk uden distraktioner ═══════════════ */
 
   .hero {
-    padding: clamp(80px, 8vh, 160px) 0 clamp(100px, 10vh, 200px);
     position: relative;
+    min-height: 88vh;
+    display: flex;
+    align-items: center;
+    padding: clamp(80px, 8vh, 160px) 0 clamp(80px, 8vh, 140px);
+    overflow: hidden;
     z-index: 2;
-    animation: fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
-  @keyframes fade-up {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+  /* Atmosfærisk gradient — orange spotlight fra højre, statisk og rolig */
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -10%;
+    right: -10%;
+    width: 70%;
+    height: 120%;
+    background: radial-gradient(ellipse at center,
+      color-mix(in srgb, var(--accent) 22%, transparent) 0%,
+      color-mix(in srgb, var(--accent) 6%, transparent) 35%,
+      transparent 65%);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* Hero-indhold (over baggrunden) */
+  .hero .container {
+    position: relative;
+    z-index: 3;
   }
 
   .hero-label {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
+    font-size: clamp(11px, 0.85vw, 13px);
     color: var(--accent);
     letter-spacing: 0.25em;
     margin-bottom: 32px;
     display: inline-flex;
     align-items: center;
     gap: 12px;
+    text-transform: uppercase;
   }
   .hero-label::before {
     content: '';
@@ -90,8 +115,8 @@
   .hero-title {
     font-family: 'Montserrat', sans-serif;
     font-weight: 800;
-    font-size: clamp(48px, 10vw, 200px);
-    line-height: 0.95;
+    font-size: clamp(48px, 11vw, 200px);
+    line-height: 0.92;
     letter-spacing: -0.04em;
     margin-bottom: 32px;
     text-transform: uppercase;
@@ -116,14 +141,196 @@
     display: flex;
     gap: 16px;
     flex-wrap: wrap;
+    align-items: center;
   }
 
-  /* ─── Ydelser preview ─── */
-  #ydelser-preview { padding: 80px 0; }
+  /* ═══════════════ STATS-BAR ═══════════════ */
+
+  .stats-bar-section {
+    padding: 0 0 32px;
+    position: relative;
+    z-index: 5;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  @media (max-width: 700px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  .stat {
+    background: var(--bg-elev);
+    padding: clamp(28px, 3vw, 48px) clamp(20px, 2vw, 32px);
+    text-align: center;
+    position: relative;
+    transition: background 0.3s;
+  }
+  .stat:hover { background: var(--bg-elev-2); }
+  .stat::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 50%;
+    width: 0; height: 2px;
+    background: var(--accent);
+    transform: translateX(-50%);
+    transition: width 0.4s;
+  }
+  .stat:hover::after { width: 60%; }
+
+  .stat-num {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: clamp(36px, 4.5vw, 64px);
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 10px;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(10px, 0.75vw, 12px);
+    color: var(--text-muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  /* ═══════════════ LAGERSALG-PROMO ═══════════════ */
+
+  .lagersalg-promo {
+    padding: clamp(60px, 6vw, 100px) 0;
+    position: relative;
+  }
+
+  .lagersalg-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: clamp(32px, 4vw, 56px);
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 40px;
+    align-items: center;
+  }
+  @media (max-width: 800px) {
+    .lagersalg-card { grid-template-columns: 1fr; gap: 28px; }
+  }
+
+  /* "I gang"-badge øverst */
+  .lagersalg-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--green);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .lagersalg-badge::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: var(--green);
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--green);
+    animation: live-pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes live-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: 0.5; transform: scale(0.85); }
+  }
+
+  .lagersalg-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: clamp(28px, 3.5vw, 52px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .lagersalg-title .accent {
+    color: var(--accent);
+    font-style: italic;
+    font-weight: 400;
+    text-transform: lowercase;
+  }
+  .lagersalg-sub {
+    color: var(--text-dim);
+    font-size: clamp(15px, 1.1vw, 18px);
+    max-width: 520px;
+    line-height: 1.6;
+    margin-bottom: 28px;
+  }
+
+  .lagersalg-stats {
+    display: flex;
+    gap: 32px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+  .lagersalg-stat-num {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: clamp(28px, 2.5vw, 36px);
+    color: var(--accent);
+    line-height: 1;
+  }
+  .lagersalg-stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* SVG-illustration til højre */
+  .lagersalg-visual {
+    width: 280px;
+    height: 200px;
+    color: var(--accent);
+  }
+  @media (max-width: 800px) {
+    .lagersalg-visual { width: 100%; max-width: 320px; height: 160px; margin: 0 auto; }
+  }
+  .lagersalg-visual svg {
+    width: 100%;
+    height: 100%;
+  }
+  .lagersalg-visual .gear-line {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: square;
+  }
+  .lagersalg-visual .gear-fill {
+    fill: currentColor;
+    opacity: 0.15;
+  }
+  .lagersalg-visual .gear-tag {
+    fill: currentColor;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+  }
+
+  /* ═══════════════ YDELSER-PREVIEW ═══════════════ */
+
+  #ydelser-preview { padding: clamp(60px, 6vh, 100px) 0; position: relative; }
 
   .section-label {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
+    font-size: clamp(11px, 0.85vw, 13px);
     color: var(--text-muted);
     letter-spacing: 0.25em;
     text-transform: uppercase;
@@ -146,8 +353,6 @@
     text-transform: lowercase;
   }
 
-  .accent { color: var(--accent); }
-
   .services-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -156,12 +361,19 @@
   }
   @media (max-width: 800px) { .services-grid { grid-template-columns: 1fr; } }
 
+  /* Kategori-farver matchende ydelser-siden */
+  :root {
+    --cat-tale: #4a9eff;
+    --cat-fest: #ff4d2e;
+    --cat-koncert: #b388ff;
+  }
+
   .service-card {
     background: var(--bg-elev);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: clamp(28px, 2.5vw, 56px) clamp(24px, 2vw, 48px);
-    transition: border-color 0.3s, transform 0.3s;
+    padding: clamp(32px, 2.8vw, 56px) clamp(28px, 2.2vw, 48px);
+    transition: border-color 0.3s, transform 0.3s, background 0.3s;
     position: relative;
     overflow: hidden;
   }
@@ -171,21 +383,38 @@
     top: 0; left: 0;
     width: 0;
     height: 2px;
-    background: var(--accent);
+    background: var(--service-color, var(--accent));
     transition: width 0.4s;
   }
   .service-card:hover {
-    border-color: #3a3a40;
+    border-color: var(--service-color, var(--accent));
     transform: translateY(-4px);
   }
   .service-card:hover::before { width: 100%; }
+  .service-card[data-cat="tale"] { --service-color: var(--cat-tale); }
+  .service-card[data-cat="fest"] { --service-color: var(--cat-fest); }
+  .service-card[data-cat="koncert"] { --service-color: var(--cat-koncert); }
+
+  .service-icon {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 24px;
+    color: var(--service-color, var(--accent));
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .service-card:hover .service-icon { transform: translateY(-4px) scale(1.06); }
+  .service-icon svg {
+    width: 100%; height: 100%;
+    overflow: visible;
+  }
 
   .service-num {
     font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
-    color: var(--accent);
-    margin-bottom: 16px;
+    color: var(--service-color, var(--accent));
+    margin-bottom: 12px;
     display: block;
+    letter-spacing: 0.15em;
   }
 
   .service-title {
@@ -196,207 +425,224 @@
     letter-spacing: 0.02em;
     margin-bottom: 14px;
     line-height: 1.15;
+    transition: color 0.25s;
   }
+  .service-card:hover .service-title { color: var(--service-color, var(--accent)); }
 
   .service-card p {
     color: var(--text-dim);
     font-size: clamp(14px, 1.05vw, 17px);
     line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .service-card-footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: color 0.25s, gap 0.25s;
+  }
+  .service-card:hover .service-card-footer {
+    color: var(--service-color, var(--accent));
+    gap: 14px;
   }
 
   .services-cta { text-align: center; }
 
-  /* ─── Om preview ─── */
-  .about {
-    padding: 80px 0;
+  /* ═══════════════ "SÅDAN FOREGÅR DET" — proces ═══════════════ */
+
+  .process {
+    padding: clamp(80px, 7vh, 120px) 0;
     background: var(--bg-elev);
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    position: relative;
+  }
+  @media (max-width: 900px) {
+    .process-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  }
+  @media (max-width: 500px) {
+    .process-grid { grid-template-columns: 1fr; }
+  }
+
+  .process-step {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: clamp(28px, 2.5vw, 40px) clamp(24px, 2vw, 32px);
+    position: relative;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .process-step:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+  }
+
+  .process-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(36px, 3.5vw, 56px);
+    color: var(--accent);
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 20px;
+    opacity: 0.3;
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  .process-step:hover .process-num {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+
+  .process-icon {
+    width: 36px;
+    height: 36px;
+    margin-bottom: 16px;
+    color: var(--accent);
+  }
+
+  .process-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: clamp(17px, 1.4vw, 22px);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+
+  .process-step p {
+    color: var(--text-dim);
+    font-size: clamp(13px, 1vw, 15px);
+    line-height: 1.55;
+  }
+
+  /* ═══════════════ OM-PREVIEW ═══════════════ */
+
+  .about {
+    padding: clamp(80px, 7vh, 120px) 0;
+    position: relative;
   }
 
   .about-grid {
     display: grid;
-    grid-template-columns: 1fr 1.1fr;
-    gap: 64px;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(40px, 5vw, 80px);
     align-items: center;
   }
-  @media (max-width: 900px) {
-    .about-grid { grid-template-columns: 1fr; gap: 32px; }
-  }
+  @media (max-width: 900px) { .about-grid { grid-template-columns: 1fr; gap: 40px; } }
 
-  .about-image {
+  .about-visual {
     aspect-ratio: 4/5;
-    background:
-      linear-gradient(135deg, var(--bg-elev-2) 0%, var(--bg) 100%),
-      var(--bg-elev-2);
+    background: var(--bg-elev);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     position: relative;
     overflow: hidden;
-  }
-  .about-image::after {
-    content: '[ HOLDET ]';
-    position: absolute;
-    bottom: 24px;
-    left: 24px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    color: var(--text-muted);
-    letter-spacing: 0.2em;
-  }
-
-  .about p {
-    color: var(--text-dim);
-    font-size: 16px;
-    margin-bottom: 18px;
-    line-height: 1.7;
-  }
-  .about p:first-of-type { color: var(--text); font-size: 17px; }
-
-  .about-meta {
     display: flex;
-    gap: 32px;
+    align-items: center;
+    justify-content: center;
+  }
+  /* Geometrisk SVG-illustration som placeholder */
+  .about-visual::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(color-mix(in srgb, var(--accent) 5%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, var(--accent) 5%, transparent) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  .about-text p {
+    color: var(--text-dim);
+    font-size: clamp(16px, 1.15vw, 20px);
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+  .about-text p:first-child { color: var(--text); }
+
+  .about-cta {
     margin-top: 32px;
-    flex-wrap: wrap;
-  }
-
-  .meta-item {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
-    color: var(--text);
-    line-height: 1.5;
-  }
-  .meta-item span {
-    display: block;
-    color: var(--text-muted);
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-
-  /* ─── CTA-blok ─── */
-  .cta-block { padding: 100px 0; text-align: center; }
-
-  .cta-tag {
     display: inline-flex;
     align-items: center;
     gap: 10px;
     font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
     color: var(--accent);
-    letter-spacing: 0.15em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    margin-bottom: 32px;
-    padding: 8px 16px;
-    border: 1px solid var(--accent);
-    border-radius: 100px;
-    background: color-mix(in srgb, var(--accent) 5%, transparent);
+    text-decoration: none;
+    transition: gap 0.25s;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 4px;
   }
+  .about-cta:hover { gap: 16px; }
 
-  .live-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--accent);
-    animation: live 1.5s ease-in-out infinite;
-  }
-  @keyframes live {
-    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 var(--accent); }
-    50% { opacity: 0.5; box-shadow: 0 0 0 8px transparent; }
-  }
+  /* ═══════════════ KONTAKT-CTA ═══════════════ */
 
-  .cta-title {
+  .cta-block {
+    padding: clamp(80px, 8vh, 140px) 0;
+    text-align: center;
+    position: relative;
+  }
+  .cta-block::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80%;
+    height: 200%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(ellipse at center,
+      color-mix(in srgb, var(--accent) 10%, transparent) 0%,
+      transparent 50%);
+    z-index: 0;
+    pointer-events: none;
+  }
+  .cta-block .container { position: relative; z-index: 1; }
+
+  .cta-block h2 {
     font-family: 'Montserrat', sans-serif;
     font-weight: 800;
-    font-size: clamp(40px, 6vw, 72px);
+    font-size: clamp(36px, 6vw, 96px);
     line-height: 1;
     letter-spacing: -0.03em;
     margin-bottom: 24px;
     text-transform: uppercase;
   }
-  .cta-title .accent {
+  .cta-block h2 .accent {
     color: var(--accent);
     font-style: italic;
     font-weight: 400;
     text-transform: lowercase;
   }
-
-  .cta-sub {
+  .cta-block p {
     color: var(--text-dim);
-    font-size: 18px;
-    max-width: 560px;
+    font-size: clamp(16px, 1.2vw, 20px);
+    max-width: 580px;
     margin: 0 auto 40px;
   }
+  .cta-block .hero-actions {
+    justify-content: center;
+  }
 
-  .cta-big {
-    display: inline-flex;
-    align-items: center;
-    gap: 16px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 16px;
-    color: var(--text);
-    text-decoration: none;
-    padding: 22px 36px;
-    border: 1px solid var(--accent);
-    border-radius: var(--radius-sm);
-    background: color-mix(in srgb, var(--accent) 6%, transparent);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    transition: background 0.25s, transform 0.25s, color 0.25s, box-shadow 0.25s;
+  /* Reduced motion: stop alle animationer */
+  @media (prefers-reduced-motion: reduce) {
+    .stat-num.counting { transition: none; }
   }
-  .cta-big:hover {
-    background: var(--accent);
-    color: #0a0a0b;
-    transform: translateY(-2px);
-    box-shadow: 0 12px 30px var(--accent-glow);
-  }
-  .cta-big .arrow { transition: transform 0.25s; }
-  .cta-big:hover .arrow { transform: translateX(6px); }
-
-  /* ─── Kontakt-boks ─── */
-  .contact-box {
-    margin-top: 80px;
-    padding: 40px;
-    background: var(--bg-elev);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    align-items: center;
-    text-align: left;
-  }
-  @media (max-width: 700px) { .contact-box { grid-template-columns: 1fr; gap: 24px; } }
-
-  .contact-box h3 {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 22px;
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
-    margin-bottom: 8px;
-  }
-  .contact-box p { color: var(--text-dim); font-size: 14px; }
-
-  .contact-links {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  .contact-links a {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: var(--text);
-    text-decoration: none;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 14px;
-    transition: color 0.2s;
-  }
-  .contact-links a:hover { color: var(--accent); }
-  .contact-links svg { width: 18px; height: 18px; }
 </style>
 </head>
 <body>
@@ -419,7 +665,7 @@
       <a href="ydelser.html">Ydelser</a>
       <a href="om.html">Om os</a>
       <a href="kontakt.html">Kontakt</a>
-      <a href="lagersalg.html" class="btn-nav">Lagersalg →</a>
+      <a href="lagersalg.html" class="btn-nav">Lagersalg<span class="nav-arrow">→</span></a>
     </div>
     <button class="burger" id="burger" aria-label="Åbn menu" aria-expanded="false" aria-controls="mobile-menu">
       <span></span><span></span><span></span>
@@ -446,6 +692,10 @@
 
 <main id="main">
 
+<!-- ═══════════════════════════════════════════════════════════
+     HERO — atmosfærisk gradient, ren og rolig
+═══════════════════════════════════════════════════════════════ -->
+
 <header class="hero">
   <div class="container">
     <div class="hero-label">EST. ODENSE — DK</div>
@@ -454,11 +704,11 @@
       <span class="accent">løfter</span> rummet.
     </h1>
     <p class="hero-sub">
-      LYDSTYRKEN leverer professionel lyd til events, koncerter og arrangementer — fra intime gigs til festivalscener.
+      Vi rigger lyd op i hele Danmark — fra 30 mand til 1.000. Tale, fest, koncert. Du beskriver eventet, vi finder den rigtige løsning.
     </p>
     <div class="hero-actions">
       <a href="ydelser.html" class="btn btn-primary">
-        Se vores pakker
+        Få et estimat på 30 sek
         <span class="arrow">→</span>
       </a>
       <a href="lagersalg.html" class="btn btn-secondary">
@@ -468,99 +718,321 @@
   </div>
 </header>
 
+<!-- ═══════════════════════════════════════════════════════════
+     STATS-BAR — bygger tillid med konkrete tal
+═══════════════════════════════════════════════════════════════ -->
+
+<section class="stats-bar-section">
+  <div class="container">
+    <div class="stats-grid reveal">
+      <div class="stat">
+        <div class="stat-num" data-count-to="30" data-count-suffix="+">0</div>
+        <div class="stat-label">Events afviklet</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" data-count-to="5000" data-count-suffix="+" data-count-format="thousands">0</div>
+        <div class="stat-label">Publikummer</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" data-count-to="12" data-count-suffix="+">0</div>
+        <div class="stat-label">Bands &amp; artister</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">12<span style="font-size: 0.5em; opacity: 0.6; margin-left: 4px;">t</span></div>
+        <div class="stat-label">Svartid på mails</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     LAGERSALG-PROMO — prominent fordi det er aktivt
+═══════════════════════════════════════════════════════════════ -->
+
+<section class="lagersalg-promo">
+  <div class="container">
+    <div class="lagersalg-card reveal">
+      <div class="lagersalg-content">
+        <div class="lagersalg-badge">Budrunde i gang</div>
+        <h2 class="lagersalg-title">
+          Vi sælger ud af <span class="accent">lageret.</span>
+        </h2>
+        <p class="lagersalg-sub">
+          Højttalere, mikrofoner, kabler, mixerpulte. Privat udstyr og LYDSTYRKEN-gear til budrunde — alt skal væk.
+        </p>
+
+        <div class="lagersalg-stats">
+          <div>
+            <div class="lagersalg-stat-num" id="lagersalg-count">—</div>
+            <div class="lagersalg-stat-label">Items tilgængelige</div>
+          </div>
+          <div>
+            <div class="lagersalg-stat-num" style="color: var(--green);">●</div>
+            <div class="lagersalg-stat-label">Live nu</div>
+          </div>
+        </div>
+
+        <a href="lagersalg.html" class="btn btn-primary">
+          Gå til lagersalg
+          <span class="arrow">→</span>
+        </a>
+      </div>
+
+      <!-- SVG-illustration: stack af gear-kasser -->
+      <div class="lagersalg-visual" aria-hidden="true">
+        <svg viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg">
+          <!-- Bracket ramme -->
+          <path class="gear-line" d="M16 16 L8 16 L8 184 L16 184"/>
+          <path class="gear-line" d="M264 16 L272 16 L272 184 L264 184"/>
+
+          <!-- Stack #1 (venstre) -->
+          <rect class="gear-fill" x="40" y="120" width="60" height="48"/>
+          <rect class="gear-line" x="40" y="120" width="60" height="48"/>
+          <rect class="gear-fill" x="46" y="80" width="48" height="40"/>
+          <rect class="gear-line" x="46" y="80" width="48" height="40"/>
+          <circle class="gear-line" cx="70" cy="100" r="10"/>
+          <circle class="gear-fill" cx="70" cy="100" r="4"/>
+
+          <!-- Stack #2 (midt — højere) -->
+          <rect class="gear-fill" x="115" y="100" width="60" height="68"/>
+          <rect class="gear-line" x="115" y="100" width="60" height="68"/>
+          <rect class="gear-fill" x="120" y="50" width="50" height="50"/>
+          <rect class="gear-line" x="120" y="50" width="50" height="50"/>
+          <circle class="gear-line" cx="145" cy="75" r="12"/>
+          <circle class="gear-fill" cx="145" cy="75" r="4"/>
+          <circle class="gear-line" cx="145" cy="135" r="12"/>
+          <circle class="gear-fill" cx="145" cy="135" r="4"/>
+
+          <!-- Stack #3 (højre) -->
+          <rect class="gear-fill" x="190" y="115" width="55" height="53"/>
+          <rect class="gear-line" x="190" y="115" width="55" height="53"/>
+          <line class="gear-line" x1="200" y1="125" x2="235" y2="125"/>
+          <line class="gear-line" x1="200" y1="135" x2="235" y2="135"/>
+          <line class="gear-line" x1="200" y1="145" x2="235" y2="145"/>
+          <line class="gear-line" x1="200" y1="155" x2="220" y2="155"/>
+
+          <!-- Tags -->
+          <text class="gear-tag" x="50" y="178">SOLD</text>
+          <text class="gear-tag" x="125" y="180">FOR SALE</text>
+          <text class="gear-tag" x="200" y="178">FOR SALE</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     YDELSER-PREVIEW — 3 hovedkategorier med kategori-farver
+═══════════════════════════════════════════════════════════════ -->
+
 <section id="ydelser-preview">
   <div class="container">
-    <div class="section-label">// YDELSER</div>
-    <h2 class="section-title">Lyd til alle slags arrangementer.</h2>
+    <div class="section-label reveal">// VI LAVER LYD TIL</div>
+    <h2 class="section-title reveal">Tre slags <span class="accent">arrangementer.</span></h2>
 
     <div class="services-grid stagger">
-      <div class="service-card reveal">
-        <span class="service-num">01</span>
-        <h3 class="service-title">Live-koncerter</h3>
-        <p>Komplet lydopsætning til bands, solister og DJ-sets. Mixerpult, monitorering og front-of-house tilpasset venue og besætning.</p>
+
+      <!-- TALE -->
+      <div class="service-card reveal" data-cat="tale">
+        <div class="service-icon">
+          <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">
+            <path d="M8 8 L4 8 L4 56 L8 56"/>
+            <path d="M56 8 L60 8 L60 56 L56 56"/>
+            <rect x="28" y="14" width="8" height="20"/>
+            <line x1="32" y1="34" x2="32" y2="46"/>
+            <line x1="22" y1="46" x2="42" y2="46"/>
+            <line x1="20" y1="22" x2="14" y2="22" opacity="0.5"/>
+            <line x1="44" y1="22" x2="50" y2="22" opacity="0.5"/>
+          </svg>
+        </div>
+        <span class="service-num">01 // TALE</span>
+        <h3 class="service-title">Tale &amp; foredrag</h3>
+        <p>Konference, foredrag, oplæg, taler. Folk skal kunne forstå hvad der bliver sagt — fra hver eneste plads.</p>
+        <div class="service-card-footer">
+          Læs mere <span class="arrow">→</span>
+        </div>
       </div>
-      <div class="service-card reveal">
-        <span class="service-num">02</span>
-        <h3 class="service-title">Events & arrangementer</h3>
-        <p>Konferencer, foredrag, fester og receptioner. Trådløse mikrofoner, talerstole og diskret baggrundsmusik der bare virker.</p>
+
+      <!-- FEST -->
+      <div class="service-card reveal" data-cat="fest">
+        <div class="service-icon">
+          <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">
+            <path d="M8 8 L4 8 L4 56 L8 56"/>
+            <path d="M56 8 L60 8 L60 56 L56 56"/>
+            <rect x="20" y="14" width="24" height="36"/>
+            <circle cx="32" cy="36" r="7"/>
+            <circle cx="32" cy="36" r="2.5" fill="currentColor"/>
+            <circle cx="32" cy="22" r="3"/>
+          </svg>
+        </div>
+        <span class="service-num">02 // FEST</span>
+        <h3 class="service-title">Fest &amp; dans</h3>
+        <p>Bryllup, fødselsdag, fest, reception. Stemning og lyd der kan skrues op — uden at bryde sammen ved første bass.</p>
+        <div class="service-card-footer">
+          Læs mere <span class="arrow">→</span>
+        </div>
       </div>
-      <div class="service-card reveal">
-        <span class="service-num">03</span>
-        <h3 class="service-title">Festivaler & udendørs</h3>
-        <p>Skalerbare PA-løsninger til scener i alle størrelser — fra mindre byfester til større festivaler og sportsarrangementer.</p>
+
+      <!-- KONCERT -->
+      <div class="service-card reveal" data-cat="koncert">
+        <div class="service-icon">
+          <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">
+            <path d="M8 8 L4 8 L4 56 L8 56"/>
+            <path d="M56 8 L60 8 L60 56 L56 56"/>
+            <line x1="18" y1="28" x2="18" y2="36"/>
+            <line x1="22" y1="22" x2="22" y2="42"/>
+            <line x1="26" y1="26" x2="26" y2="38"/>
+            <line x1="30" y1="16" x2="30" y2="48"/>
+            <line x1="34" y1="20" x2="34" y2="44"/>
+            <line x1="38" y1="24" x2="38" y2="40"/>
+            <line x1="42" y1="14" x2="42" y2="50"/>
+            <line x1="46" y1="26" x2="46" y2="38"/>
+          </svg>
+        </div>
+        <span class="service-num">03 // KONCERT</span>
+        <h3 class="service-title">Live-musik</h3>
+        <p>Koncert, band, sangaften. PA, monitor og en tekniker bagved pulten der hører efter — ikke bare kører på autopilot.</p>
+        <div class="service-card-footer">
+          Læs mere <span class="arrow">→</span>
+        </div>
       </div>
+
     </div>
 
     <div class="services-cta">
       <a href="ydelser.html" class="btn btn-primary">
-        Byg din pakke & få et estimat
+        Find den rigtige pakke
         <span class="arrow">→</span>
       </a>
     </div>
   </div>
 </section>
 
-<section id="om-preview" class="about">
+<!-- ═══════════════════════════════════════════════════════════
+     SÅDAN FOREGÅR DET — 4-trins proces
+═══════════════════════════════════════════════════════════════ -->
+
+<section class="process">
   <div class="container">
-    <div class="about-grid">
-      <div class="about-image"></div>
-      <div>
-        <div class="section-label">// HOLDET</div>
-        <h2 class="section-title" style="margin-bottom: 32px;">Et lille hold med <span class="accent">stor</span> lyd.</h2>
-        <p>Vi er to mennesker bag LYDSTYRKEN — begge med rødder i live-lyd, events og det øjeblik, hvor lyden falder på plads og publikum mærker det i kroppen.</p>
-        <p>Med base i Odense leverer vi til arrangementer i hele Danmark. Personlig tilgang, professionelt udstyr, og en oprigtig interesse i at gøre dit arrangement bedst muligt.</p>
+    <div class="section-label reveal">// PROCESSEN</div>
+    <h2 class="section-title reveal">Sådan <span class="accent">foregår</span> det.</h2>
 
-        <div class="about-meta">
-          <div class="meta-item">
-            <span>Base</span>
-            Odense, Danmark
-          </div>
-          <div class="meta-item">
-            <span>CVR</span>
-            45880419
-          </div>
-        </div>
+    <div class="process-grid stagger">
 
-        <div style="margin-top: 32px;">
-          <a href="om.html" class="btn btn-secondary">
-            Mød hele holdet
-            <span class="arrow">→</span>
-          </a>
+      <div class="process-step reveal">
+        <div class="process-num">01</div>
+        <div class="process-icon">
+          <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square">
+            <rect x="4" y="8" width="28" height="20"/>
+            <path d="M4 8 L18 20 L32 8"/>
+          </svg>
         </div>
+        <h3 class="process-title">Du skriver</h3>
+        <p>Mail eller forespørgsel via sitet. Vi læser og svarer inden for 12 timer — typisk samme dag.</p>
       </div>
+
+      <div class="process-step reveal">
+        <div class="process-num">02</div>
+        <div class="process-icon">
+          <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square">
+            <rect x="4" y="6" width="28" height="22"/>
+            <line x1="4" y1="12" x2="32" y2="12"/>
+            <line x1="9" y1="18" x2="22" y2="18"/>
+            <line x1="9" y1="22" x2="18" y2="22"/>
+            <circle cx="27" cy="20" r="2" fill="currentColor"/>
+          </svg>
+        </div>
+        <h3 class="process-title">Vi laver tilbud</h3>
+        <p>Konkret pris, konkret pakke, konkret tidspunkt. Ingen luftige antydninger, ingen skjulte gebyrer.</p>
+      </div>
+
+      <div class="process-step reveal">
+        <div class="process-num">03</div>
+        <div class="process-icon">
+          <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square">
+            <rect x="6" y="14" width="24" height="14"/>
+            <line x1="10" y1="18" x2="10" y2="24"/>
+            <line x1="14" y1="18" x2="14" y2="24"/>
+            <line x1="18" y1="18" x2="18" y2="24"/>
+            <line x1="22" y1="18" x2="22" y2="24"/>
+            <line x1="26" y1="18" x2="26" y2="24"/>
+            <circle cx="18" cy="8" r="3"/>
+            <line x1="18" y1="11" x2="18" y2="14"/>
+          </svg>
+        </div>
+        <h3 class="process-title">Vi rigger op</h3>
+        <p>Vi ankommer i god tid, sætter op, tester, og er klar når dine gæster er der. Du tager imod — vi tager lyden.</p>
+      </div>
+
+      <div class="process-step reveal">
+        <div class="process-num">04</div>
+        <div class="process-icon">
+          <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square">
+            <path d="M6 18 L14 26 L30 10"/>
+          </svg>
+        </div>
+        <h3 class="process-title">Eventet kører</h3>
+        <p>Vi sidder bagved pulten og hører efter. Hvis noget driller, mærker du intet — vi har styr på det.</p>
+      </div>
+
     </div>
   </div>
 </section>
 
+<!-- ═══════════════════════════════════════════════════════════
+     OM-PREVIEW — to mennesker, én lydhør tilgang
+═══════════════════════════════════════════════════════════════ -->
+
+<section id="om-preview" class="about">
+  <div class="container">
+    <div class="about-grid">
+
+      <div class="about-visual reveal" aria-hidden="true">
+        <!-- Stor LYDSTYRKEN-bracket logo som decoration -->
+        <svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg" style="width: 80%; height: 80%; position: relative; z-index: 1;">
+          <!-- Brackets -->
+          <path d="M80 80 L40 80 L40 420 L80 420" fill="none" stroke="var(--accent)" stroke-width="4" stroke-linecap="square"/>
+          <path d="M320 80 L360 80 L360 420 L320 420" fill="none" stroke="var(--accent)" stroke-width="4" stroke-linecap="square"/>
+          <!-- Indre indhold: stiliseret EQ-kurve -->
+          <path d="M100 250 L130 250 L150 180 L170 320 L190 200 L210 280 L230 160 L250 290 L270 220 L290 250 L300 250" fill="none" stroke="var(--text)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- Centrum-prik -->
+          <circle cx="200" cy="250" r="8" fill="var(--accent)"/>
+          <!-- Tag -->
+          <text x="200" y="360" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="var(--text-dim)" letter-spacing="3">EST. 15.09.2025</text>
+        </svg>
+      </div>
+
+      <div class="about-text reveal">
+        <div class="section-label">// OM OS</div>
+        <h2 class="section-title">To ansigter. <span class="accent">Hele</span> opgaven.</h2>
+        <p>Vi er Marius og Pernille — et lille hold fra Odense der laver lyd til events i hele Danmark. Du møder os fra første mail til sidste kabel er pakket op. Det er hele pointen.</p>
+        <p>Marius står for lyd og kundekontakt. Pernille står for logistik, lys og at sikre at ord bliver til handling. Når større opgaver kræver ekstra hænder, henter vi freelancere ind.</p>
+        <a href="om.html" class="about-cta">
+          Mød holdet
+          <span class="arrow">→</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     KONTAKT-CTA
+═══════════════════════════════════════════════════════════════ -->
+
 <section id="kontakt" class="cta-block">
   <div class="container">
-    <span class="cta-tag"><span class="live-dot"></span> Budrunde i gang</span>
-    <h2 class="cta-title">
-      Lagersalg <span class="accent">via budrunde</span>
-    </h2>
-    <p class="cta-sub">
-      Udvalgt udstyr sælges via åben budrunde. Tydelig opdeling mellem privat salg og LYDSTYRKEN-salg. Højeste bud vinder.
-    </p>
-    <a href="lagersalg.html" class="cta-big">
-      Gå til budrunden
-      <span class="arrow">→</span>
-    </a>
-
-    <div class="contact-box">
-      <div>
-        <h3>Skal vi snakke?</h3>
-        <p>Skriv til os om booking, leje eller spørgsmål. Vi svarer som regel inden for 12 timer.</p>
-      </div>
-      <div class="contact-links">
-        <a href="mailto:marius@lydstyrken.com">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><path d="M3 8l9 6 9-6M3 8v10a2 2 0 002 2h14a2 2 0 002-2V8M3 8l2-2h14l2 2"/></svg>
-          marius@lydstyrken.com
-        </a>
-        <a href="https://instagram.com/lydstyrken" target="_blank" rel="noopener">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
-          @lydstyrken
-        </a>
-      </div>
+    <h2>Skal vi <span class="accent">snakke</span>?</h2>
+    <p>Booking, leje, undervisning eller bare et hurtigt spørgsmål — skriv til os, og du har svar inden for 12 timer.</p>
+    <div class="hero-actions">
+      <a href="ydelser.html" class="btn btn-primary">
+        Få et estimat på 30 sek
+        <span class="arrow">→</span>
+      </a>
+      <a href="kontakt.html" class="btn btn-secondary">
+        Se kontakt-info
+      </a>
     </div>
   </div>
 </section>
@@ -606,7 +1078,97 @@
   </div>
 </footer>
 
+<script src="products.js" defer></script>
 <script src="app.js" defer></script>
+
+<script defer>
+  // ════════════════════════════════════════════════════════════════
+  //   COUNT-UP ANIMATION på stats-bar
+  //   Bruger IntersectionObserver — kører kun når element scrolles ind
+  // ════════════════════════════════════════════════════════════════
+
+  function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+  function formatNumber(n, format) {
+    if (format === 'thousands') {
+      return n.toLocaleString('da-DK');
+    }
+    return Math.round(n).toString();
+  }
+
+  function animateCount(el) {
+    const target = parseInt(el.dataset.countTo, 10);
+    const suffix = el.dataset.countSuffix || '';
+    const format = el.dataset.countFormat || '';
+    const duration = 1800;
+    const start = performance.now();
+
+    function tick(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = easeOutCubic(progress);
+      const current = target * eased;
+      el.textContent = formatNumber(current, format) + suffix;
+      if (progress < 1) {
+        requestAnimationFrame(tick);
+      } else {
+        el.textContent = formatNumber(target, format) + suffix;
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function setupCountUp() {
+    if (!('IntersectionObserver' in window)) {
+      // Fallback: bare sæt sluttallene direkte
+      document.querySelectorAll('[data-count-to]').forEach(el => {
+        const target = parseInt(el.dataset.countTo, 10);
+        const suffix = el.dataset.countSuffix || '';
+        const format = el.dataset.countFormat || '';
+        el.textContent = formatNumber(target, format) + suffix;
+      });
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !entry.target.dataset.counted) {
+          entry.target.dataset.counted = 'true';
+          animateCount(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+
+    document.querySelectorAll('[data-count-to]').forEach(el => observer.observe(el));
+  }
+
+  // ════════════════════════════════════════════════════════════════
+  //   LAGERSALG-TÆLLER — viser hvor mange items der er aktive
+  //   Læser fra products.js's PRODUCTS-array hvis tilgængelig
+  // ════════════════════════════════════════════════════════════════
+
+  function setupLagersalgCounter() {
+    const el = document.getElementById('lagersalg-count');
+    if (!el) return;
+
+    // Forsøg at hente fra products.js
+    if (typeof PRODUCTS !== 'undefined' && Array.isArray(PRODUCTS)) {
+      const activeCount = PRODUCTS.filter(p => p.status !== 'sold').length;
+      el.textContent = activeCount > 0 ? activeCount : '20+';
+    } else {
+      // Fallback — vis "20+" som rimelig estimat
+      el.textContent = '20+';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    setupCountUp();
+    setupLagersalgCounter();
+  });
+
+  // Hvis products.js loades senere, prøv igen
+  window.addEventListener('load', setupLagersalgCounter);
+</script>
 
 </body>
 </html>

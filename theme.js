@@ -8,7 +8,7 @@
 
    Sådan skifter du tema:
    ─────────────────────────
-   1. Åbn denne fil (theme-config.js)
+   1. Åbn denne fil (theme.js)
    2. Skift værdien af SITE_THEME nedenfor til ét af temaerne
    3. Gem og push til GitHub — hele sitet skifter.
 
@@ -28,14 +28,13 @@
 
    ═══════════════════════════════════════════════════════════════ */
 
-const SITE_THEME = 'electric';
+const SITE_THEME = 'orange';
 
 
 // ══════════════════════════════════════════════════════════════════
 // Teknisk: Sæt data-theme på <html> så CSS i themes.css kan matche.
 // Dette script loades synkront i <head> så det sker FØR rendering —
-// og dermed undgår vi flicker mellem orange (HTML default) og det
-// faktiske tema.
+// og dermed undgår vi flicker mellem default og det faktiske tema.
 // ══════════════════════════════════════════════════════════════════
 (function() {
   document.documentElement.setAttribute('data-theme', SITE_THEME);
