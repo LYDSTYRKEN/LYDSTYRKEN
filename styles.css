@@ -170,7 +170,7 @@ body::before {
 /* ═══════════════ NAV + LOGO ═══════════════ */
 
 nav {
-  padding: 22px 0;
+  padding: 18px 0;
   position: sticky;
   top: 0;
   background: color-mix(in srgb, var(--bg) 75%, transparent);
@@ -178,15 +178,14 @@ nav {
   -webkit-backdrop-filter: blur(12px) saturate(140%);
   z-index: 100;
   border-bottom: 1px solid transparent;
-  transition: padding 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Når man scroller, bliver nav mere kompakt og solidt */
+/* Når man scroller, bliver nav mere solidt — uden at hoppe i højde */
 nav.scrolled {
-  padding: 14px 0;
-  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  background: color-mix(in srgb, var(--bg) 94%, transparent);
   border-bottom-color: var(--border);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.22);
 }
 
 .nav-inner {
@@ -214,12 +213,6 @@ nav.scrolled {
   display: block;
   height: clamp(28px, 2.4vw, 34px);
   width: auto;
-  transition: height 0.3s ease;
-}
-
-/* Mindre logo når man scroller */
-nav.scrolled .logo-img {
-  height: clamp(24px, 2vw, 28px);
 }
 
 /* Underline der glider ind ved hover — matcher resten af nav */
@@ -243,13 +236,20 @@ nav.scrolled .logo-img {
 /* Mobil-justering */
 @media (max-width: 700px) {
   .logo-img { height: 26px; }
-  nav.scrolled .logo-img { height: 22px; }
 }
 
-/* Footer-logo — lidt større for at være ankerpunkt */
+/* Footer-logo — lidt større for at være ankerpunkt, ingen underline */
 footer .logo-img {
   height: clamp(32px, 2.4vw, 38px);
-  margin-bottom: 16px;
+}
+footer .logo {
+  /* Sørger for at bredden matcher logoets indhold, ikke containerens */
+  align-self: flex-start;
+  width: max-content;
+}
+/* Drop underline-effekten i footer — den giver ingen mening her */
+footer .logo::after {
+  display: none;
 }
 
 /* ─── NAV LINKS ─── */
@@ -601,14 +601,88 @@ footer {
   z-index: 2;
 }
 
+/* ═══════════════ FOOTER ═══════════════ */
+
+footer {
+  padding: clamp(60px, 6vh, 100px) 0 32px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Footer-top: brand + CTA i to kolonner */
+.footer-top {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: clamp(32px, 4vw, 80px);
+  padding-bottom: clamp(40px, 4vw, 60px);
+  margin-bottom: clamp(40px, 4vw, 56px);
+  border-bottom: 1px solid var(--border);
+  align-items: start;
+}
+@media (max-width: 800px) {
+  .footer-top { grid-template-columns: 1fr; gap: 32px; }
+}
+
+.footer-brand .logo {
+  margin-bottom: 18px;
+}
+
+.footer-tag {
+  color: var(--text-dim);
+  font-size: clamp(14px, 1vw, 16px);
+  max-width: 420px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Footer-CTA blok */
+.footer-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+.footer-cta-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.footer-cta-btn {
+  font-size: clamp(13px, 0.95vw, 15px);
+}
+.footer-response {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text-dim);
+  letter-spacing: 0.05em;
+}
+.footer-response-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 10px var(--green);
+}
+
+/* Footer kolonner */
 .footer-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: 48px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(24px, 3vw, 48px);
   margin-bottom: 48px;
 }
 
-@media (max-width: 700px) { .footer-grid { grid-template-columns: 1fr; } }
+@media (max-width: 800px) {
+  .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+}
+@media (max-width: 480px) {
+  .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+}
 
 .footer-col h4 {
   font-family: 'JetBrains Mono', monospace;
@@ -616,38 +690,46 @@ footer {
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--text-muted);
-  margin-bottom: 20px;
+  margin-bottom: 18px;
   font-weight: 400;
 }
 
 .footer-col a {
-  display: block;
+  display: flex;
+  align-items: center;
   color: var(--text-dim);
   text-decoration: none;
   font-size: 14px;
-  margin-bottom: 10px;
-  transition: color 0.2s;
+  margin-bottom: 12px;
+  transition: color 0.2s, transform 0.2s;
 }
-.footer-col a:hover { color: var(--accent); }
-
-.footer-tag {
-  color: var(--text-dim);
-  font-size: 14px;
-  max-width: 300px;
-  line-height: 1.6;
-  margin-top: 16px;
+.footer-col a:hover {
+  color: var(--accent);
+  transform: translateX(2px);
 }
 
+/* Footer-bund med © + tilbage-til-top */
 .footer-bottom {
-  padding-top: 32px;
+  padding-top: 28px;
   border-top: 1px solid var(--border);
   display: flex;
   justify-content: space-between;
+  align-items: center;
   flex-wrap: wrap;
   gap: 16px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 12px;
   color: var(--text-muted);
+}
+.footer-back-top {
+  color: var(--text-muted);
+  text-decoration: none;
+  letter-spacing: 0.1em;
+  transition: color 0.2s ease;
+  text-transform: uppercase;
+}
+.footer-back-top:hover {
+  color: var(--accent);
 }
 
 /* ═══════════════ RESPONSIVE ═══════════════ */

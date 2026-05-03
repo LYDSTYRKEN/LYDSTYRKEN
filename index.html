@@ -146,60 +146,6 @@
 
   /* ═══════════════ STATS-BAR ═══════════════ */
 
-  .stats-bar-section {
-    padding: 0 0 32px;
-    position: relative;
-    z-index: 5;
-  }
-
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-  }
-  @media (max-width: 700px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
-
-  .stat {
-    background: var(--bg-elev);
-    padding: clamp(28px, 3vw, 48px) clamp(20px, 2vw, 32px);
-    text-align: center;
-    position: relative;
-    transition: background 0.3s;
-  }
-  .stat:hover { background: var(--bg-elev-2); }
-  .stat::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 50%;
-    width: 0; height: 2px;
-    background: var(--accent);
-    transform: translateX(-50%);
-    transition: width 0.4s;
-  }
-  .stat:hover::after { width: 60%; }
-
-  .stat-num {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 800;
-    font-size: clamp(36px, 4.5vw, 64px);
-    color: var(--accent);
-    line-height: 1;
-    margin-bottom: 10px;
-    letter-spacing: -0.02em;
-    font-variant-numeric: tabular-nums;
-  }
-  .stat-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: clamp(10px, 0.75vw, 12px);
-    color: var(--text-muted);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-  }
-
   /* ═══════════════ LAGERSALG-PROMO ═══════════════ */
 
   .lagersalg-promo {
@@ -376,6 +322,11 @@
     transition: border-color 0.3s, transform 0.3s, background 0.3s;
     position: relative;
     overflow: hidden;
+    /* Reset link-styling — kortet er en <a> men ser ikke ud som et link */
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    cursor: pointer;
   }
   .service-card::before {
     content: '';
@@ -465,68 +416,152 @@
     overflow: hidden;
   }
 
+  /* Subtil grid-baggrund i process-sektionen — matcher LYDSTYRKEN's geometriske vibe */
+  .process::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(color-mix(in srgb, var(--accent) 4%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, var(--accent) 4%, transparent) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .process .container { position: relative; z-index: 1; }
+
   .process-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
+    gap: 0;
     position: relative;
   }
+
+  /* Forbindende linje på tværs af alle trin */
+  .process-grid::before {
+    content: '';
+    position: absolute;
+    top: 56px;
+    left: 8%;
+    right: 8%;
+    height: 1px;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      var(--accent) 10%,
+      var(--accent) 90%,
+      transparent 100%);
+    opacity: 0.35;
+    z-index: 0;
+  }
+
   @media (max-width: 900px) {
-    .process-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .process-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .process-grid::before { display: none; }
   }
   @media (max-width: 500px) {
-    .process-grid { grid-template-columns: 1fr; }
+    .process-grid { grid-template-columns: 1fr; gap: 8px; }
   }
 
   .process-step {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: clamp(28px, 2.5vw, 40px) clamp(24px, 2vw, 32px);
+    padding: 0 16px;
     position: relative;
-    transition: border-color 0.3s, transform 0.3s;
-  }
-  .process-step:hover {
-    border-color: var(--accent);
-    transform: translateY(-3px);
+    z-index: 1;
+    text-align: left;
   }
 
+  /* Top-prik: sidder på timeline-linjen */
+  .process-step-marker {
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--accent);
+    background: var(--bg-elev);
+    border-radius: 50%;
+    position: relative;
+    margin: 48px 0 24px;
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+  .process-step-marker::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    background: var(--accent);
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .process-step:hover .process-step-marker {
+    transform: scale(1.15);
+  }
+  .process-step:hover .process-step-marker::after {
+    opacity: 1;
+  }
+
+  /* Trin-nummer med brackets — kantet, LYDSTYRKEN-stil */
   .process-num {
     font-family: 'JetBrains Mono', monospace;
-    font-size: clamp(36px, 3.5vw, 56px);
+    font-size: clamp(11px, 0.85vw, 13px);
     color: var(--accent);
-    font-weight: 700;
+    font-weight: 600;
     line-height: 1;
     margin-bottom: 20px;
-    opacity: 0.3;
-    transition: opacity 0.3s, transform 0.3s;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
   }
-  .process-step:hover .process-num {
-    opacity: 1;
-    transform: translateY(-2px);
-  }
+  .process-num::before { content: '['; }
+  .process-num::after  { content: ']'; }
 
   .process-icon {
-    width: 36px;
-    height: 36px;
-    margin-bottom: 16px;
+    width: 32px;
+    height: 32px;
+    margin-bottom: 18px;
     color: var(--accent);
+    transition: transform 0.3s ease;
+  }
+  .process-step:hover .process-icon {
+    transform: translateY(-2px);
   }
 
   .process-title {
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
-    font-size: clamp(17px, 1.4vw, 22px);
+    font-size: clamp(18px, 1.5vw, 24px);
     text-transform: uppercase;
     letter-spacing: 0.02em;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     line-height: 1.2;
+    transition: color 0.25s ease;
+  }
+  .process-step:hover .process-title {
+    color: var(--accent);
   }
 
   .process-step p {
     color: var(--text-dim);
-    font-size: clamp(13px, 1vw, 15px);
-    line-height: 1.55;
+    font-size: clamp(14px, 1.05vw, 16px);
+    line-height: 1.6;
+  }
+
+  /* Subtil lodret stang på venstre side af hvert trin (undtagen første) */
+  .process-step:not(:first-child)::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 48px;
+    bottom: 16px;
+    width: 1px;
+    background: var(--border);
+    opacity: 0.5;
+  }
+  @media (max-width: 900px) {
+    .process-step:not(:first-child)::before { display: none; }
+  }
+
+  @media (max-width: 900px) {
+    .process-step { padding: 0; }
+    .process-step-marker { margin-top: 24px; }
   }
 
   /* ═══════════════ OM-PREVIEW ═══════════════ */
@@ -638,11 +673,6 @@
   .cta-block .hero-actions {
     justify-content: center;
   }
-
-  /* Reduced motion: stop alle animationer */
-  @media (prefers-reduced-motion: reduce) {
-    .stat-num.counting { transition: none; }
-  }
 </style>
 </head>
 <body>
@@ -717,29 +747,6 @@
 <!-- ═══════════════════════════════════════════════════════════
      STATS-BAR — bygger tillid med konkrete tal
 ═══════════════════════════════════════════════════════════════ -->
-
-<section class="stats-bar-section">
-  <div class="container">
-    <div class="stats-grid reveal">
-      <div class="stat">
-        <div class="stat-num" data-count-to="100+" data-count-suffix="+">0</div>
-        <div class="stat-label">Events afviklet</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num" data-count-to="30000" data-count-suffix="+" >0</div>
-        <div class="stat-label">mennesker nået</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num" data-count-to="10" data-count-suffix="+">0</div>
-        <div class="stat-label">Bands & artisters foretrukne teknikere</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">0<span style="font-size: 0.5em; opacity: 0.6; margin-left: 4px;"></span></div>
-        <div class="stat-label">Skjulte gebyrer</div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ═══════════════════════════════════════════════════════════
      LAGERSALG-PROMO — prominent fordi det er aktivt
@@ -828,7 +835,7 @@
     <div class="services-grid stagger">
 
       <!-- TALE -->
-      <div class="service-card reveal" data-cat="tale">
+      <a href="ydelser.html?type=tale" class="service-card reveal" data-cat="tale">
         <div class="service-icon">
           <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">
             <path d="M8 8 L4 8 L4 56 L8 56"/>
@@ -844,12 +851,12 @@
         <h3 class="service-title">Tale &amp; foredrag</h3>
         <p>Taler, Foredrag eller konferencer. Vi sørger for at hvert ord når frem til bagerste række.</p>
         <div class="service-card-footer">
-          Læs mere <span class="arrow">→</span>
+          Start estimat <span class="arrow">→</span>
         </div>
-      </div>
+      </a>
 
       <!-- FEST -->
-      <div class="service-card reveal" data-cat="fest">
+      <a href="ydelser.html?type=fest" class="service-card reveal" data-cat="fest">
         <div class="service-icon">
           <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">
             <path d="M8 8 L4 8 L4 56 L8 56"/>
@@ -864,12 +871,12 @@
         <h3 class="service-title">Fest &amp; dans</h3>
         <p>Bryllupper, jubilæer, sommerfester. Fra første velkomstdrink til sidste sang.</p>
         <div class="service-card-footer">
-          Læs mere <span class="arrow">→</span>
+          Start estimat <span class="arrow">→</span>
         </div>
-      </div>
+      </a>
 
       <!-- KONCERT -->
-      <div class="service-card reveal" data-cat="koncert">
+      <a href="ydelser.html?type=koncert" class="service-card reveal" data-cat="koncert">
         <div class="service-icon">
           <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">
             <path d="M8 8 L4 8 L4 56 L8 56"/>
@@ -888,9 +895,9 @@
         <h3 class="service-title">Live-musik</h3>
         <p>Live-musik fra solo til 6-mands besætning. Ordentlig PA, monitor-mix til musikerne, og en tekniker der lytter efter.</p>
         <div class="service-card-footer">
-          Læs mere <span class="arrow">→</span>
+          Start estimat <span class="arrow">→</span>
         </div>
-      </div>
+      </a>
 
     </div>
 
@@ -915,7 +922,8 @@
     <div class="process-grid stagger">
 
       <div class="process-step reveal">
-        <div class="process-num">01</div>
+        <div class="process-step-marker"></div>
+        <div class="process-num">Trin 01</div>
         <div class="process-icon">
           <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square">
             <rect x="4" y="8" width="28" height="20"/>
@@ -927,7 +935,8 @@
       </div>
 
       <div class="process-step reveal">
-        <div class="process-num">02</div>
+        <div class="process-step-marker"></div>
+        <div class="process-num">Trin 02</div>
         <div class="process-icon">
           <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square">
             <rect x="4" y="6" width="28" height="22"/>
@@ -942,7 +951,8 @@
       </div>
 
       <div class="process-step reveal">
-        <div class="process-num">03</div>
+        <div class="process-step-marker"></div>
+        <div class="process-num">Trin 03</div>
         <div class="process-icon">
           <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square">
             <rect x="6" y="14" width="24" height="14"/>
@@ -960,7 +970,8 @@
       </div>
 
       <div class="process-step reveal">
-        <div class="process-num">04</div>
+        <div class="process-step-marker"></div>
+        <div class="process-num">Trin 04</div>
         <div class="process-icon">
           <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square">
             <path d="M6 18 L14 26 L30 10"/>
@@ -1036,19 +1047,36 @@
 
 <footer>
   <div class="container">
-    <div class="footer-grid">
-      <div class="footer-col">
+
+    <!-- Footer top: brand + CTA -->
+    <div class="footer-top">
+      <div class="footer-brand">
         <a href="index.html" class="logo" aria-label="LYDSTYRKEN">
           <img src="images/Branding/logo-transparent.png" alt="LYDSTYRKEN" class="logo-img">
         </a>
         <p class="footer-tag">Professionel lyd til events og koncerter — leveret fra Odense, hele Danmark over.</p>
       </div>
+
+      <div class="footer-cta">
+        <div class="footer-cta-label">Klar til at booke?</div>
+        <a href="ydelser.html" class="btn btn-primary footer-cta-btn">
+          Få et estimat <span class="arrow">→</span>
+        </a>
+        <div class="footer-response">
+          <span class="footer-response-dot"></span>
+          Svartid på mails: 12 timer
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer kolonner -->
+    <div class="footer-grid">
       <div class="footer-col">
         <h4>Kontakt</h4>
         <a href="mailto:marius@lydstyrken.com">marius@lydstyrken.com</a>
-        <a href="https://instagram.com/lydstyrken" target="_blank" rel="noopener">Instagram ↗</a>
         <a href="kontakt.html">Kontakt-side</a>
       </div>
+
       <div class="footer-col">
         <h4>Sider</h4>
         <a href="ydelser.html">Ydelser</a>
@@ -1056,14 +1084,30 @@
         <a href="lagersalg.html">Lagersalg</a>
         <a href="faq.html">FAQ</a>
       </div>
+
       <div class="footer-col">
         <h4>Juridisk</h4>
         <a href="privatlivspolitik.html">Privatlivspolitik</a>
         <a href="lejebetingelser.html">Lejebetingelser</a>
       </div>
+
+      <div class="footer-col">
+        <h4>Følg os</h4>
+        <a href="https://instagram.com/lydstyrken" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:6px;">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+          </svg>
+          Instagram
+        </a>
+      </div>
     </div>
+
+    <!-- Footer bund -->
     <div class="footer-bottom">
       <span>© 2025 LYDSTYRKEN — CVR 45880419</span>
+      <a href="#main" class="footer-back-top">Tilbage til top ↑</a>
       <span>[ ODENSE / DK ]</span>
     </div>
   </div>
@@ -1073,66 +1117,6 @@
 <script src="app.js" defer></script>
 
 <script defer>
-  // ════════════════════════════════════════════════════════════════
-  //   COUNT-UP ANIMATION på stats-bar
-  //   Bruger IntersectionObserver — kører kun når element scrolles ind
-  // ════════════════════════════════════════════════════════════════
-
-  function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
-
-  function formatNumber(n, format) {
-    if (format === 'thousands') {
-      return n.toLocaleString('da-DK');
-    }
-    return Math.round(n).toString();
-  }
-
-  function animateCount(el) {
-    const target = parseInt(el.dataset.countTo, 10);
-    const suffix = el.dataset.countSuffix || '';
-    const format = el.dataset.countFormat || '';
-    const duration = 1800;
-    const start = performance.now();
-
-    function tick(now) {
-      const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = easeOutCubic(progress);
-      const current = target * eased;
-      el.textContent = formatNumber(current, format) + suffix;
-      if (progress < 1) {
-        requestAnimationFrame(tick);
-      } else {
-        el.textContent = formatNumber(target, format) + suffix;
-      }
-    }
-    requestAnimationFrame(tick);
-  }
-
-  function setupCountUp() {
-    if (!('IntersectionObserver' in window)) {
-      // Fallback: bare sæt sluttallene direkte
-      document.querySelectorAll('[data-count-to]').forEach(el => {
-        const target = parseInt(el.dataset.countTo, 10);
-        const suffix = el.dataset.countSuffix || '';
-        const format = el.dataset.countFormat || '';
-        el.textContent = formatNumber(target, format) + suffix;
-      });
-      return;
-    }
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && !entry.target.dataset.counted) {
-          entry.target.dataset.counted = 'true';
-          animateCount(entry.target);
-        }
-      });
-    }, { threshold: 0.4 });
-
-    document.querySelectorAll('[data-count-to]').forEach(el => observer.observe(el));
-  }
-
   // ════════════════════════════════════════════════════════════════
   //   LAGERSALG-TÆLLER — viser hvor mange items der er aktive
   //   Læser fra products.js's PRODUCTS-array hvis tilgængelig
@@ -1153,7 +1137,6 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    setupCountUp();
     setupLagersalgCounter();
   });
 
