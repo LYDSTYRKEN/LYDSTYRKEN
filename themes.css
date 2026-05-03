@@ -1,11 +1,13 @@
 /* ════════════════════════════════════════════════════════════════
-   LYDSTYRKEN — TEMA-FARVER
+   LYDSTYRKEN — TEMA-FARVER (25 temaer i alt)
    ════════════════════════════════════════════════════════════════
 
    Sådan skifter du tema:
    ─────────────────────────
-   Åbn theme-config.js og ændr SITE_THEME-konstanten øverst.
+   Åbn theme.js og ændr SITE_THEME-konstanten øverst.
    ÉN linje, ét sted, hele sitet skifter.
+
+   Se theme.js for fuld liste over de 25 tilgængelige temaer.
 
    ─────────────────────────
    ARKITEKTUR
@@ -15,17 +17,27 @@
 
    Indlæs i denne rækkefølge i hver HTML-fil:
      <head>
-       <script src="theme-config.js"></script>     <!-- sætter data-theme -->
+       <script src="theme.js"></script>            <!-- sætter data-theme -->
        ...
        <link rel="stylesheet" href="themes.css">   <!-- definerer farver -->
        <link rel="stylesheet" href="styles.css">   <!-- bruger farverne -->
      </head>
 
    ─────────────────────────
+   STRUKTUR
+   ─────────────────────────
+   • Grund-temaer:        orange, green, danskflag, pride, monochrome
+   • Stemnings-temaer:    electric, sunset, midnight, forest, gold
+   • Højtidstemaer:       nytar, jul, paaske, valentinsdag, halloween,
+                          sankthans, fastelavn, morsdag, farsdag,
+                          kvindekampdag, luciadag, grundlovsdag,
+                          mortensaften, bededag, himmelfart
+
+   ─────────────────────────
    TILFØJ ET NYT TEMA
    ─────────────────────────
    Kopiér en eksisterende [data-theme="..."] blok, giv den nyt navn,
-   og tilføj navnet til listen i theme-config.js's kommentar.
+   og tilføj navnet til listen i theme.js's kommentar.
 
    ════════════════════════════════════════════════════════════════ */
 
@@ -273,6 +285,1040 @@
   --accent-hover: #e6b32a;
   --accent-glow: rgba(212, 160, 23, 0.20);
   --accent-soft: rgba(212, 160, 23, 0.08);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   ━━━ HØJTIDS- OG NATIONALDAGS-TEMAER ━━━
+   ════════════════════════════════════════════════════════════════
+   Brug disse til events der falder på/omkring de respektive datoer.
+   Skift bare SITE_THEME i theme.js — sitet skifter til lejligheden.
+   ════════════════════════════════════════════════════════════════ */
+
+
+/* ─── NYTÅR — guld med dyb violet undertone ─────────────── */
+/* Til nytårsbal, gallaaftner 31. december, jubilæer */
+[data-theme="nytar"] {
+  --bg: #08070d;
+  --bg-elev: #11101a;
+  --bg-elev-2: #1a1827;
+  --border: #2c293d;
+  --text: #f5f0db;
+  --text-dim: #968d76;
+  --text-muted: #66604d;
+
+  --accent: #f4c430;
+  --accent-hover: #ffd966;
+  --accent-glow: rgba(244, 196, 48, 0.22);
+  --accent-soft: rgba(244, 196, 48, 0.10);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
+
+
+/* ─── JUL — klassisk jule-rød på dyb grøn-tonet sort ─────── */
+/* Til julefrokoster, julekoncerter, december-events */
+[data-theme="jul"] {
+  --bg: #080a08;
+  --bg-elev: #111513;
+  --bg-elev-2: #1a201d;
+  --border: #2a302c;
+  --text: #f0eee8;
+  --text-dim: #8a908a;
+  --text-muted: #5a605a;
+
+  --accent: #c41e3a;
+  --accent-hover: #e63950;
+  --accent-glow: rgba(196, 30, 58, 0.20);
+  --accent-soft: rgba(196, 30, 58, 0.08);
+
+  --green: #2e7d32;
+
+  --bracket-left: #c41e3a;
+  --bracket-right: #2e7d32;
+}
+
+
+/* ─── PÅSKE — frisk pastel-gul med blød grøn ─────────────── */
+/* Til påskefrokoster, forårs-events, kirke-koncerter i påsken */
+[data-theme="paaske"] {
+  --bg: #0a0b08;
+  --bg-elev: #131611;
+  --bg-elev-2: #1c201a;
+  --border: #2c302a;
+  --text: #f5f2e6;
+  --text-dim: #968f80;
+  --text-muted: #666050;
+
+  --accent: #f7d046;
+  --accent-hover: #ffdc66;
+  --accent-glow: rgba(247, 208, 70, 0.20);
+  --accent-soft: rgba(247, 208, 70, 0.08);
+
+  --green: #8bc34a;
+
+  --bracket-left: var(--accent);
+  --bracket-right: #8bc34a;
+}
+
+
+/* ─── VALENTINSDAG — passioneret rød/pink ─────────────────── */
+/* Til romantiske middage, parmiddage 14. februar */
+[data-theme="valentinsdag"] {
+  --bg: #0c0709;
+  --bg-elev: #161013;
+  --bg-elev-2: #20171c;
+  --border: #2f242a;
+  --text: #f5e6ec;
+  --text-dim: #9a8085;
+  --text-muted: #6a5055;
+
+  --accent: #e91e63;
+  --accent-hover: #ff4081;
+  --accent-glow: rgba(233, 30, 99, 0.20);
+  --accent-soft: rgba(233, 30, 99, 0.08);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
+
+
+/* ─── HALLOWEEN — pumpkin-orange på dyb lilla-sort ───────── */
+/* Til Halloween-fester 31. oktober, Allehelgen */
+[data-theme="halloween"] {
+  --bg: #08060c;
+  --bg-elev: #110e18;
+  --bg-elev-2: #1b1525;
+  --border: #2d2438;
+  --text: #f5e8d6;
+  --text-dim: #9a8a76;
+  --text-muted: #6a5a4a;
+
+  --accent: #ff7518;
+  --accent-hover: #ff8f3f;
+  --accent-glow: rgba(255, 117, 24, 0.22);
+  --accent-soft: rgba(255, 117, 24, 0.10);
+
+  --green: #76ff03;
+
+  --bracket-left: #ff7518;
+  --bracket-right: #9c27b0;
+}
+
+
+/* ─── SANKT HANS — bål-orange/rød ─────────────────────────── */
+/* Til Sankt Hans-aften 23. juni, midsommer-fester */
+[data-theme="sankthans"] {
+  --bg: #0a0807;
+  --bg-elev: #161210;
+  --bg-elev-2: #201a16;
+  --border: #2f2620;
+  --text: #f5ece0;
+  --text-dim: #9a8c80;
+  --text-muted: #6a5c50;
+
+  --accent: #e25822;
+  --accent-hover: #ff6f3c;
+  --accent-glow: rgba(226, 88, 34, 0.22);
+  --accent-soft: rgba(226, 88, 34, 0.10);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
+
+
+/* ─── FASTELAVN — pastel lilla og pink ────────────────────── */
+/* Til fastelavnsfester (februar), karneval, børnefester */
+[data-theme="fastelavn"] {
+  --bg: #0a070c;
+  --bg-elev: #131018;
+  --bg-elev-2: #1d1822;
+  --border: #2d2734;
+  --text: #f3e8f5;
+  --text-dim: #968396;
+  --text-muted: #665566;
+
+  --accent: #ce93d8;
+  --accent-hover: #e1bee7;
+  --accent-glow: rgba(206, 147, 216, 0.22);
+  --accent-soft: rgba(206, 147, 216, 0.10);
+
+  --green: #4ad7a5;
+
+  --bracket-left: #ce93d8;
+  --bracket-right: #f48fb1;
+}
+
+
+/* ─── MORS DAG — varm rosa ────────────────────────────────── */
+/* Til mors dag-arrangementer (anden søndag i maj) */
+[data-theme="morsdag"] {
+  --bg: #0c0809;
+  --bg-elev: #161113;
+  --bg-elev-2: #20181c;
+  --border: #2f262a;
+  --text: #f5ebec;
+  --text-dim: #9a8689;
+  --text-muted: #6a585c;
+
+  --accent: #f48fb1;
+  --accent-hover: #ffabc6;
+  --accent-glow: rgba(244, 143, 177, 0.20);
+  --accent-soft: rgba(244, 143, 177, 0.08);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
+
+
+/* ─── FARS DAG — afdæmpet stålblå ─────────────────────────── */
+/* Til fars dag-arrangementer 5. juni (Danmark) */
+[data-theme="farsdag"] {
+  --bg: #08090b;
+  --bg-elev: #111316;
+  --bg-elev-2: #1a1d22;
+  --border: #2a2f36;
+  --text: #ecf0f3;
+  --text-dim: #889098;
+  --text-muted: #586068;
+
+  --accent: #4a6572;
+  --accent-hover: #6c8593;
+  --accent-glow: rgba(74, 101, 114, 0.22);
+  --accent-soft: rgba(74, 101, 114, 0.10);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
+
+
+/* ─── KVINDEKAMPDAG — kraftig magenta ─────────────────────── */
+/* Til 8. marts-arrangementer, kvinde-konferencer */
+[data-theme="kvindekampdag"] {
+  --bg: #0c0708;
+  --bg-elev: #161012;
+  --bg-elev-2: #20181b;
+  --border: #2f2426;
+  --text: #f5e6e9;
+  --text-dim: #9a8083;
+  --text-muted: #6a5054;
+
+  --accent: #d81b60;
+  --accent-hover: #f02d75;
+  --accent-glow: rgba(216, 27, 96, 0.22);
+  --accent-soft: rgba(216, 27, 96, 0.10);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
+
+
+/* ─── LUCIADAG — varm lys-gul ─────────────────────────────── */
+/* Til Lucia-optog 13. december, jule-koncerter */
+[data-theme="luciadag"] {
+  --bg: #0a0a07;
+  --bg-elev: #16150f;
+  --bg-elev-2: #201e16;
+  --border: #2f2c20;
+  --text: #faf3dd;
+  --text-dim: #988e76;
+  --text-muted: #665e4e;
+
+  --accent: #ffd54f;
+  --accent-hover: #ffe082;
+  --accent-glow: rgba(255, 213, 79, 0.22);
+  --accent-soft: rgba(255, 213, 79, 0.10);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
+
+
+/* ─── GRUNDLOVSDAG — frisk dansk rød med hvid ─────────────── */
+/* Til Grundlovsdag 5. juni, festlige danske arrangementer */
+[data-theme="grundlovsdag"] {
+  --bg: #0b0a0a;
+  --bg-elev: #171313;
+  --bg-elev-2: #221c1c;
+  --border: #322a2a;
+  --text: #ffffff;
+  --text-dim: #b0aaaa;
+  --text-muted: #807878;
+
+  --accent: #d63031;
+  --accent-hover: #ff4757;
+  --accent-glow: rgba(214, 48, 49, 0.22);
+  --accent-soft: rgba(214, 48, 49, 0.10);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--text);
+  --bracket-right: var(--text);
+}
+
+
+/* ─── MORTENSAFTEN — efterårs-orange/brun ─────────────────── */
+/* Til Mortensaften 10. november, efterårs-arrangementer */
+[data-theme="mortensaften"] {
+  --bg: #0b0807;
+  --bg-elev: #161210;
+  --bg-elev-2: #20181a;
+  --border: #2f2622;
+  --text: #f5ead8;
+  --text-dim: #98886e;
+  --text-muted: #685c48;
+
+  --accent: #d35400;
+  --accent-hover: #e67318;
+  --accent-glow: rgba(211, 84, 0, 0.20);
+  --accent-soft: rgba(211, 84, 0, 0.08);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
+
+
+/* ─── BEDEDAG — afdæmpet stålgrå-blå ──────────────────────── */
+/* Til reflekterende koncerter, kirke-events */
+[data-theme="bededag"] {
+  --bg: #08090a;
+  --bg-elev: #111316;
+  --bg-elev-2: #1a1d20;
+  --border: #2a2f33;
+  --text: #ecf0f3;
+  --text-dim: #889098;
+  --text-muted: #586068;
+
+  --accent: #78909c;
+  --accent-hover: #90a4ae;
+  --accent-glow: rgba(120, 144, 156, 0.18);
+  --accent-soft: rgba(120, 144, 156, 0.08);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
+
+
+/* ─── KRISTI HIMMELFART — himmelblå med hvid ──────────────── */
+/* Til majs Kristi himmelfartsdag, lyse forårs-arrangementer */
+[data-theme="himmelfart"] {
+  --bg: #08090c;
+  --bg-elev: #111418;
+  --bg-elev-2: #1a1d24;
+  --border: #2a2f36;
+  --text: #f0f4f8;
+  --text-dim: #889098;
+  --text-muted: #586068;
+
+  --accent: #4fc3f7;
+  --accent-hover: #81d4fa;
+  --accent-glow: rgba(79, 195, 247, 0.22);
+  --accent-soft: rgba(79, 195, 247, 0.10);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   ━━━ FLERE HØJTIDS- OG NATIONALDAGS-TEMAER (12) ━━━
+   ════════════════════════════════════════════════════════════════ */
+
+
+/* ─── HELLIGTREKONGER (6. januar) — kongelig violet med guld ── */
+[data-theme="helligtrekonger"] {
+  --bg: #08070d;
+  --bg-elev: #11101a;
+  --bg-elev-2: #1a1827;
+  --border: #2c293d;
+  --text: #f0eed8;
+  --text-dim: #968e75;
+  --text-muted: #66614d;
+
+  --accent: #ffd700;
+  --accent-hover: #ffe24d;
+  --accent-glow: rgba(255, 215, 0, 0.22);
+  --accent-soft: rgba(255, 215, 0, 0.10);
+
+  --green: #4ad7a5;
+
+  --bracket-left: #6a4c93;
+  --bracket-right: #ffd700;
+}
+
+
+/* ─── KYNDELMISSE (2. februar) — lysenes fest, varm hvid ──── */
+[data-theme="kyndelmisse"] {
+  --bg: #0a0a08;
+  --bg-elev: #161510;
+  --bg-elev-2: #201e16;
+  --border: #2f2c20;
+  --text: #faf3dd;
+  --text-dim: #988d72;
+  --text-muted: #685c4a;
+
+  --accent: #fff3a3;
+  --accent-hover: #fffacd;
+  --accent-glow: rgba(255, 243, 163, 0.20);
+  --accent-soft: rgba(255, 243, 163, 0.08);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
+
+
+/* ─── ST. PATRICKS DAY (17. marts) — irsk grøn ───────────── */
+[data-theme="stpatricksday"] {
+  --bg: #060a07;
+  --bg-elev: #0e1610;
+  --bg-elev-2: #15201a;
+  --border: #243025;
+  --text: #e8f5e8;
+  --text-dim: #82988a;
+  --text-muted: #50685a;
+
+  --accent: #2a8c3f;
+  --accent-hover: #3da757;
+  --accent-glow: rgba(42, 140, 63, 0.22);
+  --accent-soft: rgba(42, 140, 63, 0.10);
+
+  --green: #00d27a;
+
+  --bracket-left: #2a8c3f;
+  --bracket-right: #ffd700;
+}
+
+
+/* ─── VOLDBORGSAFTEN (30. april) — bål mod hekse ─────────── */
+[data-theme="voldborgsaften"] {
+  --bg: #0a0807;
+  --bg-elev: #161210;
+  --bg-elev-2: #20181a;
+  --border: #2f2622;
+  --text: #f5e8d6;
+  --text-dim: #98886e;
+  --text-muted: #685c48;
+
+  --accent: #ff4500;
+  --accent-hover: #ff6b30;
+  --accent-glow: rgba(255, 69, 0, 0.22);
+  --accent-soft: rgba(255, 69, 0, 0.10);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
+
+
+/* ─── ARBEJDERDAG (1. maj) — solidaritetsrød ─────────────── */
+[data-theme="arbejderdag"] {
+  --bg: #0a0707;
+  --bg-elev: #161010;
+  --bg-elev-2: #201818;
+  --border: #2f2424;
+  --text: #f5e8e8;
+  --text-dim: #988080;
+  --text-muted: #685050;
+
+  --accent: #c1272d;
+  --accent-hover: #d63a40;
+  --accent-glow: rgba(193, 39, 45, 0.22);
+  --accent-soft: rgba(193, 39, 45, 0.10);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
+
+
+/* ─── BEFRIELSESDAG (4. maj) — lys i vinduet, varm gul ──── */
+/* Danmarks befrielsesdag — symbolet er lyset i vinduet */
+[data-theme="befrielsesdag"] {
+  --bg: #08080a;
+  --bg-elev: #131316;
+  --bg-elev-2: #1c1c20;
+  --border: #2c2c30;
+  --text: #f8f0d8;
+  --text-dim: #988e72;
+  --text-muted: #685c4a;
+
+  --accent: #f4d03f;
+  --accent-hover: #f7dc6f;
+  --accent-glow: rgba(244, 208, 63, 0.22);
+  --accent-soft: rgba(244, 208, 63, 0.10);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
+
+
+/* ─── PINSE (variabel) — lys grøn, gensilstand ──────────── */
+[data-theme="pinse"] {
+  --bg: #08090a;
+  --bg-elev: #121514;
+  --bg-elev-2: #1a201d;
+  --border: #2a302c;
+  --text: #ecf3e8;
+  --text-dim: #88988a;
+  --text-muted: #58685a;
+
+  --accent: #76b947;
+  --accent-hover: #8cc862;
+  --accent-glow: rgba(118, 185, 71, 0.22);
+  --accent-soft: rgba(118, 185, 71, 0.10);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
+
+
+/* ─── OKTOBERFEST (sept) — Bayern blå/hvid + øl-rød ──────── */
+[data-theme="oktoberfest"] {
+  --bg: #08090c;
+  --bg-elev: #111316;
+  --bg-elev-2: #1a1d22;
+  --border: #2a2f36;
+  --text: #f0f4f8;
+  --text-dim: #889098;
+  --text-muted: #586068;
+
+  --accent: #ce0e2d;
+  --accent-hover: #e63950;
+  --accent-glow: rgba(206, 14, 45, 0.22);
+  --accent-soft: rgba(206, 14, 45, 0.10);
+
+  --green: #4ad7a5;
+
+  --bracket-left: #0066cc;
+  --bracket-right: #ffffff;
+}
+
+
+/* ─── MIKKELSDAG (29. sept) — efterårshøst brun/orange ──── */
+[data-theme="mikkelsdag"] {
+  --bg: #0a0907;
+  --bg-elev: #161310;
+  --bg-elev-2: #201b16;
+  --border: #2f2820;
+  --text: #f5ead8;
+  --text-dim: #988672;
+  --text-muted: #685a48;
+
+  --accent: #d2691e;
+  --accent-hover: #e07b30;
+  --accent-glow: rgba(210, 105, 30, 0.20);
+  --accent-soft: rgba(210, 105, 30, 0.08);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
+
+
+/* ─── ALLEHELGEN (1. nov) — sober dyb, ærefrygt ─────────── */
+[data-theme="allehelgen"] {
+  --bg: #07080a;
+  --bg-elev: #101115;
+  --bg-elev-2: #181a20;
+  --border: #282a30;
+  --text: #d8dde0;
+  --text-dim: #788088;
+  --text-muted: #485058;
+
+  --accent: #6e7c7d;
+  --accent-hover: #889595;
+  --accent-glow: rgba(110, 124, 125, 0.20);
+  --accent-soft: rgba(110, 124, 125, 0.08);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
+
+
+/* ─── BLACK FRIDAY (variabel - 4. fredag i nov) — sort/rød ─ */
+[data-theme="blackfriday"] {
+  --bg: #050505;
+  --bg-elev: #0d0d0d;
+  --bg-elev-2: #161616;
+  --border: #2a2a2a;
+  --text: #ffffff;
+  --text-dim: #aaaaaa;
+  --text-muted: #777777;
+
+  --accent: #ff0000;
+  --accent-hover: #ff3838;
+  --accent-glow: rgba(255, 0, 0, 0.25);
+  --accent-soft: rgba(255, 0, 0, 0.10);
+
+  --green: #00ff88;
+
+  --bracket-left: #ffffff;
+  --bracket-right: #ff0000;
+}
+
+
+/* ─── CYBER MONDAY (variabel - mandag efter blackfriday) ── */
+[data-theme="cybermonday"] {
+  --bg: #06060a;
+  --bg-elev: #0e0e16;
+  --bg-elev-2: #161624;
+  --border: #2a2a3a;
+  --text: #e0f8ff;
+  --text-dim: #80a0a8;
+  --text-muted: #506068;
+
+  --accent: #00d4ff;
+  --accent-hover: #33ddff;
+  --accent-glow: rgba(0, 212, 255, 0.25);
+  --accent-soft: rgba(0, 212, 255, 0.10);
+
+  --green: #00ff88;
+
+  --bracket-left: #ff00cc;
+  --bracket-right: #00d4ff;
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   ━━━ STEMNINGS-TEMAER (8) — kun manuel, til specifikke events ━━
+   ════════════════════════════════════════════════════════════════ */
+
+
+/* ─── CLUB — mørk neon disco ─────────────────────────────── */
+[data-theme="club"] {
+  --bg: #060509;
+  --bg-elev: #0e0d14;
+  --bg-elev-2: #16151f;
+  --border: #2a283a;
+  --text: #f5edff;
+  --text-dim: #988aaa;
+  --text-muted: #585068;
+
+  --accent: #b300ff;
+  --accent-hover: #c633ff;
+  --accent-glow: rgba(179, 0, 255, 0.25);
+  --accent-soft: rgba(179, 0, 255, 0.10);
+
+  --green: #00ff88;
+
+  --bracket-left: #ff00aa;
+  --bracket-right: #b300ff;
+}
+
+
+/* ─── FESTIVAL — lys glad lys-pink ───────────────────────── */
+[data-theme="festival"] {
+  --bg: #0a0708;
+  --bg-elev: #161012;
+  --bg-elev-2: #20181c;
+  --border: #2f2428;
+  --text: #fce8ed;
+  --text-dim: #988088;
+  --text-muted: #685058;
+
+  --accent: #ff6b9d;
+  --accent-hover: #ff85b0;
+  --accent-glow: rgba(255, 107, 157, 0.22);
+  --accent-soft: rgba(255, 107, 157, 0.10);
+
+  --green: #4ad7a5;
+
+  --bracket-left: #ffa500;
+  --bracket-right: #ff6b9d;
+}
+
+
+/* ─── BRYLLUP — varm elegant champagne ───────────────────── */
+[data-theme="bryllup"] {
+  --bg: #0a0908;
+  --bg-elev: #151310;
+  --bg-elev-2: #1f1c18;
+  --border: #2e2a25;
+  --text: #f5ecdf;
+  --text-dim: #98897a;
+  --text-muted: #685a4d;
+
+  --accent: #d4a574;
+  --accent-hover: #e0b88c;
+  --accent-glow: rgba(212, 165, 116, 0.22);
+  --accent-soft: rgba(212, 165, 116, 0.10);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
+
+
+/* ─── STUDENTER — rød/hvid student-kasket ────────────────── */
+[data-theme="studenter"] {
+  --bg: #0a0807;
+  --bg-elev: #15110f;
+  --bg-elev-2: #1f1916;
+  --border: #2f2622;
+  --text: #ffffff;
+  --text-dim: #b0a8a5;
+  --text-muted: #807878;
+
+  --accent: #c41e3a;
+  --accent-hover: #e63950;
+  --accent-glow: rgba(196, 30, 58, 0.22);
+  --accent-soft: rgba(196, 30, 58, 0.10);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--text);
+  --bracket-right: var(--accent);
+}
+
+
+/* ─── KONFIRMATION — hvid/sølv lys ───────────────────────── */
+[data-theme="konfirmation"] {
+  --bg: #08080a;
+  --bg-elev: #131316;
+  --bg-elev-2: #1c1c20;
+  --border: #2c2c30;
+  --text: #f5f5f8;
+  --text-dim: #989898;
+  --text-muted: #686868;
+
+  --accent: #c0c0c0;
+  --accent-hover: #dcdcdc;
+  --accent-glow: rgba(192, 192, 192, 0.22);
+  --accent-soft: rgba(192, 192, 192, 0.10);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
+
+
+/* ─── FØDSELSDAG — festlig multi koral ───────────────────── */
+[data-theme="fodselsdag"] {
+  --bg: #0a0708;
+  --bg-elev: #161012;
+  --bg-elev-2: #20181c;
+  --border: #2f2428;
+  --text: #f5e8ec;
+  --text-dim: #988088;
+  --text-muted: #685058;
+
+  --accent: #ff5e7d;
+  --accent-hover: #ff7894;
+  --accent-glow: rgba(255, 94, 125, 0.22);
+  --accent-soft: rgba(255, 94, 125, 0.10);
+
+  --green: #4ad7a5;
+
+  --bracket-left: #ffd700;
+  --bracket-right: #00d4ff;
+}
+
+
+/* ─── STUDIO — clean minimal grå ─────────────────────────── */
+[data-theme="studio"] {
+  --bg: #0a0a0b;
+  --bg-elev: #131315;
+  --bg-elev-2: #1c1c1f;
+  --border: #2c2c30;
+  --text: #e8e8eb;
+  --text-dim: #889098;
+  --text-muted: #585c60;
+
+  --accent: #6c757d;
+  --accent-hover: #8a929a;
+  --accent-glow: rgba(108, 117, 125, 0.18);
+  --accent-soft: rgba(108, 117, 125, 0.08);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
+
+
+/* ─── BEGRAVELSE — sober dyb ──────────────────────────────── */
+[data-theme="begravelse"] {
+  --bg: #06070a;
+  --bg-elev: #0e0f12;
+  --bg-elev-2: #16181c;
+  --border: #262830;
+  --text: #d8dde2;
+  --text-dim: #707880;
+  --text-muted: #404850;
+
+  --accent: #4a5568;
+  --accent-hover: #687385;
+  --accent-glow: rgba(74, 85, 104, 0.18);
+  --accent-soft: rgba(74, 85, 104, 0.06);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   ━━━ GENRE-TEMAER (5) — kun manuel ━━━
+   ════════════════════════════════════════════════════════════════ */
+
+
+/* ─── JAZZ — varm gylden brun ────────────────────────────── */
+[data-theme="jazz"] {
+  --bg: #0a0807;
+  --bg-elev: #161210;
+  --bg-elev-2: #201a16;
+  --border: #2f2620;
+  --text: #f5e8d4;
+  --text-dim: #988572;
+  --text-muted: #685a48;
+
+  --accent: #b8860b;
+  --accent-hover: #d4a017;
+  --accent-glow: rgba(184, 134, 11, 0.22);
+  --accent-soft: rgba(184, 134, 11, 0.10);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
+
+
+/* ─── METAL — sort/sølv hård ──────────────────────────────── */
+[data-theme="metal"] {
+  --bg: #050507;
+  --bg-elev: #0d0d10;
+  --bg-elev-2: #16161a;
+  --border: #2a2a30;
+  --text: #e8e8ec;
+  --text-dim: #888890;
+  --text-muted: #555560;
+
+  --accent: #c0c0c0;
+  --accent-hover: #d8d8d8;
+  --accent-glow: rgba(192, 192, 192, 0.18);
+  --accent-soft: rgba(192, 192, 192, 0.06);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
+
+
+/* ─── TECHNO — neon grøn cyber ────────────────────────────── */
+[data-theme="techno"] {
+  --bg: #050608;
+  --bg-elev: #0a0d10;
+  --bg-elev-2: #131618;
+  --border: #1f2528;
+  --text: #e0ffe8;
+  --text-dim: #80a088;
+  --text-muted: #506058;
+
+  --accent: #00ff41;
+  --accent-hover: #33ff66;
+  --accent-glow: rgba(0, 255, 65, 0.25);
+  --accent-soft: rgba(0, 255, 65, 0.10);
+
+  --green: #00ff41;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
+
+
+/* ─── COUNTRY — varm brun rustik ──────────────────────────── */
+[data-theme="country"] {
+  --bg: #0a0908;
+  --bg-elev: #15120e;
+  --bg-elev-2: #1f1a14;
+  --border: #2e2620;
+  --text: #f0e6d4;
+  --text-dim: #988570;
+  --text-muted: #685848;
+
+  --accent: #cd853f;
+  --accent-hover: #d99a5b;
+  --accent-glow: rgba(205, 133, 63, 0.22);
+  --accent-soft: rgba(205, 133, 63, 0.10);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
+
+
+/* ─── HIPHOP — mørk kraftig urban gold ──────────────────── */
+[data-theme="hiphop"] {
+  --bg: #060606;
+  --bg-elev: #0e0e0e;
+  --bg-elev-2: #181818;
+  --border: #2a2a2a;
+  --text: #f5f0d8;
+  --text-dim: #988e6e;
+  --text-muted: #685e48;
+
+  --accent: #ffaa00;
+  --accent-hover: #ffbf3d;
+  --accent-glow: rgba(255, 170, 0, 0.22);
+  --accent-soft: rgba(255, 170, 0, 0.10);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   ━━━ ELEMENT-TEMAER (5) — kun manuel ━━━
+   ════════════════════════════════════════════════════════════════ */
+
+
+/* ─── OCEAN — dyb havblå ─────────────────────────────────── */
+[data-theme="ocean"] {
+  --bg: #050a0c;
+  --bg-elev: #0a1418;
+  --bg-elev-2: #131e24;
+  --border: #1f2e36;
+  --text: #e0f0f5;
+  --text-dim: #80a0a8;
+  --text-muted: #506068;
+
+  --accent: #006994;
+  --accent-hover: #2185b0;
+  --accent-glow: rgba(0, 105, 148, 0.22);
+  --accent-soft: rgba(0, 105, 148, 0.10);
+
+  --green: #00b8a9;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
+
+
+/* ─── FIRE — flamme orange/rød ───────────────────────────── */
+[data-theme="fire"] {
+  --bg: #0a0605;
+  --bg-elev: #16100c;
+  --bg-elev-2: #201812;
+  --border: #2f241a;
+  --text: #fce8d4;
+  --text-dim: #98856e;
+  --text-muted: #685848;
+
+  --accent: #ff4500;
+  --accent-hover: #ff6b30;
+  --accent-glow: rgba(255, 69, 0, 0.25);
+  --accent-soft: rgba(255, 69, 0, 0.10);
+
+  --green: #4ad7a5;
+
+  --bracket-left: #ffaa00;
+  --bracket-right: #ff4500;
+}
+
+
+/* ─── ICE — kold lys blå/hvid ────────────────────────────── */
+[data-theme="ice"] {
+  --bg: #08090b;
+  --bg-elev: #121418;
+  --bg-elev-2: #1a1d22;
+  --border: #2a2f35;
+  --text: #f0f8fc;
+  --text-dim: #889098;
+  --text-muted: #586068;
+
+  --accent: #87ceeb;
+  --accent-hover: #a4dceb;
+  --accent-glow: rgba(135, 206, 235, 0.22);
+  --accent-soft: rgba(135, 206, 235, 0.10);
+
+  --green: #4ad7a5;
+
+  --bracket-left: var(--accent);
+  --bracket-right: var(--accent);
+}
+
+
+/* ─── NEON — cyberpunk magenta/cyan ──────────────────────── */
+[data-theme="neon"] {
+  --bg: #050508;
+  --bg-elev: #0c0c14;
+  --bg-elev-2: #15151f;
+  --border: #2a2a3a;
+  --text: #f5e8ff;
+  --text-dim: #9888aa;
+  --text-muted: #585068;
+
+  --accent: #ff00ff;
+  --accent-hover: #ff33ff;
+  --accent-glow: rgba(255, 0, 255, 0.25);
+  --accent-soft: rgba(255, 0, 255, 0.10);
+
+  --green: #00ff88;
+
+  --bracket-left: #00ffff;
+  --bracket-right: #ff00ff;
+}
+
+
+/* ─── VINTAGE — sepia brun nostalgisk ────────────────────── */
+[data-theme="vintage"] {
+  --bg: #0a0907;
+  --bg-elev: #15110d;
+  --bg-elev-2: #1f1a14;
+  --border: #2e2820;
+  --text: #f0e6d0;
+  --text-dim: #98886e;
+  --text-muted: #685c48;
+
+  --accent: #a0826d;
+  --accent-hover: #b29b85;
+  --accent-glow: rgba(160, 130, 109, 0.20);
+  --accent-soft: rgba(160, 130, 109, 0.08);
 
   --green: #4ad7a5;
 
