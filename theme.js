@@ -134,7 +134,6 @@ const HOLIDAY_RULES = [
   // ─── Variable datoer (kræver beregning hvert år) ───
   d => isEasterPeriod(d)  ? 'paaske'      : null,  // Palmesøndag → 2. påskedag
   d => isFastelavn(d)     ? 'fastelavn'   : null,  // Fastelavnsweekend
-  d => isMothersDay(d)    ? 'morsdag'     : null,  // Mors dag-weekend
   d => isPentecost(d)     ? 'pinse'       : null,  // Pinsedag-weekend
   d => isCyberMonday(d)   ? 'cybermonday' : null,  // Mandag efter Black Friday
   d => isBlackFriday(d)   ? 'blackfriday' : null,  // 4. fredag i november
@@ -220,17 +219,6 @@ function isPentecost(date) {
   const end = new Date(pentecostSunday);
   end.setDate(pentecostSunday.getDate() + 1);    // mandag (2. pinsedag)
   return isSameOrBetween(date, start, end);
-}
-
-// Mors dag: 2. søndag i maj (lørdag-mandag omkring den dag)
-function isMothersDay(date) {
-  if (date.getMonth() !== 4) return false;
-  const day = date.getDate();
-  if (day < 7 || day > 15) return false;
-  const may1 = new Date(date.getFullYear(), 4, 1);
-  const firstSundayOffset = (7 - may1.getDay()) % 7;
-  const secondSunday = 1 + firstSundayOffset + 7;
-  return day >= (secondSunday - 1) && day <= (secondSunday + 1);
 }
 
 // Black Friday: 4. fredag i november
