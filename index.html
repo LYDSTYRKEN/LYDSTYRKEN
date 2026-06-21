@@ -1128,7 +1128,7 @@
 
     // Forsøg at hente fra products.js
     if (typeof PRODUCTS !== 'undefined' && Array.isArray(PRODUCTS)) {
-      const activeCount = PRODUCTS.filter(p => p.status !== 'sold').length;
+      const activeCount = PRODUCTS.filter(p => !p.sold).length;
       el.textContent = activeCount > 0 ? activeCount : '20+';
     } else {
       // Fallback — vis "20+" som rimelig estimat

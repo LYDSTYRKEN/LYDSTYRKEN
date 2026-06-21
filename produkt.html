@@ -781,10 +781,12 @@
                   <span class="value strike">${formatKr(p.newPrice)}</span>
                 </div>
                 <div class="price-card">
-                  <span class="label">Mindstepris</span>
+                  <span class="label">${p.bundleSavings ? 'Pakkepris (byd fra)' : 'Mindstepris'}</span>
                   <span class="value">${formatKr(p.minPrice)}</span>
                 </div>
               </div>
+
+              ${(p.bundleSavings) ? `<div style="margin:14px 0 0;padding:12px 14px;border:1px solid var(--green);border-radius:10px;background:color-mix(in srgb, var(--green) 10%, transparent);font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--text);line-height:1.5;">Pakke med ${p.bundleQty} stk. — <strong style="color:var(--green);">spar ${formatKr(p.bundleSavings)}</strong> i forhold til ${formatKr(p.sepPrice)} hver for sig.</div>` : ''}
 
               ${currentBidCard}
 
