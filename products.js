@@ -56,7 +56,8 @@ const PRODUCTS = [
     "bidder": null,
     "image": "",
     "images": [],
-    "sold": false
+    "sold": false,
+    "group": "Yamaha DXR15"
   },
   {
     "id": 102,
@@ -98,7 +99,8 @@ const PRODUCTS = [
     "bidder": null,
     "image": "",
     "images": [],
-    "sold": false
+    "sold": false,
+    "group": "Yamaha DXR15"
   },
   {
     "id": 103,
@@ -140,7 +142,8 @@ const PRODUCTS = [
     "bidder": null,
     "image": "",
     "images": [],
-    "sold": false
+    "sold": false,
+    "group": "Yamaha DXR15"
   },
   {
     "id": 104,
@@ -182,7 +185,8 @@ const PRODUCTS = [
     "bidder": null,
     "image": "",
     "images": [],
-    "sold": false
+    "sold": false,
+    "group": "Yamaha DXR15"
   },
   {
     "id": 105,
@@ -224,7 +228,8 @@ const PRODUCTS = [
     "bidder": null,
     "image": "",
     "images": [],
-    "sold": false
+    "sold": false,
+    "group": "Yamaha DXR15"
   },
   {
     "id": 106,
@@ -272,7 +277,8 @@ const PRODUCTS = [
     "bundleOf": [
       101,
       102
-    ]
+    ],
+    "group": "Yamaha DXR15"
   },
   {
     "id": 110,
@@ -320,7 +326,8 @@ const PRODUCTS = [
     "images": [
       "images/products/dxr12-4.jpg"
     ],
-    "sold": false
+    "sold": false,
+    "group": "Yamaha DXR12"
   },
   {
     "id": 111,
@@ -368,7 +375,8 @@ const PRODUCTS = [
     "images": [
       "images/products/dxr12-3.jpg"
     ],
-    "sold": false
+    "sold": false,
+    "group": "Yamaha DXR12"
   },
   {
     "id": 112,
@@ -416,7 +424,56 @@ const PRODUCTS = [
     "images": [
       "images/products/dxr12-4.jpg"
     ],
-    "sold": false
+    "sold": false,
+    "group": "Yamaha DXR12"
+  },
+  {
+    "id": 114,
+    "name": "Yamaha DXR12 #4",
+    "category": "Højttaler",
+    "type": "private",
+    "description": "Aktiv 12\" fuldspektrums-tophøjttaler — en af de mest driftssikre aktive kasser i klassen. Velegnet til FOH og som monitor.",
+    "details": "Privat enhed — denne er solgt. De øvrige DXR12 er fortsat til salg, se gruppen.",
+    "condition": "Solgt",
+    "specs": [
+      {
+        "label": "Effekt",
+        "value": "1100 W klasse-D"
+      },
+      {
+        "label": "Max SPL",
+        "value": "132 dB"
+      },
+      {
+        "label": "Driver",
+        "value": "12\" woofer + 1,4\" comp"
+      },
+      {
+        "label": "Frekvens",
+        "value": "52 Hz – 20 kHz"
+      },
+      {
+        "label": "Horn",
+        "value": "90° × 60°"
+      },
+      {
+        "label": "Indgange",
+        "value": "2x XLR/jack combo + RCA, link-out"
+      },
+      {
+        "label": "Vægt",
+        "value": "ca. 19,5 kg"
+      }
+    ],
+    "newPrice": 4500,
+    "minPrice": 3000,
+    "currentBid": null,
+    "bidder": null,
+    "image": "images/products/dxr12-1.jpg",
+    "images": [],
+    "sold": true,
+    "soldPrice": 4000,
+    "group": "Yamaha DXR12"
   },
   {
     "id": 113,
@@ -471,7 +528,8 @@ const PRODUCTS = [
     "bundleOf": [
       110,
       111
-    ]
+    ],
+    "group": "Yamaha DXR12"
   },
   {
     "id": 120,
@@ -516,7 +574,8 @@ const PRODUCTS = [
       "images/products/bhype12-3.jpg",
       "images/products/bhype12-5.jpg"
     ],
-    "sold": false
+    "sold": false,
+    "group": "dB Technologies B-Hype 12"
   },
   {
     "id": 121,
@@ -561,7 +620,8 @@ const PRODUCTS = [
       "images/products/bhype12-4.jpg",
       "images/products/bhype12-7.jpg"
     ],
-    "sold": false
+    "sold": false,
+    "group": "dB Technologies B-Hype 12"
   },
   {
     "id": 122,
@@ -611,7 +671,8 @@ const PRODUCTS = [
     "bundleOf": [
       120,
       121
-    ]
+    ],
+    "group": "dB Technologies B-Hype 12"
   },
   {
     "id": 4,

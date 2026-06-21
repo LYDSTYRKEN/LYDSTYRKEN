@@ -371,6 +371,36 @@
   .bid-btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
   .bid-btn.disabled { background: var(--bg-elev-2); color: var(--text-muted); cursor: not-allowed; pointer-events: none; }
 
+  /* ─── GRUPPER (udvidbare) ─── */
+  .group { grid-column: 1 / -1; background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; animation: card-in 0.5s cubic-bezier(0.16,1,0.3,1) both; }
+  .group[open] { border-color: color-mix(in srgb, var(--accent) 38%, var(--border)); }
+  .group-head { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 16px; padding: 16px 18px; user-select: none; transition: background 0.2s; }
+  .group-head::-webkit-details-marker { display: none; }
+  .group-head:hover { background: var(--bg-elev-2); }
+  .group-thumb { width: 60px; height: 60px; border-radius: var(--radius-sm); object-fit: cover; background: var(--bg-elev-2); flex: none; }
+  span.group-thumb.ph { display: flex; align-items: center; justify-content: center; color: var(--text-muted); }
+  .group-info { flex: 1; min-width: 0; }
+  .group-name { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 18px; color: var(--text); line-height: 1.2; margin: 2px 0; }
+  .group-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-dim); letter-spacing: 0.02em; }
+  .group-pkg { display: flex; flex-direction: column; align-items: flex-end; gap: 1px; padding: 8px 12px; border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--border)); border-radius: var(--radius-sm); background: color-mix(in srgb, var(--accent) 8%, transparent); flex: none; }
+  .group-pkg-label { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); }
+  .group-pkg-price { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 17px; color: var(--accent); line-height: 1.1; }
+  .group-pkg-save { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--green); }
+  .group-toggle { display: flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); flex: none; }
+  .group-toggle .gt-open { display: none; }
+  .group[open] .group-toggle .gt-closed { display: none; }
+  .group[open] .group-toggle .gt-open { display: inline; }
+  .group-chev { transition: transform 0.25s; }
+  .group[open] .group-chev { transform: rotate(180deg); }
+  .group-body { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; padding: 4px 18px 18px; }
+  @media (max-width: 620px) {
+    .group-head { flex-wrap: wrap; gap: 12px; }
+    .group-pkg { order: 3; }
+    .group-toggle { order: 4; margin-left: auto; }
+    .group-body { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 460px) { .group-body { grid-template-columns: 1fr; } }
+
   .empty-state {
     text-align: center;
     padding: 80px 20px;
@@ -442,12 +472,12 @@
     <div class="mobile-menu-footer">
       <a href="mailto:marius@lydstyrken.com">marius@lydstyrken.com</a>
       <a href="https://instagram.com/lydstyrken" target="_blank" rel="noopener">@lydstyrken på Instagram ↗</a>
-      <span style="margin-top: 12px;">© 2025 LYDSTYRKEN — CVR 45880419</span>
+      <span style="margin-top: 12px;">© 2026 LYDSTYRKEN — CVR 45880419</span>
     </div>
   </div>
 </div>
 
-<main>
+<main id="main">
 
 <header class="page-header">
   <div class="container">
@@ -461,7 +491,7 @@
 
     <div class="countdown-wrap" id="countdown-wrap">
       <div>
-        <div class="countdown-label">Budrunden er ikke begyndt endnu</div>
+        <div class="countdown-label" id="cd-label">Budrunden slutter</div>
         <div class="countdown-date" id="end-date"></div>
       </div>
       <div class="countdown" id="countdown">
@@ -604,7 +634,7 @@
 
     <!-- Footer bund -->
     <div class="footer-bottom">
-      <span>© 2025 LYDSTYRKEN — CVR 45880419</span>
+      <span>© 2026 LYDSTYRKEN — CVR 45880419</span>
       <a href="#main" class="footer-back-top">Tilbage til top ↑</a>
       <span>[ ODENSE / DK ]</span>
     </div>
@@ -686,6 +716,163 @@
       }
     }
 
+    // ── Udvidbare grupper ──
+    const openGroups = new Set();
+
+    function cardHTML(p) {
+      const isBundle = Array.isArray(p.bundleOf) && p.bundleOf.length > 0;
+      const reserved = p.sold && /reserv/i.test(p.condition || '');
+      const statusText = p.sold ? (reserved ? 'Reserveret' : 'Solgt') : '';
+      const badge = p.type === 'private'
+        ? '<span class="badge badge-private">● Privat</span>'
+        : '<span class="badge badge-business">● LYDSTYRKEN</span>';
+      const bundleBadge = isBundle ? `<span class="badge badge-bundle">PAKKE · ${p.bundleQty} stk.</span>` : '';
+      const media = p.image
+        ? `<img src="${p.image}" alt="${escapeAttr(p.name)}" loading="lazy" decoding="async">`
+        : `<div class="media-ph">
+             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="2" width="16" height="20" rx="2"/><circle cx="12" cy="14" r="4.5"/><circle cx="12" cy="6" r="1"/></svg>
+             <span class="ph-name">${escapeHtml(p.name)}</span>
+             <span class="ph-note">Foto følger</span>
+           </div>`;
+      const livePill = (p.currentBid && !p.sold)
+        ? `<div class="p-livebid"><span class="dot"></span>${formatKr(p.currentBid)}</div>` : '';
+      const statusRibbon = statusText ? `<div class="p-status">${statusText}</div>` : '';
+
+      let priceBlock;
+      if (p.sold) {
+        const soldLabel = reserved ? 'Reserveret' : 'Solgt for';
+        const soldVal = reserved ? 'Aftalt' : (p.soldPrice ? formatKr(p.soldPrice) : '—');
+        priceBlock = `
+          <div class="p-price">
+            <div class="p-price-main">
+              <span class="p-price-label">${soldLabel}</span>
+              <span class="p-price-val" style="font-size:16px;">${soldVal}</span>
+            </div>
+          </div>`;
+      } else if (isBundle) {
+        priceBlock = `
+          <div class="p-price">
+            <div class="p-price-main">
+              <span class="p-price-label">Pakke · byd fra</span>
+              <span class="p-price-val">${formatKr(p.minPrice)}</span>
+            </div>
+            <div class="p-price-sub">
+              <span class="strike">Hver for sig: ${formatKr(p.sepPrice)}</span>
+              <span class="p-save">Spar ${formatKr(p.bundleSavings)}</span>
+            </div>
+          </div>`;
+      } else if (p.currentBid) {
+        priceBlock = `
+          <div class="p-price">
+            <div class="p-price-main">
+              <span class="p-price-label">Højeste bud</span>
+              <span class="p-price-val"><span class="p-livebid-inline"><span class="dot"></span>${formatKr(p.currentBid)}</span></span>
+            </div>
+            <div class="p-price-sub">
+              <span>Byd fra ${formatKr(p.minPrice)}</span>
+              <span class="strike">Nypris ${formatKr(p.newPrice)}</span>
+            </div>
+          </div>`;
+      } else {
+        priceBlock = `
+          <div class="p-price">
+            <div class="p-price-main">
+              <span class="p-price-label">Byd fra</span>
+              <span class="p-price-val">${formatKr(p.minPrice)}</span>
+            </div>
+            <div class="p-price-sub">
+              <span class="strike">Vejl. nypris ${formatKr(p.newPrice)}</span>
+            </div>
+          </div>`;
+      }
+
+      const subject = encodeURIComponent(`Bud på: ${p.name}`);
+      const body = encodeURIComponent(`Hej Marius,\n\nJeg vil gerne byde på "${p.name}".\n\nMit bud: ___ kr.\nNavn:\nTelefon:\n\nMvh.`);
+      const disabled = p.sold || auctionClosed;
+      const btnText = p.sold ? (reserved ? 'Reserveret' : 'Solgt') : (auctionClosed ? 'Budrunde lukket' : 'Byd via mail →');
+
+      return `
+        <article class="product${p.sold ? ' sold' : ''}${isBundle ? ' bundle' : ''}">
+          <a class="product-media has-vt-name" style="--product-vt: product-${p.id}" href="produkt.html?id=${p.id}" aria-label="Se detaljer for ${escapeAttr(p.name)}">
+            ${media}
+            <div class="p-badges">${badge}${bundleBadge}</div>
+            ${livePill}
+            ${statusRibbon}
+          </a>
+          <div class="product-body">
+            <div class="p-cat">${escapeHtml(p.category)}</div>
+            <h3 class="p-name">${escapeHtml(p.name)}</h3>
+            <div class="p-cond">${escapeHtml(p.condition || '')}</div>
+            ${priceBlock}
+            <a href="${disabled ? '#' : `mailto:marius@lydstyrken.com?subject=${subject}&body=${body}`}"
+               class="bid-btn${disabled ? ' disabled' : ''}"
+               ${disabled ? 'aria-disabled="true" tabindex="-1"' : ''}>${btnText}</a>
+          </div>
+        </article>`;
+    }
+
+    function groupHTML(name, members) {
+      const units   = members.filter(m => !(Array.isArray(m.bundleOf) && m.bundleOf.length));
+      const bundles = members.filter(m =>  (Array.isArray(m.bundleOf) && m.bundleOf.length));
+      const avail = units.filter(u => !u.sold);
+      const soldUnits = units.filter(u => u.sold);
+      const prices = avail.map(u => u.minPrice);
+      const fromPrice = prices.length ? Math.min(...prices) : (bundles[0] ? bundles[0].minPrice : 0);
+      const pkg = bundles[0];
+      const cat = (members[0] && members[0].category) || '';
+      const repImg = (members.find(m => m.image) || {}).image || '';
+      const thumb = repImg
+        ? `<img class="group-thumb" src="${repImg}" alt="" loading="lazy">`
+        : `<span class="group-thumb ph"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="2" width="16" height="20" rx="2"/><circle cx="12" cy="14" r="4.5"/><circle cx="12" cy="6" r="1"/></svg></span>`;
+      const meta = [`${avail.length} til salg`];
+      if (soldUnits.length) meta.push(`${soldUnits.length} solgt`);
+      meta.push(`fra ${formatKr(fromPrice)}`);
+      const pkgChip = pkg
+        ? `<div class="group-pkg"><span class="group-pkg-label">Pakke · ${pkg.bundleQty} stk.</span><span class="group-pkg-price">${formatKr(pkg.minPrice)}</span><span class="group-pkg-save">spar ${formatKr(pkg.bundleSavings)}</span></div>`
+        : '';
+      const isOpen = openGroups.has(name) || (currentSearch.trim() !== '');
+      const body = members.map(cardHTML).join('');
+      return `
+        <details class="group"${isOpen ? ' open' : ''} data-group="${escapeAttr(name)}">
+          <summary class="group-head">
+            ${thumb}
+            <div class="group-info">
+              <div class="p-cat">${escapeHtml(cat)} · ${units.length} enheder</div>
+              <h3 class="group-name">${escapeHtml(name)}</h3>
+              <div class="group-meta">${meta.join(' · ')}</div>
+            </div>
+            ${pkgChip}
+            <span class="group-toggle"><span class="gt-closed">Se enheder</span><span class="gt-open">Skjul</span><svg class="group-chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span>
+          </summary>
+          <div class="group-body">${body}</div>
+        </details>`;
+    }
+
+    function buildGridHTML(arr) {
+      const emitted = new Set();
+      let out = '';
+      arr.forEach(p => {
+        if (p.group) {
+          if (emitted.has(p.group)) return;
+          emitted.add(p.group);
+          const members = arr.filter(x => x.group === p.group);
+          out += members.length >= 2 ? groupHTML(p.group, members) : cardHTML(members[0]);
+        } else {
+          out += cardHTML(p);
+        }
+      });
+      return out;
+    }
+
+    function attachGroupToggles() {
+      grid.querySelectorAll('details.group').forEach(d => {
+        d.addEventListener('toggle', () => {
+          if (d.open) openGroups.add(d.dataset.group);
+          else openGroups.delete(d.dataset.group);
+        });
+      });
+    }
+
     function renderProducts() {
       const searchLower = currentSearch.toLowerCase().trim();
 
@@ -718,98 +905,8 @@
         return;
       }
 
-      grid.innerHTML = filtered.map(p => {
-        const isBundle = Array.isArray(p.bundleOf) && p.bundleOf.length > 0;
-        const reserved = p.sold && /reserv/i.test(p.condition || '');
-        const statusText = p.sold ? (reserved ? 'Reserveret' : 'Solgt') : '';
-
-        const badge = p.type === 'private'
-          ? '<span class="badge badge-private">● Privat</span>'
-          : '<span class="badge badge-business">● LYDSTYRKEN</span>';
-        const bundleBadge = isBundle ? `<span class="badge badge-bundle">PAKKE · ${p.bundleQty} stk.</span>` : '';
-
-        const media = p.image
-          ? `<img src="${p.image}" alt="${escapeAttr(p.name)}" loading="lazy" decoding="async">`
-          : `<div class="media-ph">
-               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="2" width="16" height="20" rx="2"/><circle cx="12" cy="14" r="4.5"/><circle cx="12" cy="6" r="1"/></svg>
-               <span class="ph-name">${escapeHtml(p.name)}</span>
-               <span class="ph-note">Foto følger</span>
-             </div>`;
-
-        const livePill = (p.currentBid && !p.sold)
-          ? `<div class="p-livebid"><span class="dot"></span>${formatKr(p.currentBid)}</div>` : '';
-        const statusRibbon = statusText ? `<div class="p-status">${statusText}</div>` : '';
-
-        let priceBlock;
-        if (p.sold) {
-          priceBlock = `
-            <div class="p-price">
-              <div class="p-price-main">
-                <span class="p-price-label">${reserved ? 'Reserveret' : 'Solgt'}</span>
-                <span class="p-price-val" style="font-size:15px;">${reserved ? 'Aftalt' : '—'}</span>
-              </div>
-            </div>`;
-        } else if (isBundle) {
-          priceBlock = `
-            <div class="p-price">
-              <div class="p-price-main">
-                <span class="p-price-label">Pakke · byd fra</span>
-                <span class="p-price-val">${formatKr(p.minPrice)}</span>
-              </div>
-              <div class="p-price-sub">
-                <span class="strike">Hver for sig: ${formatKr(p.sepPrice)}</span>
-                <span class="p-save">Spar ${formatKr(p.bundleSavings)}</span>
-              </div>
-            </div>`;
-        } else if (p.currentBid) {
-          priceBlock = `
-            <div class="p-price">
-              <div class="p-price-main">
-                <span class="p-price-label">Højeste bud</span>
-                <span class="p-price-val"><span class="p-livebid-inline"><span class="dot"></span>${formatKr(p.currentBid)}</span></span>
-              </div>
-              <div class="p-price-sub">
-                <span>Byd fra ${formatKr(p.minPrice)}</span>
-                <span class="strike">Nypris ${formatKr(p.newPrice)}</span>
-              </div>
-            </div>`;
-        } else {
-          priceBlock = `
-            <div class="p-price">
-              <div class="p-price-main">
-                <span class="p-price-label">Byd fra</span>
-                <span class="p-price-val">${formatKr(p.minPrice)}</span>
-              </div>
-              <div class="p-price-sub">
-                <span class="strike">Vejl. nypris ${formatKr(p.newPrice)}</span>
-              </div>
-            </div>`;
-        }
-
-        const subject = encodeURIComponent(`Bud på: ${p.name}`);
-        const body = encodeURIComponent(`Hej Marius,\n\nJeg vil gerne byde på "${p.name}".\n\nMit bud: ___ kr.\nNavn:\nTelefon:\n\nMvh.`);
-        const disabled = p.sold || auctionClosed;
-        const btnText = p.sold ? (reserved ? 'Reserveret' : 'Solgt') : (auctionClosed ? 'Budrunde lukket' : 'Byd via mail →');
-
-        return `
-          <article class="product${p.sold ? ' sold' : ''}${isBundle ? ' bundle' : ''}">
-            <a class="product-media has-vt-name" style="--product-vt: product-${p.id}" href="produkt.html?id=${p.id}" aria-label="Se detaljer for ${escapeAttr(p.name)}">
-              ${media}
-              <div class="p-badges">${badge}${bundleBadge}</div>
-              ${livePill}
-              ${statusRibbon}
-            </a>
-            <div class="product-body">
-              <div class="p-cat">${escapeHtml(p.category)}</div>
-              <h3 class="p-name">${escapeHtml(p.name)}</h3>
-              <div class="p-cond">${escapeHtml(p.condition || '')}</div>
-              ${priceBlock}
-              <a href="${disabled ? '#' : `mailto:marius@lydstyrken.com?subject=${subject}&body=${body}`}"
-                 class="bid-btn${disabled ? ' disabled' : ''}"
-                 ${disabled ? 'aria-disabled="true" tabindex="-1"' : ''}>${btnText}</a>
-            </div>
-          </article>`;
-      }).join('');
+      grid.innerHTML = buildGridHTML(filtered);
+      attachGroupToggles();
     }
 
     // Simple HTML/attr escape — i tilfælde af at produktnavne får < > " &
@@ -875,6 +972,7 @@
     const cdMins = document.getElementById('cd-mins');
     const cdSecs = document.getElementById('cd-secs');
     const endDateEl = document.getElementById('end-date');
+    const cdLabel = document.getElementById('cd-label');
     let lastSecs = null;
 
     function updateCountdown() {
@@ -885,7 +983,8 @@
         cdHours.textContent = '00';
         cdMins.textContent = '00';
         cdSecs.textContent = '00';
-        endDateEl.textContent = 'Budrunden er lukket';
+        if (cdLabel) cdLabel.textContent = 'Budrunden er lukket';
+        endDateEl.textContent = '';
         cdWrap.classList.add('closed');
         return false;
       }
@@ -899,6 +998,9 @@
       cdHours.textContent = String(hours).padStart(2, '0');
       cdMins.textContent = String(mins).padStart(2, '0');
       cdSecs.textContent = String(secs).padStart(2, '0');
+
+      if (cdLabel) cdLabel.textContent = 'Budrunden slutter';
+      endDateEl.textContent = END_DATE.toLocaleDateString('da-DK', { day: 'numeric', month: 'long', year: 'numeric' }) + ' kl. ' + END_DATE.toLocaleTimeString('da-DK', { hour: '2-digit', minute: '2-digit' });
 
       // Lille pulse hver gang sek skifter
       if (lastSecs !== secs) {
