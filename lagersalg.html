@@ -433,6 +433,12 @@
     transition: background 0.2s;
   }
   .empty-state button:hover { background: color-mix(in srgb, var(--accent) 10%, transparent); }
+
+  /* ─── GRUPPE-BOKS (adskiller sig fra normale kort) ─── */
+  .product.group-card { border-color: color-mix(in srgb, var(--accent) 50%, var(--border)); box-shadow: 5px 5px 0 -1px var(--bg-elev), 5px 5px 0 0 var(--border), 10px 10px 0 -1px var(--bg-elev), 10px 10px 0 0 var(--border); }
+  .product.group-card:hover { transform: translateY(-3px); box-shadow: 5px 5px 0 -1px var(--bg-elev), 5px 5px 0 0 var(--accent), 10px 10px 0 -1px var(--bg-elev), 10px 10px 0 0 color-mix(in srgb, var(--accent) 55%, var(--border)); }
+  .badge-group { color: #0a0a0b; background: var(--accent); border: 1px solid var(--accent); font-weight: 600; }
+  .group-flag { position: absolute; bottom: 10px; left: 10px; right: 10px; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); background: rgba(10,10,11,0.72); border: 1px solid var(--accent); border-radius: 4px; padding: 5px 8px; z-index: 2; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
 </style>
 </head>
 <body>
@@ -554,7 +560,6 @@
       <button class="filter-btn" data-filter="private">Privat</button>
       <button class="filter-btn" data-filter="business">LYDSTYRKEN</button>
       <button class="filter-btn" data-filter="available">Tilgængelige</button>
-      <button class="filter-btn" data-filter="bundle">Pakker</button>
     </div>
     <div class="sort-group">
       <label for="sort" class="visually-hidden" style="position:absolute;left:-9999px;">Sortér</label>
@@ -732,7 +737,7 @@
         : `<div class="media-ph">
              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="2" width="16" height="20" rx="2"/><circle cx="12" cy="14" r="4.5"/><circle cx="12" cy="6" r="1"/></svg>
              <span class="ph-name">${escapeHtml(p.name)}</span>
-             <span class="ph-note">Foto følger</span>
+             <span class="ph-note">Billeder kommer snart</span>
            </div>`;
       const livePill = (p.currentBid && !p.sold)
         ? `<div class="p-livebid"><span class="dot"></span>${formatKr(p.currentBid)}</div>` : '';
@@ -755,10 +760,6 @@
             <div class="p-price-main">
               <span class="p-price-label">Pakke · byd fra</span>
               <span class="p-price-val">${formatKr(p.minPrice)}</span>
-            </div>
-            <div class="p-price-sub">
-              <span class="strike">Hver for sig: ${formatKr(p.sepPrice)}</span>
-              <span class="p-save">Spar ${formatKr(p.bundleSavings)}</span>
             </div>
           </div>`;
       } else if (p.currentBid) {
@@ -820,32 +821,41 @@
       const fromPrice = prices.length ? Math.min(...prices) : (bundles[0] ? bundles[0].minPrice : 0);
       const pkg = bundles[0];
       const cat = (members[0] && members[0].category) || '';
-      const repImg = (members.find(m => m.image) || {}).image || '';
-      const thumb = repImg
-        ? `<img class="group-thumb" src="${repImg}" alt="" loading="lazy">`
-        : `<span class="group-thumb ph"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="2" width="16" height="20" rx="2"/><circle cx="12" cy="14" r="4.5"/><circle cx="12" cy="6" r="1"/></svg></span>`;
+      const repImg = (typeof GROUP_IMAGES !== 'undefined' && GROUP_IMAGES[name]) || (members.find(m => m.image) || {}).image || '';
+      const link = `produkt.html?group=${encodeURIComponent(name)}`;
+      const media = repImg
+        ? `<img src="${repImg}" alt="${escapeAttr(name)}" loading="lazy" decoding="async">`
+        : `<div class="media-ph">
+             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="2" width="16" height="20" rx="2"/><circle cx="12" cy="14" r="4.5"/><circle cx="12" cy="6" r="1"/></svg>
+             <span class="ph-name">${escapeHtml(name)}</span>
+             <span class="ph-note">Billeder kommer snart</span>
+           </div>`;
       const meta = [`${avail.length} til salg`];
       if (soldUnits.length) meta.push(`${soldUnits.length} solgt`);
-      meta.push(`fra ${formatKr(fromPrice)}`);
-      const pkgChip = pkg
-        ? `<div class="group-pkg"><span class="group-pkg-label">Pakke · ${pkg.bundleQty} stk.</span><span class="group-pkg-price">${formatKr(pkg.minPrice)}</span><span class="group-pkg-save">spar ${formatKr(pkg.bundleSavings)}</span></div>`
+      const pkgSub = pkg
+        ? `<div class="p-price-sub"><span>+ pakke (${pkg.bundleQty} stk.)</span></div>`
         : '';
-      const isOpen = openGroups.has(name) || (currentSearch.trim() !== '');
-      const body = members.map(cardHTML).join('');
       return `
-        <details class="group"${isOpen ? ' open' : ''} data-group="${escapeAttr(name)}">
-          <summary class="group-head">
-            ${thumb}
-            <div class="group-info">
-              <div class="p-cat">${escapeHtml(cat)} · ${units.length} enheder</div>
-              <h3 class="group-name">${escapeHtml(name)}</h3>
-              <div class="group-meta">${meta.join(' · ')}</div>
+        <article class="product group-card">
+          <a class="product-media" href="${link}" aria-label="Se alle ${escapeAttr(name)} (${units.length} enheder)">
+            ${media}
+            <div class="p-badges"><span class="badge badge-group">${units.length} ENHEDER</span></div>
+            <div class="group-flag">Gruppe · klik for at se alle</div>
+          </a>
+          <div class="product-body">
+            <div class="p-cat">${escapeHtml(cat)}</div>
+            <h3 class="p-name">${escapeHtml(name)}</h3>
+            <div class="p-cond">${meta.join(' · ')}</div>
+            <div class="p-price">
+              <div class="p-price-main">
+                <span class="p-price-label">Byd fra</span>
+                <span class="p-price-val">${formatKr(fromPrice)}</span>
+              </div>
+              ${pkgSub}
             </div>
-            ${pkgChip}
-            <span class="group-toggle"><span class="gt-closed">Se enheder</span><span class="gt-open">Skjul</span><svg class="group-chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span>
-          </summary>
-          <div class="group-body">${body}</div>
-        </details>`;
+            <a href="${link}" class="bid-btn">Se alle ${units.length} enheder →</a>
+          </div>
+        </article>`;
     }
 
     function buildGridHTML(arr) {
@@ -891,7 +901,10 @@
 
       filtered = sortProducts(filtered, currentSort);
 
-      countEl.textContent = filtered.length;
+      const _gnames = new Set(filtered.filter(p=>p.group).map(p=>p.group));
+      let _top = filtered.filter(p=>!p.group).length;
+      _gnames.forEach(g => { const c = filtered.filter(p=>p.group===g).length; _top += (c>=2?1:c); });
+      countEl.textContent = _top;
 
       if (filtered.length === 0) {
         grid.innerHTML = `
@@ -1021,4 +1034,4 @@
 </script>
 
 </body>
-</html>
+</html>                                                                                                                                                                                                                     

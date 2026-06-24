@@ -26,38 +26,59 @@ const PRODUCTS = [
     "condition": "Velholdt — fungerende (enkelt enhed)",
     "specs": [
       {
-        "label": "Effekt",
-        "value": "1100 W klasse-D"
+        "label": "Type",
+        "value": "2-vejs aktiv tophøjttaler"
+      },
+      {
+        "label": "Forstærker",
+        "value": "1100 W klasse-D (bi-amp)"
+      },
+      {
+        "label": "Driver",
+        "value": "15\" woofer + 1,4\" comp-driver"
       },
       {
         "label": "Max SPL",
         "value": "134 dB"
       },
       {
-        "label": "Driver",
-        "value": "15\" woofer + 1,4\" comp"
-      },
-      {
         "label": "Frekvens",
         "value": "49 Hz – 20 kHz"
+      },
+      {
+        "label": "Spredning",
+        "value": "90° × 60°"
+      },
+      {
+        "label": "DSP",
+        "value": "FIR-X tuning + D-CONTOUR multiband"
+      },
+      {
+        "label": "Onboard-mixer",
+        "value": "3-kanals (mic/line)"
       },
       {
         "label": "Indgange",
         "value": "2x XLR/jack combo + RCA, link-out"
       },
       {
+        "label": "Kabinet",
+        "value": "ABS, dual-angle stativfod"
+      },
+      {
         "label": "Vægt",
-        "value": "ca. 22 kg"
+        "value": "ca. 22,5 kg"
       }
     ],
     "newPrice": 5000,
     "minPrice": 2500,
-    "currentBid": null,
+    "currentBid": 2950,
     "bidder": null,
     "image": "",
     "images": [],
     "sold": false,
-    "group": "Yamaha DXR15"
+    "group": "Yamaha DXR15",
+    "pitch": "Yamaha DXR-serien er en af de mest udbredte og driftssikre aktive PA-kasser i klassen — anmeldere fremhæver et enormt, rent output uden forvrængning selv ved fuld gas. 15\"-modellen giver mere bund og tryk end 12\"-versionen og kan trække en hel bandkoncert alene. D-CONTOUR holder lyden ensartet ved alle niveauer, og den dobbelt-vinklede stativfod gør den lige så god som gulvmonitor. Til mobil-DJ's, små-til-mellemstore koncerter og som kraftig main-PA der bare virker."
   },
   {
     "id": 102,
@@ -69,38 +90,59 @@ const PRODUCTS = [
     "condition": "Velholdt — fungerende (enkelt enhed)",
     "specs": [
       {
-        "label": "Effekt",
-        "value": "1100 W klasse-D"
+        "label": "Type",
+        "value": "2-vejs aktiv tophøjttaler"
+      },
+      {
+        "label": "Forstærker",
+        "value": "1100 W klasse-D (bi-amp)"
+      },
+      {
+        "label": "Driver",
+        "value": "15\" woofer + 1,4\" comp-driver"
       },
       {
         "label": "Max SPL",
         "value": "134 dB"
       },
       {
-        "label": "Driver",
-        "value": "15\" woofer + 1,4\" comp"
-      },
-      {
         "label": "Frekvens",
         "value": "49 Hz – 20 kHz"
+      },
+      {
+        "label": "Spredning",
+        "value": "90° × 60°"
+      },
+      {
+        "label": "DSP",
+        "value": "FIR-X tuning + D-CONTOUR multiband"
+      },
+      {
+        "label": "Onboard-mixer",
+        "value": "3-kanals (mic/line)"
       },
       {
         "label": "Indgange",
         "value": "2x XLR/jack combo + RCA, link-out"
       },
       {
+        "label": "Kabinet",
+        "value": "ABS, dual-angle stativfod"
+      },
+      {
         "label": "Vægt",
-        "value": "ca. 22 kg"
+        "value": "ca. 22,5 kg"
       }
     ],
     "newPrice": 5000,
     "minPrice": 2500,
-    "currentBid": null,
+    "currentBid": 2900,
     "bidder": null,
     "image": "",
     "images": [],
     "sold": false,
-    "group": "Yamaha DXR15"
+    "group": "Yamaha DXR15",
+    "pitch": "Yamaha DXR-serien er en af de mest udbredte og driftssikre aktive PA-kasser i klassen — anmeldere fremhæver et enormt, rent output uden forvrængning selv ved fuld gas. 15\"-modellen giver mere bund og tryk end 12\"-versionen og kan trække en hel bandkoncert alene. D-CONTOUR holder lyden ensartet ved alle niveauer, og den dobbelt-vinklede stativfod gør den lige så god som gulvmonitor. Til mobil-DJ's, små-til-mellemstore koncerter og som kraftig main-PA der bare virker."
   },
   {
     "id": 103,
@@ -112,38 +154,59 @@ const PRODUCTS = [
     "condition": "Velholdt — fungerende (enkelt enhed)",
     "specs": [
       {
-        "label": "Effekt",
-        "value": "1100 W klasse-D"
+        "label": "Type",
+        "value": "2-vejs aktiv tophøjttaler"
+      },
+      {
+        "label": "Forstærker",
+        "value": "1100 W klasse-D (bi-amp)"
+      },
+      {
+        "label": "Driver",
+        "value": "15\" woofer + 1,4\" comp-driver"
       },
       {
         "label": "Max SPL",
         "value": "134 dB"
       },
       {
-        "label": "Driver",
-        "value": "15\" woofer + 1,4\" comp"
-      },
-      {
         "label": "Frekvens",
         "value": "49 Hz – 20 kHz"
+      },
+      {
+        "label": "Spredning",
+        "value": "90° × 60°"
+      },
+      {
+        "label": "DSP",
+        "value": "FIR-X tuning + D-CONTOUR multiband"
+      },
+      {
+        "label": "Onboard-mixer",
+        "value": "3-kanals (mic/line)"
       },
       {
         "label": "Indgange",
         "value": "2x XLR/jack combo + RCA, link-out"
       },
       {
+        "label": "Kabinet",
+        "value": "ABS, dual-angle stativfod"
+      },
+      {
         "label": "Vægt",
-        "value": "ca. 22 kg"
+        "value": "ca. 22,5 kg"
       }
     ],
     "newPrice": 5000,
     "minPrice": 2500,
-    "currentBid": null,
+    "currentBid": 2900,
     "bidder": null,
     "image": "",
     "images": [],
     "sold": false,
-    "group": "Yamaha DXR15"
+    "group": "Yamaha DXR15",
+    "pitch": "Yamaha DXR-serien er en af de mest udbredte og driftssikre aktive PA-kasser i klassen — anmeldere fremhæver et enormt, rent output uden forvrængning selv ved fuld gas. 15\"-modellen giver mere bund og tryk end 12\"-versionen og kan trække en hel bandkoncert alene. D-CONTOUR holder lyden ensartet ved alle niveauer, og den dobbelt-vinklede stativfod gør den lige så god som gulvmonitor. Til mobil-DJ's, små-til-mellemstore koncerter og som kraftig main-PA der bare virker."
   },
   {
     "id": 104,
@@ -155,38 +218,59 @@ const PRODUCTS = [
     "condition": "Velholdt — fungerende (enkelt enhed)",
     "specs": [
       {
-        "label": "Effekt",
-        "value": "1100 W klasse-D"
+        "label": "Type",
+        "value": "2-vejs aktiv tophøjttaler"
+      },
+      {
+        "label": "Forstærker",
+        "value": "1100 W klasse-D (bi-amp)"
+      },
+      {
+        "label": "Driver",
+        "value": "15\" woofer + 1,4\" comp-driver"
       },
       {
         "label": "Max SPL",
         "value": "134 dB"
       },
       {
-        "label": "Driver",
-        "value": "15\" woofer + 1,4\" comp"
-      },
-      {
         "label": "Frekvens",
         "value": "49 Hz – 20 kHz"
+      },
+      {
+        "label": "Spredning",
+        "value": "90° × 60°"
+      },
+      {
+        "label": "DSP",
+        "value": "FIR-X tuning + D-CONTOUR multiband"
+      },
+      {
+        "label": "Onboard-mixer",
+        "value": "3-kanals (mic/line)"
       },
       {
         "label": "Indgange",
         "value": "2x XLR/jack combo + RCA, link-out"
       },
       {
+        "label": "Kabinet",
+        "value": "ABS, dual-angle stativfod"
+      },
+      {
         "label": "Vægt",
-        "value": "ca. 22 kg"
+        "value": "ca. 22,5 kg"
       }
     ],
     "newPrice": 5000,
     "minPrice": 2500,
-    "currentBid": null,
+    "currentBid": 3000,
     "bidder": null,
     "image": "",
     "images": [],
     "sold": false,
-    "group": "Yamaha DXR15"
+    "group": "Yamaha DXR15",
+    "pitch": "Yamaha DXR-serien er en af de mest udbredte og driftssikre aktive PA-kasser i klassen — anmeldere fremhæver et enormt, rent output uden forvrængning selv ved fuld gas. 15\"-modellen giver mere bund og tryk end 12\"-versionen og kan trække en hel bandkoncert alene. D-CONTOUR holder lyden ensartet ved alle niveauer, og den dobbelt-vinklede stativfod gør den lige så god som gulvmonitor. Til mobil-DJ's, små-til-mellemstore koncerter og som kraftig main-PA der bare virker."
   },
   {
     "id": 105,
@@ -198,87 +282,59 @@ const PRODUCTS = [
     "condition": "Defekt — sælges som reservedele",
     "specs": [
       {
-        "label": "Effekt",
-        "value": "1100 W klasse-D"
+        "label": "Type",
+        "value": "2-vejs aktiv tophøjttaler"
+      },
+      {
+        "label": "Forstærker",
+        "value": "1100 W klasse-D (bi-amp)"
+      },
+      {
+        "label": "Driver",
+        "value": "15\" woofer + 1,4\" comp-driver"
       },
       {
         "label": "Max SPL",
         "value": "134 dB"
       },
       {
-        "label": "Driver",
-        "value": "15\" woofer + 1,4\" comp"
-      },
-      {
         "label": "Frekvens",
         "value": "49 Hz – 20 kHz"
+      },
+      {
+        "label": "Spredning",
+        "value": "90° × 60°"
+      },
+      {
+        "label": "DSP",
+        "value": "FIR-X tuning + D-CONTOUR multiband"
+      },
+      {
+        "label": "Onboard-mixer",
+        "value": "3-kanals (mic/line)"
       },
       {
         "label": "Indgange",
         "value": "2x XLR/jack combo + RCA, link-out"
       },
       {
+        "label": "Kabinet",
+        "value": "ABS, dual-angle stativfod"
+      },
+      {
         "label": "Vægt",
-        "value": "ca. 22 kg"
+        "value": "ca. 22,5 kg"
       }
     ],
     "newPrice": 5000,
     "minPrice": 300,
-    "currentBid": null,
+    "currentBid": 300,
     "bidder": null,
     "image": "",
     "images": [],
     "sold": false,
-    "group": "Yamaha DXR15"
-  },
-  {
-    "id": 106,
-    "name": "Yamaha DXR15 — 2-pak",
-    "category": "Højttaler",
-    "type": "private",
-    "description": "To fungerende Yamaha DXR15 som samlet pakke — lidt billigere end at byde på dem hver for sig.",
-    "details": "2x aktiv 15\" tophøjttaler. Pakkepris beregnes automatisk ud fra de enkelte opslag og er en smule billigere end at købe to enkeltvis. Foto følger.",
-    "condition": "Velholdt — fungerende (2 stk.)",
-    "specs": [
-      {
-        "label": "Effekt",
-        "value": "1100 W klasse-D"
-      },
-      {
-        "label": "Max SPL",
-        "value": "134 dB"
-      },
-      {
-        "label": "Driver",
-        "value": "15\" woofer + 1,4\" comp"
-      },
-      {
-        "label": "Frekvens",
-        "value": "49 Hz – 20 kHz"
-      },
-      {
-        "label": "Indgange",
-        "value": "2x XLR/jack combo + RCA, link-out"
-      },
-      {
-        "label": "Vægt",
-        "value": "ca. 22 kg"
-      }
-    ],
-    "newPrice": 0,
-    "minPrice": 0,
-    "currentBid": null,
-    "bidder": null,
-    "image": "",
-    "images": [],
-    "sold": false,
-    "bundle": true,
-    "bundleQty": 2,
-    "bundleOf": [
-      101,
-      102
-    ],
-    "group": "Yamaha DXR15"
+    "group": "Yamaha DXR15",
+    "pitch": "Yamaha DXR-serien er en af de mest udbredte og driftssikre aktive PA-kasser i klassen — anmeldere fremhæver et enormt, rent output uden forvrængning selv ved fuld gas. 15\"-modellen giver mere bund og tryk end 12\"-versionen og kan trække en hel bandkoncert alene. D-CONTOUR holder lyden ensartet ved alle niveauer, og den dobbelt-vinklede stativfod gør den lige så god som gulvmonitor. Til mobil-DJ's, små-til-mellemstore koncerter og som kraftig main-PA der bare virker."
   },
   {
     "id": 110,
@@ -290,24 +346,36 @@ const PRODUCTS = [
     "condition": "Velholdt — fungerende (enkelt enhed)",
     "specs": [
       {
-        "label": "Effekt",
-        "value": "1100 W klasse-D"
+        "label": "Type",
+        "value": "2-vejs aktiv tophøjttaler"
+      },
+      {
+        "label": "Forstærker",
+        "value": "1100 W klasse-D (bi-amp)"
+      },
+      {
+        "label": "Driver",
+        "value": "12\" woofer + 1,4\" comp-driver"
       },
       {
         "label": "Max SPL",
         "value": "132 dB"
       },
       {
-        "label": "Driver",
-        "value": "12\" woofer + 1,4\" comp"
-      },
-      {
         "label": "Frekvens",
         "value": "52 Hz – 20 kHz"
       },
       {
-        "label": "Horn",
+        "label": "Spredning",
         "value": "90° × 60°"
+      },
+      {
+        "label": "DSP",
+        "value": "FIR-X tuning + D-CONTOUR"
+      },
+      {
+        "label": "Onboard-mixer",
+        "value": "3-kanals (mic/line)"
       },
       {
         "label": "Indgange",
@@ -320,14 +388,20 @@ const PRODUCTS = [
     ],
     "newPrice": 4500,
     "minPrice": 3000,
-    "currentBid": 3500,
-    "bidder": "MJ",
+    "currentBid": 3400,
+    "bidder": null,
     "image": "images/products/dxr12-1.jpg",
     "images": [
-      "images/products/dxr12-4.jpg"
+      "images/products/dxr12-2.jpg",
+      "images/products/dxr12-3.jpg",
+      "images/products/dxr12-4.jpg",
+      "images/products/dxr12-5.jpg",
+      "images/products/dxr12-6.jpg",
+      "images/products/dxr12-7.jpg"
     ],
     "sold": false,
-    "group": "Yamaha DXR12"
+    "group": "Yamaha DXR12",
+    "pitch": "DXR12 er arbejdshesten i Yamaha DXR-serien — let nok til at én person flytter den, kraftig nok til FOH. Anmeldere beskriver en glat, varm og velbalanceret lyd med masser af headroom (målt ~132 dB SPL). Det skrå kabinet gør den lige så anvendelig som scenemonitor. Perfekt til DJ-sets, taler, mindre koncerter og fester — et sikkert valg der holder værdien godt."
   },
   {
     "id": 111,
@@ -339,24 +413,103 @@ const PRODUCTS = [
     "condition": "Velholdt — fungerende (enkelt enhed)",
     "specs": [
       {
-        "label": "Effekt",
-        "value": "1100 W klasse-D"
+        "label": "Type",
+        "value": "2-vejs aktiv tophøjttaler"
+      },
+      {
+        "label": "Forstærker",
+        "value": "1100 W klasse-D (bi-amp)"
+      },
+      {
+        "label": "Driver",
+        "value": "12\" woofer + 1,4\" comp-driver"
       },
       {
         "label": "Max SPL",
         "value": "132 dB"
       },
       {
+        "label": "Frekvens",
+        "value": "52 Hz – 20 kHz"
+      },
+      {
+        "label": "Spredning",
+        "value": "90° × 60°"
+      },
+      {
+        "label": "DSP",
+        "value": "FIR-X tuning + D-CONTOUR"
+      },
+      {
+        "label": "Onboard-mixer",
+        "value": "3-kanals (mic/line)"
+      },
+      {
+        "label": "Indgange",
+        "value": "2x XLR/jack combo + RCA, link-out"
+      },
+      {
+        "label": "Vægt",
+        "value": "ca. 19,5 kg"
+      }
+    ],
+    "newPrice": 4500,
+    "minPrice": 3000,
+    "currentBid": 3250,
+    "bidder": null,
+    "image": "images/products/dxr12-2.jpg",
+    "images": [
+      "images/products/dxr12-3.jpg",
+      "images/products/dxr12-4.jpg",
+      "images/products/dxr12-5.jpg",
+      "images/products/dxr12-6.jpg",
+      "images/products/dxr12-7.jpg",
+      "images/products/dxr12-1.jpg"
+    ],
+    "sold": false,
+    "group": "Yamaha DXR12",
+    "pitch": "DXR12 er arbejdshesten i Yamaha DXR-serien — let nok til at én person flytter den, kraftig nok til FOH. Anmeldere beskriver en glat, varm og velbalanceret lyd med masser af headroom (målt ~132 dB SPL). Det skrå kabinet gør den lige så anvendelig som scenemonitor. Perfekt til DJ-sets, taler, mindre koncerter og fester — et sikkert valg der holder værdien godt."
+  },
+  {
+    "id": 112,
+    "name": "Yamaha DXR12 #3",
+    "category": "Højttaler",
+    "type": "private",
+    "description": "Aktiv 12\" fuldspektrums-tophøjttaler — en af de mest driftssikre aktive kasser i klassen. Velegnet til FOH og som monitor.",
+    "details": "1100 W klasse-D, max 132 dB SPL, 90°×60° horn, FIR-X tuning, D-CONTOUR og 3-kanals indbygget mixer. Privat enhed (sælges momsfrit).",
+    "condition": "Velholdt — fungerende (enkelt enhed)",
+    "specs": [
+      {
+        "label": "Type",
+        "value": "2-vejs aktiv tophøjttaler"
+      },
+      {
+        "label": "Forstærker",
+        "value": "1100 W klasse-D (bi-amp)"
+      },
+      {
         "label": "Driver",
-        "value": "12\" woofer + 1,4\" comp"
+        "value": "12\" woofer + 1,4\" comp-driver"
+      },
+      {
+        "label": "Max SPL",
+        "value": "132 dB"
       },
       {
         "label": "Frekvens",
         "value": "52 Hz – 20 kHz"
       },
       {
-        "label": "Horn",
+        "label": "Spredning",
         "value": "90° × 60°"
+      },
+      {
+        "label": "DSP",
+        "value": "FIR-X tuning + D-CONTOUR"
+      },
+      {
+        "label": "Onboard-mixer",
+        "value": "3-kanals (mic/line)"
       },
       {
         "label": "Indgange",
@@ -370,62 +523,19 @@ const PRODUCTS = [
     "newPrice": 4500,
     "minPrice": 3000,
     "currentBid": 3300,
-    "bidder": "PT",
-    "image": "images/products/dxr12-2.jpg",
-    "images": [
-      "images/products/dxr12-3.jpg"
-    ],
-    "sold": false,
-    "group": "Yamaha DXR12"
-  },
-  {
-    "id": 112,
-    "name": "Yamaha DXR12 #3",
-    "category": "Højttaler",
-    "type": "private",
-    "description": "Aktiv 12\" fuldspektrums-tophøjttaler — en af de mest driftssikre aktive kasser i klassen. Velegnet til FOH og som monitor.",
-    "details": "1100 W klasse-D, max 132 dB SPL, 90°×60° horn, FIR-X tuning, D-CONTOUR og 3-kanals indbygget mixer. Privat enhed (sælges momsfrit).",
-    "condition": "Velholdt — fungerende (enkelt enhed)",
-    "specs": [
-      {
-        "label": "Effekt",
-        "value": "1100 W klasse-D"
-      },
-      {
-        "label": "Max SPL",
-        "value": "132 dB"
-      },
-      {
-        "label": "Driver",
-        "value": "12\" woofer + 1,4\" comp"
-      },
-      {
-        "label": "Frekvens",
-        "value": "52 Hz – 20 kHz"
-      },
-      {
-        "label": "Horn",
-        "value": "90° × 60°"
-      },
-      {
-        "label": "Indgange",
-        "value": "2x XLR/jack combo + RCA, link-out"
-      },
-      {
-        "label": "Vægt",
-        "value": "ca. 19,5 kg"
-      }
-    ],
-    "newPrice": 4500,
-    "minPrice": 3000,
-    "currentBid": 3200,
-    "bidder": "LK",
+    "bidder": null,
     "image": "images/products/dxr12-3.jpg",
     "images": [
-      "images/products/dxr12-4.jpg"
+      "images/products/dxr12-4.jpg",
+      "images/products/dxr12-5.jpg",
+      "images/products/dxr12-6.jpg",
+      "images/products/dxr12-7.jpg",
+      "images/products/dxr12-1.jpg",
+      "images/products/dxr12-2.jpg"
     ],
     "sold": false,
-    "group": "Yamaha DXR12"
+    "group": "Yamaha DXR12",
+    "pitch": "DXR12 er arbejdshesten i Yamaha DXR-serien — let nok til at én person flytter den, kraftig nok til FOH. Anmeldere beskriver en glat, varm og velbalanceret lyd med masser af headroom (målt ~132 dB SPL). Det skrå kabinet gør den lige så anvendelig som scenemonitor. Perfekt til DJ-sets, taler, mindre koncerter og fester — et sikkert valg der holder værdien godt."
   },
   {
     "id": 114,
@@ -437,24 +547,36 @@ const PRODUCTS = [
     "condition": "Solgt",
     "specs": [
       {
-        "label": "Effekt",
-        "value": "1100 W klasse-D"
+        "label": "Type",
+        "value": "2-vejs aktiv tophøjttaler"
+      },
+      {
+        "label": "Forstærker",
+        "value": "1100 W klasse-D (bi-amp)"
+      },
+      {
+        "label": "Driver",
+        "value": "12\" woofer + 1,4\" comp-driver"
       },
       {
         "label": "Max SPL",
         "value": "132 dB"
       },
       {
-        "label": "Driver",
-        "value": "12\" woofer + 1,4\" comp"
-      },
-      {
         "label": "Frekvens",
         "value": "52 Hz – 20 kHz"
       },
       {
-        "label": "Horn",
+        "label": "Spredning",
         "value": "90° × 60°"
+      },
+      {
+        "label": "DSP",
+        "value": "FIR-X tuning + D-CONTOUR"
+      },
+      {
+        "label": "Onboard-mixer",
+        "value": "3-kanals (mic/line)"
       },
       {
         "label": "Indgange",
@@ -469,67 +591,19 @@ const PRODUCTS = [
     "minPrice": 3000,
     "currentBid": null,
     "bidder": null,
-    "image": "images/products/dxr12-1.jpg",
-    "images": [],
+    "image": "images/products/dxr12-4.jpg",
+    "images": [
+      "images/products/dxr12-5.jpg",
+      "images/products/dxr12-6.jpg",
+      "images/products/dxr12-7.jpg",
+      "images/products/dxr12-1.jpg",
+      "images/products/dxr12-2.jpg",
+      "images/products/dxr12-3.jpg"
+    ],
     "sold": true,
     "soldPrice": 4000,
-    "group": "Yamaha DXR12"
-  },
-  {
-    "id": 113,
-    "name": "Yamaha DXR12 — 2-pak",
-    "category": "Højttaler",
-    "type": "business",
-    "description": "To Yamaha DXR12 som samlet pakke — lidt billigere end at byde på dem hver for sig. Et komplet stereo-toppar.",
-    "details": "2x aktiv 12\" tophøjttaler. Pakkeprisen beregnes automatisk ud fra de enkelte opslag og er en smule billigere end to enkeltvis. Billeder viser parret.",
-    "condition": "Velholdt — fungerende (2 stk.)",
-    "specs": [
-      {
-        "label": "Effekt",
-        "value": "1100 W klasse-D"
-      },
-      {
-        "label": "Max SPL",
-        "value": "132 dB"
-      },
-      {
-        "label": "Driver",
-        "value": "12\" woofer + 1,4\" comp"
-      },
-      {
-        "label": "Frekvens",
-        "value": "52 Hz – 20 kHz"
-      },
-      {
-        "label": "Horn",
-        "value": "90° × 60°"
-      },
-      {
-        "label": "Indgange",
-        "value": "2x XLR/jack combo + RCA, link-out"
-      },
-      {
-        "label": "Vægt",
-        "value": "ca. 19,5 kg"
-      }
-    ],
-    "newPrice": 0,
-    "minPrice": 0,
-    "currentBid": null,
-    "bidder": null,
-    "image": "images/products/dxr12-5.jpg",
-    "images": [
-      "images/products/dxr12-6.jpg",
-      "images/products/dxr12-7.jpg"
-    ],
-    "sold": false,
-    "bundle": true,
-    "bundleQty": 2,
-    "bundleOf": [
-      110,
-      111
-    ],
-    "group": "Yamaha DXR12"
+    "group": "Yamaha DXR12",
+    "pitch": "DXR12 er arbejdshesten i Yamaha DXR-serien — let nok til at én person flytter den, kraftig nok til FOH. Anmeldere beskriver en glat, varm og velbalanceret lyd med masser af headroom (målt ~132 dB SPL). Det skrå kabinet gør den lige så anvendelig som scenemonitor. Perfekt til DJ-sets, taler, mindre koncerter og fester — et sikkert valg der holder værdien godt."
   },
   {
     "id": 120,
@@ -541,24 +615,36 @@ const PRODUCTS = [
     "condition": "Velholdt — fungerende (enkelt enhed)",
     "specs": [
       {
-        "label": "Effekt",
-        "value": "400 W RMS / 800 W peak"
+        "label": "Type",
+        "value": "2-vejs aktiv højttaler"
       },
       {
-        "label": "Max SPL",
-        "value": "~126 dB"
+        "label": "Forstærker",
+        "value": "400 W klasse-D"
       },
       {
         "label": "Driver",
-        "value": "12\" + 1\""
+        "value": "12\" woofer (2\" svingspole) + 1\" neodym comp"
+      },
+      {
+        "label": "Max SPL",
+        "value": "126 dB"
       },
       {
         "label": "Frekvens",
-        "value": "~60 Hz – 20 kHz"
+        "value": "55 – 20.000 Hz (-10 dB)"
       },
       {
-        "label": "Mixer",
-        "value": "Indbygget 2-kanal / DSP"
+        "label": "DSP",
+        "value": "24-bit, FLAT/BOOST preset-EQ"
+      },
+      {
+        "label": "Kabinet",
+        "value": "polypropylen, 3 håndtag, 45° monitorvinkel"
+      },
+      {
+        "label": "Indgange",
+        "value": "2x combo (mic/line) + mix-out"
       },
       {
         "label": "Vægt",
@@ -567,15 +653,20 @@ const PRODUCTS = [
     ],
     "newPrice": 1800,
     "minPrice": 1000,
-    "currentBid": 1200,
-    "bidder": "TL",
+    "currentBid": 1000,
+    "bidder": null,
     "image": "images/products/bhype12-1.jpg",
     "images": [
+      "images/products/bhype12-2.jpg",
       "images/products/bhype12-3.jpg",
-      "images/products/bhype12-5.jpg"
+      "images/products/bhype12-4.jpg",
+      "images/products/bhype12-5.jpg",
+      "images/products/bhype12-6.jpg",
+      "images/products/bhype12-7.jpg"
     ],
     "sold": false,
-    "group": "dB Technologies B-Hype 12"
+    "group": "dB Technologies B-Hype 12",
+    "pitch": "B-Hype 12 er dB Technologies' ultralette budget-kasse — polypropylen-kabinet på kun ~13 kg med tre håndtag, så den er hurtig at sætte op. Brugere fremhæver at et par stykker med en sub uden problemer fylder en klub på 100 personer, og at vokal og akustiske instrumenter gengives naturligt uden hård EQ. Et oplagt let fill-/monitor-sæt eller en komplet lille PA til singer-songwriter-gigs, foredrag og mindre fester."
   },
   {
     "id": 121,
@@ -587,24 +678,36 @@ const PRODUCTS = [
     "condition": "Velholdt — fungerende (enkelt enhed)",
     "specs": [
       {
-        "label": "Effekt",
-        "value": "400 W RMS / 800 W peak"
+        "label": "Type",
+        "value": "2-vejs aktiv højttaler"
       },
       {
-        "label": "Max SPL",
-        "value": "~126 dB"
+        "label": "Forstærker",
+        "value": "400 W klasse-D"
       },
       {
         "label": "Driver",
-        "value": "12\" + 1\""
+        "value": "12\" woofer (2\" svingspole) + 1\" neodym comp"
+      },
+      {
+        "label": "Max SPL",
+        "value": "126 dB"
       },
       {
         "label": "Frekvens",
-        "value": "~60 Hz – 20 kHz"
+        "value": "55 – 20.000 Hz (-10 dB)"
       },
       {
-        "label": "Mixer",
-        "value": "Indbygget 2-kanal / DSP"
+        "label": "DSP",
+        "value": "24-bit, FLAT/BOOST preset-EQ"
+      },
+      {
+        "label": "Kabinet",
+        "value": "polypropylen, 3 håndtag, 45° monitorvinkel"
+      },
+      {
+        "label": "Indgange",
+        "value": "2x combo (mic/line) + mix-out"
       },
       {
         "label": "Vægt",
@@ -614,65 +717,19 @@ const PRODUCTS = [
     "newPrice": 1800,
     "minPrice": 1000,
     "currentBid": 1100,
-    "bidder": "HN",
-    "image": "images/products/bhype12-2.jpg",
-    "images": [
-      "images/products/bhype12-4.jpg",
-      "images/products/bhype12-7.jpg"
-    ],
-    "sold": false,
-    "group": "dB Technologies B-Hype 12"
-  },
-  {
-    "id": 122,
-    "name": "dB Technologies B-Hype 12 — 2-pak",
-    "category": "Højttaler",
-    "type": "private",
-    "description": "Begge B-Hype 12 som samlet pakke — lidt billigere end hver for sig. Perfekt lille stereo-sæt.",
-    "details": "2x aktiv 12\" højttaler. Pakkeprisen beregnes automatisk ud fra de enkelte opslag og er en smule billigere end to enkeltvis.",
-    "condition": "Velholdt — fungerende (2 stk.)",
-    "specs": [
-      {
-        "label": "Effekt",
-        "value": "400 W RMS / 800 W peak"
-      },
-      {
-        "label": "Max SPL",
-        "value": "~126 dB"
-      },
-      {
-        "label": "Driver",
-        "value": "12\" + 1\""
-      },
-      {
-        "label": "Frekvens",
-        "value": "~60 Hz – 20 kHz"
-      },
-      {
-        "label": "Mixer",
-        "value": "Indbygget 2-kanal / DSP"
-      },
-      {
-        "label": "Vægt",
-        "value": "ca. 13–14 kg"
-      }
-    ],
-    "newPrice": 0,
-    "minPrice": 0,
-    "currentBid": null,
     "bidder": null,
-    "image": "images/products/bhype12-6.jpg",
+    "image": "images/products/bhype12-4.jpg",
     "images": [
-      "images/products/bhype12-1.jpg"
+      "images/products/bhype12-5.jpg",
+      "images/products/bhype12-6.jpg",
+      "images/products/bhype12-7.jpg",
+      "images/products/bhype12-1.jpg",
+      "images/products/bhype12-2.jpg",
+      "images/products/bhype12-3.jpg"
     ],
     "sold": false,
-    "bundle": true,
-    "bundleQty": 2,
-    "bundleOf": [
-      120,
-      121
-    ],
-    "group": "dB Technologies B-Hype 12"
+    "group": "dB Technologies B-Hype 12",
+    "pitch": "B-Hype 12 er dB Technologies' ultralette budget-kasse — polypropylen-kabinet på kun ~13 kg med tre håndtag, så den er hurtig at sætte op. Brugere fremhæver at et par stykker med en sub uden problemer fylder en klub på 100 personer, og at vokal og akustiske instrumenter gengives naturligt uden hård EQ. Et oplagt let fill-/monitor-sæt eller en komplet lille PA til singer-songwriter-gigs, foredrag og mindre fester."
   },
   {
     "id": 4,
@@ -684,78 +741,103 @@ const PRODUCTS = [
     "condition": "Velholdt — fungerende",
     "specs": [
       {
-        "label": "Effekt",
+        "label": "Type",
+        "value": "aktiv 18\" subwoofer (band-pass)"
+      },
+      {
+        "label": "Forstærker",
         "value": "1020 W klasse-D"
+      },
+      {
+        "label": "Driver",
+        "value": "18\" woofer, 4\" svingspole"
       },
       {
         "label": "Max SPL",
         "value": "136 dB"
       },
       {
-        "label": "Driver",
-        "value": "18\" bass-reflex, 4\" svingspole"
+        "label": "Frekvens",
+        "value": "ned til 32 Hz"
       },
       {
-        "label": "Funktioner",
-        "value": "D-XSUB, cardioid-mode"
+        "label": "DSP",
+        "value": "D-XSUB (Normal/Boost/Xtended LF) + cardioid"
+      },
+      {
+        "label": "Crossover",
+        "value": "justerbart op til 120 Hz"
       },
       {
         "label": "Indgange",
-        "value": "2x XLR, dual pole-sockets"
+        "value": "2x XLR, dual pole-sockets, hjul"
       },
       {
         "label": "Vægt",
-        "value": "ca. 47 kg (m. hjul)"
+        "value": "ca. 47 kg"
       }
     ],
     "newPrice": 11000,
     "minPrice": 7000,
     "currentBid": 7500,
-    "bidder": "KH",
+    "bidder": null,
     "image": "images/products/dxs18-1.jpg",
     "images": [
       "images/products/dxs18-2.jpg"
     ],
-    "sold": false
+    "sold": false,
+    "pitch": "DXS18 er det tunge skyts: en 18\" aktiv sub med 4\"-svingspole, 1020 W og best-in-class 136 dB SPL helt ned til 32 Hz. Thomann-brugere roser den dybe, vidtrækkende bas både inde og ude og en velafstemt forstærker der kører stabilt selv ved høj lyd. Med indbyggede hjul og cardioid-mode er den lavet til DJ- og koncertbrug hvor der skal være rigtig tryk i maven. Hjørnestenen i et fest-rig."
   },
   {
     "id": 5,
-    "name": "Yamaha DXS12",
+    "name": "Yamaha DXS12 MKII",
     "category": "Subwoofer",
     "type": "private",
-    "description": "Kompakt aktiv 12\" subwoofer der matcher DXR-toppene. Cardioid-mode og DSP.",
-    "details": "Aktiv 12\" bass-reflex sub, ca. 1020 W klasse-D, max ~133 dB. D-XSUB og cardioid-mode, M20 pole-socket. Bekræft modelnavn på typeskilt (DXS12 / DXR12 MKII).",
+    "description": "Kompakt aktiv 12\" subwoofer (MKII) der matcher DXR-toppene. Cardioid-mode og opgraderet 1020 W forstærker.",
+    "details": "Aktiv 12\" band-pass subwoofer (MKII). 1020 W klasse-D, max 134 dB SPL og ned til 42 Hz. D-XSUB-processing og cardioid-mode, M20 pole-socket.",
     "condition": "Velholdt — fungerende",
     "specs": [
       {
-        "label": "Effekt",
-        "value": "~1020 W klasse-D"
+        "label": "Type",
+        "value": "aktiv 12\" subwoofer (band-pass), MKII"
       },
       {
-        "label": "Max SPL",
-        "value": "~133 dB"
+        "label": "Forstærker",
+        "value": "1020 W klasse-D"
       },
       {
         "label": "Driver",
-        "value": "12\" bass-reflex"
+        "value": "12\" high-output woofer"
+      },
+      {
+        "label": "Max SPL",
+        "value": "134 dB"
       },
       {
         "label": "Frekvens",
-        "value": "40 – 150 Hz"
+        "value": "ned til 42 Hz"
       },
       {
-        "label": "Funktioner",
-        "value": "D-XSUB, cardioid-mode"
+        "label": "DSP",
+        "value": "D-XSUB + cardioid-mode"
+      },
+      {
+        "label": "Kabinet",
+        "value": "akustisk optimeret, M20 pole-socket"
+      },
+      {
+        "label": "Indgange",
+        "value": "2x XLR link/through"
       },
       {
         "label": "Vægt",
-        "value": "ca. 28 kg"
+        "value": "ca. 27 kg"
       }
     ],
     "newPrice": 8000,
     "minPrice": 5000,
-    "currentBid": 5200,
-    "bidder": "RA",
+    "currentBid": 5500,
+    "bidder": null,
     "image": "images/products/dxs12-1.jpg",
     "images": [
       "images/products/dxs12-2.jpg",
@@ -763,7 +845,8 @@ const PRODUCTS = [
       "images/products/dxs12-4.jpg",
       "images/products/dxs12-5.jpg"
     ],
-    "sold": false
+    "sold": false,
+    "pitch": "DXS12 MKII giver kompakt, kontant bas der matcher DXR-toppene perfekt — træ-kabinet, D-XSUB-processing og en forstærker der ikke kræver aktiv køling, så den kan køre højt i timevis uden thermal-shutdown. Lavet til gigging-musikere, skole-anlæg og kirker. Oplagt når du vil have ekstra bund uden at slæbe på en 18\"."
   },
   {
     "id": 6,
@@ -775,37 +858,50 @@ const PRODUCTS = [
     "condition": "Velholdt — fungerende",
     "specs": [
       {
+        "label": "Type",
+        "value": "48-kanals digital mixer"
+      },
+      {
         "label": "Kanaler",
-        "value": "48 processering"
+        "value": "48 stereo, 24 motorfaders (100 mm)"
       },
       {
-        "label": "Fadere",
-        "value": "24 motorfaders"
+        "label": "Preamps",
+        "value": "8x Midas PRO mic"
       },
       {
-        "label": "Busser",
-        "value": "24 mix-busser"
+        "label": "Lyd",
+        "value": "24-bit / 192 kHz"
       },
       {
         "label": "I/O",
-        "value": "48 in, AES50, USB/SD, AoIP"
+        "value": "374 ind/ud, 3x AES50 SuperMAC"
+      },
+      {
+        "label": "FX",
+        "value": "8 true-stereo premium (Lexicon/EMT/TC)"
       },
       {
         "label": "Skærm",
-        "value": "Touch + channel-strip"
+        "value": "10\" kapacitiv touch + touch-encodere"
+      },
+      {
+        "label": "Optagelse",
+        "value": "USB/SD multitrack, AoIP-kort"
       },
       {
         "label": "Format",
-        "value": "19\" / rackbar"
+        "value": "19\" rackbar"
       }
     ],
     "newPrice": 19000,
     "minPrice": 15000,
-    "currentBid": 16000,
-    "bidder": "PN",
+    "currentBid": 15000,
+    "bidder": null,
     "image": "",
     "images": [],
-    "sold": false
+    "sold": false,
+    "pitch": "WING er flagskibet — 48 stereo-kanaler, 24 motorfaders, 10\" touchskærm og 8 Midas PRO-preamps i 24-bit/192 kHz. På Sweetwater ligger den 4,5/5: anmeldere kalder routing-systemet utroligt intuitivt og konsollen ekstremt kraftfuld men nem at lære. Lavet til den professionelle live-tekniker eller studie der skal mixe alt fra store koncerter til teater og broadcast. Holder værdien godt på brugtmarkedet."
   },
   {
     "id": 7,
@@ -817,37 +913,46 @@ const PRODUCTS = [
     "condition": "Velholdt — fungerende",
     "specs": [
       {
-        "label": "Inputs",
-        "value": "8 (2 mic/kombi)"
+        "label": "Type",
+        "value": "8-kanals digital mixer m. Bluetooth"
+      },
+      {
+        "label": "Indgange",
+        "value": "2x XLR mic + 2x combo (8 inputs)"
+      },
+      {
+        "label": "Preamps",
+        "value": "2x Midas"
       },
       {
         "label": "Fadere",
-        "value": "60 mm"
+        "value": "6x 60 mm"
       },
       {
-        "label": "Effekter",
-        "value": "2 FX-processorer"
+        "label": "EQ/dynamik",
+        "value": "4-bånds EQ + komp pr. kanal, 9-bånds output-EQ"
       },
       {
-        "label": "EQ",
-        "value": "4-bånds"
+        "label": "FX",
+        "value": "2 motorer (16 presets, 12 reverbs)"
       },
       {
         "label": "Styring",
-        "value": "Bluetooth + app"
+        "value": "Bluetooth-app (iOS/Android), EZ-Gain, snapshots"
       },
       {
-        "label": "USB-audio",
-        "value": "Ja"
+        "label": "USB",
+        "value": "USB-lydinterface"
       }
     ],
     "newPrice": 1300,
     "minPrice": 800,
     "currentBid": 900,
-    "bidder": "SM",
+    "bidder": null,
     "image": "",
     "images": [],
-    "sold": false
+    "sold": false,
+    "pitch": "Flow 8 lukker hullet for små digitale mixere: Midas-preamps, X32-konvertere og fuld trådløs app-styring i et lommeformat. Anmeldere fremhæver overraskende ren lyd uden hiss selv ved høj gain, og EZ-Gain der selv sætter optimal headroom. Perfekt til den mobile musiker, lille band eller café-gig der vil have digital fleksibilitet og fjernstyring til prisen af en analog mixer. (Bemærk: strømstik er micro-USB — behandl det nænsomt.)"
   },
   {
     "id": 8,
@@ -859,40 +964,49 @@ const PRODUCTS = [
     "condition": "Velholdt — fungerende",
     "specs": [
       {
+        "label": "Type",
+        "value": "6-kanals analog mixer"
+      },
+      {
         "label": "Kanaler",
-        "value": "6 (2 mono + 2 stereo)"
+        "value": "2 mono mic/line (D-PRE) + 2 stereo"
       },
       {
         "label": "Preamps",
-        "value": "D-PRE"
+        "value": "D-PRE klasse-A (inverteret Darlington)"
+      },
+      {
+        "label": "EQ/filter",
+        "value": "±15 dB high/low shelf, 80 Hz HPF, 26 dB pad"
       },
       {
         "label": "Phantom",
         "value": "+48 V (kanal 1–2)"
       },
       {
-        "label": "EQ",
-        "value": "3-bånds + HPF"
+        "label": "Ud",
+        "value": "stereo XLR + phones"
       },
       {
-        "label": "Ud",
-        "value": "Stereo XLR + phones"
+        "label": "Kabinet",
+        "value": "metal-chassis, EMI-skærmet"
       },
       {
         "label": "Vægt",
-        "value": "ca. 1 kg"
+        "value": "ca. 0,9 kg"
       }
     ],
     "newPrice": 1300,
     "minPrice": 800,
-    "currentBid": 850,
-    "bidder": "JC",
+    "currentBid": 800,
+    "bidder": null,
     "image": "images/products/mg06-1.jpg",
     "images": [
       "images/products/mg06-2.jpg",
       "images/products/mg06-3.jpg"
     ],
-    "sold": false
+    "sold": false,
+    "pitch": "Lille men ægte Yamaha-kvalitet: MG06 har de roste D-PRE klasse-A-preamps der giver fed, naturlig bund og bløde diskanter med meget lav støj. Metal-chassis, kun 0,9 kg og driftssikker. Musikere, podcastere og mindre spillesteder bruger den fordi den bare lyder rent og virker — uden at fylde. Perfekt som submixer eller talermixer."
   },
   {
     "id": 9,
@@ -904,16 +1018,32 @@ const PRODUCTS = [
     "condition": "Velholdt — fungerende",
     "specs": [
       {
-        "label": "Forbindelse",
-        "value": "Bluetooth (aptX)"
+        "label": "Type",
+        "value": "Bluetooth 5.0 modtager/sender + DAC"
+      },
+      {
+        "label": "Codecs",
+        "value": "aptX HD, AAC"
+      },
+      {
+        "label": "DAC",
+        "value": "ESS Sabre (op til 24-bit/96 kHz)"
+      },
+      {
+        "label": "Indgange",
+        "value": "RCA + optisk"
       },
       {
         "label": "Udgange",
-        "value": "RCA + digital optisk"
+        "value": "RCA + optisk"
       },
       {
-        "label": "Strøm",
-        "value": "Ekstern adapter"
+        "label": "Funktioner",
+        "value": "receiver / transmitter / D/A"
+      },
+      {
+        "label": "Vægt",
+        "value": "ca. 0,35 kg"
       }
     ],
     "newPrice": 1000,
@@ -922,7 +1052,8 @@ const PRODUCTS = [
     "bidder": "LH",
     "image": "",
     "images": [],
-    "sold": false
+    "sold": false,
+    "pitch": "Argon Audio BT3 streamer trådløst i høj kvalitet — Bluetooth 5.0 med aptX HD/AAC og en ESS Sabre high-end DAC. Den kan både modtage (telefon → anlæg), sende (TV → trådløse hovedtelefoner) og fungere som ren DAC. En praktisk lille boks når du hurtigt vil spille baggrundsmusik fra telefonen til et anlæg i god kvalitet."
   },
   {
     "id": 10,
@@ -934,37 +1065,46 @@ const PRODUCTS = [
     "condition": "Velholdt — fungerende",
     "specs": [
       {
-        "label": "Synth-spor",
-        "value": "2 polyfoniske"
+        "label": "Type",
+        "value": "standalone groovebox / sequencer"
       },
       {
-        "label": "Drum-spor",
-        "value": "4 sample"
+        "label": "Synth",
+        "value": "2 polyfoniske digitale synth-spor"
       },
       {
-        "label": "MIDI-spor",
-        "value": "2"
+        "label": "Trommer",
+        "value": "4 sample-spor (microSD)"
+      },
+      {
+        "label": "MIDI",
+        "value": "2 MIDI-spor til eksternt grej"
       },
       {
         "label": "Pads",
-        "value": "32 velocity"
+        "value": "4×8 velocity-/RGB-pads, 32-step sequencer"
+      },
+      {
+        "label": "FX",
+        "value": "delay + reverb pr. spor, sidechain, mix-bus-komp"
       },
       {
         "label": "Strøm",
-        "value": "Genopladeligt batteri + USB"
+        "value": "genopladeligt batteri (op til 4 t), USB"
       },
       {
         "label": "I/O",
-        "value": "MIDI ind/ud, audio ud"
+        "value": "MIDI ind/ud, audio ud, hovedtelefon"
       }
     ],
     "newPrice": 3051,
     "minPrice": 1500,
     "currentBid": 1800,
-    "bidder": "MK",
+    "bidder": null,
     "image": "",
     "images": [],
-    "sold": false
+    "sold": false,
+    "pitch": "Circuit Tracks er en af markedets bedste value-grooveboxe: to polyfoniske synth-spor, fire sample-trommespor, to MIDI-spor og indbygget batteri — ingen computer eller skærm nødvendig. Anmeldere kalder workflowet måske det mest intuitive nogensinde, og scale-systemet gør at alt automatisk klinger harmonisk. Lavet til beatmageren der vil jamme væk fra laptoppen — på sofaen eller til en live-optræden."
   },
   {
     "id": 11,
@@ -977,19 +1117,35 @@ const PRODUCTS = [
     "specs": [
       {
         "label": "Type",
-        "value": "UHF trådløst"
+        "value": "UHF trådløst vokalsystem (WMS420)"
       },
       {
-        "label": "Sendere",
-        "value": "2x HT420 (dynamisk kapsel)"
+        "label": "Sæt",
+        "value": "2x HT420 håndsender + 2x SR420 modtager"
       },
       {
-        "label": "Modtagere",
-        "value": "2x SR420 (halv-rack)"
+        "label": "Kapsel",
+        "value": "dynamisk (D5-akustik)"
+      },
+      {
+        "label": "Kanaler",
+        "value": "op til 8 samtidige"
+      },
+      {
+        "label": "Rækkevidde",
+        "value": "op til 30 m (fri sigtelinje)"
+      },
+      {
+        "label": "Frekvens",
+        "value": "40 Hz – 20 kHz"
+      },
+      {
+        "label": "Batteri",
+        "value": "op til 8 t på 1x AA"
       },
       {
         "label": "Ud",
-        "value": "XLR/jack"
+        "value": "balanceret XLR + 6,3 mm jack, diversity"
       }
     ],
     "newPrice": 1000,
@@ -998,7 +1154,8 @@ const PRODUCTS = [
     "bidder": null,
     "image": "",
     "images": [],
-    "sold": true
+    "sold": true,
+    "pitch": "AKG WMS420 er et professionelt trådløst vokalsystem med den roste D5-kapsel — maksimal feedback-modstand og den klassiske AKG-lyd. Diversity-modtager, op til 8 kanaler samtidig og 8 timers batteri på ét AA. Et solidt arbejdshest-sæt til foredrag, vokal og events. (Reserveret — handel aftalt.)"
   },
   {
     "id": 12,
@@ -1010,34 +1167,34 @@ const PRODUCTS = [
     "condition": "Fungerende — sælges samlet (8 stk. + flightcase)",
     "specs": [
       {
-        "label": "Antal",
-        "value": "8 stk. + flightcase"
-      },
-      {
         "label": "Type",
-        "value": "LED wash moving head"
+        "value": "8x LED wash moving head + flightcase"
       },
       {
         "label": "LED",
-        "value": "ca. 36x RGBW (4-i-1)"
+        "value": "ca. 36x RGBW (4-i-1) pr. lampe"
+      },
+      {
+        "label": "Bevægelse",
+        "value": "motoriseret pan/tilt"
       },
       {
         "label": "Styring",
-        "value": "DMX-512 + lyd"
+        "value": "DMX-512 + lyd, indbyggede programmer"
       },
       {
-        "label": "Funktioner",
-        "value": "Pan/tilt, dæmper, strobe"
+        "label": "Effekter",
+        "value": "dæmper, strobe, farveblanding"
       },
       {
         "label": "Tilbehør",
-        "value": "Flightcase medfølger"
+        "value": "flightcase medfølger"
       }
     ],
     "newPrice": 20000,
     "minPrice": 6400,
     "currentBid": 7000,
-    "bidder": "DJ",
+    "bidder": null,
     "image": "images/products/alina-1.jpg",
     "images": [
       "images/products/alina-2.jpg",
@@ -1049,7 +1206,8 @@ const PRODUCTS = [
       "images/products/alina-8.jpg",
       "images/products/alina-9.jpg"
     ],
-    "sold": false
+    "sold": false,
+    "pitch": "8 ens LED wash moving heads med RGBW-farveblanding i én samlet flightcase — et komplet lyssæt klar til at rykke ud. Budget-brand, men som samlet pakke får du et helt gulvshow til prisen af nogle få mærkevare-lamper. Oplagt for den mobile DJ eller arrangør der vil have farver og bevægelse på dansegulvet uden at investere i dyrt moving-head-grej. Styres nemt sammen med Cameo Control 54."
   },
   {
     "id": 13,
@@ -1062,28 +1220,45 @@ const PRODUCTS = [
     "specs": [
       {
         "label": "Type",
-        "value": "Quad beam-effekt"
+        "value": "Quad beam-effekt (4 spejle)"
       },
       {
         "label": "Lampe",
-        "value": "5R-type"
+        "value": "5R skarp beam"
+      },
+      {
+        "label": "Farver",
+        "value": "farvehjul 7 + hvid"
+      },
+      {
+        "label": "Gobo",
+        "value": "14 metal-gobos + hvid"
+      },
+      {
+        "label": "Strobe",
+        "value": "1–5 Hz / puls"
       },
       {
         "label": "Styring",
-        "value": "DMX + lyd"
+        "value": "DMX-512 (16 kanaler), Sound, Auto, Master/Slave"
       },
       {
-        "label": "Programmer",
-        "value": "Indbyggede"
+        "label": "Effekt",
+        "value": "230 W, 90–250 V"
+      },
+      {
+        "label": "Mål/vægt",
+        "value": "352×231×298 mm, ca. 10,9 kg"
       }
     ],
     "newPrice": 5600,
     "minPrice": 2500,
-    "currentBid": 2800,
-    "bidder": "BT",
+    "currentBid": 3500,
+    "bidder": null,
     "image": "",
     "images": [],
-    "sold": false
+    "sold": false,
+    "pitch": "Airstrike 5R er et helt lysshow i én kasse — fire spejle kaster knivskarpe 5R-beams ud over lokalet, med farvehjul, 14 gobos og strobe. Designet til klubber og krævende mobile DJ's der vil have stort visuelt udtryk fra én enhed. (1 stk. virker; 1 stk. sælges som reservedele.)"
   },
   {
     "id": 14,
@@ -1095,24 +1270,32 @@ const PRODUCTS = [
     "condition": "Velholdt — fungerende",
     "specs": [
       {
-        "label": "Kanaler",
-        "value": "54 DMX (6 × 9)"
+        "label": "Type",
+        "value": "54-kanals DMX-controller"
+      },
+      {
+        "label": "Fixtures",
+        "value": "op til 9 fixtures/grupper"
       },
       {
         "label": "Fadere",
-        "value": "6 + Speed/Fade master"
+        "value": "6 (R/G/B/W/A/UV) + master"
+      },
+      {
+        "label": "Presets",
+        "value": "9 farve-presets/genveje"
       },
       {
         "label": "Funktioner",
-        "value": "Strobe, Blackout, sound-to-light"
+        "value": "sound-to-light (justerbar), strobe, blackout, colour fade/jump, LC-display"
       },
       {
         "label": "Ud",
         "value": "DMX 3-pol XLR"
       },
       {
-        "label": "Format",
-        "value": "19\" / 3 HE"
+        "label": "Strøm",
+        "value": "9–12 V DC + 9 V batteri (valgfri)"
       }
     ],
     "newPrice": 959,
@@ -1125,7 +1308,8 @@ const PRODUCTS = [
       "images/products/cameo-3.jpg",
       "images/products/cameo-4.jpg"
     ],
-    "sold": false
+    "sold": false,
+    "pitch": "Cameo Control 54 er en solid, kompakt DMX-pult til op til 9 fixtures — seks fadere til direkte RGBWA+UV-styring, ni farve-presets og sound-to-light med justerbar følsomhed. Anmeldere kalder den et godt entry-level-bord med fin kvalitet. Ideel til DJ's, barer og mindre scener der vil have manuel kontrol over deres LED-lys. Passer perfekt til Alina-sættet."
   },
   {
     "id": 15,
@@ -1137,16 +1321,20 @@ const PRODUCTS = [
     "condition": "Velholdt — fungerende",
     "specs": [
       {
+        "label": "Type",
+        "value": "DMX-lyscontroller"
+      },
+      {
         "label": "Fixtures",
-        "value": "Op til 12"
+        "value": "op til 12 fixtures"
       },
       {
         "label": "Funktioner",
-        "value": "Scener/chases, fadere"
+        "value": "scener/chases, fadere, sound-to-light"
       },
       {
-        "label": "Styring",
-        "value": "Sound-to-light"
+        "label": "Ud",
+        "value": "DMX"
       }
     ],
     "newPrice": 317,
@@ -1155,14 +1343,15 @@ const PRODUCTS = [
     "bidder": null,
     "image": "",
     "images": [],
-    "sold": false
+    "sold": false,
+    "pitch": "Simpel og billig DMX-controller til op til 12 fixtures — scener, chases og sound-to-light. Et nemt indstigningsbord eller backup til den mindre lysopsætning. Sælges fint sammen med lyspakken."
   }
 ];
 
 // ── PAKKE-PRISER beregnes automatisk ud fra de enkelte opslag ──
 //    Ret en enkelt-pris, og pakken opdaterer sig selv ved reload.
-//    Pakken er BUNDLE_DISCOUNT billigere end at byde på enhederne hver for sig.
-const BUNDLE_DISCOUNT = 0.10;                       // 10 % pakkerabat
+//    Pakken koster summen af enhederne (ingen rabat).
+const BUNDLE_DISCOUNT = 0;                          // ingen pakkerabat — pakke = summen af enhederne
 const _roundTo = (n, step) => Math.round(n / step) * step;
 PRODUCTS.forEach(p => {
   if (Array.isArray(p.bundleOf) && p.bundleOf.length) {
@@ -1175,6 +1364,12 @@ PRODUCTS.forEach(p => {
     p.bundleSavings = p.sepPrice - p.minPrice;      // hvad man sparer
   }
 });
+
+// Gruppe-boks billede (foto med flere enheder) — bruges på lagersalg + gruppeside
+const GROUP_IMAGES = {
+  "Yamaha DXR12": "images/products/dxr12-5.jpg",
+  "dB Technologies B-Hype 12": "images/products/bhype12-6.jpg"
+};
 
 // Hjælpefunktion brugt på begge sider
 const formatKr = n => n.toLocaleString('da-DK') + ' kr.';

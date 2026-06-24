@@ -47,7 +47,7 @@
   }
   .back-link:hover { color: var(--accent); gap: 14px; }
 
-  .product-page { padding: 48px 0 80px; }
+  .product-page { padding-top: 48px; padding-bottom: 80px; }
 
   .product-layout {
     display: grid;
@@ -497,6 +497,35 @@
     transition: border-color 0.2s, transform 0.2s;
   }
   .lightbox-close:hover { border-color: var(--accent); color: var(--accent); transform: rotate(90deg); }
+
+  /* ─── SALGSTALE ─── */
+  .pitch { margin-top: 48px; padding-top: 36px; border-top: 1px solid var(--border); max-width: 760px; }
+  .pitch-text { font-size: 16.5px; line-height: 1.78; color: var(--text-dim); }
+
+  /* ─── ENHEDER (gruppeside) ─── */
+  .units { margin-top: 48px; padding-top: 36px; border-top: 1px solid var(--border); }
+  .unit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 640px) { .unit-grid { grid-template-columns: 1fr; } }
+  .unit-card { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 16px 18px; background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius-md); text-decoration: none; color: inherit; transition: border-color 0.2s, transform 0.2s; }
+  .unit-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .unit-card.bundle { border-color: color-mix(in srgb, var(--accent) 45%, var(--border)); background: color-mix(in srgb, var(--accent) 6%, var(--bg-elev)); }
+  .unit-card.sold { opacity: 0.6; }
+  .unit-card-info { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+  .unit-card-name { font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 15px; color: var(--text); }
+  .unit-card-price { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent); }
+  .unit-card.sold .unit-card-price { color: var(--text-muted); }
+  .unit-card-go { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent); white-space: nowrap; flex: none; }
+
+  .bundle-callout { margin-bottom: 24px; padding: 14px 16px; border: 1px solid var(--green); border-radius: var(--radius-md); background: color-mix(in srgb, var(--green) 10%, transparent); font-family: 'JetBrains Mono', monospace; font-size: 12.5px; line-height: 1.5; color: var(--text); }
+  .bundle-callout strong { color: var(--green); }
+
+  .specs-source { margin-top: 28px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); letter-spacing: 0.03em; }
+
+  /* ─── Margin / læsbarhed ─── */
+  .product-page { padding-bottom: 96px; }
+  .info-desc { color: var(--text-dim); font-size: 16.5px; line-height: 1.78; margin-bottom: 30px; max-width: 62ch; }
+  .info-condition { margin-bottom: 30px; }
+  .specs { margin-top: 64px; }
 </style>
 </head>
 <body>
@@ -645,6 +674,9 @@
     const content = document.getElementById('content');
     const auctionClosed = (typeof END_DATE !== 'undefined') && (END_DATE - new Date() <= 0);
 
+    const groupName = params.get('group');
+    if (groupName) { renderGroupPage(groupName); return; }
+
     if (!product) {
       document.title = 'Produkt ikke fundet — LYDSTYRKEN';
       content.innerHTML = `
@@ -685,13 +717,117 @@
     setupStickyBid(product);
 
     // ─────────────────────────────────────────────────────────
+    function specsSection(specs) {
+      return `<section class="specs">
+        <div class="specs-label">// SPECIFIKATIONER</div>
+        <h2 class="specs-title">Tekniske detaljer</h2>
+        <div class="specs-grid">
+          ${specs.map(s => `<div class="spec-row"><span class="label">${escapeHtml(s.label)}</span><span class="value">${escapeHtml(s.value)}</span></div>`).join('')}
+        </div>
+      </section>`;
+    }
+
+    function attachThumbs() {
+      const mainImg = document.getElementById('main-img');
+      document.querySelectorAll('.gallery-thumb').forEach(thumb => {
+        thumb.addEventListener('click', () => {
+          const src = thumb.dataset.src;
+          if (mainImg && src) {
+            mainImg.src = src;
+            document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
+            thumb.classList.add('active');
+          }
+        });
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+        const thumbs = [...document.querySelectorAll('.gallery-thumb')];
+        if (thumbs.length < 2) return;
+        const activeIdx = thumbs.findIndex(t => t.classList.contains('active'));
+        if (e.key === 'ArrowRight' && activeIdx < thumbs.length - 1) thumbs[activeIdx + 1].click();
+        if (e.key === 'ArrowLeft' && activeIdx > 0) thumbs[activeIdx - 1].click();
+      });
+    }
+
+    function renderGroupPage(name) {
+      const members = (typeof PRODUCTS !== 'undefined') ? PRODUCTS.filter(p => p.group === name) : [];
+      if (!members.length) {
+        document.title = 'Gruppe ikke fundet — LYDSTYRKEN';
+        content.innerHTML = `<div class="container"><div class="not-found"><h1>Ikke <span style="color:var(--accent);font-style:italic;font-weight:400;text-transform:lowercase;">fundet.</span></h1><p>Gruppen findes ikke længere.</p><a href="lagersalg.html" class="btn btn-primary">Se lagersalg<span class="arrow">→</span></a></div></div>`;
+        return;
+      }
+      document.title = `${name} — LYDSTYRKEN`;
+      const isB = m => Array.isArray(m.bundleOf) && m.bundleOf.length;
+      const units = members.filter(m => !isB(m));
+      const bundles = members.filter(isB);
+      const heroImg = (typeof GROUP_IMAGES !== 'undefined' && GROUP_IMAGES[name]) || (members.find(m=>m.image)||{}).image || '';
+      const imgSet = [];
+      members.forEach(m => [m.image, ...(m.images||[])].filter(Boolean).forEach(s => { if (!imgSet.includes(s)) imgSet.push(s); }));
+      const allImages = heroImg ? [heroImg, ...imgSet.filter(s => s !== heroImg)] : imgSet;
+      const hasImages = allImages.length > 0;
+      const sample = units.find(u=>!u.sold) || units[0] || members[0];
+      const avail = units.filter(u=>!u.sold);
+      const fromPrice = avail.length ? Math.min(...avail.map(u=>u.minPrice)) : (bundles[0]?bundles[0].minPrice:0);
+      const cat = sample.category || '';
+      const mainImage = hasImages ? `<img src="${allImages[0]}" alt="${escapeHtml(name)}" id="main-img">` : `<div class="gallery-main-placeholder">Billeder kommer snart</div>`;
+      const thumbsHtml = allImages.length>1
+        ? `<div class="gallery-thumbs">${allImages.map((src,i)=>`<button type="button" class="gallery-thumb${i===0?' active':''}" data-src="${src}" aria-label="Vis billede ${i+1}"><img src="${src}" alt="" loading="lazy"></button>`).join('')}</div>`
+        : '';
+      const unitCard = (p) => {
+        const reserved = p.sold && /reserv/i.test(p.condition||'');
+        const b = isB(p);
+        let t;
+        if (p.sold) t = reserved ? 'Reserveret' : (p.soldPrice ? 'Solgt '+formatKr(p.soldPrice) : 'Solgt');
+        else if (b) t = `Pakke · byd fra ${formatKr(p.minPrice)}`;
+        else if (p.currentBid) t = `Højeste bud ${formatKr(p.currentBid)}`;
+        else t = `Byd fra ${formatKr(p.minPrice)}`;
+        return `<a class="unit-card${p.sold?' sold':''}${b?' bundle':''}" href="produkt.html?id=${p.id}">
+          <span class="unit-card-info"><span class="unit-card-name">${escapeHtml(p.name)}</span><span class="unit-card-price">${t}</span></span>
+          <span class="unit-card-go">${p.sold?'Se':'Byd'} →</span>
+        </a>`;
+      };
+      const unitsHtml = [...units, ...bundles].map(unitCard).join('');
+      content.innerHTML = `
+        <div class="container product-page">
+          <div class="product-layout">
+            <div class="gallery">
+              <div class="gallery-main${hasImages?'':' no-image'}" id="gallery-main">
+                <span class="gallery-badge business">● Gruppe · ${units.length} enheder</span>
+                ${mainImage}
+              </div>
+              ${thumbsHtml}
+            </div>
+            <div class="info">
+              <div class="info-cat">${escapeHtml(cat)} · ${units.length} enheder</div>
+              <h1 class="info-title">${escapeHtml(name)}</h1>
+              <p class="info-desc">${escapeHtml(sample.description||'')}</p>
+              <div class="price-grid">
+                <div class="price-card"><span class="label">Byd fra</span><span class="value">${formatKr(fromPrice)}</span></div>
+                <div class="price-card"><span class="label">Vejl. nypris / stk.</span><span class="value strike">${formatKr(sample.newPrice)}</span></div>
+              </div>
+              ${bundles[0] ? `<div class="bundle-callout">Køb alle ${bundles[0].bundleQty} som én samlet pakke.</div>` : ''}
+              <a href="#enheder" class="bid-btn">Vælg en enhed ↓</a>
+            </div>
+          </div>
+          ${sample.pitch ? `<section class="pitch"><div class="specs-label">// SÆLGERS VURDERING</div><p class="pitch-text">${escapeHtml(sample.pitch)}</p></section>` : ''}
+          <section class="units" id="enheder">
+            <div class="specs-label">// VÆLG ENHED</div>
+            <h2 class="specs-title">${units.length} enheder${bundles.length?' + pakke':''}</h2>
+            <div class="unit-grid">${unitsHtml}</div>
+          </section>
+          ${(sample.specs && sample.specs.length) ? specsSection(sample.specs) : ''}
+          ${(sample.specs && sample.specs.length) ? `<p class="specs-source">Specifikationer er hentet fra Thomann og producenternes datablade.</p>` : ''}
+        </div>`;
+      attachThumbs();
+    }
+
     function renderProduct(p) {
       const allImages = [p.image, ...(p.images || [])].filter(Boolean);
       const hasImages = allImages.length > 0;
 
       const mainImage = hasImages
         ? `<img src="${p.image}" alt="${escapeHtml(p.name)}" id="main-img">`
-        : `<div class="gallery-main-placeholder">PRODUKTBILLEDE</div>`;
+        : `<div class="gallery-main-placeholder">Billeder kommer snart</div>`;
 
       const thumbsHtml = allImages.length > 1
         ? `<div class="gallery-thumbs">${
@@ -758,6 +894,13 @@
            </section>`
         : '';
 
+      const pitchHtml = p.pitch
+        ? `<section class="pitch"><div class="specs-label">// SÆLGERS VURDERING</div><p class="pitch-text">${escapeHtml(p.pitch)}</p></section>`
+        : '';
+      const sourceNote = (p.specs && p.specs.length)
+        ? `<p class="specs-source">Specifikationer er hentet fra Thomann og producenternes datablade.</p>`
+        : '';
+
       content.innerHTML = `
         <div class="container product-page">
           <div class="product-layout">
@@ -784,12 +927,12 @@
                   <span class="value strike">${formatKr(p.newPrice)}</span>
                 </div>
                 <div class="price-card">
-                  <span class="label">${p.bundleSavings ? 'Pakkepris (byd fra)' : 'Mindstepris'}</span>
+                  <span class="label">${p.bundleOf ? 'Pakkepris (byd fra)' : 'Mindstepris'}</span>
                   <span class="value">${formatKr(p.minPrice)}</span>
                 </div>
               </div>
 
-              ${(p.bundleSavings) ? `<div style="margin:14px 0 0;padding:12px 14px;border:1px solid var(--green);border-radius:10px;background:color-mix(in srgb, var(--green) 10%, transparent);font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--text);line-height:1.5;">Pakke med ${p.bundleQty} stk. — <strong style="color:var(--green);">spar ${formatKr(p.bundleSavings)}</strong> i forhold til ${formatKr(p.sepPrice)} hver for sig.</div>` : ''}
+              
 
               ${currentBidCard}
 
@@ -803,32 +946,13 @@
             </div>
           </div>
 
+          ${pitchHtml}
           ${specsHtml}
+          ${sourceNote}
         </div>
       `;
 
-      // Klik-håndtering på thumbnails — skifter hovedbillede
-      const mainImg = document.getElementById('main-img');
-      document.querySelectorAll('.gallery-thumb').forEach(thumb => {
-        thumb.addEventListener('click', () => {
-          const src = thumb.dataset.src;
-          if (mainImg && src) {
-            mainImg.src = src;
-            document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
-            thumb.classList.add('active');
-          }
-        });
-      });
-
-      // Tastatur-navigation: venstre/højre piletaster skifter mellem thumbs
-      document.addEventListener('keydown', (e) => {
-        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-        const thumbs = [...document.querySelectorAll('.gallery-thumb')];
-        if (thumbs.length < 2) return;
-        const activeIdx = thumbs.findIndex(t => t.classList.contains('active'));
-        if (e.key === 'ArrowRight' && activeIdx < thumbs.length - 1) thumbs[activeIdx + 1].click();
-        if (e.key === 'ArrowLeft' && activeIdx > 0) thumbs[activeIdx - 1].click();
-      });
+      attachThumbs();
     }
 
     // ─────────────────────────────────────────────────────────
