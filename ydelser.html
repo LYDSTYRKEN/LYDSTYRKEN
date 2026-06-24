@@ -1382,7 +1382,7 @@
             </svg>
           </div>
           <div class="answer-card-num">02</div>
-          <div class="answer-card-title">Dansekoncert</div>
+          <div class="answer-card-title">Festkoncert</div>
           <div class="answer-card-desc">Publikum synger med, danser, festen er i gang. Anlægget skal kunne overdøve dem — kraftig PA og sub-bass.</div>
         </button>
       </div>
@@ -1556,7 +1556,8 @@
         <button type="button" class="pkg-cat-btn active" data-pkg-cat="alle">Alle</button>
         <button type="button" class="pkg-cat-btn" data-pkg-cat="Tale">Tale &amp; foredrag</button>
         <button type="button" class="pkg-cat-btn" data-pkg-cat="Lyttekoncert">Lyttekoncert</button>
-        <button type="button" class="pkg-cat-btn" data-pkg-cat="Fest">Fest &amp; koncert</button>
+        <button type="button" class="pkg-cat-btn" data-pkg-cat="Fest">Fest</button>
+        <button type="button" class="pkg-cat-btn" data-pkg-cat="Festkoncert">Festkoncert</button>
         <button type="button" class="pkg-cat-btn" data-pkg-cat="Byg-selv">Byg selv</button>
       </div>
 
@@ -1732,7 +1733,7 @@
   // ════════════════════════════════════════════════════════════════
   // Hver pakke har:
   //  id              — unik tekst
-  //  category        — 'Tale', 'Lyttekoncert', 'Fest' eller 'Byg-selv'
+  //  category        — 'Tale', 'Lyttekoncert', 'Fest', 'Festkoncert' eller 'Byg-selv'
   //  name            — vises på kortet
   //  tag             — kort sætning under navnet (typisk publikum)
   //  prices          — { afvikling: <kr eller null>, udlejning: <kr eller null>, onRequest: <bool> }
@@ -1755,7 +1756,7 @@
       category: 'Tale',
       name: 'Tale — Lille',
       tag: '30–150 publikum',
-      prices: { afvikling: 1200, udlejning: 500 },
+      prices: { afvikling: 2000, udlejning: 500 },
       gear: [
         '1 mixerpult (4–8 kanaler)',
         '1 aktiv PA-højttaler på stativ',
@@ -1768,7 +1769,7 @@
       category: 'Tale',
       name: 'Tale — Mellem',
       tag: '100–350 publikum',
-      prices: { afvikling: 1800, udlejning: 900 },
+      prices: { afvikling: 3000, udlejning: 800 },
       gear: [
         '1 mixerpult (4–8 kanaler)',
         '2 aktive PA-højttalere på stativ',
@@ -1781,7 +1782,7 @@
       category: 'Tale',
       name: 'Tale — Stor',
       tag: '300–1.000 publikum',
-      prices: { afvikling: 3500, udlejning: 1200 },
+      prices: { afvikling: 4400, udlejning: 1400 },
       gear: [
         '1 mixerpult (4–8 kanaler)',
         '4 aktive PA-højttalere på stativ',
@@ -1810,7 +1811,7 @@
       category: 'Lyttekoncert',
       name: 'Lyttekoncert — Lille',
       tag: '30–120 publikum',
-      prices: { afvikling: 2300, udlejning: null },
+      prices: { afvikling: 2500, udlejning: null },
       gear: [
         'Digital mixerpult (8–12 kanaler)',
         '2 aktive PA-højttalere',
@@ -1825,7 +1826,7 @@
       category: 'Lyttekoncert',
       name: 'Lyttekoncert — Mellem',
       tag: '80–250 publikum',
-      prices: { afvikling: 3200, udlejning: null },
+      prices: { afvikling: 3600, udlejning: null },
       gear: [
         'Digital mixerpult (16 kanaler)',
         '2 aktive PA-højttalere + subwoofer',
@@ -1857,7 +1858,7 @@
       category: 'Fest',
       name: 'Fest — Lille',
       tag: '30–100 gæster',
-      prices: { afvikling: 3000, udlejning: 500 },
+      prices: { afvikling: 2300, udlejning: 800 },
       gear: [
         'Mixer + Bluetooth-modtager',
         '2 aktive PA-højttalere (10")',
@@ -1870,7 +1871,7 @@
       category: 'Fest',
       name: 'Fest — Mellem',
       tag: '100–200 gæster',
-      prices: { afvikling: 4200, udlejning: 1000 },
+      prices: { afvikling: 3400, udlejning: 1200 },
       gear: [
         'Mixer + Bluetooth-modtager',
         '2 aktive PA-højttalere (12")',
@@ -1884,7 +1885,7 @@
       category: 'Fest',
       name: 'Fest — Stor',
       tag: '200–400 gæster',
-      prices: { afvikling: 6500, udlejning: 1500 },
+      prices: { afvikling: 4900, udlejning: 1900 },
       gear: [
         'Mixerpult (4–8 kanaler)',
         '4 aktive PA-højttalere (12")',
@@ -1898,12 +1899,59 @@
       category: 'Fest',
       name: 'Fest — Kæmpe',
       tag: '400–1.000 gæster',
-      prices: { afvikling: null, udlejning: 2500, onRequest: true },
+      prices: { afvikling: null, udlejning: 3500, onRequest: true },
       gear: [
         'Mixerpult (4–8 kanaler)',
         '4 PA-højttalere (15") + 4 (12")',
         'Subwoofer (18") + (12")',
         'Stativer + alle kabler',
+        'Skaleres efter venue'
+      ]
+    },
+
+    // ─── FESTKONCERT (band + fest — mest udstyr og mest fagligt) ───
+    {
+      id: 'festkoncert-lille',
+      category: 'Festkoncert',
+      name: 'Festkoncert — Lille',
+      tag: '50–150 publikum',
+      prices: { afvikling: 3200, udlejning: 2000 },
+      gear: [
+        'Digital mixerpult (16 kanaler)',
+        '2 aktive PA-toppe (12") + subwoofer',
+        'Mikrofon-pakke til band',
+        '2 monitorer på scenen',
+        'Stage box + multikabel',
+        'Stativer + alle kabler'
+      ]
+    },
+    {
+      id: 'festkoncert-mellem',
+      category: 'Festkoncert',
+      name: 'Festkoncert — Mellem',
+      tag: '150–300 publikum',
+      prices: { afvikling: 4800, udlejning: 3200 },
+      gear: [
+        'Digital mixerpult (16–24 kanaler)',
+        'RCF line-array toppe + 2 subwoofere',
+        'Komplet mikrofon-pakke til band',
+        '3–4 monitorer + monitor-mix',
+        'Stage box + multikabel',
+        'Stativer + alle kabler'
+      ]
+    },
+    {
+      id: 'festkoncert-stor',
+      category: 'Festkoncert',
+      name: 'Festkoncert — Stor',
+      tag: '300–600 publikum',
+      prices: { afvikling: 6800, udlejning: null },
+      gear: [
+        'Digital mixerpult (24+ kanaler)',
+        '4 RCF line-array toppe + 2× 18" sub',
+        'Fuld mikrofon- og DI-pakke',
+        '4 monitorer + monitor-mix / IEM',
+        'Stage box + multikabel',
         'Skaleres efter venue'
       ]
     },
@@ -1938,10 +1986,10 @@
     { id: 'mic-headset', category: 'Mikrofoner', name: 'Headset-mikrofon (trådløs)', desc: 'Diskret til foredrag', price: 500, maxQty: 4 },
 
     // Højttalere & Lyd
-    { id: 'sub-extra', category: 'Højttalere', name: 'Ekstra subwoofer', desc: '18" aktiv subwoofer', price: 1200, maxQty: 4 },
-    { id: 'pa-extra', category: 'Højttalere', name: 'Ekstra PA-højttaler', desc: 'Fyld eller delay-line', price: 800, maxQty: 4 },
-    { id: 'monitor', category: 'Højttalere', name: 'Monitor-højttaler ekstra', desc: 'Til scenen', price: 600, maxQty: 6 },
-    { id: 'in-ear', category: 'Højttalere', name: 'In-ear monitor system', desc: 'Til musikere', price: 900, maxQty: 4 },
+    { id: 'sub-extra', category: 'Højttalere', name: 'Ekstra subwoofer', desc: '18" aktiv subwoofer', price: 600, maxQty: 4 },
+    { id: 'pa-extra', category: 'Højttalere', name: 'Ekstra PA-højttaler', desc: 'Fyld eller delay-line', price: 400, maxQty: 4 },
+    { id: 'monitor', category: 'Højttalere', name: 'Monitor-højttaler ekstra', desc: 'Til scenen', price: 300, maxQty: 6 },
+    { id: 'in-ear', category: 'Højttalere', name: 'In-ear monitor system', desc: 'Til musikere', price: 500, maxQty: 4 },
 
     // Lys
     { id: 'led-par', category: 'Lys', name: 'LED PAR-pakke (4 stk.)', desc: 'DMX-styrede farvespots', price: 1500, maxQty: 3 },
@@ -1951,7 +1999,7 @@
     { id: 'mirror-ball', category: 'Lys', name: 'Discokugle med spot', desc: 'Klassisk feststemning', price: 400, maxQty: 1 },
 
     // Mixer & Tilbehør
-    { id: 'mixer-upgrade', category: 'Mixer & Backline', name: 'Opgradér til digital mixer', desc: '16-kanals med effekter', price: 1500, maxQty: 1 },
+    { id: 'mixer-upgrade', category: 'Mixer & Backline', name: 'Opgradér til digital mixer', desc: '16-kanals med effekter', price: 700, maxQty: 1 },
     { id: 'dj-deck', category: 'Mixer & Backline', name: 'DJ-pult (CDJ + mixer)', desc: 'Pioneer eller lign.', price: 2000, maxQty: 1 },
     { id: 'recording', category: 'Mixer & Backline', name: 'Multitrack-optagelse af event', desc: 'Du får filerne efter', price: 1200, maxQty: 1 },
 
@@ -1960,7 +2008,7 @@
     { id: 'tech-extra-hour', category: 'Personale', name: 'Ekstra tekniker-time', desc: 'Hvis arrangementet løber over', price: 500, maxQty: 8 },
     { id: 'transport-50', category: 'Personale', name: 'Transport (op til 50 km)', desc: 'Inkl. setup og pickup', price: 800, maxQty: 1 },
     { id: 'transport-150', category: 'Personale', name: 'Transport (50–150 km)', desc: 'Inkl. setup og pickup', price: 1800, maxQty: 1 },
-    { id: 'transport-far', category: 'Personale', name: 'Transport (over 150 km)', desc: 'Pris pr. aftale', price: 3000, maxQty: 1 },
+    { id: 'transport-far', category: 'Personale', name: 'Transport (over 150 km)', desc: 'Fast tillæg over 150 km', price: 3000, maxQty: 1 },
   ];
 
   // ════════════════════════════════════════════════════════════════
@@ -1969,7 +2017,7 @@
 
   const state = {
     serviceMode: 'afvikling',  // 'afvikling' eller 'udlejning'
-    packageCategory: 'alle',    // 'alle', 'Tale', 'Lyttekoncert', 'Fest', 'Byg-selv'
+    packageCategory: 'alle',    // 'alle', 'Tale', 'Lyttekoncert', 'Fest', 'Festkoncert', 'Byg-selv'
     selectedPackage: null,
     addons: {}, // { id: quantity }
     activeCategory: 'Alle'
@@ -2393,11 +2441,11 @@
     'lyttekoncert-stor':   'koncert-stor',
     'lyttekoncert-kaempe': 'koncert-stor',  // Vi har ikke kæmpe-lyttekoncert
 
-    // Dansekoncert (publikum festen — bruger Fest-pakker fordi de har sub-bass-kraft)
-    'dansekoncert-lille':  'fest-lille',
-    'dansekoncert-mellem': 'fest-mellem',
-    'dansekoncert-stor':   'fest-stor',
-    'dansekoncert-kaempe': 'fest-kaempe',
+    // Festkoncert (band + fest — egne pakker med fuld PA, subs og monitoring)
+    'dansekoncert-lille':  'festkoncert-lille',
+    'dansekoncert-mellem': 'festkoncert-mellem',
+    'dansekoncert-stor':   'festkoncert-stor',
+    'dansekoncert-kaempe': 'festkoncert-stor',
   };
 
   // Returnerer den effektive kategori brugt i mapping ('tale', 'fest', 'lyttekoncert', 'dansekoncert')
